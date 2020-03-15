@@ -4,6 +4,6 @@
     text-align: center ;
     padding-top: 5px;
 }
-.hiddendiv{
+.hiddendiv , .hiddendivIcon{
     display: none;
 }

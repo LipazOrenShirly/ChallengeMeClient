@@ -17,7 +17,7 @@ export default class CCSendingMessages extends Component {
     render() {
         let key=[1,2]; //key from map
         return (
-            <div className="alSendingMessages">
+            <div className="allSendingMessages">
                
           <CCOneSendingM index={key[0]}/>
           <CCOneSendingM index={key[1]}/>

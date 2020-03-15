@@ -4,7 +4,7 @@ import './styleMessages.css'
 import { FaTrashAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { MdMail } from  "react-icons/md";
-
+import CCOneIncomeMessage from './CCOneIncomeMessage';
 
 
 export default class CCIncomeMessages extends Component {
@@ -15,18 +15,12 @@ export default class CCIncomeMessages extends Component {
 
 
     render() {
+        let key=[1,2]; //key from map
         return (
-            <div className="container-OneAlert col-12">
+            <div className="allIncomeMessages">
                
-               <div className="row col-4 iconsAlertDiv">
-                   <div className="iconDiv"><FaTrashAlt/></div>
-                   <div className="iconDiv"><FaStar/></div>
-                   <div className="iconDiv"><MdMail/></div>
-               </div>
-               <div className="row col-8 detailsOneAlert">
-                   <div className="col-12">22/10/2020 שעה 12:00</div>
-                   <div className="col-12"> הודעות נכנסות </div>
-               </div>
+          <CCOneIncomeMessage index={key[0]}/>
+          <CCOneIncomeMessage index={key[1]}/>
            </div>
             
             

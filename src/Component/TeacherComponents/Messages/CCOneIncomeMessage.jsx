@@ -10,7 +10,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import $ from 'jquery';
 
 
-export default class CCOneSendingM extends Component {
+export default class CCOneIncomeMessage extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -41,7 +41,7 @@ $('#'+this.state.hiddendivIcon).toggle();
                <div className="row col-8 detailsOneAlert">
                    <div className="col-12">22/10/2020 שעה 12:00</div>
                     <div className="col-12 arrowDown" id={this.state.arrowDownID}><IoIosArrowDown onClick={this.openDetail}/></div>
-                   <div className="col-12 hiddendiv" id={this.state.hiddendivID} >גבי שלום, בלה בלה בלה</div>
+                   <div className="col-12 hiddendiv" id={this.state.hiddendivID} >המורה אני לא מצליח את האתגר ואני לא יודע מה לעשות אני צריך עזרהההההההההההההה</div>
                    <div className="col-12 hiddendivIcon" id={this.state.hiddendivIcon}><IoIosArrowUp onClick={this.openDetail}/></div>
                </div>
            </div>

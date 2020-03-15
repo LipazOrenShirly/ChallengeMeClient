@@ -4,7 +4,7 @@ import '../../../css/Style.css';
 import './styleMessages.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
-import CCOneMessage from './CCOneMessage';
+import CCOneMessage from './CCOneIncomeMessage';
 import CCIncomeMessages from './CCIncomeMessages';
 import CCSendingMessages from './CCSendingMessages';
 import $ from 'jquery';
