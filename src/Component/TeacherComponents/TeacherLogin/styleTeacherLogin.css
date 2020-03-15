@@ -1,0 +1,39 @@
+.logoImgLoginTeacher{
+    padding-top: 10%;
+    width: 100%;
+    padding-bottom: 10%;
+}
+
+/* for large device */
+@media (min-device-width: 500px) {
+.logoImgLoginTeacher{
+    padding:0px;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}}
+.rememberMeDiv{
+    background-color: rgba(0, 0, 0, 0.17);
+    margin-top: 7%;
+}
+
+/* for large device */
+@media (min-device-width: 500px) {
+    .rememberMeDiv{
+        margin-top: 0px;
+    
+    }
+}
+h5{
+    padding-top: 2%;
+    font-size: 20px;
+    text-shadow: 1px 1px rgba(147, 141, 160, 0.801);
+    color: rgb(127, 116, 145);
+}
+h6{
+    position: fixed;
+    bottom: 10px;
+    color:#7E758E;
+    width: 100%;
+    text-shadow: 0.5px 0.5px rgb(172, 158, 158);
+}

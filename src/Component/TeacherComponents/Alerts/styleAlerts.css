@@ -1,0 +1,31 @@
+.addingAlertsDiv{
+    margin: 3% auto;
+    
+}
+
+
+/*******One Alert *******/
+.container-OneAlert{
+    margin: 2px;
+    padding: 0px;
+    border: 2px solid black;
+    text-align: right;
+    display: flex;
+    width: 98%;
+}
+
+.iconsAlertDiv{
+    float: left;
+    height: 100%;
+    margin-left: auto;
+    margin-top: 2%;
+    padding: 0px;
+}
+.detailsOneAlert{
+    margin: 0px;
+    padding: 0px;
+}
+.iconDiv{
+    height: 20px;
+    margin-left: 3%;
+}

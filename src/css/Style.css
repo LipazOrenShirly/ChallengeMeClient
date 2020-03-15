@@ -1,0 +1,58 @@
+*{
+    padding:0px;
+    margin: 0px;
+    font-size:20px;  
+}
+
+body{
+    background-color: #E8D5D5;
+
+}
+.container-fluid{
+    padding:0px;
+    margin:0px;
+    height:100vh;
+    text-align: center;
+}
+.floatLeft{
+    float: left;
+}
+/*************ButtonYellow*****************/
+.btnYellow{
+    background-color:#FFE568 ;
+    border:none;
+    color: black;
+    font-weight: 600;
+    border-radius: 60px; 
+    width: 100%;
+}
+.btnYellow:hover{
+    background-color:rgba(224, 129, 154, 0.801) ;
+    color: black;
+}
+
+/*************inputRounded*****************/
+.inputRounded{
+    border-radius: 60px; 
+    text-align: center;
+}
+
+/************searchDiv********************/
+
+.searchDiv{
+    background-color: rgb(255, 255, 255,0.43);
+    padding:0px;
+    margin: 0px;
+}
+.searchItselfDiv{
+    padding-top: 2%;
+    margin: 0 auto;
+}
+
+/***********turkiz font******************/
+.turkiz{
+    font-weight: 700;
+    color: #8AC9C1;
+    text-align: center ;
+    padding-top: 5px;
+}

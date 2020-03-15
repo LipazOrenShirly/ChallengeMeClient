@@ -1,0 +1,47 @@
+footer{
+    background-color: rgba(30, 28, 28, 0.85);
+    position: fixed;
+    width: 100%;
+    color:#9A91AB;
+    
+}
+.footerDown{
+    bottom: 0px;
+    padding-bottom: 0px;
+ }
+
+
+/*********navBar******************/
+
+.colorNav{
+background-color: rgba(30, 28, 28, 0.5);
+
+}
+.navbar-light .navbar-nav .nav-link{
+    color:whitesmoke;
+}
+
+/*********logoIMG******************/
+.logoImg{
+   
+    width: 100%;
+    padding-bottom: 3%;
+}
+
+/* for large device */
+@media (min-device-width: 500px) {
+.logoImg{
+    padding:0px;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 0%;
+}}
+
+
+
+
+
+
+
+
