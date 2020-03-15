@@ -5,8 +5,6 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { MdMail } from  "react-icons/md";
 
-
-
 export default class CCOneAlert extends Component {
     constructor(props){
         super(props);
