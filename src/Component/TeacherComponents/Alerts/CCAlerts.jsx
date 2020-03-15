@@ -6,6 +6,7 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import CCOneAlert from './CCOneAlert';
 
+// test sync to github
 
 export default class CCAlerts extends Component {
     constructor(props){
