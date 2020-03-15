@@ -7,6 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCOneAlert from './CCOneAlert';
 
 // test sync to github
+// test sync to github2
 
 export default class CCAlerts extends Component {
     constructor(props){
