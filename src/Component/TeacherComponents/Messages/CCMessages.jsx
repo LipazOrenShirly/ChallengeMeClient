@@ -9,7 +9,7 @@ import CCIncomeMessages from './CCIncomeMessages';
 import CCSendingMessages from './CCSendingMessages';
 import $ from 'jquery';
 
-export default class CCAlerts extends Component {
+export default class CCMessages extends Component {
     constructor(props){
         super(props);
        this.state={
@@ -29,8 +29,12 @@ GoToSendingMessages=()=>{
     {
       this.setState({IncomeMessages:false});
     }  
-    
-   
+}
+
+linkToNewMessage=()=>{
+    this.props.history.push({
+        pathname:'/NewMessage',
+})
 }
 
     render() {  
@@ -52,9 +56,10 @@ GoToSendingMessages=()=>{
                 <div className="col-8 searchItselfDiv">
                 <input type="text" className="form-control inputRounded" id="search"  placeholder="חיפוש"></input>
                 </div>
-                <div className="col-8 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
+                <div className="col-8 addingAlertsDiv" onClick={this.linkToNewMessage}>
+               <h5>שליחת הודעה חדשה</h5>
                 </div>
-                
+
                  {textFonts}
                      
             </div>

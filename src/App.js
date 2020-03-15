@@ -11,6 +11,8 @@ import TeacherInfoScreen from './Component/TeacherComponents/TeacherInfoScreen/C
 import Alerts from './Component/TeacherComponents/Alerts/CCAlerts';
 import AlertsSetting from './Component/TeacherComponents/AlertsSetting/CCAlertsSetting';
 import Messages from './Component/TeacherComponents/Messages/CCMessages';
+import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
+import EddNewChallenge from './Component/TeacherComponents/EddNewChallenge/CCEddNewChallenge';
 
 
 
@@ -28,6 +30,8 @@ function App() {
         <Route path="/Alerts" component={Alerts} />
         <Route path="/AlertsSetting" component={AlertsSetting} />
         <Route path="/Messages" component={Messages} />
+        <Route path="/NewMessage" component={NewMessage} />
+        <Route path="/EddNewChallenge" component={EddNewChallenge} />
 
         
         
