@@ -19,6 +19,16 @@ export default class CCTeacherLogin extends Component {
     }
   }
 
+  UpdatePasswordInput = (e) => {
+    sessionStorage.setItem('password', e.target.value);
+    this.setState({password: e.target.value});
+  }
+
+  UpdateUsernameInput = (e) => {
+    sessionStorage.setItem('username', e.target.value);
+    this.setState({username: e.target.value});
+  }
+
   NewTeacher = () => {
     this.props.history.push({
       pathname: '/newTeacher',
@@ -87,18 +97,12 @@ export default class CCTeacherLogin extends Component {
             <div className="form-group col-12">
               <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required
                 value={localStorage.getItem('username')}
-                onChange={(e) => {
-                  sessionStorage.setItem('username', e.target.value);
-                  this.setState({username: e.target.value});
-                }} />
+                onChange={this.UpdateUsernameInput}/>
             </div>
             <div className="form-group col-12">
               <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required
                 value={localStorage.getItem('password')}
-                onChange={(e) => {
-                  sessionStorage.setItem('password', e.target.value);
-                  this.setState({password: e.target.value});
-                  }} />
+                onChange={this.UpdatePasswordInput} />
             </div>
             <div className="rememberMeDiv">
               <label>
