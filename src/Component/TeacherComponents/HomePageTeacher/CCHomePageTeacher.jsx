@@ -9,9 +9,13 @@ import NavBar from '../../LittleComponents/NavBar';
 export default class CCHomePageTeacher extends Component {
     constructor(props){
         super(props);
+        // this.state = {
+        //     teacherID: this.props.match.params.teachersFromDB  //--taking teacherID from the previous page
+        // };
        
 }
     render() {
+        console.log(this.state.teacherID)
         return (
             <div className="container-fluid">
                 <NavBar></NavBar><br/><br/>
