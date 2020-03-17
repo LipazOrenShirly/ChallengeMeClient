@@ -4,7 +4,6 @@ import './styleNewTeacher.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
-import Popup from 'react-popup';
 
 export default class CCnewTeacher extends Component {
     constructor(props) {
