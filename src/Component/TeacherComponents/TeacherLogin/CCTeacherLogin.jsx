@@ -96,12 +96,12 @@ export default class CCTeacherLogin extends Component {
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
               <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required
-                value={localStorage.getItem('username')}
+                value={localStorage.getItem('username')!=null ? localStorage.getItem('username') : ""}
                 onChange={this.UpdateUsernameInput}/>
             </div>
             <div className="form-group col-12">
               <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required
-                value={localStorage.getItem('password')}
+                value={localStorage.getItem('password')!=null ? localStorage.getItem('password') : ""}
                 onChange={this.UpdatePasswordInput} />
             </div>
             <div className="rememberMeDiv">
