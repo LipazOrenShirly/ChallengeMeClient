@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import '../../../css/Style.css';
 import './styleTeacherLogin.css'
 import localHost from '../../LittleComponents/LocalHost';
+import $ from 'jquery'
 
 export default class CCTeacherLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      remember: false,
       teachersFromDB: []
     };
     let local = true;
@@ -19,14 +17,9 @@ export default class CCTeacherLogin extends Component {
     }
   }
 
-  UpdatePasswordInput = (e) => {
-    sessionStorage.setItem('password', e.target.value);
-    this.setState({password: e.target.value});
-  }
-
-  UpdateUsernameInput = (e) => {
-    sessionStorage.setItem('username', e.target.value);
-    this.setState({username: e.target.value});
+  componentDidMount = () => {
+    $('#unameId').val(localStorage.getItem('username')!=null ? localStorage.getItem('username')+'' : "");
+    $('#apasswordId').val(localStorage.getItem('password')!=null ? localStorage.getItem('password')+'' : "");
   }
 
   NewTeacher = () => {
@@ -41,22 +34,21 @@ export default class CCTeacherLogin extends Component {
     })
   }
 
-  Submit = () => {
-    if(this.state.remember === true) {
-      localStorage.setItem('username', this.state.username);
-      localStorage.setItem('password', this.state.password);
+  Submit = (event) => {
+    var username = $('#unameId').val();
+    var password =  $('#apasswordId').val();
+
+    sessionStorage.setItem('password', password);
+    sessionStorage.setItem('username', username);
+    this.setState({password: password});
+    this.setState({username: username});
+
+    if($('#remember').prop('checked') === true) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
     }
 
-    // this.props.history.push({
-    //   pathname: '/HomePageTeacher',
-    // });
-
-    var data ={
-      username: sessionStorage.getItem('username'),
-      password: sessionStorage.getItem('password'),
-    };
-
-    fetch(this.apiUrl//+'?username='+data.username+'&password='+data.password 
+    fetch(this.apiUrl+'?username='+username+'&password='+password 
     ,{
       method: 'GET',
       // mode: 'no-cors',
@@ -72,21 +64,18 @@ export default class CCTeacherLogin extends Component {
       })
       .then(
         (result) => {
-          console.log("Submit= ", result[0].teacherID);
-          this.setState({teachersFromDB:result[0].teacherID})
+          console.log("Submit= ", JSON.stringify(result));
+          this.setState({teachersFromDB:JSON.stringify(result)})
+          console.log('state.teachersFromDB = '+this.state.teachersFromDB);
+          this.props.history.push('/HomePageTeacher/', {teachersFromDB: this.state.teachersFromDB});
         },
         (error) => {
           console.log("err get=", error);
-        })
-      .then(
-        this.props.history.push({
-          pathname: '/HomePageTeacher/'+this.state.teachersFromDB,
-        })
-      );
+        });
+      event.preventDefault();
   }
 
   render() {
-    {console.log('localHost='+{localHost}.localHost)}
     return (
       <div className="container-fluid">
         <div className="loginDiv">
@@ -95,21 +84,15 @@ export default class CCTeacherLogin extends Component {
           </div>
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
-              <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required
-                value={localStorage.getItem('username')!=null ? localStorage.getItem('username') : ""}
-                onChange={this.UpdateUsernameInput}/>
+              <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required/>
             </div>
             <div className="form-group col-12">
-              <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required
-                value={localStorage.getItem('password')!=null ? localStorage.getItem('password') : ""}
-                onChange={this.UpdatePasswordInput} />
+              <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required/>
             </div>
             <div className="rememberMeDiv">
               <label>
                 זכור אותי&nbsp;&nbsp;
-                <input type="checkbox" name="remember" onChange={(e) => {
-                  this.setState({remember: e.target.checked});
-                  }}/>
+                <input type="checkbox" name="remember" id="remember"/>
               </label>
             </div><br />
 
