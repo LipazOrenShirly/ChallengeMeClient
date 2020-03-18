@@ -10,7 +10,7 @@ export default class CCHomePageTeacher extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            teacherID: this.props.location.state.teachersFromDB != null ? this.props.location.state.teachersFromDB : "" //--taking teacherID from the previous page
+            teacherID: this.props.location.state != null ? this.props.location.state.teachersFromDB : "" //--taking teacherID from the previous page
         };
     }
 
