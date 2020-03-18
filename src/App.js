@@ -13,6 +13,7 @@ import AlertsSetting from './Component/TeacherComponents/AlertsSetting/CCAlertsS
 import Messages from './Component/TeacherComponents/Messages/CCMessages';
 import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
 import EddNewChallenge from './Component/TeacherComponents/EddNewChallenge/CCEddNewChallenge';
+import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/Messages" component={Messages} />
         <Route path="/NewMessage" component={NewMessage} />
         <Route path="/EddNewChallenge" component={EddNewChallenge} />
+        <Route path="/StudentsList" component={StudentsList} />
 
         
         

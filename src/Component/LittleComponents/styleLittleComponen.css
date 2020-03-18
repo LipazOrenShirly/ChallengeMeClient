@@ -38,7 +38,10 @@ background-color: rgba(30, 28, 28, 0.5);
     padding-bottom: 0%;
 }}
 
-
+/********searchBarHomeTeacher************/
+.massegesTeacherHomePage, .searchTeacherHomePage, .alertsTeacherHomePage{
+    float: left; 
+}
 
 
 
