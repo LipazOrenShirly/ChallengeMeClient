@@ -19,7 +19,6 @@ export default class CCHomePageTeacher extends Component {
     }
 
     render() {
-        // console.log(this.state.teacherID)
         return (
             <div className="container-fluid">
                 <NavBar></NavBar><br /><br />

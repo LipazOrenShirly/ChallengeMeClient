@@ -8,7 +8,8 @@ export default class CCTeacherLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teachersFromDB: []
+      teachersFromDB: [],
+      randomPassword : this.props.location.state.randomPassword != null ? this.props.location.state.randomPassword : ""
     };
     let local = true;
     this.apiUrl = 'http://localhost:' + {localHost}.localHost + '/api/Teacher';
@@ -20,6 +21,7 @@ export default class CCTeacherLogin extends Component {
   componentDidMount = () => {
     $('#unameId').val(localStorage.getItem('username')!=null ? localStorage.getItem('username')+'' : "");
     $('#apasswordId').val(localStorage.getItem('password')!=null ? localStorage.getItem('password')+'' : "");
+    console.log('randomPassword = '+this.state.randomPassword);
   }
 
   NewTeacher = () => {

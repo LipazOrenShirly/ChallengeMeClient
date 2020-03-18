@@ -19,8 +19,8 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     Submit = (event) => {
-        fetch(this.apiUrl+'?mail='+this.state.mail 
-            , {
+        fetch(this.apiUrl + '?mail=' + this.state.mail,
+            {
                 method: 'GET',
                 // mode: 'no-cors',
                 headers: new Headers({
@@ -35,18 +35,13 @@ export default class CCTeacherForgetPassword extends Component {
             })
             .then(
                 (result) => {
-                    console.log("Submit= ", result[0].teacherID);
+                    console.log("Submit= ", result);
+                    this.props.history.push('/TeacherLogin', {randomPassword: result});
                 },
                 (error) => {
                     console.log("err get=", error);
-                })
-            // .then(
-            //     this.props.history.push({
-            //         pathname: '/HomePageTeacher/' + this.state.teachersFromDB,
-            //     })
-            // )
-            ;
-            event.preventDefault();
+                });
+        event.preventDefault();
     }
 
     render() {
