@@ -20,10 +20,11 @@ export default class CCHomePageTeacher extends Component {
     componentDidMount = () => {
 
     }
+
     getDataFromClasses=(data)=>{
         this.props.history.push({
             pathname:'/StudentsList',
-            state:{nameOfClass:data,teacherID:this.state.teacherID}
+            state:{Class:data,teacherID:this.state.teacherID}
         })   
     }
 
