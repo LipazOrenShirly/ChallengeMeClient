@@ -1,4 +1,13 @@
-h4 {
+.AlertSettingText {
     float: left;
     text-align: right;
+}
+.Switches{
+    
+    
+    right: 0px;
+    padding-right: 0px;
+}
+.SwitchDiv{
+    right: 0px;
 }
