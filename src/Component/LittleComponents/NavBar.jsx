@@ -16,7 +16,7 @@ const NavBar = () => {
     <Nav className="mr-auto">
       <Nav.Link href="/TeacherInfoScreen">עדכון פרטים אישיים</Nav.Link>
       <Nav.Link href="/Alerts">התרעות מערכת</Nav.Link>
-      <Nav.Link href="/Messages">הודעות נכנסות</Nav.Link>
+      <Nav.Link href="/Messages">הודעות</Nav.Link>
       <Nav.Link href="/EddNewChallenge">הוספת אתגר חדש</Nav.Link>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

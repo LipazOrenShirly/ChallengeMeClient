@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../../css/Style.css';
 import './styleTeacherLogin.css'
 import localHost from '../../LittleComponents/LocalHost';
-import $ from 'jquery'
+import $ from 'jquery';
 
 export default class CCTeacherLogin extends Component {
   constructor(props) {
@@ -12,15 +12,15 @@ export default class CCTeacherLogin extends Component {
       // randomPassword : this.props.location.state.randomPassword != null ? this.props.location.state.randomPassword : ""
     };
     let local = true;
-    this.apiUrl = 'http://localhost:' + {localHost}.localHost + '/api/Teacher';
+    this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
     if (!local) {
       this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
     }
   }
 
   componentDidMount = () => {
-    $('#unameId').val(localStorage.getItem('username')!=null ? localStorage.getItem('username')+'' : "");
-    $('#apasswordId').val(localStorage.getItem('password')!=null ? localStorage.getItem('password')+'' : "");
+    $('#unameId').val(localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "");
+    $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
   }
 
   NewTeacher = () => {
@@ -37,26 +37,26 @@ export default class CCTeacherLogin extends Component {
 
   Submit = (event) => {
     var username = $('#unameId').val();
-    var password =  $('#apasswordId').val();
+    var password = $('#apasswordId').val();
 
     sessionStorage.setItem('password', password);
     sessionStorage.setItem('username', username);
-    this.setState({password: password});
-    this.setState({username: username});
+    this.setState({ password: password });
+    this.setState({ username: username });
 
-    if($('#remember').prop('checked') === true) {
+    if ($('#remember').prop('checked') === true) {
       localStorage.setItem('username', username);
       localStorage.setItem('password', password);
     }
 
-    fetch(this.apiUrl+'?username='+username+'&password='+password 
-    ,{
-      method: 'GET',
-      // mode: 'no-cors',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
+    fetch(this.apiUrl + '?username=' + username + '&password=' + password
+      , {
+        method: 'GET',
+        // mode: 'no-cors',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+        })
       })
-    })
       .then(res => {
         console.log('res=', res);
         console.log('res.status', res.status);
@@ -66,14 +66,19 @@ export default class CCTeacherLogin extends Component {
       .then(
         (result) => {
           console.log("Submit= ", JSON.stringify(result));
-          this.setState({teachersFromDB:JSON.stringify(result)})
-          console.log('state.teachersFromDB = '+this.state.teachersFromDB);
-          this.props.history.push('/HomePageTeacher/', {teachersFromDB: this.state.teachersFromDB});
+          if (result === 0) {
+            this.setState({ teachersFromDB: JSON.stringify(result) })
+            console.log('state.teachersFromDB = ' + this.state.teachersFromDB);
+            this.props.history.push('/HomePageTeacher/', { teachersFromDB: this.state.teachersFromDB });
+          }
+          else {
+            //הודעה למשתמש
+          }
         },
         (error) => {
           console.log("err get=", error);
         });
-      event.preventDefault();
+    event.preventDefault();
   }
 
   render() {
@@ -85,15 +90,15 @@ export default class CCTeacherLogin extends Component {
           </div>
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
-              <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required/>
+              <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required />
             </div>
             <div className="form-group col-12">
-              <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required/>
+              <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required />
             </div>
             <div className="rememberMeDiv">
               <label>
                 זכור אותי&nbsp;&nbsp;
-                <input type="checkbox" name="remember" id="remember"/>
+                <input type="checkbox" name="remember" id="remember" />
               </label>
             </div><br />
 
