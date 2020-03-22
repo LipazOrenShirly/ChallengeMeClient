@@ -66,7 +66,7 @@ export default class CCTeacherLogin extends Component {
       .then(
         (result) => {
           console.log("Submit= ", JSON.stringify(result));
-          if (result === 0) {
+          if (result != 0) {
             this.setState({ teachersFromDB: JSON.stringify(result) })
             console.log('state.teachersFromDB = ' + this.state.teachersFromDB);
             this.props.history.push('/HomePageTeacher/', { teachersFromDB: this.state.teachersFromDB });
