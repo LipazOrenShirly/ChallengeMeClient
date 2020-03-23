@@ -81,6 +81,7 @@ export default class CCClasses extends Component {
                     this.setState({ showAddClass: false })
                 );
         event.preventDefault();
+        window.location.reload();
     }
 
     render() {
