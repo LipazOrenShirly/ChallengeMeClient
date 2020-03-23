@@ -91,7 +91,8 @@ export default class CCTeacherInfoScreen extends Component {
                 (error) => {
                     console.log("err PUT=", error);
                 });
-        event.preventDefault();
+        // event.preventDefault();
+        // window.location.reload();
     }
 
     btnClick = () => {
