@@ -37,3 +37,8 @@ h6{
     width: 100%;
     text-shadow: 0.5px 0.5px rgb(172, 158, 158);
 }
+.react-inputs-validation__error___2aXSp , .errorFromServer{
+    color:red;
+    font-size: 16px;
+}
+

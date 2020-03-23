@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import '../../../css/Style.css';
-import './styleTeacherLogin.css'
+import './styleTeacherLogin.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
+
 
 export default class CCTeacherLogin extends Component {
   constructor(props) {
@@ -10,7 +12,13 @@ export default class CCTeacherLogin extends Component {
     this.state = {
       teachersFromDB: [],
       // randomPassword : this.props.location.state.randomPassword != null ? this.props.location.state.randomPassword : ""
+      validate: false,
+      Username: "",
+      Password: "",
+      HasUserNameValError:true,
+      HasPasswordError:true,
     };
+   
     let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
     if (!local) {
@@ -19,37 +27,58 @@ export default class CCTeacherLogin extends Component {
   }
 
   componentDidMount = () => {
-    $('#unameId').val(localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "");
-    $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
+    //לפני שעולה העמוד- אם קיימים שם משתמש וססמה בלוקל סטורז' תביא אותם למקומות המתאימים
+    let un=localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "";
+    this.setState({Username:un});
+    let ps=localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "";
+    this.setState({Password:ps});
+    if(this.state.Username !=null)
+    this.setState({HasUserNameValError:false});
+    if(this.state.Password !=null)
+    this.setState({HasPasswordError:false});
+   // $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
   }
 
   NewTeacher = () => {
+    //כשלוחצים על ימירת מורה חדש העברה לעמוד המתאים
     this.props.history.push({
       pathname: '/newTeacher',
     })
   }
 
   ForgetPassword = () => {
+    //כשלוחצים על שכחתי ססמה מועבר לעמוד מתאים
     this.props.history.push({
       pathname: '/TeacherForgetPassword',
     })
   }
 
+
   Submit = (event) => {
-    var username = $('#unameId').val();
-    var password = $('#apasswordId').val();
+    
+   
+    if (
+      !this.state.HasUserNameValError && !this.state.HasPasswordError
+    ) {
+   
+    const {
+      Username,
+      Password,
+ 
+    } = this.state;
+    
+   
 
-    sessionStorage.setItem('password', password);
-    sessionStorage.setItem('username', username);
-    this.setState({ password: password });
-    this.setState({ username: username });
+    sessionStorage.setItem('password', Password);
+    sessionStorage.setItem('username', Username);
 
+    //אם מסומן זכור אותי שומר בלוקל סטורז
     if ($('#remember').prop('checked') === true) {
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
+      localStorage.setItem('username', Username);
+      localStorage.setItem('password', Password);
     }
-
-    fetch(this.apiUrl + '?username=' + username + '&password=' + password
+    //בעזרת גט בודק אם השם משתמש וססמה קיימים במערכת
+    fetch(this.apiUrl + '?username=' + Username + '&password=' + Password
       , {
         method: 'GET',
         // mode: 'no-cors',
@@ -64,7 +93,8 @@ export default class CCTeacherLogin extends Component {
         return res.json();
       })
       .then(
-        (result) => {
+        (result) => { //אם קיימים במערכת-שמור בסטיייט תעבור לעמוד הבית
+          // !!!!!!!!!!!!!הערה!!!!!!!!!!!!!!!!!!!!!!צריך לשמור במשתנה הכללי ולא בסטייט!!!!!!!!!!
           console.log("Submit= ", JSON.stringify(result));
           if (result != 0) {
             this.setState({ teachersFromDB: JSON.stringify(result) })
@@ -72,16 +102,27 @@ export default class CCTeacherLogin extends Component {
             this.props.history.push('/HomePageTeacher/', { teachersFromDB: this.state.teachersFromDB });
           }
           else {
-            //הודעה למשתמש
+            $('#errorFromServer').append("שם המשתמש או הססמא אינם נכונים");//הודעה למשתמש
+            
           }
         },
         (error) => {
           console.log("err get=", error);
         });
-    event.preventDefault();
+        
+  }
+   
+      
+  event.preventDefault();
   }
 
   render() {
+    const {
+      Username,
+      Password,
+      validate
+    } = this.state;
+
     return (
       <div className="container-fluid">
         <div className="loginDiv">
@@ -90,10 +131,52 @@ export default class CCTeacherLogin extends Component {
           </div>
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
-              <input type="text" className="form-control inputRounded" id="unameId" placeholder="הכנס שם משתמש" required />
+              <Textbox
+                attributesInput={{ 
+                  id: 'unameId',
+                  type: 'text',
+                  placeholder: 'הכנס שם משתמש',
+                  className: "form-control inputRounded"
+                }}
+                value={Username} 
+                validationCallback={res =>
+                  this.setState({ HasUserNameValError: res, validate: false })
+                }       
+                onChange={(Username, e) => {
+                  this.setState({ Username});
+                  console.log(e);
+                }} 
+                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                validationOption={{
+                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  msgOnError: "שם משתמש חיב להיות ממולא"
+                }}
+              />
             </div>
-            <div className="form-group col-12">
-              <input type="password" className="form-control inputRounded" id="apasswordId" placeholder="הכנס ססמה" required />
+          <div className="form-group col-12">
+            <Textbox
+                attributesInput={{ 
+                  id: 'apasswordId',
+                  type: 'password',
+                  placeholder: 'הכנס ססמה',
+                  className: "form-control inputRounded"
+                }}
+                value={Password} // Optional.[String].Default: "".
+                validationCallback={res =>
+                  this.setState({ HasPasswordError: res, validate: false })
+                } 
+                onChange={(Password, e) => {
+                  this.setState({ Password });
+                  console.log(e);
+                }} // Required.[Func].Default: () => {}. Will return the value.
+                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                validationOption={{
+                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  msgOnError: "הססמה חייבת להיות ממולאת"
+                }}
+              />
             </div>
             <div className="rememberMeDiv">
               <label>
@@ -104,6 +187,7 @@ export default class CCTeacherLogin extends Component {
 
             <div className="col-12">
               <button type="submit" id="submit" className="btn btn-info btnYellow">כניסה</button>
+              <h1 id="errorFromServer" className="errorFromServer"></h1>
             </div>
             <h5 onClick={this.ForgetPassword}> שכחתי ססמה</h5>
           </form>
