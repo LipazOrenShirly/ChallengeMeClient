@@ -7,6 +7,7 @@
     text-align: center ;
     margin-bottom: 20px;
 }
+
 .AddnewClass{
     margin-top: 30px;
 }
@@ -23,7 +24,21 @@
     padding:0px;
     height: 100px;
 }
-
+.classInput:disabled{
+    background-color:transparent;
+    border: none;
+    text-align: center ;
+    color: #8AC9C1;
+}
+.classInput:enabled{
+    background-color:transparent;
+    border-bottom: 2px solid #8AC9C1;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: center ;
+    color: #8AC9C1;
+}
 .classNameHome{
     border: 3px solid black;
     height: 98px;
