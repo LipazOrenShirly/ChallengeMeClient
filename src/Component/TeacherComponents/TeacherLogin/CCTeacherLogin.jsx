@@ -54,7 +54,7 @@ export default class CCTeacherLogin extends Component {
   }
 
   Submit = (event) => {
-    if ( !this.state.HasUserNameValError && !this.state.HasPasswordError) 
+    if ( !this.state.HasUserNameValError && !this.state.HasPasswordError) //אם אין הערות
     {
       const { Username, Password } = this.state;
       
@@ -118,18 +118,19 @@ export default class CCTeacherLogin extends Component {
           </div>
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
-              <Textbox
+              <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                 attributesInput={{
                   id: 'unameId',
                   type: 'text',
                   placeholder: 'הכנס שם משתמש',
                   className: "form-control inputRounded"
                 }}
+               
                 value={Username}
                 validationCallback={res =>
                   this.setState({ HasUserNameValError: res, validate: false })
                 }
-                onChange={(Username, e) => {
+                onChange={(Username, e) => { //כל שינוי הוא שומר בסטייט
                   this.setState({ Username });
                   console.log(e);
                 }}
@@ -173,7 +174,7 @@ export default class CCTeacherLogin extends Component {
             </div><br />
             <div className="col-12">
               <button type="submit" id="submit" className="btn btn-info btnYellow">כניסה</button>
-              <h1 id="errorFromServer" className="errorFromServer"></h1>
+              <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
             </div>
             <h5 onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
           </form>
