@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import '../../../css/Style.css';
 import './styleNewTeacher.css'
 import Footer from '../../LittleComponents/Footer';
@@ -15,7 +16,17 @@ export default class CCnewTeacher extends Component {
             mail: "",
             phone: "",
             password: "",
-            school: ""
+            password2: "",
+            school: "",
+            HasfirstNameValError:true,
+            HaslastNameValError:true,
+            HasuserNameValError:true,
+            HasMailValError:true,
+            HasPhoneValError:true,
+            HasPasswordValError:true,
+            HasPassword2ValError:true,
+            HasSchoolValError:true,
+
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
@@ -25,53 +36,95 @@ export default class CCnewTeacher extends Component {
     }
 
     Submit = (event) => {
-        console.log('state=' + this.state);
+        // console.log('state=' + this.state);
 
-        var data = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            userName: this.state.userName,
-            mail: this.state.mail,
-            phone: this.state.phone,
-            password: this.state.password,
-            school: this.state.school
-        }
-        console.log('data=' + data);
-        fetch(this.apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch POST= ", result);
+        // var data = {
+        //     firstName: this.state.firstName,
+        //     lastName: this.state.lastName,
+        //     userName: this.state.userName,
+        //     mail: this.state.mail,
+        //     phone: this.state.phone,
+        //     password: this.state.password,
+        //     school: this.state.school
+        // }
+        // console.log('data=' + data);
+        // fetch(this.apiUrl, {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-type': 'application/json; charset=UTF-8'
+        //     })
+        // })
+        //     .then(res => {
+        //         console.log('res=', res);
+        //         return res.json()
+        //     })
+        //     .then(
+        //         (result) => {
+        //             console.log("fetch POST= ", result);
                     
-                },
-                (error) => {
-                    console.log("err post=", error);
-                })
-            .then(
-                this.props.history.push({
-                    pathname: '/TeacherLogin',
-                })
-            );
+        //         },
+        //         (error) => {
+        //             console.log("err post=", error);
+        //         })
+        //     .then(
+        //         this.props.history.push({
+        //             pathname: '/TeacherLogin',
+        //         })
+        //     );
 
-        event.preventDefault();
+        // event.preventDefault();
     }
 
     render() {
+        const {
+            firstName,
+            lastName,
+            userName,
+            mail,
+            phone,
+            password,
+            password2,
+            school,
+          } = this.state;
+       
         return (
             <div className="container-fluid">
                 <div className="loginDiv">
                     <Logo></Logo>
                     <form onSubmit={this.Submit}>
                         <div className="form-group col-12">
+                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                attributesInput={{
+                  id: 'NewTFirstName',
+                  type: 'text',
+                  placeholder: 'שם פרטי',
+                  className: "form-control inputNewTeacher"
+                }}
+               
+                value={firstName}
+                validationCallback={res =>
+                  this.setState({ HasfirstNameValError: res, validate: false })
+                }
+                onChange={(firstName, e) => { //כל שינוי הוא שומר בסטייט
+                  this.setState({ firstName });
+                  console.log(e);
+                }}
+                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                validationOption={{
+                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  customFunc: async v => {
+                    if (v === "") {
+                      this.setState({ hasError: true });
+                      return "Name is required.";
+                    }
+                    if (v.length < 4) {
+                      this.setState({ hasError: true });
+                      return "Name needs at least 4 length.";
+                    }}
+                }}
+              />
                             <input type="text" className="form-control inputNewTeacher" id="NewTFirstName" placeholder="שם פרטי" pattern="[א-ת]+" required
                                 onChange={(e) => this.setState({ firstName: e.target.value })} />
                         </div>
