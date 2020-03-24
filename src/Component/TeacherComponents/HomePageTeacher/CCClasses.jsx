@@ -90,7 +90,7 @@ export default class CCClasses extends Component {
                 <div className="myClasses">הכיתות שלי</div>
                 <div className="row col-12">
                     {this.state.classesArr.map((item) =>
-                        <CCOneClass teacherID={this.state.teacherID} class={item} SendDataToClasses={this.getDataFromOneClass} />
+                        <CCOneClass key={item.classID} teacherID={this.state.teacherID} class={item} SendDataToClasses={this.getDataFromOneClass} />
                     )}
                 </div>
                 <div className="AddnewClass" id="AddnewClass" onClick={this.AddClass}>הוספת כיתה +</div>
