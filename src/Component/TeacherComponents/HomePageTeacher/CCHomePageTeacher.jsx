@@ -7,9 +7,11 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCClasses from './CCClasses';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import CCStudents from './CCStudents';
+import ProjectContext from '../../../Context/ProjectContext';
 
 
 export default class CCHomePageTeacher extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -27,16 +29,24 @@ export default class CCHomePageTeacher extends Component {
             state:{Class:data,teacherID:this.state.teacherID}
         })   
     }
-
+    static contextType = ProjectContext;
     render() {
-       
+        const teacherID = this.context;
+        console.log("context: "+JSON.stringify(this.context));
+
         return (
-            <div className="container-fluid">
-                <NavBar></NavBar><br /><br />
-                <SearchBarHomeTeacher />
-                <CCClasses teacherID={this.state.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
-                <Footer></Footer>
-            </div>
+            <ProjectContext.Consumer>{ (ProjectContex) => {
+                const teacherID = ProjectContex;
+                console.log(ProjectContex);
+                return(
+                <div className="container-fluid">
+                    <NavBar></NavBar><br /><br />
+                    <SearchBarHomeTeacher />
+                    <CCClasses teacherID = {this.state.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
+                    <Footer></Footer>
+                </div>
+                )
+            }}</ProjectContext.Consumer>
         );
     };
 }
