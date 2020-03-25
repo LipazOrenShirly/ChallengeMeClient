@@ -35,18 +35,18 @@ export default class CCHomePageTeacher extends Component {
         console.log("context: "+JSON.stringify(this.context));
 
         return (
-            <ProjectContext.Consumer>{ (ProjectContex) => {
-                const teacherID = ProjectContex;
-                console.log(ProjectContex);
-                return(
+            // <ProjectContext.Consumer>{ (ProjectContex) => {
+            //     const teacherID = ProjectContex;
+            //     console.log(ProjectContex);
+            //     return(
                 <div className="container-fluid">
                     <NavBar></NavBar><br /><br />
                     <SearchBarHomeTeacher />
                     <CCClasses teacherID = {this.state.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
                     <Footer></Footer>
                 </div>
-                )
-            }}</ProjectContext.Consumer>
+            //     )
+            // }}</ProjectContext.Consumer>
         );
     };
 }
