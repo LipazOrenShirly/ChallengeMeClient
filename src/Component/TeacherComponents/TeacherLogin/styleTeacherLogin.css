@@ -42,3 +42,9 @@ h6{
     font-size: 16px;
 }
 
+/*************popup*****************/
+
+#newPassword1Div ,#newPassword2Div{
+    display: none;
+   
+}
