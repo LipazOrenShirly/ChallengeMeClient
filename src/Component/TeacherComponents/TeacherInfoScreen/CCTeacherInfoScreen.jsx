@@ -21,10 +21,10 @@ export default class CCTeacherInfoScreen extends Component {
         }
     }
 
-    static contextType = ProjectContext;  //קשור לאופציה ראשונה לשימוש בקונטקסט
+    static contextType = ProjectContext;              //קשור לאופציה ראשונה לשימוש בקונטקסט
 
     componentWillMount() {
-        const { teacherID } = this.context;            //קשור לאופציה ראשונה לשימוש בקונטקסט
+        const { teacherID } = this.context;           //קשור לאופציה ראשונה לשימוש בקונטקסט
 
         console.log('teacherID = '+JSON.stringify(this.context));
         fetch(this.apiUrl + '?teacherID/8'
