@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCClasses from './CCClasses';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import CCStudents from './CCStudents';
-import ProjectContext from '../../../Context/ProjectContext';
+import { ProjectContext } from '../../../Context/ProjectContext';
 
 
 export default class CCHomePageTeacher extends Component {
@@ -29,24 +29,28 @@ export default class CCHomePageTeacher extends Component {
             state:{Class:data,teacherID:this.state.teacherID}
         })   
     }
-    static contextType = ProjectContext;
+   
+    // static contextType = ProjectContext;                                 //קשור לאופציה ראשונה לשימוש בקונטקסט 
+   
     render() {
-        const teacherID = this.context;
-        console.log("context: "+JSON.stringify(this.context));
+      
+        // console.log("context: "+ JSON.stringify(this.context));          //קשור לאופציה ראשונה לשימוש בקונטקסט 
+        // const { teacherID, setTeacher } = this.context;                  //קשור לאופציה ראשונה לשימוש בקונטקסט 
+        // console.log("teacherID from context = " + teacherID);            //קשור לאופציה ראשונה לשימוש בקונטקסט 
 
         return (
-            // <ProjectContext.Consumer>{ (ProjectContex) => {
-            //     const teacherID = ProjectContex;
-            //     console.log(ProjectContex);
-            //     return(
+            <ProjectContext.Consumer>{ (ProjectContex) => {                     //קשור לאופציה שניה לשימוש בקונטקסט
+                const { teacherID } = ProjectContex;                            //קשור לאופציה שניה לשימוש בקונטקסט
+                console.log("teacherID from ProjectContex = "+teacherID);       //קשור לאופציה שניה לשימוש בקונטקסט
+                return(                                                         //קשור לאופציה שניה לשימוש בקונטקסט    
                 <div className="container-fluid">
                     <NavBar></NavBar><br /><br />
                     <SearchBarHomeTeacher />
-                    <CCClasses teacherID = {this.state.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
+                    <CCClasses teacherID = {teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
                     <Footer></Footer>
                 </div>
-            //     )
-            // }}</ProjectContext.Consumer>
+                )                                                               //קשור לאופציה שניה לשימוש בקונטקסט
+            }}</ProjectContext.Consumer>                                        //קשור לאופציה שניה לשימוש בקונטקסט
         );
     };
 }

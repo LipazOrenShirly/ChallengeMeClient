@@ -4,16 +4,14 @@ export const ProjectContext = createContext();
 
 class ProjectContextProvider extends Component {
   state = {
-    teacherId: "8",
-    test1: 12,
-    test2: "fdsfsd"
+    teacherID: "",
   }
-  setTeacher= (teacherIDfromDB) => {
+  setTeacher = (teacherIDfromDB) => {
     this.setState({ teacherID: teacherIDfromDB });
   }
   render() { 
     return (
-      <ProjectContext.Provider value={{teacherId: this.state.teacherId}}>
+      <ProjectContext.Provider value={{...this.state, setTeacher: this.setTeacher}}>
         {this.props.children}
       </ProjectContext.Provider>
     );
