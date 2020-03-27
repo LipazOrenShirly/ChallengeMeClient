@@ -11,7 +11,6 @@ export default class CCTeacherLogin extends Component {
     super(props);
     this.state = {
       teachersFromDB: [],
-      // randomPassword : this.props.location.state.randomPassword != null ? this.props.location.state.randomPassword : ""
       validate: false,
       Username: "",
       Password: "",
@@ -55,10 +54,10 @@ export default class CCTeacherLogin extends Component {
     })
   }
   
-  static contextType = ProjectContext;  //קשור לאופציה ראשונה לשימוש בקונטקסט
+  static contextType = ProjectContext;  
 
   Submit = (event) => {
-    const user = this.context;            //קשור לאופציה ראשונה לשימוש בקונטקסט
+    const user = this.context;           
 
     if (!this.state.HasUserNameValError && !this.state.HasPasswordError) //אם אין הערות
     {
@@ -93,13 +92,13 @@ export default class CCTeacherLogin extends Component {
             console.log("Submit= ", result);
             console.log("Submit= ", JSON.stringify(result));
             if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
-              this.setState({ teachersFromDB: JSON.stringify(result.TeacherID) }) //אם המורה קיים - שמור את המספר המזהה שלו בסטייט
-              console.log('state.teachersFromDB = ' + this.state.teachersFromDB);
-              user.setTeacher(result.TeacherID); //קשור לאופציה ראשונה לשימוש בקונטקסט
+              // this.setState({ teachersFromDB: JSON.stringify(result.TeacherID) }) //אם המורה קיים - שמור את המספר המזהה שלו בסטייט
+              // console.log('state.teachersFromDB = ' + this.state.teachersFromDB);
+              user.setTeacher(result.TeacherID); //אם קיים שמור בקונטקט
 
-              //אם המורה קיים - מעבר לעמוד הבית של המורה ושליחת המספר המזהה שלו
+              
               if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
-                this.props.history.push('/HomePageTeacher/', { teachersFromDB: this.state.teachersFromDB });
+                this.props.history.push('/HomePageTeacher/');
 
               else {//אם זה סיסמה זמנית אז
 

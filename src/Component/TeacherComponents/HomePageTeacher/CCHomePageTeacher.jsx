@@ -15,7 +15,7 @@ export default class CCHomePageTeacher extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            teacherID: this.props.location.state != null ? this.props.location.state.teachersFromDB : "" ,//--taking teacherID from the previous page
+            // teacherID: this.props.location.state != null ? this.props.location.state.teachersFromDB : "" ,//--taking teacherID from the previous page
         };
     }
 
@@ -26,7 +26,7 @@ export default class CCHomePageTeacher extends Component {
     getDataFromClasses=(data)=>{
         this.props.history.push({
             pathname:'/StudentsList',
-            state:{Class:data,teacherID:this.state.teacherID}
+             state:{Class:data}
         })   
     }
    
