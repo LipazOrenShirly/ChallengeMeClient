@@ -1,20 +1,8 @@
 import React, { Component, createContext } from 'react';
 
-export const ProjectContext = createContext();
+const ProjectContext = React.createContext();
 
-class ProjectContextProvider extends Component {
-  state = {
-    teacherID: "",
-  }
-  setTeacher = (teacherIDfromDB) => {
-    this.setState({ teacherID: teacherIDfromDB });
-  }
-  render() { 
-    return (
-      <ProjectContext.Provider value={{...this.state, setTeacher: this.setTeacher}}>
-        {this.props.children}
-      </ProjectContext.Provider>
-    );
-  }
-}
-export default ProjectContextProvider;
+export const ProjectProvider = ProjectContext.Provider;
+export const ProjectConsumer = ProjectContext.Consumer;
+
+export default ProjectContext;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import './styleLittleComponen.css'
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,17 +7,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 
+import ProjectContext from '../../Context/ProjectContext';
+import { NavLink } from 'react-router-dom';
+                              
 const NavBar = () => {
+  const user = useContext(ProjectContext);
+  
+  console.log("teacherID from context = " + user.teacherID); 
   return (
     <Navbar className="colorNav" expand="lg">
   <Navbar.Brand href="/HomePageTeacher"><img src={require('../../img/logoSmall.svg')}></img></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="/TeacherInfoScreen">עדכון פרטים אישיים</Nav.Link>
-      <Nav.Link href="/Alerts">התרעות מערכת</Nav.Link>
-      <Nav.Link href="/Messages">הודעות</Nav.Link>
-      <Nav.Link href="/EddNewChallenge">הוספת אתגר חדש</Nav.Link>
+    <NavLink to="/TeacherInfoScreen">פרטים אישיים</NavLink>
+    <NavLink to="/Alerts">התרעות מערכת</NavLink>
+    <NavLink to="/Messages">הודעות</NavLink>
+    <NavLink to="/EddNewChallenge">הוספת אתגר חדש</NavLink>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

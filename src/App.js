@@ -14,12 +14,14 @@ import Messages from './Component/TeacherComponents/Messages/CCMessages';
 import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
 import EddNewChallenge from './Component/TeacherComponents/EddNewChallenge/CCEddNewChallenge';
 import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
-import ProjectContextProvider from './Context/ProjectContext';
+import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
+  const user = { teacherID: '', setTeacher: (teacherIDfromDB) => { user.teacherID=teacherIDfromDB ;}}
+
   return (
     <div className="App">
-      <ProjectContextProvider>
+      <ProjectProvider value={user}>
         <Switch>
           <Route exact path="/" component={teacherORstudent} />
           <Route path="/TeacherLogin" component={TeacherLogin} />
@@ -35,7 +37,7 @@ function App() {
           <Route path="/EddNewChallenge" component={EddNewChallenge} />
           <Route path="/StudentsList" component={StudentsList} />
         </Switch>
-      </ProjectContextProvider>
+      </ProjectProvider>
     </div>
   );
 }
