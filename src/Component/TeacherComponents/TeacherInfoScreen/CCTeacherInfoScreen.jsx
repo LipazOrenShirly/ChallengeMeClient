@@ -6,7 +6,7 @@ import Logo from '../../LittleComponents/Logo';
 import $ from 'jquery';
 import NavBar from '../../LittleComponents/NavBar';
 import localHost from '../../LittleComponents/LocalHost';
-import { ProjectContext } from '../../../Context/ProjectContext';
+import  ProjectContext from '../../../Context/ProjectContext';
 
 export default class CCTeacherInfoScreen extends Component {
     constructor(props) {
@@ -21,13 +21,13 @@ export default class CCTeacherInfoScreen extends Component {
         }
     }
 
-    static contextType = ProjectContext;  //קשור לאופציה ראשונה לשימוש בקונטקסט
+    static contextType = ProjectContext;  
 
-    componentWillMount() {
-        const { teacherID } = this.context;            //קשור לאופציה ראשונה לשימוש בקונטקסט
+    componentDidMount() {
+        const user = this.context; 
 
-        console.log('teacherID = '+JSON.stringify(this.context));
-        fetch(this.apiUrl + '?teacherID/8'
+        console.log('teacherID = '+JSON.stringify(user.teacherID));
+        fetch(this.apiUrl + '?teacherID/'+user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({

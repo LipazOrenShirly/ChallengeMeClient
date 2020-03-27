@@ -4,7 +4,7 @@ import '../../../css/Style.css';
 import './styleTeacherLogin.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
-import { ProjectContext } from '../../../Context/ProjectContext';
+import  ProjectContext  from '../../../Context/ProjectContext';
 
 export default class CCTeacherLogin extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ export default class CCTeacherLogin extends Component {
   static contextType = ProjectContext;  //קשור לאופציה ראשונה לשימוש בקונטקסט
 
   Submit = (event) => {
-    const { setTeacher } = this.context;            //קשור לאופציה ראשונה לשימוש בקונטקסט
+    const user = this.context;            //קשור לאופציה ראשונה לשימוש בקונטקסט
 
     if (!this.state.HasUserNameValError && !this.state.HasPasswordError) //אם אין הערות
     {
@@ -95,7 +95,7 @@ export default class CCTeacherLogin extends Component {
             if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
               this.setState({ teachersFromDB: JSON.stringify(result.TeacherID) }) //אם המורה קיים - שמור את המספר המזהה שלו בסטייט
               console.log('state.teachersFromDB = ' + this.state.teachersFromDB);
-              setTeacher(result.TeacherID); //קשור לאופציה ראשונה לשימוש בקונטקסט
+              user.setTeacher(result.TeacherID); //קשור לאופציה ראשונה לשימוש בקונטקסט
 
               //אם המורה קיים - מעבר לעמוד הבית של המורה ושליחת המספר המזהה שלו
               if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
