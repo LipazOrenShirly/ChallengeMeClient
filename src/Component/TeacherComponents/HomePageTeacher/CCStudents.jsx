@@ -87,10 +87,6 @@ export default class CCStudents extends Component {
               $('#BTNsaveClassName').hide();
               $('#BTNeditClassName').show();
               $('#className').prop("disabled", true);
-
-
-
-
     }
 
     render() {

@@ -17,7 +17,6 @@ export default class CCOneClass extends Component {
     }
 
     DeleteClass = () => {
-        alert('delete class');
         fetch(this.apiUrl + '?classID=' + this.props.class.classID, {
             method: 'DELETE',
             headers: new Headers({
@@ -31,6 +30,7 @@ export default class CCOneClass extends Component {
             .then(
                 (result) => {
                     console.log("fetch DELETE= ", result);
+                    // this.props.SendDataToOneClass();   //הוספנו את זה כי הייתה בעיה
                 },
                 (error) => {
                     console.log("err post=", error);
