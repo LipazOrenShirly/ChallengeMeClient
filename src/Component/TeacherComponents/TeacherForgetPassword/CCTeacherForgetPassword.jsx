@@ -4,12 +4,16 @@ import './styleTeacherForgetPassword.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
+import SweetAlert from 'sweetalert2-react';
+
 
 export default class CCTeacherForgetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mail: ""
+            mail: "",
+            showGood:false,
+            showBad:false,
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
@@ -36,7 +40,14 @@ export default class CCTeacherForgetPassword extends Component {
             .then(
                 (result) => {
                     console.log("Submit= ", result);
-                    this.props.history.push('/TeacherLogin', {randomPassword: result});
+                    if (result==1){
+                    this.setState({ showGood: true });
+                    this.props.history.push('/TeacherLogin');
+                    }
+                    else {
+                        this.setState({ showBad: true });
+                    }
+
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -60,6 +71,20 @@ export default class CCTeacherForgetPassword extends Component {
                                 onChange={(e) => this.setState({ mail: e.target.value })} />
                         </div>
                         <div className="text-center"><button type="submit" className="btn btn-light btnYellow" onClick={this.sendEmail}>שלח</button></div>
+                        <SweetAlert
+        show={this.state.showGood}
+        title="הסיסמה שונתה!"
+        text="הססמה החדשה נשלחה לך למייל"
+        icon="success"
+        onConfirm={() => this.setState({ showGood: false })}
+      />
+      <SweetAlert
+        show={this.state.showBad}
+        title="אוי"
+        text="המייל לא נשלח, אנא נסה שנית"
+        icon="error"
+        onConfirm={() => this.setState({ showBad: false })}
+      />
                     </form>
                 </div>
                 <div className="divForgetPasswordIMG"><img className="ForgetPasswordIMG" src={require('../../../img/forgetPasswordImg.png')} />
