@@ -15,10 +15,17 @@ import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
 import EddNewChallenge from './Component/TeacherComponents/EddNewChallenge/CCEddNewChallenge';
 import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
 import StudentPage from './Component/TeacherComponents/StudentPage/StudentPage';
+import StudentDetails from './Component/TeacherComponents/StudentPage/StudentDetails';
+import StudentInfoScreen from './Component/TeacherComponents/StudentInfoScreen/StudentInfoScreen';
+import EditChallenge from './Component/TeacherComponents/StudentPage/EditChallenge';
+
 import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
-  const user = { teacherID: '', setTeacher: (teacherIDfromDB) => { user.teacherID=teacherIDfromDB ;}}
+  const user = { 
+    teacherID: '', 
+    setTeacher: (teacherIDfromDB) => { user.teacherID=teacherIDfromDB ;}
+  }
 
   return (
     <div className="App">
@@ -38,6 +45,9 @@ function App() {
           <Route path="/EddNewChallenge" component={EddNewChallenge} />
           <Route path="/StudentsList" component={StudentsList} />
           <Route path="/StudentPage" component={StudentPage} />
+          <Route path="/StudentDetails" component={StudentDetails} />
+          <Route path="/StudentInfoScreen:studentID" component={StudentInfoScreen} />
+          <Route path="/EditChallenge" component={EditChallenge} />
         </Switch>
       </ProjectProvider>
     </div>

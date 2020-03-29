@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCClasses from './CCClasses';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import CCStudents from './CCStudents';
-import  ProjectContext  from '../../../Context/ProjectContext';
+import ProjectContext from '../../../Context/ProjectContext';
 
 
 export default class CCHomePageTeacher extends Component {
