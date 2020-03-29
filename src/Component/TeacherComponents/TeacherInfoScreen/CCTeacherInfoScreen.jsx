@@ -27,7 +27,7 @@ export default class CCTeacherInfoScreen extends Component {
         const user = this.context; 
 
         console.log('teacherID = '+JSON.stringify(user.teacherID));
-        fetch(this.apiUrl + '?teacherID/'+user.teacherID
+        fetch(this.apiUrl + '?teacherID='+user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({

@@ -102,7 +102,7 @@ export default class CCStudents extends Component {
                 <br />
                 {
                     this.state.StudentArr.map((item) =>
-                        <CCOneStudent teacherID={this.state.teacherID} student={item} SendDataToClasses={this.getDataFromOneClass} />
+                        <CCOneStudent key = {item.studentID} teacherID={this.state.teacherID} student={item} SendDataToClasses={this.getDataFromOneClass} />
                     )}
                 <div className="AddnewStudent" id="AddnewStudent" onClick={this.AddStudent}>הוספת תלמיד +</div>
 

@@ -14,6 +14,7 @@ import Messages from './Component/TeacherComponents/Messages/CCMessages';
 import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
 import EddNewChallenge from './Component/TeacherComponents/EddNewChallenge/CCEddNewChallenge';
 import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
+import StudentPage from './Component/TeacherComponents/StudentPage/StudentPage';
 import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/NewMessage" component={NewMessage} />
           <Route path="/EddNewChallenge" component={EddNewChallenge} />
           <Route path="/StudentsList" component={StudentsList} />
+          <Route path="/StudentPage" component={StudentPage} />
         </Switch>
       </ProjectProvider>
     </div>
