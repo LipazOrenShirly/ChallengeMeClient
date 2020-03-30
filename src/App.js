@@ -46,7 +46,7 @@ function App() {
           <Route path="/StudentsList" component={StudentsList} />
           <Route path="/StudentPage" component={StudentPage} />
           <Route path="/StudentDetails" component={StudentDetails} />
-          <Route path="/StudentInfoScreen:studentID" component={StudentInfoScreen} />
+          <Route path="/StudentInfoScreen" component={StudentInfoScreen} />
           <Route path="/EditChallenge" component={EditChallenge} />
         </Switch>
       </ProjectProvider>

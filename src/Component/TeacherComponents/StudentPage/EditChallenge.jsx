@@ -4,6 +4,8 @@ import $ from 'jquery';
 import { MdCreate } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
+import Footer from '../../LittleComponents/Footer';
+import NavBar from '../../LittleComponents/NavBar';
 
 class EditChallenge extends Component {
     constructor(props) {
@@ -109,23 +111,30 @@ class EditChallenge extends Component {
 
         return (
             <div>
-                <div className="iconDiv" onClick={this.DeleteChallenge}><FaTrashAlt /></div>
+                <NavBar />
+                
+                <p>תאור האתגר: {challenge.challengeName}</p>
+                <p>קטגוריה: {challenge.categoryName}</p>
 
-                <p>deadline:</p>
+                <p>תאריך סיום:</p>
                 <input type="date" id="DeadlineInput" disabled />
                 <div className="iconDiv" id="editDeadline" onClick={this.EditDeadlineInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveDeadline" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
 
-                <p>status:</p>
+                <p>סטטוס:</p>
                 <input type="text" id="StatusInput" disabled />
                 <div className="iconDiv" id="editStatus" onClick={this.EditStatusInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveStatus" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
 
-                <p>difLevel:</p>
+                <p>רמת קושי:</p>
                 <input type="text" id="DifLevelInput" disabled />
                 <div className="iconDiv" id="editDifLevel" onClick={this.EditDifLevelInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveDifLevel" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
+                
+                <br />
+                <div className="iconDiv" onClick={this.DeleteChallenge}><FaTrashAlt /></div>
 
+                <Footer />
             </div>
         );
     }

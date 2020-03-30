@@ -21,49 +21,23 @@ class StudentInfoScreen extends Component {
             password: "",
         }
         let local = true;
-        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
+        this.apiUrlClass = 'http://localhost:' + { localHost }.localHost + '/api/Class';
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
 
-    static contextType = ProjectContext;
-
     componentDidMount = () => {
+        console.log(this.props.location.state.student);
         var student = this.props.location.state.student;
         $('#NewTFirstName').val(student.firstName);
         $('#NewTLastName').val(student.lastName);
         $('#NewTUserName').val(student.userName);
         $('#NewTPhone').val(student.phone);
         $('#NewTPassword').val(student.password);
- 
 
-        // fetch(this.apiUrl + '?studentID=' + this.props.location.state.student.studentID
-        //     , {
-        //         method: 'GET',
-        //         headers: new Headers({
-        //             'Content-Type': 'application/json; charset=UTF-8',
-        //         })
-        //     })
-        //     .then(res => {
-        //         console.log('res=', res);
-        //         console.log('res.status', res.status);
-        //         console.log('res.ok', res.ok);
-        //         return res.json();
-        //     })
-        //     .then(
-        //         (result) => {
-        //             console.log("Student Data= ", result[0]);
-        //             this.setState({ student: result[0] });
-        //         },
-        //         (error) => {
-        //             console.log("err get=", error);
-        //         });
-
-        const user = this.context;
-        console.log("teacherID from context = " + user.teacherID);
-
-        fetch('http://localhost:'+{localHost}.localHost+'/api/Class?teacherID='+student.teacherID,
+        fetch(this.apiUrlClass+'?teacherID='+student.teacherID,
             {
                 method: 'GET',
                 headers: new Headers({
@@ -98,11 +72,12 @@ class StudentInfoScreen extends Component {
             password: this.state.password,
             classID: 7, //צריך בפורם להוסיף בחירת כיתה
             studentID: this.props.location.state.student.studentID,
-            teacherID: this.props.location.state.student.teacherID
+            teacherID: this.props.location.state.student.teacherID,
+            avatarID: 1
         }
         console.log('data=' + data);
-        fetch(this.apiUrl, {
-            method: 'POST',
+        fetch(this.apiUrlStudent, {
+            method: 'PUT',
             body: JSON.stringify(data),
             headers: new Headers({
                 'Content-type': 'application/json; charset=UTF-8'

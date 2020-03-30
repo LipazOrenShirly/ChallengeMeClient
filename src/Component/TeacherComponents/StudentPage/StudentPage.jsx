@@ -29,7 +29,8 @@ class StudentPage extends Component {
                 <NavBar /><br /><br />
                 <StudentDetails student = {student} /><br /><br />
                 <Challenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
-                <button onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student} ) } >עדכון אפיון תלמיד</button>
+                <button onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button>
+                <br /><br />
                 <Footer />
             </div>
         );
