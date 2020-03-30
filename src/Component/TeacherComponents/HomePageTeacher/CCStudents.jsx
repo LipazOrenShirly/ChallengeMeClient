@@ -16,7 +16,7 @@ export default class CCStudents extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Class: this.props.location.state.Class != null ? this.props.location.state.Class : "",
+            Class: this.props.class,
             StudentArr: []
         };
         let local = true;
@@ -92,8 +92,6 @@ export default class CCStudents extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <NavBar></NavBar><br /><br />
-                <SearchBarHomeTeacher />
                 <div className="turkiz">
                     <input type="text" className = "classInput" id = "className" disabled ></input>
                 </div>
@@ -102,11 +100,9 @@ export default class CCStudents extends Component {
                 <br />
                 {
                     this.state.StudentArr.map((item) =>
-                        <CCOneStudent key = {item.studentID} teacherID={this.state.teacherID} student={item} SendDataToClasses={this.getDataFromOneClass} />
+                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDataToHomeTeacher2} />
                     )}
                 <div className="AddnewStudent" id="AddnewStudent" onClick={this.AddStudent}>הוספת תלמיד +</div>
-
-                <Footer></Footer>
             </div>
         );
     };

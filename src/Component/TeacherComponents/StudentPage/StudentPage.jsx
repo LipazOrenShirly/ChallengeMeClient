@@ -23,13 +23,13 @@ class StudentPage extends Component {
     }
 
     render() {
-        const studentID = 21;
+        const student = this.props.location.state.student;
         return (
             <div>
                 <NavBar /><br /><br />
-                <StudentDetails studentID = {studentID} />
-                <Challenges studentID = {studentID} goToEditChallenge = {this.goToEditChallenge} />
-                <button onClick = { ()=> this.props.history.push('/StudentInfoScreen'+studentID) } >עדכון אפיון תלמיד</button>
+                <StudentDetails student = {student} /><br /><br />
+                <Challenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
+                <button onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student} ) } >עדכון אפיון תלמיד</button>
                 <Footer />
             </div>
         );

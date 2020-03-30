@@ -19,7 +19,7 @@ export default class CCOneStudent extends Component {
         fetch(this.apiUrl + '?studentID=' + this.props.student.studentID, {
             method: 'DELETE',
             headers: new Headers({
-                'accept': 'application/json; charset=UTF-8' 
+                'accept': 'application/json; charset=UTF-8'
             })
         })
             .then(res => {
@@ -33,8 +33,8 @@ export default class CCOneStudent extends Component {
                 (error) => {
                     console.log("err post=", error);
                 })
-                .then(
-                    window.location.reload());
+            .then(
+                window.location.reload());
     }
 
     render() {
@@ -42,7 +42,9 @@ export default class CCOneStudent extends Component {
 
             <div className="classNameHome col-2" >
                 <div className="iconDiv" onClick={this.DeleteStudent}><FaTrashAlt /></div>
-                <span className="verticalMiddle">{this.props.student.firstName}</span>
+                <span className="verticalMiddle" onClick={() => this.props.SendDataToStudents(this.props.student)}>
+                    {this.props.student.firstName}
+                </span>
             </div>
         );
     };

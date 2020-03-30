@@ -11,21 +11,20 @@ class OneChallenge extends Component {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
-    
+
     componentDidMount() {
-        fetch()
     }
     
     render() { 
         const challenge = this.props.challenge;
 
         return ( 
-            <div onClick = { this.props.goToEditChallenge(challenge) }>
-                {challenge.difficulty}
-                {challenge.deadline}
-                {challenge.Status}
-                {challenge.challengeName}
-                {challenge.categoryName}
+            <div onClick = { () => this.props.goToEditChallenge(challenge) }>  
+                <p>אתגר: {challenge.challengeName}</p>
+                <p>קטגוריה: {challenge.categoryName}</p>
+                <p>תאריך סיום: {challenge.deadline}</p>
+                <p>רמת קושי: {challenge.difficulty}</p>
+                <p>סטטוס: {challenge.status}</p>
             </div>
          );
     }

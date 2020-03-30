@@ -20,26 +20,29 @@ class EditChallenge extends Component {
 
     componentDidMount = () => {
         const challenge = this.state.challenge;
-        $('#Deadline').val(challenge.deadline);
-        $('#Status').val(challenge.status);
-        $('#DifLevel').val(challenge.difficulty);
+        $('#DeadlineInput').val(challenge.deadline);
+        $('#StatusInput').val(challenge.status);
+        $('#DifLevelInput').val(challenge.difficulty);
         $('#saveDeadline').hide();
         $('#saveStatus').hide();
         $('#saveDifLevel').hide();
     }
 
     UpdateChallenge = () => {
-        const challenge = this.state.challenge;
-        console.log(challenge);
-        challenge.deadline = $('#deadline').val();
-        challenge.status = $('#status').val();
-        challenge.difficulty = $('#difLevel').val();
+        const challenge = 
+        {
+            challengeID: this.state.challenge.challengeID,
+            studentID: this.state.challenge.studentID,
+            difficulty: $('#DifLevelInput').val(), 
+            deadline: $('#DeadlineInput').val(),
+            status: $('#StatusInput').val() 
+        }
         console.log(challenge);
 
         fetch(this.apiUrl,
             {
                 method: 'PUT',
-                body: challenge,
+                body: JSON.stringify(challenge),
                 headers: new Headers({
                     'Content-Type': 'application/json; charset=UTF-8',
                 })
@@ -81,10 +84,22 @@ class EditChallenge extends Component {
         // window.location.reload();
     }
 
-    EditInput = (id) => {
-        $('#'+id).prop("disabled", false);
-        $('#edit'+id).hide();
-        $('#save'+id).show();
+    EditDeadlineInput = () => {
+        $('#DeadlineInput').prop("disabled", false);
+        $('#editDeadline').hide();
+        $('#saveDeadline').show();
+    }
+
+    EditStatusInput = () => {
+        $('#StatusInput').prop("disabled", false);
+        $('#editStatus').hide();
+        $('#saveStatus').show();
+    }
+
+    EditDifLevelInput = () => {
+        $('#DifLevelInput').prop("disabled", false);
+        $('#editDifLevel').hide();
+        $('#saveDifLevel').show();
     }
 
     render() {
@@ -97,18 +112,18 @@ class EditChallenge extends Component {
                 <div className="iconDiv" onClick={this.DeleteChallenge}><FaTrashAlt /></div>
 
                 <p>deadline:</p>
-                <input type="date" id="Deadline" disabled />
-                <div className="iconDiv" id="editDeadline" onClick={this.EditInput("Deadline")}> <MdCreate /> </div>
+                <input type="date" id="DeadlineInput" disabled />
+                <div className="iconDiv" id="editDeadline" onClick={this.EditDeadlineInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveDeadline" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
 
                 <p>status:</p>
-                <input type="text" id="Status" disabled />
-                <div className="iconDiv" id="editStatus" onClick={this.EditInput("Status")}> <MdCreate /> </div>
+                <input type="text" id="StatusInput" disabled />
+                <div className="iconDiv" id="editStatus" onClick={this.EditStatusInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveStatus" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
 
                 <p>difLevel:</p>
-                <input type="text" id="DifLevel" disabled />
-                <div className="iconDiv" id="editDifLevel" onClick={this.EditInput("DifLevel")}> <MdCreate /> </div>
+                <input type="text" id="DifLevelInput" disabled />
+                <div className="iconDiv" id="editDifLevel" onClick={this.EditDifLevelInput}> <MdCreate /> </div>
                 <div className="iconDiv" id="saveDifLevel" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
 
             </div>

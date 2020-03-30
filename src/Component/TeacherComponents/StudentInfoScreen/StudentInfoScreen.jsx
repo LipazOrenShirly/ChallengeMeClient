@@ -6,13 +6,19 @@ import './styleStudentInfoScreen.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import ProjectContext from '../../../Context/ProjectContext';
+import $ from 'jquery';
 
 class StudentInfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             student: {},
-            classesArr: []
+            classesArr: [],
+            firstName: "",
+            lastName: "",
+            userName: "",
+            phone: "",
+            password: "",
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -24,32 +30,40 @@ class StudentInfoScreen extends Component {
     static contextType = ProjectContext;
 
     componentDidMount = () => {
-        fetch(this.apiUrl + '?studentID=' + this.props.match.params.studentID
-            , {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                })
-            })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                return res.json();
-            })
-            .then(
-                (result) => {
-                    console.log("Student Data= ", result[0]);
-                    this.setState({ student: result[0] });
-                },
-                (error) => {
-                    console.log("err get=", error);
-                });
+        var student = this.props.location.state.student;
+        $('#NewTFirstName').val(student.firstName);
+        $('#NewTLastName').val(student.lastName);
+        $('#NewTUserName').val(student.userName);
+        $('#NewTPhone').val(student.phone);
+        $('#NewTPassword').val(student.password);
+ 
+
+        // fetch(this.apiUrl + '?studentID=' + this.props.location.state.student.studentID
+        //     , {
+        //         method: 'GET',
+        //         headers: new Headers({
+        //             'Content-Type': 'application/json; charset=UTF-8',
+        //         })
+        //     })
+        //     .then(res => {
+        //         console.log('res=', res);
+        //         console.log('res.status', res.status);
+        //         console.log('res.ok', res.ok);
+        //         return res.json();
+        //     })
+        //     .then(
+        //         (result) => {
+        //             console.log("Student Data= ", result[0]);
+        //             this.setState({ student: result[0] });
+        //         },
+        //         (error) => {
+        //             console.log("err get=", error);
+        //         });
 
         const user = this.context;
         console.log("teacherID from context = " + user.teacherID);
 
-        fetch('http://localhost:' + { localHost }.localHost + '/api/Class?teacherID=' + user.teacherID,
+        fetch('http://localhost:'+{localHost}.localHost+'/api/Class?teacherID='+student.teacherID,
             {
                 method: 'GET',
                 headers: new Headers({
@@ -82,7 +96,9 @@ class StudentInfoScreen extends Component {
             userName: this.state.userName,
             phone: this.state.phone,
             password: this.state.password,
-            school: this.state.school
+            classID: 7, //צריך בפורם להוסיף בחירת כיתה
+            studentID: this.props.location.state.student.studentID,
+            teacherID: this.props.location.state.student.teacherID
         }
         console.log('data=' + data);
         fetch(this.apiUrl, {
@@ -114,19 +130,15 @@ class StudentInfoScreen extends Component {
 
     render() {
 
-        console.log("studentID = " + this.props.match.params.studentID);
+        console.log("studentID = " + this.props.location.state.student);
 
         return (
             <div className="container-fluid">
-
-
                 <div className="loginDiv">
-
                     <Logo></Logo>
-
                     <form onSubmit={this.Submit}>
+                        {/* להוסיף בחירת כיתה מתוך הכיתות של המחנך שנשלפו מהדאטה בייס */}
                         <div className="form-group col-12">
-
                             <input type="text" className="form-control inputNewTeacher" id="NewTFirstName" placeholder="שם פרטי" pattern="[א-ת]+" required
                                 onChange={(e) => this.setState({ firstName: e.target.value })} />
                         </div>
@@ -138,7 +150,6 @@ class StudentInfoScreen extends Component {
                             <input type="text" className="form-control inputNewTeacher" id="NewTUserName" placeholder="שם משתמש" required
                                 onChange={(e) => this.setState({ userName: e.target.value })} />
                         </div>
-
                         <div className="form-group col-12">
                             <input type="phone" className="form-control inputNewTeacher" id="NewTPhone" placeholder="פלאפון" pattern="[0][5][0-9]{8}$" required
                                 onChange={(e) => this.setState({ phone: e.target.value })} />

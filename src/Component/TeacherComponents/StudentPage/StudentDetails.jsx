@@ -15,7 +15,7 @@ class StudentDetails extends Component {
     }
 
     componentDidMount = () => {
-        fetch(this.apiUrl + '?studentID='+this.props.studentID
+        fetch(this.apiUrl + '?studentID='+this.props.student.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -39,12 +39,11 @@ class StudentDetails extends Component {
     }
 
     render() {
-        const student = this.state.student;
+        const student = this.props.student;
         return ( 
             <div>
-                Student Details:
-                {student.firstName}
-                {student.lastName}
+                <h1>פרטי תלמיד:</h1>
+                <p>{student.firstName} {student.lastName}</p>
             </div>
          );
     }

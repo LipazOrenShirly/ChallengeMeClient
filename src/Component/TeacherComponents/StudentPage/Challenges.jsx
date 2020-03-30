@@ -40,40 +40,7 @@ class Challenges extends Component {
     }
 
     AddChallenge = () => {
-        var data = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            userName: this.state.userName,
-            mail: this.state.mail,
-            phone: this.state.phone,
-            password: this.state.password,
-            school: this.state.school
-        }
-        console.log('data=' + data);
-        fetch(this.apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch POST= ", result);
-
-                },
-                (error) => {
-                    console.log("err post=", error);
-                })
-            .then(
-                this.props.history.push({
-                    pathname: '/TeacherLogin',
-                })
-            );
+        // מעבר לעמוד שבו בוחרים אתגר או משהו כזה
     }
 
     render() { 

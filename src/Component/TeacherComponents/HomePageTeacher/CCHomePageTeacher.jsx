@@ -11,10 +11,12 @@ import ProjectContext from '../../../Context/ProjectContext';
 
 
 export default class CCHomePageTeacher extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
+            class: {},
+            studentPage: false,
         };
     }
 
@@ -22,29 +24,39 @@ export default class CCHomePageTeacher extends Component {
 
     }
 
-    getDataFromClasses=(data)=>{
-        this.props.history.push({
-            pathname:'/StudentsList',
-             state:{Class:data}
-        })   
+    getDataFromClasses = (data) => {
+        this.setState({ class: data });
+        this.setState({ studentPage: true })
     }
-   
-     static contextType = ProjectContext;                                
-   
+
+    getDataFromStudents = (data) => {
+        this.props.history.push({
+            pathname: '/StudentPage',
+            state: { student: data }
+        })
+    }
+
+    static contextType = ProjectContext;
+
     render() {
-      
-         const user = this.context;                  
-         console.log("teacherID from context = " + user.teacherID);           
-         
+
+        const user = this.context;
+        console.log("teacherID from context = " + user.teacherID);
+
         return (
-                <div className="container-fluid">
-                    <NavBar></NavBar><br /><br />
-                    <SearchBarHomeTeacher />
-                    <CCClasses teacherID = {user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
-                    <Footer></Footer>
-                </div>
-                ) 
-         
+            <div className="container-fluid">
+                <NavBar></NavBar><br /><br />
+                <SearchBarHomeTeacher />
+                {this.state.studentPage == false &&
+                    <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
+                }
+                {this.state.studentPage == true &&
+                    <CCStudents class={this.state.class} SendDataToHomeTeacher2={this.getDataFromStudents} />
+                }
+                <Footer></Footer>
+            </div>
+        )
+
     };
 }
 
