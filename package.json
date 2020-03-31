@@ -24,6 +24,7 @@
     "react-switch": "^5.0.1",
     "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.4.1",
+    "sweetalert2": "^9.10.7",
     "sweetalert2-react": "^0.8.3",
     "typeface-roboto": "0.0.75"
   },

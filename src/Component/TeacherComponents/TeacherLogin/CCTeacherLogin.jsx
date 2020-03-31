@@ -5,7 +5,7 @@ import './styleTeacherLogin.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
-import SweetAlert from 'react-bootstrap-sweetalert';
+import Swal from 'sweetalert2'
 
 
 export default class CCTeacherLogin extends Component {
@@ -41,6 +41,7 @@ export default class CCTeacherLogin extends Component {
     if (this.state.Password != null)
       this.setState({ HasPasswordError: false });
     // $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
+  
   }
 
   NewTeacher = () => {
@@ -105,8 +106,35 @@ export default class CCTeacherLogin extends Component {
               else {//אם זה סיסמה זמנית אז
 
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                this.setState({ showChangePassword: true });
-
+                // this.setState({ showChangePassword: true });
+                const { value: formValues } = Swal.fire({
+                  title: 'הכנס ססמה חדשה',
+                  html:
+                    '<input type="password" placeholder="הזן ססמה חדשה" id="swal-input1" class="swal2-input inputRounded">' +
+                    '<input type="password" placeholder="הזן ססמה שנית" id="swal-input2" class="swal2-input inputRounded">',
+                  focusConfirm: false,
+                  showCloseButton: true,
+                  showCancelButton: true,
+                  cancelButtonText:
+                  '<i class="fa fa-thumbs-down">בטל</i>',
+                cancelButtonAriaLabel: 'Thumbs down',
+                  confirmButtonText:
+                    '<i class="fa fa-thumbs-up"></i> מעולה!',
+                  confirmButtonAriaLabel: 'Thumbs up, great!',
+                 
+                  preConfirm: () => {
+                    return [
+                      document.getElementById('swal-input1').value,
+                      document.getElementById('swal-input2').value
+                    ]
+                    
+                  }
+                })
+                
+                if (formValues) {
+                  Swal.fire(JSON.stringify(formValues))
+                }
+              
               }
             }
             else {
@@ -222,7 +250,7 @@ export default class CCTeacherLogin extends Component {
         icon="success"
         onConfirm={() => this.setState({ showChangePassword: false })}
       /> */}
-            <SweetAlert
+            {/* <SweetAlert
               input
               inputType="password"
               show={this.state.showChangePassword}
@@ -232,7 +260,7 @@ export default class CCTeacherLogin extends Component {
               // validationMsg="You must enter your password!"
               onConfirm={this.onRecieveNewPassword}
             >
-</SweetAlert>
+</SweetAlert> */}
 {/* <div><input type="password" id="swal-input1" class="swal2-input"><input  type="password" id="swal-input2" class="swal2-input"></input></div> */}
 
           </form>
