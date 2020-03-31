@@ -10,6 +10,7 @@ import CCStudents from './CCStudents';
 import ProjectContext from '../../../Context/ProjectContext';
 
 
+
 export default class CCHomePageTeacher extends Component {
 
     constructor(props) {
@@ -21,7 +22,11 @@ export default class CCHomePageTeacher extends Component {
     }
 
     componentDidMount = () => {
-
+        this.getDataOfMessagesNum();
+        setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
+    }
+    getDataOfMessagesNum=()=>{// runs every 30 seconds.
+        //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
     }
 
     getDataFromClasses = (data) => {
@@ -46,7 +51,7 @@ export default class CCHomePageTeacher extends Component {
         return (
             <div className="container-fluid">
                 <NavBar></NavBar><br /><br />
-                <SearchBarHomeTeacher />
+                <SearchBarHomeTeacher countMessages={4} countAlerts={144} />
                 {this.state.studentPage == false &&
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
                 }

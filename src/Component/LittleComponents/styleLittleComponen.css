@@ -41,7 +41,16 @@ background-color: rgba(30, 28, 28, 0.5);
 /********searchBarHomeTeacher************/
 .massegesTeacherHomePage, .searchTeacherHomePage, .alertsTeacherHomePage{
     float: left; 
+    padding: 0px;
+
 }
+
+.massegesTeacherHomePage, .alertsTeacherHomePage{
+    color:rgba(224, 129, 154, 0.801);
+   
+     
+}
+
 
 a{
     color:whitesmoke;
