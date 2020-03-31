@@ -18,7 +18,7 @@ import StudentPage from './Component/TeacherComponents/StudentPage/StudentPage';
 import StudentDetails from './Component/TeacherComponents/StudentPage/StudentDetails';
 import StudentInfoScreen from './Component/TeacherComponents/StudentInfoScreen/StudentInfoScreen';
 import EditChallenge from './Component/TeacherComponents/StudentPage/EditChallenge';
-
+import InputTests from './Component/InputTests/InputTests';
 import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
@@ -48,6 +48,7 @@ function App() {
           <Route path="/StudentDetails" component={StudentDetails} />
           <Route path="/StudentInfoScreen" component={StudentInfoScreen} />
           <Route path="/EditChallenge" component={EditChallenge} />
+          <Route path="/InputTests" component={InputTests} />
         </Switch>
       </ProjectProvider>
     </div>
