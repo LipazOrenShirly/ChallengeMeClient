@@ -19,9 +19,12 @@ export default class CCClasses extends Component {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         console.log(this.props.teacherID)
+this.GetClassesNames();
 
+    }
+    GetClassesNames=()=>{
         fetch(this.apiUrl + '?teacherID=' + this.state.teacherID
             , {
                 method: 'GET',
@@ -48,12 +51,40 @@ export default class CCClasses extends Component {
     getDataFromOneClass = (data) => {
         this.props.SendDataToHomeTeacher(data);
     }
-
+    getClassNameFromOneClass=(data)=>{
+        this.DeleteClass(data);
+    }
+    DeleteClass = (classIdData) => {
+        fetch(this.apiUrl + '?classID=' + classIdData, {
+            method: 'DELETE',
+            headers: new Headers({
+                'accept': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch DELETE= ", result);
+                    this.GetClassesNames();
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+                
+            }
     AddClass = () => {
-        this.setState({ showAddClass: true })
+        this.setState(
+        prevState => ({
+            showAddClass: !prevState.showAddClass
+          }));
     }
 
     Submit = (event) => {
+    
+        event.preventDefault();
         var data = {
             className: $('#newClass').val(),
             teacherID: this.state.teacherID
@@ -72,6 +103,7 @@ export default class CCClasses extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
+                    this.GetClassesNames()  
 
                 },
                 (error) => {
@@ -79,18 +111,19 @@ export default class CCClasses extends Component {
                 })
                 .then(
                     this.setState({ showAddClass: false })
+
                 );
-        event.preventDefault();
-        window.location.reload();
+        
+
     }
 
     render() {
         return (
             <div className="classes">
                 <div className="myClasses">הכיתות שלי</div>
-                <div className="row col-12">
+                <div className="row col-12 flex-container">
                     {this.state.classesArr.map((item) =>
-                        <CCOneClass key={item.classID} class={item} SendDataToClasses={this.getDataFromOneClass} />
+                        <CCOneClass  key={item.classID} class={item} SendClassNameToClasses={this.getClassNameFromOneClass} SendDataToClasses={this.getDataFromOneClass} />
                     )}
                 </div>
                 <div className="AddnewClass" id="AddnewClass" onClick={this.AddClass}>הוספת כיתה +</div>

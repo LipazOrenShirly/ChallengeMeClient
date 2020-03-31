@@ -20,6 +20,7 @@ export default class CCHomePageTeacher extends Component {
             studentPage: false,
         };
     }
+    static contextType = ProjectContext;
 
     componentDidMount = () => {
         this.getDataOfMessagesNum();
@@ -27,7 +28,9 @@ export default class CCHomePageTeacher extends Component {
     }
     getDataOfMessagesNum=()=>{// runs every 30 seconds.
         //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
+  
     }
+    
 
     getDataFromClasses = (data) => {
         this.setState({ class: data });
@@ -41,7 +44,6 @@ export default class CCHomePageTeacher extends Component {
         })
     }
 
-    static contextType = ProjectContext;
 
     render() {
 

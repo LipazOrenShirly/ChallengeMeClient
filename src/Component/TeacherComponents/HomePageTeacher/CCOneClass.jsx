@@ -3,7 +3,9 @@ import '../../../css/Style.css';
 import './styleHomePageTeacher.css';
 import CCStudents from './CCStudents';
 import localHost from '../../LittleComponents/LocalHost';
-import { FaTrashAlt } from "react-icons/fa";
+//import { FaTrashAlt } from "react-icons/fa";
+import { MdClose } from  "react-icons/md";
+import Swal from 'sweetalert2'
 
 
 export default class CCOneClass extends Component {
@@ -16,25 +18,29 @@ export default class CCOneClass extends Component {
         }
     }
 
-    DeleteClass = () => {
-        fetch(this.apiUrl + '?classID=' + this.props.class.classID, {
-            method: 'DELETE',
-            headers: new Headers({
-                'accept': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch DELETE= ", result);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-        window.location.reload();
+    deleteClass=()=>{
+        Swal.fire({
+            title: 'האם אתה בטוח?',
+            text: "בלחיצה על הכפתור, הכיתה וכל תלמידייה ימחקו לצמיתות",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText:'בטל',
+            confirmButtonText: 'כן, מחק'
+          }).then((result) => {
+            if (result.value) {
+              Swal.fire(
+                'נמחק!',
+                'הכיתה נמחקה בהצלחה',
+                'success'
+              )
+            
+            this.props.SendClassNameToClasses(this.props.class.classID);
+              }
+          })
+        
+
     }
 
     studentsPage = () => {
@@ -42,9 +48,9 @@ export default class CCOneClass extends Component {
     }
     render() {
         return (
-            <div className="classNameHome col-2" >
-                <div className="iconDiv" onClick={this.DeleteClass}><FaTrashAlt /></div>
-                <span className="verticalMiddle" onClick={this.studentsPage}>{this.props.class.className}</span>
+            <div className="classNameHome" dir="rtl" >
+                <MdClose className="closeIcon" onClick={this.deleteClass}/>
+                <span className="verticalMiddle" onClick={this.studentsPage}> {this.props.class.className}</span>
             </div>
         );
     };

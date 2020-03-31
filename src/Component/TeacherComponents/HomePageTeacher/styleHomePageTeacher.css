@@ -37,30 +37,17 @@
     text-align: center ;
     color: #8AC9C1;
 }
-.classNameHome{
-    border: 3px solid black;
-    height: 98px;
-    width: 100%;
-    text-align: center;
-    align-items: center;
-    float: left;
-    margin:0px;
-    padding:0px;
-    background-color: #96C8C2;
-    font-weight: 700;
-    color: white;
-    margin-top:2px;
-}
-.addStudent{
+
+/* .addStudent{
    
     float: left;
     height: 99px;
     width: 100%;
     background-color:rgba(224, 129, 154, 0.801);
-    border: 1px solid black;
+    border: 1px solid rgb(255, 60, 60);
     margin-top: 1px;
     
-}
+} */
 .childrenNames{
     float: left;
     margin:0px;
@@ -78,9 +65,41 @@ background-color: #867D95;
 .verticalMiddle{
 display: flex;
 justify-content: center; /* align horizontal */
-align-items: center;
-height: 100px;
-padding-right: 3px;
-padding-left: 3px;
+/* align-items: center; */
+/* height: 100px; */
+padding-right: 5px;
+padding-left: 5px;
+padding-top: 7px;
+}
+/********** classes ************/
+.classNameHome{
+    border: 2px solid black;
+    height: 98px;
+    width: 100px;
+    text-align: center;
+    align-items: center;
+    float: left;
+    margin:10px;
+    padding:0px;
+    background-color: #96C8C2;
+    font-weight: 700;
+    color: white;
+    margin-top:2px;
+    border-radius: 2px;
+}
+.flex-container{
+    display: flex;
+    margin:0px;
+    padding:0px;
 }
 
+
+
+/* ******oneClass******* */
+
+.closeIcon{
+    display: flex;
+    right: 0px;
+    
+    z-index: 1;
+}
