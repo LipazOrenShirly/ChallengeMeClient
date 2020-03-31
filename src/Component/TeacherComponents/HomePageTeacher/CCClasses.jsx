@@ -49,10 +49,6 @@ export default class CCClasses extends Component {
         this.props.SendDataToHomeTeacher(data);
     }
 
-    // getDataFromOneClass=()=>{     //הוספנו את זה כי הייתה בעיה
-    //     window.location.reload();
-    // }
-
     AddClass = () => {
         this.setState({ showAddClass: true })
     }
@@ -94,7 +90,7 @@ export default class CCClasses extends Component {
                 <div className="myClasses">הכיתות שלי</div>
                 <div className="row col-12">
                     {this.state.classesArr.map((item) =>
-                        <CCOneClass key={item.classID} class={item} SendDataToClasses={this.getDataFromOneClass} SendDataToOneClass={this.getDataFromOneClass}/>
+                        <CCOneClass key={item.classID} class={item} SendDataToClasses={this.getDataFromOneClass} />
                     )}
                 </div>
                 <div className="AddnewClass" id="AddnewClass" onClick={this.AddClass}>הוספת כיתה +</div>
