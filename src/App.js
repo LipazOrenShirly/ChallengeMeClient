@@ -19,7 +19,9 @@ import StudentDetails from './Component/TeacherComponents/StudentPage/StudentDet
 import StudentInfoScreen from './Component/TeacherComponents/StudentInfoScreen/StudentInfoScreen';
 import EditChallenge from './Component/TeacherComponents/StudentPage/EditChallenge';
 import InputTests from './Component/InputTests/InputTests';
+import InputTests2 from './Component/InputTests/InputTests2';
 import {ProjectProvider} from './Context/ProjectContext';
+
 
 function App() {
   const user = { 
@@ -49,6 +51,7 @@ function App() {
           <Route path="/StudentInfoScreen" component={StudentInfoScreen} />
           <Route path="/EditChallenge" component={EditChallenge} />
           <Route path="/InputTests" component={InputTests} />
+          <Route path="/InputTests2" component={InputTests2} />
         </Switch>
       </ProjectProvider>
     </div>
