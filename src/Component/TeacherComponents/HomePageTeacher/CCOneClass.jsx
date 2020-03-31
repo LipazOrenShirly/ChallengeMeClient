@@ -24,17 +24,19 @@ export default class CCOneClass extends Component {
             text: "בלחיצה על הכפתור, הכיתה וכל תלמידייה ימחקו לצמיתות",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#e0819a',
+            cancelButtonColor: '#867D95',
             cancelButtonText:'בטל',
             confirmButtonText: 'כן, מחק'
           }).then((result) => {
             if (result.value) {
-              Swal.fire(
-                'נמחק!',
-                'הכיתה נמחקה בהצלחה',
-                'success'
-              )
+              Swal.fire({
+                title:'נמחק!',
+                text:'הכיתה נמחקה בהצלחה',
+                icon:'success',
+                confirmButtonColor: '#e0819a',
+
+              })
             
             this.props.SendClassNameToClasses(this.props.class.classID);
               }

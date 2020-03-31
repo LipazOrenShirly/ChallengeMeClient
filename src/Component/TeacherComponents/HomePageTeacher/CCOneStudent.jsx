@@ -3,7 +3,7 @@ import '../../../css/Style.css';
 import './styleHomePageTeacher.css';
 import CCStudents from './CCStudents';
 import localHost from '../../LittleComponents/LocalHost';
-import { FaTrashAlt } from "react-icons/fa";
+import { MdClose } from  "react-icons/md";
 
 export default class CCOneStudent extends Component {
     constructor(props) {
@@ -40,11 +40,12 @@ export default class CCOneStudent extends Component {
     render() {
         return (
 
-            <div className="classNameHome col-2" >
-                <div className="iconDiv" onClick={this.DeleteStudent}><FaTrashAlt /></div>
+            <div className="classNameHome col-2" dir="rtl" >
+                <MdClose className="closeIcon" onClick={this.DeleteStudent}/>
                 <span className="verticalMiddle" onClick={() => this.props.SendDataToStudents(this.props.student)}>
-                    {this.props.student.firstName}
+                {this.props.student.firstName}
                 </span>
+           
             </div>
         );
     };

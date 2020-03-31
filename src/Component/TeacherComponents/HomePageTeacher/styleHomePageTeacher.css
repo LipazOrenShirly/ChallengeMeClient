@@ -1,22 +1,22 @@
 
-.myClasses, .AddnewClass{
+.myClasses, .AddnewClass, .AddnewStudent{
     font-weight: 700;
     color: #8AC9C1;
     text-align: center ;
     margin-bottom: 20px;
 }
 
-.AddnewClass{
+.AddnewClass, .AddnewStudent{
     margin-top: 30px;
 }
 
 
-.element{
+/* .element{
     height: 100% ;
     width: 100%;
     border: 1px solid black;
     padding: 0 3px;
-}
+}  */
 .container{
     margin:0px;
     padding:0px;
@@ -25,8 +25,10 @@
 .classInput:disabled{
     background-color:transparent;
     border: none;
-    text-align: center ;
+    text-align: right ;
     color: #8AC9C1;
+    padding-right: 5px;
+    width: auto;
 }
 .classInput:enabled{
     background-color:transparent;
@@ -36,6 +38,11 @@
     border-right: none;
     text-align: center ;
     color: #8AC9C1;
+}
+EditNameClassDiv{
+    display: flex;
+    align-content: center;
+    align-self: center;
 }
 
 /* .addStudent{
@@ -48,19 +55,19 @@
     margin-top: 1px;
     
 } */
-.childrenNames{
+/* .childrenNames{
     float: left;
     margin:0px;
     padding:0px;
     height: 100px;
     overflow: hidden;
-}
-.doubleChild{
+} */
+/* .doubleChild{
 background-color: #867D95;
 }
 .oddChild{
    background-color: #CCC4D9;
-}
+} */
 
 .verticalMiddle{
 display: flex;
@@ -71,7 +78,7 @@ padding-right: 5px;
 padding-left: 5px;
 padding-top: 7px;
 }
-/********** classes ************/
+
 .classNameHome{
     border: 2px solid black;
     height: 98px;
@@ -94,12 +101,8 @@ padding-top: 7px;
 }
 
 
-
-/* ******oneClass******* */
-
 .closeIcon{
     display: flex;
     right: 0px;
-    
     z-index: 1;
 }

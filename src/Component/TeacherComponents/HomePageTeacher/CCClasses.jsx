@@ -21,7 +21,7 @@ export default class CCClasses extends Component {
     }
     componentDidMount() {
         console.log(this.props.teacherID)
-this.GetClassesNames();
+        this.GetClassesNames();
 
     }
     GetClassesNames=()=>{
@@ -77,7 +77,7 @@ this.GetClassesNames();
             }
     AddClass = () => {
         this.setState(
-        prevState => ({
+        prevState => ({ //אם אמת תהפוך לשקר וההפך
             showAddClass: !prevState.showAddClass
           }));
     }

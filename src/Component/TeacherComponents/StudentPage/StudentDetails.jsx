@@ -14,7 +14,7 @@ class StudentDetails extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = () => { //כרגע לא משתמשים בזה, האוביקט בא שלם ממסך הבית
         fetch(this.apiUrl + '?studentID='+this.props.student.studentID
             , {
                 method: 'GET',

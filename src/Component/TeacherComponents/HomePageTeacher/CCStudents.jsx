@@ -92,16 +92,20 @@ export default class CCStudents extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="turkiz">
+                <div className="row EditNameClassDiv">
                     <input type="text" className = "classInput" id = "className" disabled ></input>
+                <div className="iconEditNameClassDiv" id="BTNeditClassName" onClick={this.EditClassName}><MdCreate /></div>
+                <div className="iconEditNameClassDiv" id="BTNsaveClassName" visibility = 'hidden' onClick={this.UpdateClassName}><IoMdCheckmark /></div>
                 </div>
-                <div className="iconDiv" id="BTNeditClassName" onClick={this.EditClassName}><MdCreate /></div>
-                <div className="iconDiv" id="BTNsaveClassName" visibility = 'hidden' onClick={this.UpdateClassName}><IoMdCheckmark /></div>
-                <br />
+                <br/>
+                <div className="row col-12 flex-container">
                 {
                     this.state.StudentArr.map((item) =>
                         <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDataToHomeTeacher2} />
-                    )}
+                    )
+                    }
+                    </div>
+
                 <div className="AddnewStudent" id="AddnewStudent" onClick={this.AddStudent}>הוספת תלמיד +</div>
             </div>
         );
