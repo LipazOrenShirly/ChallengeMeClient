@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import OneChallenge from './OneChallenge';
 import localHost from '../../LittleComponents/LocalHost';
+import './styleStudentPage.css';
+import '../../../css/Style.css';
 
 class Challenges extends Component {
     constructor(props) {
@@ -46,11 +48,13 @@ class Challenges extends Component {
     render() { 
         return ( 
             <div>
-                {this.state.StudentChallenges.map( (item) => 
-                    <OneChallenge key = {item.challengeID} challenge = {item} goToEditChallenge = {this.props.goToEditChallenge} />
+                <div className="textTilteChallStusent" dir="rtl">{this.state.StudentChallenges.length} האתגרים של התלמיד: </div>
+                {this.state.StudentChallenges.map( (item,key) => 
+                    <OneChallenge  index = {key+1} challenge = {item} goToEditChallenge = {this.props.goToEditChallenge} />
                     )}
-                <button type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
-            </div>
+                    <div className="col-12">
+                <button className="btn btn-info btnYellow eddChallengeBTN" type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
+                </div></div>
          );
     }
 }

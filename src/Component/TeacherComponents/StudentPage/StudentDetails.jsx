@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
+import './styleStudentPage.css'
 
 class StudentDetails extends Component {
     constructor(props) {
@@ -42,8 +43,7 @@ class StudentDetails extends Component {
         const student = this.props.student;
         return ( 
             <div>
-                <h1>פרטי תלמיד:</h1>
-                <p>{student.firstName} {student.lastName}</p>
+                <p className="textStudentDetails">פרטי התלמיד <strong>{student.firstName} {student.lastName}</strong></p>
             </div>
          );
     }

@@ -5,6 +5,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import Challenges from './Challenges';
 import StudentDetails from './StudentDetails';
 import EditChallenge from './EditChallenge';
+import './styleStudentPage.css'
 
 class StudentPage extends Component {
     constructor(props) {
@@ -26,10 +27,10 @@ class StudentPage extends Component {
         const student = this.props.location.state.student;
         return (
             <div>
-                <NavBar /><br /><br />
-                <StudentDetails student = {student} /><br /><br />
+                <NavBar /><br />
+                <StudentDetails student = {student} />
                 <Challenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
-                <button onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button>
+                <div className="col-12"><button className="btn btn-info btnYellow" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button></div>
                 <br /><br />
                 <Footer />
             </div>

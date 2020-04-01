@@ -1,0 +1,27 @@
+.textStudentDetails, .textStudentDetails > strong {
+    text-align: right;
+    padding-right: 2%;
+    font-size: 120%;
+    text-shadow: 1px 1px rgba(147, 141, 160, 0.801);
+    color: rgb(127, 116, 145);
+}
+/* *** */
+.textTilteChallStusent{
+color: rgba(224, 129, 154, 0.801);
+font-size: 110%;
+font-weight: 500;
+}
+/* ****** */
+.oneChallengeDiv{
+    border: 1px solid rgb(127, 116, 145);
+    margin:2%;
+    text-align: right;
+    padding: 3%;
+}
+.oneChallengeDetails{
+    text-decoration: underline;
+    
+}
+.eddChallengeBTN{
+    margin-bottom: 2%;
+}

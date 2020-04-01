@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
+import './styleStudentPage.css';
+import '../../../css/Style.css';
+
 
 class OneChallenge extends Component {
     constructor(props) {
@@ -17,14 +20,13 @@ class OneChallenge extends Component {
     
     render() { 
         const challenge = this.props.challenge;
-
         return ( 
-            <div onClick = { () => this.props.goToEditChallenge(challenge) }>  
-                <p>אתגר: {challenge.challengeName}</p>
-                <p>קטגוריה: {challenge.categoryName}</p>
-                <p>תאריך סיום: {challenge.deadline}</p>
-                <p>רמת קושי: {challenge.difficulty}</p>
-                <p>סטטוס: {challenge.status}</p>
+            <div className="oneChallengeDiv" onClick = { () => this.props.goToEditChallenge(challenge) }>  
+                <div className="oneChallengeDetails"><strong>אתגר {this.props.index}:</strong> {challenge.challengeName}</div>
+                <div>קטגוריה: {challenge.categoryName}</div>
+                <div>תאריך סיום: {challenge.deadline}</div>
+                <div>רמת קושי: {challenge.difficulty}</div>
+                <div>סטטוס: {challenge.status}</div>
             </div>
          );
     }
