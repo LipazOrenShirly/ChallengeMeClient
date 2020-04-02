@@ -8,12 +8,16 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import './styleStudentPage.css';
 import '../../../css/Style.css';
+import Swal from 'sweetalert2';
+
 
 class EditChallenge extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            challenge: this.props.location.state.challenge
+            challenge: this.props.location.state.challenge,
+            iconIsLevelInput: <MdCreate onClick={this.EditDifLevelInput} />,
+            iconIsDeadline: <MdCreate onClick={this.EditDeadlineInput} />,
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
@@ -27,19 +31,17 @@ class EditChallenge extends Component {
         $('#DeadlineInput').val(challenge.deadline);
         $('#StatusInput').val(challenge.status);
         $('#DifLevelInput').val(challenge.difficulty);
-        $('#saveDeadline').hide();
-        $('#saveStatus').hide();
-        $('#saveDifLevel').hide();
+      
     }
 
     UpdateChallenge = () => {
-        const challenge = 
+        const challenge =
         {
             challengeID: this.state.challenge.challengeID,
             studentID: this.state.challenge.studentID,
-            difficulty: $('#DifLevelInput').val(), 
+            difficulty: $('#DifLevelInput').val(),
             deadline: $('#DeadlineInput').val(),
-            status: $('#StatusInput').val() 
+            status: $('#StatusInput').val()
         }
         console.log(challenge);
 
@@ -68,7 +70,19 @@ class EditChallenge extends Component {
     }
 
     DeleteChallenge = () => {
-        fetch(this.apiUrl+'?challengeID='+this.state.challenge.challengeID+'&studentID='+this.state.challenge.studentID, {
+        Swal.fire({
+            title: 'האם אתה בטוח?',
+            text: "בלחיצה על מחק יימחק האתגר לצמיתות",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e0819a',
+            cancelButtonColor: '#867D95',
+            cancelButtonText:'בטל',
+            confirmButtonText: 'כן, מחק'
+          }).then((result) => {
+            if (result.value) {
+        
+        fetch(this.apiUrl + '?challengeID=' + this.state.challenge.challengeID + '&studentID=' + this.state.challenge.studentID, {
             method: 'DELETE',
             headers: new Headers({
                 'accept': 'application/json; charset=UTF-8'
@@ -81,29 +95,70 @@ class EditChallenge extends Component {
             .then(
                 (result) => {
                     console.log("fetch DELETE= ", result);
+                    Swal.fire({
+                        title:'נמחק!',
+                        text:'האתגר נמחק בהצלחה',
+                        icon:'success',
+                        confirmButtonColor: '#e0819a',
+                      })
+                      this.props.history.push({
+                        pathname: '/StudentPage',
+                      })
                 },
                 (error) => {
                     console.log("err post=", error);
                 });
         // window.location.reload();
+     
+       
+   }})
     }
 
     EditDeadlineInput = () => {
+        let iconIsTemp = <IoMdCheckmark onClick={this.UpdateChallenge} />
+        this.setState({ iconIsDeadline: iconIsTemp });
         $('#DeadlineInput').prop("disabled", false);
-        $('#editDeadline').hide();
-        $('#saveDeadline').show();
+
     }
 
     EditStatusInput = () => {
-        $('#StatusInput').prop("disabled", false);
-        $('#editStatus').hide();
-        $('#saveStatus').show();
+       if( this.state.challenge.status == 0){
+        Swal.fire({
+            title:'!שים לב',
+            text:'סטטוס האתגר מאופס כבר',
+            confirmButtonColor: '#e0819a',
+          })
+    }
+       else { 
+        Swal.fire({
+            title: 'האם אתה בטוח?',
+            text: "בלחיצה על איפוס יתאפס לתלמיד סטטוס האתגר",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e0819a',
+            cancelButtonColor: '#867D95',
+            cancelButtonText:'בטל',
+            confirmButtonText: 'כן, אפס'
+          }).then((result) => {
+            if (result.value) {
+              Swal.fire({
+                title:'אופס!',
+                text:'סטטוס האתגר אופס בהצלחה',
+                icon:'success',
+                confirmButtonColor: '#e0819a',
+              })
+              $('#StatusInput').val(0);
+       this.UpdateChallenge();
+       }})
+    }
+
     }
 
     EditDifLevelInput = () => {
+        let iconIsTemp = <IoMdCheckmark onClick={this.UpdateChallenge} />
+        this.setState({ iconIsLevelInput: iconIsTemp });
         $('#DifLevelInput').prop("disabled", false);
-        $('#editDifLevel').hide();
-        $('#saveDifLevel').show();
+
     }
 
     render() {
@@ -113,29 +168,47 @@ class EditChallenge extends Component {
 
         return (
             <div>
-                <NavBar />
-                
-                <p>תאור האתגר: {challenge.challengeName}</p>
-                <p>קטגוריה: {challenge.categoryName}</p>
+                <NavBar /><br />
 
-                <p>תאריך סיום:</p>
-                <input type="date" id="DeadlineInput" disabled />
-                <div className="iconDiv" id="editDeadline" onClick={this.EditDeadlineInput}> <MdCreate /> </div>
-                <div className="iconDiv" id="saveDeadline" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
-
-                <p>סטטוס:</p>
-                <input type="text" id="StatusInput" disabled />
-                <div className="iconDiv" id="editStatus" onClick={this.EditStatusInput}> <MdCreate /> </div>
-                <div className="iconDiv" id="saveStatus" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
-
-                <p>רמת קושי:</p>
-                <input type="text" id="DifLevelInput" disabled />
-                <div className="iconDiv" id="editDifLevel" onClick={this.EditDifLevelInput}> <MdCreate /> </div>
-                <div className="iconDiv" id="saveDifLevel" visibility='hidden' onClick={this.UpdateChallenge}><IoMdCheckmark /></div>
-                
+                <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
+                <div className="titleCategoryInCCEDIT">קטגוריה: {challenge.categoryName}</div>
                 <br />
-                <div className="iconDiv" onClick={this.DeleteChallenge}><FaTrashAlt /></div>
 
+                <div><strong>:תאריך סיום האתגר</strong></div>
+                <div className="col-12 input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsDeadline}</span>
+                    </div>
+                    <input type="date" className="form-control inputCCEdit" id="DeadlineInput" disabled />
+                </div>
+
+
+                <div><strong>:סטטוס האתגר </strong></div>
+                <div className="col-12 input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
+                    </div>
+                    <input type="text" className="form-control inputCCEdit" id="StatusInput" disabled />
+                </div>
+
+                <div><strong>:רמת קושי האתגר</strong></div>
+                <div className="col-12 input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsLevelInput}</span>
+                    </div>
+                    <select class="form-control inputCCEdit" id="DifLevelInput" disabled>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+
+                <br />
+                <div className="col-12">
+                    <button id="deleteChallenge" className="btn btn-info btnDeleteChallenge" onClick={this.DeleteChallenge}>מחק את האתגר</button>
+               </div>
                 <Footer />
             </div>
         );
