@@ -3,6 +3,8 @@ import OneChallenge from './OneChallenge';
 import localHost from '../../LittleComponents/LocalHost';
 import './styleStudentPage.css';
 import '../../../css/Style.css';
+import { FaCircle } from 'react-icons/fa';
+
 
 class Challenges extends Component {
     constructor(props) {
@@ -49,6 +51,20 @@ class Challenges extends Component {
         return ( 
             <div>
                 <div className="textTilteChallStusent" dir="rtl">{this.state.StudentChallenges.length} האתגרים של התלמיד: </div>
+                <div className="row iconsCircle">
+                <div className="col-4 oneIconCircle">  צריך עזרה 
+               <FaCircle className="iconStatus3"></FaCircle>
+               </div>
+               <div className="col-4 oneIconCircle">  לא הצליח 
+               <FaCircle className="iconStatus2"></FaCircle>
+               </div>
+               <div className="col-4 oneIconCircle">  הצליח 
+               <FaCircle className="iconStatus1"></FaCircle>
+               </div>
+              
+              
+                
+                </div>
                 {this.state.StudentChallenges.map( (item,key) => 
                     <OneChallenge  index = {key+1} challenge = {item} goToEditChallenge = {this.props.goToEditChallenge} />
                     )}

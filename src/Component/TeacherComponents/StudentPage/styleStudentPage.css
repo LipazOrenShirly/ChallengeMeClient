@@ -27,12 +27,39 @@ font-weight: 500;
 }
 .status1{
     border: 1px solid green;
+    background-color: rgba(100, 241, 112, 0.8);
+}
+.iconStatus1{
+  color: rgba(100, 241, 112, 0.8);
 }
 .status2{
     border: 1px solid red;
+    background-color: rgba(240, 159, 180, 0.8);
+}
+.iconStatus2{
+    color: rgba(240, 159, 180, 0.8);
 }
 .status3{
     border: 1px solid orange;
+    background-color: rgba(252, 212, 102, 0.8);
+}
+.iconStatus3{
+    color: rgba(252, 212, 102, 0.8);
+    
+}
+.iconStatus1 , .iconStatus2, .iconStatus3{
+    padding-left: 4px;
+}
+.iconsCircle{
+    padding: 0px;
+}
+.oneIconCircle{
+    padding: 0px;
+}
+.iconArrowBack{
+    display: flex;
+    right: 0px;
+    color: rgba(147, 141, 160, 0.801);
 }
 /* ***EDIT**** */
 .titleChalengeinCCEDIT{

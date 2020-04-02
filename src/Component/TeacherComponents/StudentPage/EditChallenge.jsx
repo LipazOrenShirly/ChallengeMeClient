@@ -9,6 +9,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import './styleStudentPage.css';
 import '../../../css/Style.css';
 import Swal from 'sweetalert2';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 class EditChallenge extends Component {
@@ -160,7 +161,10 @@ class EditChallenge extends Component {
         $('#DifLevelInput').prop("disabled", false);
 
     }
-
+    goBackToStudentPage= ()=>{
+     
+        window.history.back();
+    }
     render() {
         console.log(this.props.location.state.challenge);
         const challenge = this.props.location.state.challenge;
@@ -168,8 +172,10 @@ class EditChallenge extends Component {
 
         return (
             <div>
-                <NavBar /><br />
-
+                <NavBar />
+                <div className="col-12">
+                <TiArrowBack className="iconArrowBack" onClick={this.goBackToStudentPage} size={40} />
+                </div>
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
                 <div className="titleCategoryInCCEDIT">קטגוריה: {challenge.categoryName}</div>
                 <br />

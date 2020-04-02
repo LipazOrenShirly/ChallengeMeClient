@@ -19,12 +19,14 @@ class StudentPage extends Component {
     goToEditChallenge=(challenge)=>{
         this.props.history.push({
             pathname:'/EditChallenge',
-             state:{challenge: challenge}
+             state:{challenge: challenge }
         })   
     }
 
     render() {
         const student = this.props.location.state.student;
+        console.log("dddddd");
+        console.log(student);
         return (
             <div>
                 <NavBar /><br />
