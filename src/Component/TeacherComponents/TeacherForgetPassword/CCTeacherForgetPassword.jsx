@@ -5,6 +5,7 @@ import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
 import SweetAlert from 'sweetalert2-react';
+import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 
 
 export default class CCTeacherForgetPassword extends Component {
@@ -56,6 +57,7 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     render() {
+        const {mail}=this.state
         return (
             <div className="container-fluid">
                 <Logo></Logo>
@@ -65,10 +67,38 @@ export default class CCTeacherForgetPassword extends Component {
                     <br />
                     <form onSubmit={this.Submit}>
                         <div className="form-group">
-                            <input type="mail" className="form-control col-12 inputRounded" id="NewTMail" placeholder="כתובת מייל"
-                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                required
-                                onChange={(e) => this.setState({ mail: e.target.value })} />
+                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                                attributesInput={{
+                                    id: 'NewTMail',
+                                    type: 'mail',
+                                    placeholder: 'כתובת מייל',
+                                    className: "form-control col-12 inputRounded"
+                                }}
+
+                                value={mail}
+                                validationCallback={res =>
+                                    this.setState({ HasmailValError: res, validate: false })
+                                }
+                                onChange={(mail, e) => { //כל שינוי הוא שומר בסטייט
+                                    this.setState({ mail });
+                                    console.log(e);
+                                }}
+                                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                                validationOption={{
+                                    check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                                    required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                                    customFunc: mail => {
+                                        const reg1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                                        if (reg1.test(String(mail).toLowerCase())) {
+                                          return true;
+                                        } else {
+                                            this.setState({ HasmailValError: true });
+                                            return "is not a valid email address";
+                                        }
+                                      }
+                                }}
+                            />
+                       
                         </div>
                         <div className="text-center"><button type="submit" className="btn btn-light btnYellow" onClick={this.sendEmail}>שלח</button></div>
                         <SweetAlert

@@ -42,7 +42,7 @@ export default class CCTeacherLogin extends Component {
     if (this.state.Password != null)
       this.setState({ HasPasswordError: false });
     // $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
-  
+
   }
 
   NewTeacher = () => {
@@ -111,31 +111,31 @@ export default class CCTeacherLogin extends Component {
                 const { value: formValues } = Swal.fire({
                   title: 'הכנס ססמה חדשה',
                   html:
-                    '<input type="password" placeholder="הזן ססמה חדשה" id="swal-input1" class="swal2-input inputRounded">' +
-                    '<input type="password" placeholder="הזן ססמה שנית" id="swal-input2" class="swal2-input inputRounded">',
+                    `<input type="password" placeholder="הזן ססמה חדשה" id="swal-input1"  class="swal2-input inputRounded">
+                    <input type="password" placeholder="הזן ססמה שנית" id="swal-input2" class="swal2-input inputRounded">`,
                   focusConfirm: false,
                   showCloseButton: true,
                   showCancelButton: true,
                   cancelButtonText:
-                  '<i class="fa fa-thumbs-down">בטל</i>',
-                cancelButtonAriaLabel: 'Thumbs down',
+                    '<i class="fa fa-thumbs-down">בטל</i>',
+                  cancelButtonAriaLabel: 'Thumbs down',
                   confirmButtonText:
-                    '<i class="fa fa-thumbs-up"></i> מעולה!',
+                    '<i class="fa fa-thumbs-up"></i> אשר',
                   confirmButtonAriaLabel: 'Thumbs up, great!',
-                 
+
                   preConfirm: () => {
                     return [
                       document.getElementById('swal-input1').value,
                       document.getElementById('swal-input2').value
                     ]
-                    
+
                   }
                 })
-                
+
                 if (formValues) {
                   Swal.fire(JSON.stringify(formValues))
                 }
-              
+
               }
             }
             else {
@@ -167,7 +167,7 @@ export default class CCTeacherLogin extends Component {
     return (
       <div className="container-fluid">
         <div className="loginDiv">
-        
+
           <div className="col-12">
             <img className="logoImgLoginTeacher" src={require('../../../img/logoChallengeMe.svg')} />
           </div>
@@ -217,7 +217,15 @@ export default class CCTeacherLogin extends Component {
                 validationOption={{
                   check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                   required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                  msgOnError: "נא לכתוב סיסמה"
+                  customFunc: pas => { //Minimum eight characters, at least one letter, one number and one special character:                                            :
+                    const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
+                    if (reg.test(pas)) {
+                      return true;
+                    } else {
+                      this.setState({ HasPasswordError: true });
+                      return "Minimum eight characters, at least one letter, one number and one special character";
+                    }
+                  }
                 }}
               />
             </div>
@@ -263,7 +271,7 @@ export default class CCTeacherLogin extends Component {
               onConfirm={this.onRecieveNewPassword}
             >
 </SweetAlert> */}
-{/* <div><input type="password" id="swal-input1" class="swal2-input"><input  type="password" id="swal-input2" class="swal2-input"></input></div> */}
+            {/* <div><input type="password" id="swal-input1" class="swal2-input"><input  type="password" id="swal-input2" class="swal2-input"></input></div> */}
 
           </form>
           <div onClick={this.NewTeacher}>

@@ -163,7 +163,7 @@ class EditChallenge extends Component {
     }
     goBackToStudentPage= ()=>{
      
-        window.history.back();
+        window.history.back(); //חזור למסך הקודם
     }
     render() {
         console.log(this.props.location.state.challenge);
