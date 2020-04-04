@@ -8,7 +8,7 @@ import Logo from '../../LittleComponents/Logo'
 import ProjectContext from '../../../Context/ProjectContext';
 import $ from 'jquery';
 
-class StudentInfoScreen extends Component {
+class CCStudentInfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -148,4 +148,4 @@ class StudentInfoScreen extends Component {
     }
 }
 
-export default StudentInfoScreen;
+export default CCStudentInfoScreen;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import './styleStudentPage.css'
 
-class StudentDetails extends Component {
+class CCStudentDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,4 +49,4 @@ class StudentDetails extends Component {
     }
 }
 
-export default StudentDetails;
+export default CCStudentDetails;

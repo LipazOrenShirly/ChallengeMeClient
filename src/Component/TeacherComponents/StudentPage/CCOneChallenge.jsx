@@ -4,7 +4,7 @@ import './styleStudentPage.css';
 import '../../../css/Style.css';
 import $ from 'jquery';
 
-class OneChallenge extends Component {
+class CCOneChallenge extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -38,4 +38,4 @@ class OneChallenge extends Component {
     }
 }
  
-export default OneChallenge;
+export default CCOneChallenge;

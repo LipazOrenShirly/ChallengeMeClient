@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { TiArrowBack } from 'react-icons/ti';
 
 
-class EditChallenge extends Component {
+class CCEditChallenge extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -221,4 +221,4 @@ class EditChallenge extends Component {
     }
 }
 
-export default EditChallenge;
+export default CCEditChallenge;

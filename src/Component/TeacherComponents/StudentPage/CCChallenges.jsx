@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import OneChallenge from './OneChallenge';
+import CCOneChallenge from './CCOneChallenge';
 import localHost from '../../LittleComponents/LocalHost';
 import './styleStudentPage.css';
 import '../../../css/Style.css';
 import { FaCircle } from 'react-icons/fa';
 
 
-class Challenges extends Component {
+class CCChallenges extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -66,7 +66,7 @@ class Challenges extends Component {
                 
                 </div>
                 {this.state.StudentChallenges.map( (item,key) => 
-                    <OneChallenge  index = {key+1} challenge = {item} goToEditChallenge = {this.props.goToEditChallenge} />
+                    <CCOneChallenge key = {key} index = {key+1} challenge = {item} goToEditChallenge = {this.props.goToEditChallenge} />
                     )}
                     <div className="col-12">
                 <button className="btn btn-info btnYellow eddChallengeBTN" type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
@@ -75,4 +75,4 @@ class Challenges extends Component {
     }
 }
  
-export default Challenges;
+export default CCChallenges;

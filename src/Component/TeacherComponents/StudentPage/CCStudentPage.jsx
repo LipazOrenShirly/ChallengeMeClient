@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import '../../../css/Style.css';
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
-import Challenges from './Challenges';
-import StudentDetails from './StudentDetails';
-import EditChallenge from './EditChallenge';
+import CCChallenges from './CCChallenges';
+import CCStudentDetails from './CCStudentDetails';
 import './styleStudentPage.css'
 
-class StudentPage extends Component {
+class CCStudentPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,8 +29,8 @@ class StudentPage extends Component {
         return (
             <div>
                 <NavBar /><br />
-                <StudentDetails student = {student} />
-                <Challenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
+                <CCStudentDetails student = {student} />
+                <CCChallenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
                 <div className="col-12"><button className="btn btn-info btnYellow" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button></div>
                 <br /><br />
                 <Footer />
@@ -40,4 +39,4 @@ class StudentPage extends Component {
     }
 }
 
-export default StudentPage;
+export default CCStudentPage;
