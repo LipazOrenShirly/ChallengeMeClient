@@ -5,6 +5,7 @@ import './styleNewTeacher.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
+import Swal from 'sweetalert2';
 
 export default class CCnewTeacher extends Component {
     constructor(props) {
@@ -48,49 +49,82 @@ export default class CCnewTeacher extends Component {
             !this.state.Haspassword2ValError &&
             !this.state.HasschoolValError
             )
-            alert("all valid")
-        // console.log('state=' + this.state);
+        {
+        console.log('state=' + this.state);
 
-        // var data = {
-        //     firstName: this.state.firstName,
-        //     lastName: this.state.lastName,
-        //     userName: this.state.userName,
-        //     mail: this.state.mail,
-        //     phone: this.state.phone,
-        //     password: this.state.password,
-        //     school: this.state.school
-        // }
-        // console.log('data=' + data);
-        // fetch(this.apiUrl, {
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-type': 'application/json; charset=UTF-8'
-        //     })
-        // })
-        //     .then(res => {
-        //         console.log('res=', res);
-        //         return res.json()
-        //     })
-        //     .then(
-        //         (result) => {
-        //             console.log("fetch POST= ", result);
+        var data = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            userName: this.state.userName,
+            mail: this.state.mail,
+            phone: this.state.phone,
+            password: this.state.password,
+            school: this.state.school
+        }
+        console.log('data=' + data);
+        fetch(this.apiUrl, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
 
-        //         },
-        //         (error) => {
-        //             console.log("err post=", error);
-        //         })
-        //     .then(
-        //         this.props.history.push({
-        //             pathname: '/TeacherLogin',
-        //         })
-        //     );
-
-         event.preventDefault();
+                },
+                (error) => {
+                    console.log("err post=", error);
+                })
+            .then(
+                Swal.fire({
+                  title: 'מעולה!',
+                  text: 'הוספת בהצלחה!',
+                  icon: 'success',
+                  confirmButtonColor: '#e0819a',
+                }).then(
+                this.props.history.push({
+                    pathname: '/TeacherLogin',
+                }))
+            );
+            }
+            event.preventDefault();
     }
 
     checkIfUserNameExist(e){
-        //לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        var username= e.target.value;
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?usernameNewTeacher=' + username 
+        , {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json; charset=UTF-8',
+          })
+        })
+        .then(res => {
+          console.log('res=', res);
+          console.log('res.status', res.status);
+          console.log('res.ok', res.ok);
+          return res.json();
+        })
+        .then(
+          (result) => {
+            console.log("Submit= ", result);
+            console.log("Submit= ", JSON.stringify(result));
+            if ( result == 1){ // כבר קיים השם משתמש הזה
+                 this.setState({isUserNameExist:true});
+                }
+         
+          },
+          (error) => {
+            console.log("err get=", error);
+          });
+    
     }
 
     render() {
