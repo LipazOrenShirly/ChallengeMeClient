@@ -43,7 +43,12 @@ export default class CCHomePageTeacher extends Component {
             state: { student: data }
         })
     }
-
+    getFronStudents=(classID)=>{
+        this.props.history.push({
+            pathname:'/AddNewStudent',
+            state: { classID: classID }
+        }) 
+    }
 
     render() {
 
@@ -58,7 +63,7 @@ export default class CCHomePageTeacher extends Component {
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
                 }
                 {this.state.studentPage == true &&
-                    <CCStudents class={this.state.class} SendDataToHomeTeacher2={this.getDataFromStudents} />
+                    <CCStudents class={this.state.class} SendtoStudents={this.getFronStudents} SendDataToHomeTeacher2={this.getDataFromStudents} />
                 }
                 <Footer></Footer>
             </div>

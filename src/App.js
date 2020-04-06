@@ -21,7 +21,7 @@ import EditChallenge from './Component/TeacherComponents/StudentPage/CCEditChall
 import InputTests from './Component/InputTests/InputTests';
 import InputTests2 from './Component/InputTests/InputTests2';
 import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToStudent/CCAddChallengeToStudent';
-
+import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewStudent'
 import {ProjectProvider} from './Context/ProjectContext';
 
 
@@ -56,6 +56,7 @@ function App() {
           <Route path="/InputTests" component={InputTests} />
           <Route path="/InputTests2" component={InputTests2} />
           <Route path="/AddChallengeToStudent" component={AddChallengeToStudent} />
+          <Route path="/AddNewStudent" component={AddNewStudent} />
 
           
         </Switch>

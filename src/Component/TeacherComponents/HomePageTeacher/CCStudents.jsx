@@ -57,7 +57,10 @@ export default class CCStudents extends Component {
         $('#BTNeditClassName').hide();
         $('#BTNsaveClassName').show();
     }
+    AddStudent=()=>{
+        this.props.SendtoStudents(this.props.class.classID);
 
+    }
     UpdateClassName = () => {
         var updatedClass = {
             className: $('#className').val(),

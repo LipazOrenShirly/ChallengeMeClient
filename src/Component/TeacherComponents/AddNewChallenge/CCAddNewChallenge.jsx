@@ -4,6 +4,7 @@ import '../../../css/Style.css';
 import './styleAddNewChallenge.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
+import { TiArrowBack } from 'react-icons/ti';
 
 import $ from 'jquery';
 
@@ -21,6 +22,9 @@ export default class CCAddNewChallenge extends Component {
         return (
             <div className="container-fluid">
                 <NavBar></NavBar>
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={()=> window.history.back()} size={40} />
+                </div>
                 <div className="col-12 turkiz">יצירת אתגר חדש</div>
                 <br/>
                 <form>

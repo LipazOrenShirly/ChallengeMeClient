@@ -177,10 +177,7 @@ class CCEditChallenge extends Component {
         $('#DifLevelInput').prop("disabled", false);
 
     }
-    goBackToStudentPage = () => {
-
-        window.history.back(); //חזור למסך הקודם
-    }
+    
     render() {
         console.log(this.props.location.state.challenge);
         const challenge = this.props.location.state.challenge;
@@ -189,8 +186,8 @@ class CCEditChallenge extends Component {
         return (
             <div>
                 <NavBar />
-                <div className="col-12">
-                    <TiArrowBack className="iconArrowBack" onClick={this.goBackToStudentPage} size={40} />
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={()=> window.history.back()} size={40} />
                 </div>
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
                 <div className="titleCategoryInCCEDIT">קטגוריה: {challenge.categoryName}</div>
