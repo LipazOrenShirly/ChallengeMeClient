@@ -104,6 +104,7 @@ box-shadow: none !important
     font-weight: 600;
     border-radius: 60px; 
     width: 100%;
+  
 }
 .btnDeleteChallenge:active{
     background-color:rgba(104, 104, 95, 0.842) ;

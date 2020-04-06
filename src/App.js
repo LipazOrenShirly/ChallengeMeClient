@@ -20,7 +20,10 @@ import StudentInfoScreen from './Component/TeacherComponents/StudentInfoScreen/C
 import EditChallenge from './Component/TeacherComponents/StudentPage/CCEditChallenge';
 import InputTests from './Component/InputTests/InputTests';
 import InputTests2 from './Component/InputTests/InputTests2';
+import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToStudent/CCAddChallengeToStudent';
+
 import {ProjectProvider} from './Context/ProjectContext';
+
 
 
 function App() {
@@ -52,6 +55,9 @@ function App() {
           <Route path="/EditChallenge" component={EditChallenge} />
           <Route path="/InputTests" component={InputTests} />
           <Route path="/InputTests2" component={InputTests2} />
+          <Route path="/AddChallengeToStudent" component={AddChallengeToStudent} />
+
+          
         </Switch>
       </ProjectProvider>
     </div>

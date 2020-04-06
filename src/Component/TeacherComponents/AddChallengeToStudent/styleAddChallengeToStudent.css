@@ -1,0 +1,45 @@
+.btnAddChallengeToStudent{
+    background-color: #F5B5DB;
+    border: none;
+    width: 80%;
+}
+.titleSmartDiv{
+    color:rgb(182, 126, 159);
+}
+.btnAddChallengeToStudent:hover , .btnAddChallengeToStudent:checked{
+    background-color: rgb(196, 115, 163);
+    border: none;
+}
+.oneSmartText{
+    display: flex;
+    text-align: right;
+font-size: medium;
+padding-right: 5px;
+padding-left: 5px;
+padding-top: 7px;
+}
+.DivOneSmart{
+    border: 2px solid black;
+    /* height: 150%; */
+    /* width: 150px; */
+    /* text-align: center; */
+    /* align-items: center; */
+    
+    margin:10px 0;
+    padding:0px;
+    background-color: #96C8C2;
+    font-weight: 700;
+    color: white;
+    margin-top:2px;
+    border-radius: 2px;
+}
+.floatCrossIcon{
+    float: right;
+
+}
+.DivAllSmart{
+    overflow: scroll;
+    height: 300px;
+margin-bottom: 5%;
+border: 2px solid rgb(182, 126, 159);
+}

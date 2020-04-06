@@ -30,9 +30,23 @@ class CCEditChallenge extends Component {
     componentDidMount = () => {
         const challenge = this.state.challenge;
         $('#DeadlineInput').val(challenge.deadline);
-        $('#StatusInput').val(challenge.status);
+        var statusWord;
+        switch (challenge.status) {
+            case '1':
+                statusWord = "הצליח את האתגר"
+                break;
+            case '2':
+                statusWord = "לא הצליח את האתגר"
+                break;
+            case '3':
+                statusWord = "צריך עזרה"
+                break;
+            default:
+                statusWord="לא סימן כלום"
+        }
+        $('#StatusInput').val(statusWord);
         $('#DifLevelInput').val(challenge.difficulty);
-      
+
     }
 
     UpdateChallenge = () => {
@@ -78,41 +92,42 @@ class CCEditChallenge extends Component {
             showCancelButton: true,
             confirmButtonColor: '#e0819a',
             cancelButtonColor: '#867D95',
-            cancelButtonText:'בטל',
+            cancelButtonText: 'בטל',
             confirmButtonText: 'כן, מחק'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
-        
-        fetch(this.apiUrl + '?challengeID=' + this.state.challenge.challengeID + '&studentID=' + this.state.challenge.studentID, {
-            method: 'DELETE',
-            headers: new Headers({
-                'accept': 'application/json; charset=UTF-8'
-            })
+
+                fetch(this.apiUrl + '?challengeID=' + this.state.challenge.challengeID + '&studentID=' + this.state.challenge.studentID, {
+                    method: 'DELETE',
+                    headers: new Headers({
+                        'accept': 'application/json; charset=UTF-8'
+                    })
+                })
+                    .then(res => {
+                        console.log('res=', res);
+                        return res.json()
+                    })
+                    .then(
+                        (result) => {
+                            console.log("fetch DELETE= ", result);
+                            Swal.fire({
+                                title: 'נמחק!',
+                                text: 'האתגר נמחק בהצלחה',
+                                icon: 'success',
+                                confirmButtonColor: '#e0819a',
+                            })
+                            this.props.history.push({
+                                pathname: '/StudentPage',
+                            })
+                        },
+                        (error) => {
+                            console.log("err post=", error);
+                        });
+                // window.location.reload();
+
+
+            }
         })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch DELETE= ", result);
-                    Swal.fire({
-                        title:'נמחק!',
-                        text:'האתגר נמחק בהצלחה',
-                        icon:'success',
-                        confirmButtonColor: '#e0819a',
-                      })
-                      this.props.history.push({
-                        pathname: '/StudentPage',
-                      })
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-        // window.location.reload();
-     
-       
-   }})
     }
 
     EditDeadlineInput = () => {
@@ -123,35 +138,36 @@ class CCEditChallenge extends Component {
     }
 
     EditStatusInput = () => {
-       if( this.state.challenge.status == 0){
-        Swal.fire({
-            title:'!שים לב',
-            text:'סטטוס האתגר מאופס כבר',
-            confirmButtonColor: '#e0819a',
-          })
-    }
-       else { 
-        Swal.fire({
-            title: 'האם אתה בטוח?',
-            text: "בלחיצה על איפוס יתאפס לתלמיד סטטוס האתגר",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e0819a',
-            cancelButtonColor: '#867D95',
-            cancelButtonText:'בטל',
-            confirmButtonText: 'כן, אפס'
-          }).then((result) => {
-            if (result.value) {
-              Swal.fire({
-                title:'אופס!',
-                text:'סטטוס האתגר אופס בהצלחה',
-                icon:'success',
+        if (this.state.challenge.status == 0) {
+            Swal.fire({
+                title: '!שים לב',
+                text: 'סטטוס האתגר מאופס כבר',
                 confirmButtonColor: '#e0819a',
-              })
-              $('#StatusInput').val(0);
-       this.UpdateChallenge();
-       }})
-    }
+            })
+        }
+        else {
+            Swal.fire({
+                title: 'האם אתה בטוח?',
+                text: "בלחיצה על איפוס יתאפס לתלמיד סטטוס האתגר",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e0819a',
+                cancelButtonColor: '#867D95',
+                cancelButtonText: 'בטל',
+                confirmButtonText: 'כן, אפס'
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        title: 'אופס!',
+                        text: 'סטטוס האתגר אופס בהצלחה',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    })
+                    $('#StatusInput').val(0);
+                    this.UpdateChallenge();
+                }
+            })
+        }
 
     }
 
@@ -161,8 +177,8 @@ class CCEditChallenge extends Component {
         $('#DifLevelInput').prop("disabled", false);
 
     }
-    goBackToStudentPage= ()=>{
-     
+    goBackToStudentPage = () => {
+
         window.history.back(); //חזור למסך הקודם
     }
     render() {
@@ -174,7 +190,7 @@ class CCEditChallenge extends Component {
             <div>
                 <NavBar />
                 <div className="col-12">
-                <TiArrowBack className="iconArrowBack" onClick={this.goBackToStudentPage} size={40} />
+                    <TiArrowBack className="iconArrowBack" onClick={this.goBackToStudentPage} size={40} />
                 </div>
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
                 <div className="titleCategoryInCCEDIT">קטגוריה: {challenge.categoryName}</div>
@@ -211,10 +227,10 @@ class CCEditChallenge extends Component {
                     </select>
                 </div>
 
-                <br />
+                
                 <div className="col-12">
                     <button id="deleteChallenge" className="btn btn-info btnDeleteChallenge" onClick={this.DeleteChallenge}>מחק את האתגר</button>
-               </div>
+                </div>
                 <Footer />
             </div>
         );

@@ -21,6 +21,12 @@ class CCStudentPage extends Component {
              state:{challenge: challenge }
         })   
     }
+    getDataFromChallenges=(studentID)=>{
+        this.props.history.push({
+            pathname:'/AddChallengeToStudent',
+             state:{studentID: studentID }
+        })   
+    }
 
     render() {
         const student = this.props.location.state.student;
@@ -30,7 +36,7 @@ class CCStudentPage extends Component {
             <div>
                 <NavBar /><br />
                 <CCStudentDetails student = {student} />
-                <CCChallenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} />
+                <CCChallenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} SendDataToStudentPage={this.getDataFromChallenges}  />
                 <div className="col-12"><button className="btn btn-info btnYellow" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button></div>
                 <br /><br />
                 <Footer />

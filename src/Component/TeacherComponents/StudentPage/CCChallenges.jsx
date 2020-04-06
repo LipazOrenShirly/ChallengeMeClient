@@ -44,8 +44,7 @@ class CCChallenges extends Component {
     }
 
     AddChallenge = () => {
-        // מעבר לעמוד שבו בוחרים אתגר או משהו כזה
-    }
+        this.props.SendDataToStudentPage(this.props.studentID);    }
 
     render() { 
         return ( 
