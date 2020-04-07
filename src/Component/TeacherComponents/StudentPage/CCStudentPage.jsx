@@ -37,7 +37,9 @@ class CCStudentPage extends Component {
                 <NavBar /><br />
                 <CCStudentDetails student = {student} />
                 <CCChallenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} SendDataToStudentPage={this.getDataFromChallenges}  />
-                <div className="col-12"><button className="btn btn-info btnYellow" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >עדכון אפיון תלמיד</button></div>
+                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >פרטי התלמיד</button></div>
+                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick = { ()=> this.props.history.push('/', {student: student} ) } >אפיון התלמיד</button></div>
+                
                 <br /><br />
                 <Footer />
             </div>

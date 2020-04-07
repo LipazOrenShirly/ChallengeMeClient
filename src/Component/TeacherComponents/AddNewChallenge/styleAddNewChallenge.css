@@ -16,3 +16,11 @@ box-shadow: none !important
     background-color: rgb(196, 115, 163);
     border: none;
 }
+ .MuiFilledInput-root{
+    background-color:transparent !important;
+   
+} 
+.bc{
+    background-color: rgba(0, 0, 0, 0.07);
+    
+}
