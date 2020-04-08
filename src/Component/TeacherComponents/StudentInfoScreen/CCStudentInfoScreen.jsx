@@ -7,6 +7,8 @@ import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import ProjectContext from '../../../Context/ProjectContext';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
+
 
 class CCStudentInfoScreen extends Component {
     constructor(props) {
@@ -90,7 +92,12 @@ class CCStudentInfoScreen extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
-
+                    Swal.fire({
+                        title: 'השתנה!',
+                        text: 'פרטי התלמיד השתנו בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    })
                 },
                 (error) => {
                     console.log("err post=", error);
