@@ -9,6 +9,7 @@ import { IoMdCheckmark } from "react-icons/io";
 import FreeSoloTags from './FreeSoloTags';
 import FreeSolo from './FreeSolo';
 import Swal from 'sweetalert2';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import $ from 'jquery';
 
@@ -18,25 +19,27 @@ export default class CCAddNewChallenge extends Component {
         this.state = {
             arr: [],
             showTags: false,
+            checked: false,
         }
+
     }
-    continueToTags=(e)=>{
+    continueToTags = (e) => {
         e.preventDefault();
-        if($('#NewChallengeName').val()== ""){
+        if ($('#NewChallengeName').val() == "") {
             Swal.fire({
-                title:'שים לב',
-                text:'על האתגר אסור להשאר ריק',
-                icon:'warning',
+                title: 'שים לב',
+                text: 'על האתגר אסור להשאר ריק',
+                icon: 'warning',
                 confirmButtonColor: '#e0819a',
-              })
-              return;
+            })
+            return;
         }
 
         let inputNameChallenge = $('#NewChallengeName').val();
         console.log(inputNameChallenge);
         //פקודת גט שבודקת אם האינפוט שהוא בחר נמצא בשרת או לא 
-       let returnVal=1 //נניח ומה שחזר הוא 1
-        if (returnVal==1){
+        let returnVal = 0 //נניח ומה שחזר הוא 1
+        if (returnVal == 1) {
             Swal.fire({
                 title: 'שים לב',
                 text: "כבר קיים אתגר כזה במאגר, בלחיצה על אישור תבחר באתגר זה להיות האתגר של הילד",
@@ -44,23 +47,29 @@ export default class CCAddNewChallenge extends Component {
                 showCancelButton: true,
                 confirmButtonColor: '#e0819a',
                 cancelButtonColor: '#867D95',
-                cancelButtonText:'בטל',
+                cancelButtonText: 'בטל',
                 confirmButtonText: 'כן, בחר'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.value) {
-               //תעבור לדף שאחרי שבוחרים את האתגר מגיעים אליו
+                    //תעבור לדף שאחרי שבוחרים את האתגר מגיעים אליו
                 }      //אם בחר בטל
                 else {
                     $('#NewChallengeName').val("");
-                }   
-        })
+                }
+            })
+        }
+        else {
+            this.setState({ showTags: true });
+            $('#NewChallengeName').prop('disabled',true);
+            $('.bc').css('background-color','rgba(202, 199, 199, 0.07)');
+        }
+
     }
-    else{
-        this.setState({showTags:true});
-    }
-  
-}
-//לא למחוק את זה אולי עוד אעשה תגיותת יפות בהמשך חחח:
+    handleChange = (event) => {
+        this.setState(prevState => ({ checked: !prevState.checked }));
+
+    };
+    //לא למחוק את זה אולי עוד אעשה תגיותת יפות בהמשך חחח:
     // getNewArrAfterDelete = (data) => {
     //     this.setState({ arr: data })
     // }
@@ -75,6 +84,8 @@ export default class CCAddNewChallenge extends Component {
 
     render() {
 
+
+
         return (
             <div className="container-fluid">
                 <NavBar></NavBar>
@@ -87,26 +98,43 @@ export default class CCAddNewChallenge extends Component {
                     <div className="form-group col-12 bc" dir="rtl">
                         <FreeSolo />
                     </div>
-                    {this.state.showTags == false &&
-                    <div className="form-group col-12">
+                    {
+                    this.state.showTags == false &&
+                        <div className="form-group col-12">
                             <button className="btn btn-info createNewChallenge" onClick={this.continueToTags}>המשך</button>
                         </div>
                     }
                     {
                         this.state.showTags == true &&
                         <div>
-                        <div className="form-group input-group col-12 bc" dir="rtl">
-                            <FreeSoloTags />
-                        </div>
+                            <div className="form-group input-group col-12 bc" dir="rtl">
+                                <FreeSoloTags />
+                            </div>
 
-                        {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
-                        <div className="form-group col-12">
-                            <button className="btn btn-info createNewChallenge" onClick={this.createNewChallenge}>יצירת האתגר</button>
+                            {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
+                            
+                            <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
+                            <div className="col-12" >
+                                <input type="number" style={{textAlign:"center"}} class="form-control inputNewTeacher" placeholder="רגשי" min="1" max="100"></input>
+                                <input type="number" style={{textAlign:"center"}} class="form-control inputNewTeacher" placeholder="חברתי" min="1" max="100"></input>
+                                <input type="number" style={{textAlign:"center"}} class="form-control inputNewTeacher" placeholder="לימודי" min="1" max="100"></input>
+                            </div>
+                            <div dir="rtl" > 
+                                   
+                         
+                                <Checkbox
+                                    checked={this.state.checked}
+                                    onChange={this.handleChange}
+                                    value="primary"
+                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                />
+                               האם לשמור במאגר הגדול או שזה ספיציפי לתלמיד הזה
+                            </div>
+                            <br />
+                            <div className="form-group col-12">
+                                <button className="btn btn-info createNewChallenge" onClick={this.createNewChallenge}>יצירת האתגר</button>
+                            </div>
                         </div>
-                        // חברתי/רגשי/לימודי לפי אחוזים
-                        <br />
-                    // צ'ק בוקס של האם לשמור במאגר הגדול או שזה ספיציפי לתלמיד הזה
-                    </div>
                     }
                 </form>
 
