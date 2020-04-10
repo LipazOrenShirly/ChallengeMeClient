@@ -65,7 +65,9 @@ export default class CCAddNewChallenge extends Component {
         //     .then(
         //         (result) => {
         //             console.log("fetch POST= ", result);
-
+        // this.props.history.push({
+        //     pathname: '/HomePageTeacher',
+        // })
         //         },
         //         (error) => {
         //             console.log("err post=", error);
@@ -81,18 +83,17 @@ export default class CCAddNewChallenge extends Component {
            }
     }
     
-    CreateAndGoToStudentCharacterization = () => {
+    CreateAndGoToStudentFeatures = () => {
         this.createNewStudent();
     }
 
     CreateAndGoToHomePage = () => {
-        
         this.createNewStudent();
-        // לא מצליח להעביר לדף הבית, צריך לבדוק למה
-        // this.props.history.push({
-        //     pathname: '/HomePageTeacher',
-        // })
+        this.props.history.push({
+            pathname: '/HomePageTeacher',
+        })
     }
+
     render() {
         const { SfirstName, SlastName, Sphone, Spassword, Spassword2, Sage, SBirthDate } = this.state;
         return (
@@ -300,7 +301,7 @@ export default class CCAddNewChallenge extends Component {
                         />
                     </div>
                     <div className="form-group col-12">
-                        <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToStudentCharacterization}>יצירת התלמיד והעברה לאפיון תלמיד</button>
+                        <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToStudentFeatures}>יצירת התלמיד והעברה לאפיון תלמיד</button>
                     </div>
                     <div className="form-group col-12">
                         <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToHomePage}>יצירת תלמיד והמשכת האפיון במועד מאוחר יותר</button>

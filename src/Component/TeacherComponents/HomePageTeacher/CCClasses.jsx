@@ -4,12 +4,13 @@ import './styleHomePageTeacher.css'
 import CCOneClass from './CCOneClass';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
+import ProjectContext from '../../../Context/ProjectContext';
 
 export default class CCClasses extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            teacherID: this.props.teacherID,
+            teacherID: null,
             classesArr: [],
             showAddClass: false,
         }
@@ -19,11 +20,17 @@ export default class CCClasses extends Component {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
-    componentDidMount() {
-        console.log(this.props.teacherID)
-        this.GetClassesNames();
 
+    static contextType = ProjectContext;
+
+    async componentDidMount() {
+        // console.log(this.props.teacherID)
+        const user = await this.context;
+        await console.log("teacherID from context = " + user.teacherID);
+        await this.setState({teacherID: user.teacherID});
+        await this.GetClassesNames();
     }
+
     GetClassesNames=()=>{
         fetch(this.apiUrl + '?teacherID=' + this.state.teacherID
             , {
