@@ -27,6 +27,7 @@ export default class CCAddNewChallenge extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
+        this.apiUrlChallengeTag = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
@@ -162,7 +163,8 @@ export default class CCAddNewChallenge extends Component {
             // school: $('#school').val(),
             // emotional: $('#emotional').val()
         }
-        console.log('challenge = '+challenge);
+        console.log('challenge = ' + challenge);
+        
         fetch(this.apiUrl, {
             method: 'POST',
             body: JSON.stringify(challenge),
@@ -177,7 +179,7 @@ export default class CCAddNewChallenge extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result[0]);
-                    this.setState({newChallenge: result[0]});
+                    this.setState({ newChallenge: result[0] });
                     Swal.fire({
                         title: 'מעולה!',
                         text: 'הוספת את האתגר בהצלחה!',
@@ -185,7 +187,41 @@ export default class CCAddNewChallenge extends Component {
                         confirmButtonColor: '#e0819a',
                     });
                     this.props.history.push({
-                        pathname:'/ExtraChallengeDetails',
+                        pathname: '/ExtraChallengeDetails',
+                        state: { challenge: this.state.newChallenge }
+                    });
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+
+        const ChallengeTag = [{
+            //מערך של תגיות של אתגרים
+        }];
+        
+        fetch(this.ChallengeTag, {
+            method: 'POST',
+            body: JSON.stringify(ChallengeTag),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result[0]);
+                    this.setState({ newChallenge: result[0] });
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text: 'הוספת את האתגר בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    });
+                    this.props.history.push({
+                        pathname: '/ExtraChallengeDetails',
                         state: { challenge: this.state.newChallenge }
                     });
                 },
@@ -195,7 +231,7 @@ export default class CCAddNewChallenge extends Component {
         event.preventDefault();
     }
 
-        
+
     //לא למחוק את זה אולי עוד אעשה תגיותת יפות בהמשך חחח:
     // getNewArrAfterDelete = (data) => {
     //     this.setState({ arr: data })
@@ -208,7 +244,7 @@ export default class CCAddNewChallenge extends Component {
     //     // $('#NewRelatedTags').val("");
     // }
 
-    
+
 
     render() {
         return (
