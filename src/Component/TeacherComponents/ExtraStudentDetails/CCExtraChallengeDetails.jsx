@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import '../../../css/Style.css';
-import './styleExtraStudentDetails.css'
+import './styleExtraChallengeDetails.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import ProjectContext from '../../../Context/ProjectContext';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-class CCExtraStudentDetails extends Component {
+class CCExtraChallengeDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,30 +29,30 @@ class CCExtraStudentDetails extends Component {
 
     Submit = (event) => {
         let DifLevelInput = $('#DifLevelInput').val();
-        if(DifLevelInput=="" || this.state.startDate==null){
-        Swal.fire({
-                      title: 'שים לב',
-                      text: 'כל הערכים צריכים להיות מלאים',
-                      icon: 'warnning',
-                      confirmButtonColor: '#e0819a',
-                    })
-                    return;
-                }
+        if (DifLevelInput == "" || this.state.startDate == null) {
+            Swal.fire({
+                title: 'שים לב',
+                text: 'כל הערכים צריכים להיות מלאים',
+                icon: 'warnning',
+                confirmButtonColor: '#e0819a',
+            });
+            return;
+        }
         alert(DifLevelInput);
-        console.log(this.state.startDate.ToString("dd/mm/yyyy"))
-//כאן יהיה פקודת פוסט.. צריך לשים לב שהתאריך מגיע בצורה מוזרה
+        alert(this.state.startDate);
+        console.log(this.state.startDate.ToString("dd/mm/yyyy"));
+        //כאן יהיה פקודת פוסט.. צריך לשים לב שהתאריך מגיע בצורה מוזרה
         event.preventDefault();
     }
 
     render() {
-
         return (
             <div className="container-fluid">
                 <div className="loginDiv">
                     <NavBar></NavBar><br />
                     <form onSubmit={this.Submit}>
                         <div className="purpule"><strong>:האתגר הנבחר</strong></div>
-                        <div id="chosenChallenge">לכאן צריך להכנס שם האתגר מהדאתא בייס</div>
+                        <div id="chosenChallenge"> {this.props.location.state.challenge.challengeName}לכאן צריך להכנס שם האתגר מהדאתא בייס</div>
                         <br />
                         <div className="purpule"><strong>:תאריך סיום האתגר</strong></div>
                         <div className="col-12 input-group mb-3 dp">
@@ -88,4 +88,4 @@ class CCExtraStudentDetails extends Component {
     }
 }
 
-export default CCExtraStudentDetails;
+export default CCExtraChallengeDetails;
