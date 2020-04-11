@@ -23,7 +23,7 @@ import InputTests2 from './Component/InputTests/InputTests2';
 import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToStudent/CCAddChallengeToStudent';
 import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewStudent';
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
-import ExtraStudentDetails from './Component/TeacherComponents/ExtraStudentDetails/CCExtraStudentDetails';
+import ExtraChallengeDetails from './Component/TeacherComponents/ExtraStudentDetails/CCExtraChallengeDetails';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
@@ -60,7 +60,7 @@ function App() {
           <Route path="/AddChallengeToStudent" component={AddChallengeToStudent} />
           <Route path="/AddNewStudent" component={AddNewStudent} />
           <Route path="/StudentFeatures" component={StudentFeatures} />
-          <Route path="/ExtraStudentDetails" component={ExtraStudentDetails} />
+          <Route path="/ExtraChallengeDetails" component={ExtraChallengeDetails} />
 
           
         </Switch>

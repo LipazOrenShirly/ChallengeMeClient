@@ -22,7 +22,7 @@ export default function FreeSoloTags(props) {
       <Autocomplete
         multiple
         id="tags-filled"
-        options={top100Films.map((option) => option.title)}
+        options={props.tags.map((option) => option.tagName)}
         
         freeSolo
         renderTags={(value, getTagProps) =>
@@ -33,7 +33,7 @@ export default function FreeSoloTags(props) {
           
         }
         renderInput={(params) => (
-          <TextField {...params} variant="filled" label="הכנס תגיות מתאימות" placeholder="Favorites" />
+          <TextField {...params} variant="filled" label="הכנס תגיות מתאימות" placeholder="בחר תגיות" />
         )}
       />
     </div>

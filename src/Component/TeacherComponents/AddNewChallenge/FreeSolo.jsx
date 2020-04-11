@@ -6,16 +6,17 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 export default function FreeSolo(props) {
   return (
     <div style={{ width: 300 }}>
-      
+
       <Autocomplete
         freeSolo
         id="NewChallengeName"
-         disableClearable
-        options={top100Films.map((option) => option.title)}
+        disableClearable
+        options={props.challenges.map((option) => option.challengeName)}
         renderInput={(params) => (
           <TextField
             {...params}
             label="שם האתגר"
+            id="challengeInput"
             margin="none"
             variant="standard"
             InputProps={{ ...params.InputProps, type: 'search' }}
