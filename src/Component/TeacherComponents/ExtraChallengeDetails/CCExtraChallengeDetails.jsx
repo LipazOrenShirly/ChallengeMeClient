@@ -52,7 +52,7 @@ class CCExtraChallengeDetails extends Component {
                     <NavBar></NavBar><br />
                     <form onSubmit={this.Submit}>
                         <div className="purpule"><strong>:האתגר הנבחר</strong></div>
-                        <div id="chosenChallenge"> {this.props.location.state.challenge.challengeName}לכאן צריך להכנס שם האתגר מהדאתא בייס</div>
+                        <div id="chosenChallenge"> {this.props.location.state.challenge.challengeName}</div>
                         <br />
                         <div className="purpule"><strong>:תאריך סיום האתגר</strong></div>
                         <div className="col-12 input-group mb-3 dp">
@@ -68,7 +68,7 @@ class CCExtraChallengeDetails extends Component {
                         </div>
                         <div className="purpule"><strong>:רמת קושי האתגר</strong></div>
                         <div className="col-12 input-group mb-3">
-                            <select class="form-control inputCCEdit" id="DifLevelInput">
+                            <select className="form-control inputCCEdit" id="DifLevelInput">
                                 <option value="" >..בחר</option>
                                 <option value="1" >1</option>
                                 <option value="2" >2</option>

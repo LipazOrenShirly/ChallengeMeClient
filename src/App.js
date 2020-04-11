@@ -23,7 +23,7 @@ import InputTests2 from './Component/InputTests/InputTests2';
 import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToStudent/CCAddChallengeToStudent';
 import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewStudent';
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
-import ExtraChallengeDetails from './Component/TeacherComponents/ExtraStudentDetails/CCExtraChallengeDetails';
+import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
