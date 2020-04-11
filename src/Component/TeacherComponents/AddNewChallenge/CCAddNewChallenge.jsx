@@ -154,44 +154,44 @@ export default class CCAddNewChallenge extends Component {
 
     Submit = (event) => {
         //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
-        // const challenge = {
-        //     challemgeName:  $('#challengeInput').val(),
-        //     isPrivate: this.state.isPrivate,
-        //     social: $('#social').val(),
-        //     school: $('#school').val(),
-        //     emotional: $('#emotional').val()
-        // }
-        // console.log('challenge = '+challenge);
-        // fetch(this.apiUrl, {
-        //     method: 'POST',
-        //     body: JSON.stringify(challenge),
-        //     headers: new Headers({
-        //         'Content-type': 'application/json; charset=UTF-8'
-        //     })
-        // })
-        //     .then(res => {
-        //         console.log('res=', res);
-        //         return res.json()
-        //     })
-        //     .then(
-        //         (result) => {
-        //             console.log("fetch POST= ", result);
-        //             this.setState({newChallenge: result});
-        //             Swal.fire({
-        //                 title: 'מעולה!',
-        //                 text: 'הוספת את האתגר בהצלחה!',
-        //                 icon: 'success',
-        //                 confirmButtonColor: '#e0819a',
-        //             });
-        //         },
-        //         (error) => {
-        //             console.log("err post=", error);
-        //         });
-        
-        // this.props.history.push({
-        //     pathname:'/ExtraChallengeDetails',
-        //     state: { challenge:  this.state.newChallenge}
-        // }) 
+        const challenge = {
+            challengeName: 'אתגר דוגמה'
+            // challemgeName:  $('#challengeInput').val(),
+            // isPrivate: this.state.isPrivate,
+            // social: $('#social').val(),
+            // school: $('#school').val(),
+            // emotional: $('#emotional').val()
+        }
+        console.log('challenge = '+challenge);
+        fetch(this.apiUrl, {
+            method: 'POST',
+            body: JSON.stringify(challenge),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result[0]);
+                    this.setState({newChallenge: result[0]});
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text: 'הוספת את האתגר בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    });
+                    this.props.history.push({
+                        pathname:'/ExtraChallengeDetails',
+                        state: { challenge: this.state.newChallenge }
+                    });
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
         event.preventDefault();
     }
 

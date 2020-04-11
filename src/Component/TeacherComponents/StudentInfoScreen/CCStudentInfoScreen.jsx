@@ -1,46 +1,48 @@
 import React, { Component } from 'react';
-import localHost from '../../LittleComponents/LocalHost';
-import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import '../../../css/Style.css';
 import './styleStudentInfoScreen.css'
 import Footer from '../../LittleComponents/Footer';
-import Logo from '../../LittleComponents/Logo'
-import ProjectContext from '../../../Context/ProjectContext';
-import $ from 'jquery';
+import NavBar from '../../LittleComponents/NavBar';
+import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
+import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
+import ProjectContext from '../../../Context/ProjectContext';
 
 
-class CCStudentInfoScreen extends Component {
+import $ from 'jquery';
+
+export default class CCStudentInfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             student: {},
-            classesArr: [],
+            studentID: "",
             firstName: "",
+            HafirstNameValError: false,
             lastName: "",
-            userName: "",
+            HaslastNameValError: false,
             phone: "",
+            HasphoneValError: false,
             password: "",
+            HaspasswordValError: false,
+            password2: "",
+            Haspassword2ValError: false,
+            birthDate: "",
         }
         let local = true;
-        this.apiUrlClass = 'http://localhost:' + { localHost }.localHost + '/api/Class';
-        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
+        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
 
-    componentDidMount = () => {
-        console.log(this.props.location.state.student);
-        var student = this.props.location.state.student;
-        $('#NewTFirstName').val(student.firstName);
-        $('#NewTLastName').val(student.lastName);
-        $('#NewTUserName').val(student.userName);
-        $('#NewTPhone').val(student.phone);
-        $('#NewTPassword').val(student.password);
+    static contextType = ProjectContext;
 
-        fetch(this.apiUrlClass+'?teacherID='+student.teacherID,
-            {
+    componentDidMount() {
+        const student = this.props.location.state.student;
+
+        fetch(this.apiUrl + '?studentID=' + student.studentID
+            , {
                 method: 'GET',
                 headers: new Headers({
                     'Content-Type': 'application/json; charset=UTF-8',
@@ -54,105 +56,290 @@ class CCStudentInfoScreen extends Component {
             })
             .then(
                 (result) => {
-                    console.log("classesArr= ", result);
-                    this.setState({ classesArr: result })
+                    console.log("teacher= ", result[0]);
+                    this.setState({
+                        studentID: result[0].studentID,
+                        firstName: result[0].firstName,
+                        lastName: result[0].lastName,
+                        phone: result[0].phone,
+                        password: result[0].password,
+                        password2: result[0].password,
+                        birthDate: result[0].birthDate
+                    })
                 },
                 (error) => {
                     console.log("err get=", error);
                 });
     }
 
+    UpdateStudentInfo = (event) => {
+        const user = this.context;
 
-    Submit = (event) => {
-        console.log('state=' + this.state);
-
-        var data = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            userName: this.state.userName,
-            phone: this.state.phone,
-            password: this.state.password,
-            classID: 7, //צריך בפורם להוסיף בחירת כיתה
-            studentID: this.props.location.state.student.studentID,
-            teacherID: this.props.location.state.student.teacherID,
-            avatarID: 1
+        if (!this.state.HafirstNameValError &&
+            !this.state.HaslastNameValError &&
+            !this.state.HasphoneValError &&
+            !this.state.HaspasswordValError &&
+            !this.state.Haspassword2ValError
+        ) {
+            var student = {
+                studentID: this.props.location.state.student.studentID,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phone: this.state.phone,
+                password: this.state.password2,
+                birthDate: this.state.birthDate,
+                classID: this.props.location.state.student.classID,
+                teacherID: this.props.location.state.student.teacherID
+            }
+            console.log('student = ' + student);
+            fetch(this.apiUrl, {
+                method: 'PUT',
+                body: JSON.stringify(student),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8'
+                })
+            })
+                .then(res => {
+                    console.log('res=', res);
+                    return res.json()
+                })
+                .then(
+                    (result) => {
+                        console.log("fetch PUT= ", result);
+                        Swal.fire({
+                            title: 'השתנה!',
+                            text: 'פרטי התלמיד השתנו בהצלחה!',
+                            icon: 'success',
+                            confirmButtonColor: '#e0819a',
+                        });
+                        this.props.history.push({
+                            pathname: '/StudentPage',
+                            state: { student: student }
+                        });
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                    });
+            event.preventDefault();
         }
-        console.log('data=' + data);
-        fetch(this.apiUrlStudent, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch POST= ", result);
-                    Swal.fire({
-                        title: 'השתנה!',
-                        text: 'פרטי התלמיד השתנו בהצלחה!',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    })
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-        // .then(
-        //     this.props.history.push({
-        //         pathname: '/TeacherLogin',
-        //     }) );
-
-        event.preventDefault();
     }
 
     render() {
-
-        console.log("studentID = " + this.props.location.state.student);
-
+        const { firstName, lastName, phone, password, password2, Sage, birthDate } = this.state;
         return (
             <div className="container-fluid">
-                <div className="loginDiv">
-                    <Logo></Logo>
-                    <form onSubmit={this.Submit}>
-                        {/* להוסיף בחירת כיתה מתוך הכיתות של המחנך שנשלפו מהדאטה בייס */}
-                        <div className="form-group col-12">
-                            <input type="text" className="form-control inputNewTeacher" id="NewTFirstName" placeholder="שם פרטי" pattern="[א-ת]+" required
-                                onChange={(e) => this.setState({ firstName: e.target.value })} />
-                        </div>
-                        <div className="form-group col-12">
-                            <input type="text" className="form-control inputNewTeacher" id="NewTLastName" placeholder="שם משפחה" pattern="[א-ת]+" required
-                                onChange={(e) => this.setState({ lastName: e.target.value })} />
-                        </div>
-                        <div className="form-group col-12">
-                            <input type="text" className="form-control inputNewTeacher" id="NewTUserName" placeholder="שם משתמש" required
-                                onChange={(e) => this.setState({ userName: e.target.value })} />
-                        </div>
-                        <div className="form-group col-12">
-                            <input type="phone" className="form-control inputNewTeacher" id="NewTPhone" placeholder="פלאפון" pattern="[0][5][0-9]{8}$" required
-                                onChange={(e) => this.setState({ phone: e.target.value })} />
-                        </div>
-                        <div className="form-group col-12">
-                            <input type="password" className="form-control inputNewTeacher" id="NewTPassword" placeholder="הזן סיסמה" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
-                                onChange={(e) => this.setState({ password: e.target.value })} />
-                        </div>
-                        {/* Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters   */}
-                        <div className="form-group col-12">
-                            <input type="password" className="form-control inputNewTeacher" id="NewTPassword2" placeholder="הזן סיסמה בשנית" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required></input>
-                        </div>
-                        <div className="col-12">
-                            <button type="submit" id="submit" className="btn btn-info btnYellow">שמירה</button>
-                        </div>
-                    </form>
+                <NavBar></NavBar>
+                <div className="col-12 turkiz">הוספת תלמיד חדש</div>
+                {/* <div className="col-12">לפני הוספת התלמיד נצטרך שתמלא כמה פרטים שיעזרו לנו בהמשך לאפיין את הילד כמו שצריך ויוכל להקל עלייך רבות בבחירת האתגרים</div> */}
+                <br />
+
+                <div className="form-group col-12">
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'NewStudentFirstName',
+                            type: 'text',
+                            placeholder: 'שם פרטי של התלמיד',
+                            className: "form-control inputNewTeacher"
+                        }}
+                        value={firstName}
+                        validationCallback={(res) => { this.setState({ HafirstNameValError: res }) }
+                        }
+                        onChange={(firstName, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ firstName });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: async v => {
+                                if (v === "") {
+                                    // this.setState({ HafirstNameValError: true });
+                                    return "Name is required.";
+                                }
+                                if (v.length < 2) {
+                                    // this.setState({ HafirstNameValError: true });
+                                    return "Name needs at least 2 length.";
+                                }
+                                return true;
+                            }
+                        }}
+                    />
                 </div>
+
+                <div className="form-group col-12">
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'NewStudentLastName',
+                            type: 'text',
+                            placeholder: 'שם המשפחה של התלמיד',
+                            className: "form-control inputNewTeacher",
+                        }}
+
+                        value={lastName}
+                        validationCallback={res =>
+                            this.setState({ HaslastNameValError: res, validate: false })
+                        }
+                        onChange={(lastName, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ lastName });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: async v => {
+                                if (v === "") {
+                                    this.setState({ HaslastNameValError: true });
+                                    return "Last Name is required.";
+                                }
+                                if (v.length < 2) {
+                                    this.setState({ HaslastNameValError: true });
+                                    return "Last Name needs at least 2 length.";
+                                }
+                                return true;
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="form-group col-12">
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'NewStudentPhone',
+                            type: 'text',
+                            placeholder: 'מספר הפלאפון של התלמיד',
+                            className: "form-control inputNewTeacher"
+                        }}
+
+                        value={phone}
+                        validationCallback={res =>
+                            this.setState({ HasphoneValError: res, validate: false })
+                        }
+                        onChange={(phone, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ phone });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: phoneNum => {
+                                const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
+                                if (reg.test(phoneNum)) {
+                                    return true;
+                                } else {
+                                    this.setState({ HasphoneValError: true });
+                                    return "is not a valid phone number";
+                                }
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="form-group col-12">
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'NewStudentPassword',
+                            type: 'password',
+                            placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
+                            className: "form-control inputNewTeacher"
+                        }}
+
+                        value={password}
+                        validationCallback={res =>
+                            this.setState({ HaspasswordValError: res, validate: false })
+                        }
+                        onChange={(password, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ password });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
+                                const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+                                if (reg.test(pas)) {
+                                    return true;
+                                } else {
+                                    this.setState({ HaspasswordValError: true });
+                                    return "Minimum 5 characters, at least one letter and one number";
+                                }
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="form-group col-12">
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'NewStudentPassword2',
+                            type: 'password',
+                            placeholder: 'הזן ססמה בשנית',
+                            className: "form-control inputNewTeacher"
+                        }}
+
+                        value={password2}
+                        validationCallback={res =>
+                            this.setState({ Haspassword2ValError: res, validate: false })
+                        }
+                        onChange={(password2, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ password2 });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
+                                const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+                                if (reg.test(pas)) {
+                                    if (password2 == password)
+                                        return true;
+                                    else {
+                                        this.setState({ Haspassword2ValError: true });
+                                        return "not like first password";
+                                    }
+                                } else {
+                                    this.setState({ Haspassword2ValError: true });
+                                    return "Minimum 5 characters, at least one letter and one number";
+                                }
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="form-group col-12">
+                    {/* ללא ולידציות, אולי לא יודע תאריך לידה */}
+                    <Textbox
+                        attributesInput={{
+                            id: 'NewStudentBirthDate',
+                            type: 'date',
+                            placeholder: 'תאריך לידה תלמיד',
+                            className: "form-control inputNewTeacher"
+                        }}
+
+                        value={birthDate}
+
+                        onChange={(birthDate, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ birthDate });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+
+                    />
+                </div>
+                <div className="form-group col-12">
+                    <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.UpdateStudentInfo}>שמירת עדכונים</button>
+                </div>
+                {/* <div className="form-group col-12">
+                    <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToHomePage}>יצירת תלמיד והמשכת האפיון במועד מאוחר יותר</button>
+                </div> */}
+
+
                 <Footer></Footer>
             </div>
         );
-    }
+    };
 }
-
-export default CCStudentInfoScreen;
