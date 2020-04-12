@@ -24,11 +24,7 @@ export default function FreeSoloTags(props) {
         id="tags-filled"
         options={props.tags.map((option) => option.tagName)}
         freeSolo
-
         onChange={props.onTagsChange}
-          // console.log("chossen tag ="+data.tagID);
-          // setValue("multiple", data);
-
         renderTags={(value, getTagProps) =>
           value.map((option, index) => 
           <Chip variant="outlined" label={option} {...getTagProps({ index })} />
