@@ -10,6 +10,7 @@ import FreeSoloTags from '../AddNewChallenge/FreeSoloTags';
 import FreeSolo from '../AddNewChallenge/FreeSolo';
 import $ from 'jquery';
 import { IoIosReturnLeft } from 'react-icons/io';
+import CCOneSearchChallenge from './CCOneSearchChallenge';
 
 class CCSearchChallenge extends Component {
     constructor(props) {
@@ -133,12 +134,21 @@ class CCSearchChallenge extends Component {
                         <br />
                     </div>
                 </form>
-                {this.state.filteredChallenges.map( (item) =>
+
+                <div className="col-12 DivAllTagsSearch">
+                    {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
+                    {
+                        this.state.filteredChallenges.map( (item) =>
+                            <CCOneSearchChallenge item={item.challengeName} studentID={this.props.studentID}  />
+                        )}
+
+                </div>
+                {/* {this.state.filteredChallenges.map( (item) =>
                     <div>
                         <div>{item.challengeName}</div>
                         <br />
                     </div>
-                )}
+                )} */}
                 <Footer />
             </div>
         );
