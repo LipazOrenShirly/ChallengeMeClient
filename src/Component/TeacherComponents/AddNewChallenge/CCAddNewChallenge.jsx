@@ -20,6 +20,7 @@ export default class CCAddNewChallenge extends Component {
         this.state = {
             challengesArr: [],
             tagsArr: [],
+            chosenTags: [],
             newChallenge: {},
             showTags: false,
             isPrivate: false,
@@ -150,14 +151,22 @@ export default class CCAddNewChallenge extends Component {
 
     handleChange = (event) => {
         this.setState(prevState => ({ isPrivate: !prevState.isPrivate }));
-
     };
+
+    onTagsChange = (event, values) => {
+        this.setState({
+            chosenTags: values
+        }, () => {
+          // This will output an array of objects
+          // given by Autocompelte options property.
+          console.log("chosenTags = "+this.state.chosenTags);
+        });
+      }
 
     Submit = (event) => {
         //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
         const challenge = {
-            challengeName: 'אתגר דוגמה'
-            // challemgeName:  $('#NewChallengeName').val(),
+            challemgeName:  $('#NewChallengeName').val(),
             // isPrivate: this.state.isPrivate,
             // social: $('#social').val(),
             // school: $('#school').val(),
@@ -269,7 +278,7 @@ export default class CCAddNewChallenge extends Component {
                         this.state.showTags == true &&
                         <div>
                             <div className="form-group input-group col-12 bc" dir="rtl">
-                                <FreeSoloTags tags={this.state.tagsArr} />
+                                <FreeSoloTags tags={this.state.tagsArr} onTagsChange = {this.onTagsChange}/>
                             </div>
 
                             {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}

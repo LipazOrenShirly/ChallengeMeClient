@@ -48,7 +48,7 @@ class CCStudentFeatures extends Component {
                 });
         
         // גט לתשובות
-        fetch(this.apiUrlStudentFeatures + '?studentID=' + this.props.location.state.studentID
+        fetch(this.apiUrlStudentFeatures + '?studentID=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -64,7 +64,8 @@ class CCStudentFeatures extends Component {
             .then(
                 (result) => {
                     console.log("answerArr= ", result);
-                    this.setState({ answerArr: result })
+                    console.log("answerArr length= ", result.length);
+                    this.setState({ answerArr: result, newFeature: (result.length == 0 ? true : false) })
                 },
                 (error) => {
                     console.log("err get=", error);
