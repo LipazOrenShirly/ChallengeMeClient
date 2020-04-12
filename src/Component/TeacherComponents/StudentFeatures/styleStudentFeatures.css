@@ -1,0 +1,13 @@
+.classCategory1{
+    background-color: rgb(221, 197, 197);
+}
+.classCategory2{
+    background-color: rgb(224, 197, 216);
+}
+.classCategory3{
+    background-color: rgb(231, 199, 208);
+}
+.classCategory1 , .classCategory2 , .classCategory3{
+    margin-bottom: 2%;
+    align-content: center;
+}
