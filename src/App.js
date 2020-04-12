@@ -24,6 +24,7 @@ import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToS
 import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewStudent';
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
+import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
@@ -61,6 +62,7 @@ function App() {
           <Route path="/AddNewStudent" component={AddNewStudent} />
           <Route path="/StudentFeatures" component={StudentFeatures} />
           <Route path="/ExtraChallengeDetails" component={ExtraChallengeDetails} />
+          <Route path="/SearchChallenge" component={SearchChallenge} />
 
           
         </Switch>
