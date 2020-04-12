@@ -11,3 +11,12 @@
     margin-bottom: 2%;
     align-content: center;
 }
+.scalaDetails{
+    margin-top: 1%;
+    color: rgba(224, 129, 154, 0.801);
+font-size: 110%;
+font-weight: 500;
+}
+.textHeadlineNum{
+    text-decoration-line: underline;
+}

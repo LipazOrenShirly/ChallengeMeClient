@@ -70,15 +70,8 @@ class CCStudentFeatures extends Component {
                 (result) => {
                     console.log("QueAndAnsArr= ", result);
                     console.log("QueAndAnsArr length= ", result.length);
-                    this.setState({ QueAndAnsArr: result, newFeature: (result.length == 0 ? true : false) },
-
-                    )
-                    // if (this.state.newFeature == false)
-                    //     {
-                    // $('#radio,2,ans,1').prop("checked", true);
-                    $("#1").prop("checked", true);
-
-                    // }
+                    this.setState({ QueAndAnsArr: result, newFeature: (result.length == 0 ? true : false) })
+                
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -190,11 +183,13 @@ class CCStudentFeatures extends Component {
                 <NavBar />
                 <form onSubmit={this.state.newFeature ? this.PostFeature : this.PutFeature}>
                     <div className="turkiz">האפיון של {this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
+                    <div className="scalaDetails" dir="rtl">1- הכי חלש, 5- הכי חזק</div>
                     <br/>
                     {
                         QueAndAnsArr.map((item, key) => 
                         <div  className={`classCategory${item.categoryID}`}>
-                            <div id={`que${item.questionID}`} >שאלה בתחום ה{item.categoryName} - {item.question}</div>
+                            <div className="textHeadlineNum" id={`que${item.questionID}`} >שאלה מספר {key+1} - שאלה בתחום ה{item.categoryName}</div>
+                            <div><strong>{item.question}</strong></div>
                             <div>
                                 <RadioGroup row aria-label="position" name="position" id={`ans${item.questionID}`} onChange={this.chooseAns} defaultValue="">
                                     <FormControlLabel

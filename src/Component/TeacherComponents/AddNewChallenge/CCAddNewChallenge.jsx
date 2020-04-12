@@ -131,7 +131,7 @@ export default class CCAddNewChallenge extends Component {
                     }).then((result) => {
                         if (result.value) {  //אם בחר אישור
                             this.props.history.push({  //תעבור לדף שאחרי שבוחרים את האתגר מגיעים אליו
-                                pathname: '/ExtraStudentDetails',
+                                pathname: '/ExtraChallengeDetails',
                                 state: { challenge: returnChallenge }
                             });
                         }
@@ -165,7 +165,22 @@ export default class CCAddNewChallenge extends Component {
     }
 
     Submit = (event) => {
+        event.preventDefault();
+
         // בניית אובייקט אתגר שישלח בפקודת פוסט
+
+        if (this.state.chosenTagsID.length == 0) {
+            $('#TagsValuesError').empty();
+            $('#TagsValuesError').append("חייב להוסיף לפחות תגית אחת");
+            return;
+        }
+        if (parseInt($('#emotional').val()) + parseInt($('#social').val()) + parseInt($('#school').val()) != 100) {
+            $('#percentValuesError').empty();
+            $('#percentValuesError').append("האחוזים חייבים להשלים ל-100");
+            return;
+        }
+
+        console.log(this.state.chosenTagsID);
         const challenge = {
             challengeName: $('#NewChallengeName').val(),
             isPrivate: this.state.isPrivate,
@@ -193,7 +208,7 @@ export default class CCAddNewChallenge extends Component {
 
                     const ChallengeTag = [];
                     this.state.chosenTagsID.map((tag) =>    //בניית מערך של תגיות של אתגרים שיתאים למחלקה כדי לשלוח בפקודת פוסט
-                    ChallengeTag.push({
+                        ChallengeTag.push({
                             challengeID: this.state.newChallenge.challengeID,
                             tagID: tag
                         })
@@ -232,7 +247,6 @@ export default class CCAddNewChallenge extends Component {
                 (error) => {
                     console.log("err post=", error);
                 });
-        event.preventDefault();
     }
 
 
@@ -274,15 +288,32 @@ export default class CCAddNewChallenge extends Component {
                         <div>
                             <div className="form-group input-group col-12 bc" dir="rtl">
                                 <FreeSoloTags tags={this.state.tagsArr} onTagsChange={this.onTagsChange} />
+                                <div className='errorPercent' id="TagsValuesError"></div>
                             </div>
 
                             {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
 
                             <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
-                                <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" min="0" max="100"></input>
-                                <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" min="0" max="100"></input>
-                                <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" min="0" max="100"></input>
+                                <div className="col-12 input-group mb-3">
+                                <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" defaultValue={0} min="0" max="100"></input>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text spanCCEdit" id="basic-addon1">רגשי</span>
+                                    </div>
+                                </div>
+                                <div className="col-12 input-group mb-3">
+                                <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" defaultValue={0} min="0" max="100"></input>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text spanCCEdit" id="basic-addon1">חברתי</span>
+                                    </div>
+                                </div>
+                                <div className="col-12 input-group mb-3">
+                                <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" defaultValue={0} min="0" max="100"></input>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text spanCCEdit" id="basic-addon1">לימודי</span>
+                                    </div>
+                                </div>
+                                <div className='errorPercent' id="percentValuesError"></div>
                             </div>
                             <div dir="rtl" >
                                 <Checkbox

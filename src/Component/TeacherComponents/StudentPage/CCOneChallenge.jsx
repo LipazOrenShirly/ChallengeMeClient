@@ -29,7 +29,6 @@ class CCOneChallenge extends Component {
         return ( 
             <div  className={classDiv} onClick = { () => this.props.goToEditChallenge(challenge) }>  
                 <div className="oneChallengeDetails"><strong>אתגר {this.props.index}:</strong> {challenge.challengeName}</div>
-                <div>קטגוריה: {challenge.categoryName}</div>
                 <div>תאריך סיום: {challenge.deadline}</div>
                 <div>רמת קושי: {challenge.difficulty}</div>
                 
