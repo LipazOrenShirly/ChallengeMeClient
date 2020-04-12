@@ -20,7 +20,7 @@ export default class CCAddNewChallenge extends Component {
         this.state = {
             challengesArr: [],
             tagsArr: [],
-            chosenTags: [],
+            chosenTagsID: [],
             newChallenge: {},
             showTags: false,
             isPrivate: false,
@@ -154,27 +154,28 @@ export default class CCAddNewChallenge extends Component {
     };
 
     onTagsChange = (event, values) => {
-        this.setState({
-            chosenTags: values
-        }, () => {
-          // This will output an array of objects
-          // given by Autocompelte options property.
-          console.log("chosenTags = "+this.state.chosenTags);
+        var tags = [];
+        values.map((value) => {
+            tags.push(this.state.tagsArr.filter(tag => tag.tagName == value)[0])
         });
-      }
+        console.log(tags);
+        var tagsID = tags.map((tag) => tag.tagID);
+        console.log(tagsID);
+        this.setState({ chosenTagsID: tagsID });
+    }
 
     Submit = (event) => {
-        //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
+        // בניית אובייקט אתגר שישלח בפקודת פוסט
         const challenge = {
-            challemgeName:  $('#NewChallengeName').val(),
-            // isPrivate: this.state.isPrivate,
-            // social: $('#social').val(),
-            // school: $('#school').val(),
-            // emotional: $('#emotional').val()
+            challengeName: $('#NewChallengeName').val(),
+            isPrivate: this.state.isPrivate,
+            social: $('#social').val(),
+            school: $('#school').val(),
+            emotional: $('#emotional').val()
         }
         console.log('challenge = ' + challenge);
-        
-        fetch(this.apiUrl, {
+
+        fetch(this.apiUrl, {    //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
             method: 'POST',
             body: JSON.stringify(challenge),
             headers: new Headers({
@@ -188,51 +189,45 @@ export default class CCAddNewChallenge extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result[0]);
-                    this.setState({ newChallenge: result[0] });
-                    Swal.fire({
-                        title: 'מעולה!',
-                        text: 'הוספת את האתגר בהצלחה!',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    });
-                    this.props.history.push({
-                        pathname: '/ExtraChallengeDetails',
-                        state: { challenge: this.state.newChallenge }
-                    });
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
+                    this.setState({ newChallenge: result[0] }); // שמירת האתגר שנוצר בדאטה בייס בסטייט
 
-        const ChallengeTag = [{
-            //מערך של תגיות של אתגרים
-        }];
-        
-        fetch(this.ChallengeTag, {
-            method: 'POST',
-            body: JSON.stringify(ChallengeTag),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch POST= ", result[0]);
-                    this.setState({ newChallenge: result[0] });
-                    Swal.fire({
-                        title: 'מעולה!',
-                        text: 'הוספת את האתגר בהצלחה!',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    });
-                    this.props.history.push({
-                        pathname: '/ExtraChallengeDetails',
-                        state: { challenge: this.state.newChallenge }
-                    });
+                    const ChallengeTag = [];
+                    this.state.chosenTagsID.map((tag) =>    //בניית מערך של תגיות של אתגרים שיתאים למחלקה כדי לשלוח בפקודת פוסט
+                    ChallengeTag.push({
+                            challengeID: this.state.newChallenge.challengeID,
+                            tagID: tag
+                        })
+                    );
+                    console.log(ChallengeTag);
+
+                    fetch(this.apiUrlChallengeTag, {    //פקודת פוסט לטבלת תגיות של אתגרים לפי התגיות שנבחרו 
+                        method: 'POST',
+                        body: JSON.stringify(ChallengeTag),
+                        headers: new Headers({
+                            'Content-type': 'application/json; charset=UTF-8'
+                        })
+                    })
+                        .then(res => {
+                            console.log('res=', res);
+                            return res.json()
+                        })
+                        .then(
+                            (result) => {
+                                console.log("fetch PUT= ", result);
+                                Swal.fire({
+                                    title: 'מעולה!',
+                                    text: 'הוספת את האתגר בהצלחה!',
+                                    icon: 'success',
+                                    confirmButtonColor: '#e0819a',
+                                });
+                                this.props.history.push({
+                                    pathname: '/ExtraChallengeDetails',
+                                    state: { challenge: this.state.newChallenge }
+                                });
+                            },
+                            (error) => {
+                                console.log("err post=", error);
+                            });
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -278,16 +273,16 @@ export default class CCAddNewChallenge extends Component {
                         this.state.showTags == true &&
                         <div>
                             <div className="form-group input-group col-12 bc" dir="rtl">
-                                <FreeSoloTags tags={this.state.tagsArr} onTagsChange = {this.onTagsChange}/>
+                                <FreeSoloTags tags={this.state.tagsArr} onTagsChange={this.onTagsChange} />
                             </div>
 
                             {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
 
                             <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
-                                <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" min="1" max="100"></input>
-                                <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" min="1" max="100"></input>
-                                <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" min="1" max="100"></input>
+                                <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" min="0" max="100"></input>
+                                <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" min="0" max="100"></input>
+                                <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" min="0" max="100"></input>
                             </div>
                             <div dir="rtl" >
                                 <Checkbox
