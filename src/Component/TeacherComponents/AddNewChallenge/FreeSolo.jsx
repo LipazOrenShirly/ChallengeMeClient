@@ -16,7 +16,6 @@ export default function FreeSolo(props) {
           <TextField
             {...params}
             label="שם האתגר"
-            id="challengeInput"
             margin="none"
             variant="standard"
             InputProps={{ ...params.InputProps, type: 'search' }}

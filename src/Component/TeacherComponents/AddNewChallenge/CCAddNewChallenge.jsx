@@ -157,7 +157,7 @@ export default class CCAddNewChallenge extends Component {
         //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
         const challenge = {
             challengeName: 'אתגר דוגמה'
-            // challemgeName:  $('#challengeInput').val(),
+            // challemgeName:  $('#NewChallengeName').val(),
             // isPrivate: this.state.isPrivate,
             // social: $('#social').val(),
             // school: $('#school').val(),

@@ -24,6 +24,7 @@ class CCStudentFeatures extends Component {
     }
 
     componentDidMount() {
+        //גט לשאלות
         fetch(this.apiUrlFeaturesQuestion
             , {
                 method: 'GET',
@@ -45,7 +46,8 @@ class CCStudentFeatures extends Component {
                 (error) => {
                     console.log("err get=", error);
                 });
-
+        
+        // גט לתשובות
         fetch(this.apiUrlStudentFeatures + '?studentID=' + this.props.location.state.studentID
             , {
                 method: 'GET',
