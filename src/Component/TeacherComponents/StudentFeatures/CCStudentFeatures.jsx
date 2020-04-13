@@ -18,7 +18,6 @@ class CCStudentFeatures extends Component {
         this.state = {
             QueAndAnsArr: [],
             newFeature: false,
-            tempArr: {}
         }
         let local = true;
         this.apiUrlFeaturesQuestion = 'http://localhost:' + { localHost }.localHost + '/api/FeaturesQuestion';
@@ -29,29 +28,6 @@ class CCStudentFeatures extends Component {
     }
 
     componentDidMount() {
-        // //גט לשאלות
-        // fetch(this.apiUrlFeaturesQuestion
-        //     , {
-        //         method: 'GET',
-        //         headers: new Headers({
-        //             'Content-Type': 'application/json; charset=UTF-8',
-        //         })
-        //     })
-        //     .then(res => {
-        //         console.log('res=', res);
-        //         console.log('res.status', res.status);
-        //         console.log('res.ok', res.ok);
-        //         return res.json();
-        //     })
-        //     .then(
-        //         (result) => {
-        //             console.log("questionsArr= ", result);
-        //             this.setState({ questionsArr: result })
-        //         },
-        //         (error) => {
-        //             console.log("err get=", error);
-        //         });
-
         // גט לשאלות והתשובות
         fetch(this.apiUrlStudentFeatures + '?studentID2=' + this.props.location.state.student.studentID
             , {
@@ -70,14 +46,15 @@ class CCStudentFeatures extends Component {
                 (result) => {
                     console.log("QueAndAnsArr= ", result);
                     console.log("QueAndAnsArr length= ", result.length);
-                    this.setState({ QueAndAnsArr: result, newFeature: (result.length == 0 ? true : false) })
+                    this.setState({ QueAndAnsArr: result, newFeature: (result[0].answer == null ? true : false) })
+                    console.log("אפיון חדש" + this.state.newFeature);
                 },
                 (error) => {
                     console.log("err get=", error);
                 });
     }
 
-    PostFeature = (event) => {
+    PostPutFeature = (event) => {
         const answers = this.state.QueAndAnsArr.map( (item) => {
             return {
                 questionID: item.questionID,
@@ -87,9 +64,10 @@ class CCStudentFeatures extends Component {
         });
             
         console.log(answers); 
+        console.log(this.state.newFeature); 
 
         fetch(this.apiUrlStudentFeatures, {
-            method:'POST',
+            method: this.state.newFeature ? 'POST' : 'PUT',
             body: JSON.stringify(answers),
             headers: new Headers({
                 'Content-type': 'application/json; charset=UTF-8'
@@ -101,10 +79,10 @@ class CCStudentFeatures extends Component {
             })
             .then(
                 (result) => {
-                    console.log("fetch POST= ", result);
+                    console.log("fetch POST/PUT= ", result);
                     Swal.fire({
                         title: 'מעולה!',
-                        text: 'אפיינת את התלמיד בהצלחה!',
+                        text: this.state.newFeature ? 'אפיינת את התלמיד בהצלחה!' : 'עדכון האפיון בוצע בהצלחה',
                         icon: 'success',
                         confirmButtonColor: '#e0819a',
                     });
@@ -114,42 +92,10 @@ class CCStudentFeatures extends Component {
                     });
                 },
                 (error) => {
-                    console.log("err post=", error);
+                    console.log("err post/put=", error);
                 });
         event.preventDefault();
     }
-
-    // PutFeature = (event) => {
-    //     fetch(this.apiUrl, {
-    //         method: 'PUT',
-    //         body: JSON.stringify(answers),
-    //         headers: new Headers({
-    //             'Content-type': 'application/json; charset=UTF-8'
-    //         })
-    //     })
-    //         .then(res => {
-    //             console.log('res=', res);
-    //             return res.json()
-    //         })
-    //         .then(
-    //             (result) => {
-    //                 console.log("fetch PUT= ", result);
-    //                 Swal.fire({
-    //                     title: 'מעולה!',
-    //                     text: 'אפיון הלמיד עודכן בהצלחה!',
-    //                     icon: 'success',
-    //                     confirmButtonColor: '#e0819a',
-    //                 });
-    //                 this.props.history.push({
-    //                     pathname: '/StudentPage',
-    //                     state: { student: this.props.location.state.student }
-    //                 });
-    //             },
-    //             (error) => {
-    //                 console.log("err post=", error);
-    //             });
-    //     event.preventDefault();
-    // }
 
     chooseAns = (e) => {
         // console.log(e.target.value);
@@ -165,7 +111,7 @@ class CCStudentFeatures extends Component {
         return (
             <div className="container-fluid">
                 <NavBar />
-                <form onSubmit= {this.PostFeature}>
+                <form onSubmit= {this.PostPutFeature}>
                     <div className="turkiz">האפיון של {this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
                     <div className="scalaDetails" dir="rtl">1- הכי חלש, 5- הכי חזק</div>
                     <br />
