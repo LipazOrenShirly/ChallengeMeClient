@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import localHost from '../../LittleComponents/LocalHost';
 import '../../../css/Style.css';
 import './styleAddChallengeToStudent.css'
 import Footer from '../../LittleComponents/Footer';
@@ -13,8 +13,37 @@ export default class CCAddChallengeToStudent extends Component {
         this.state = {
             Smartchallenges: ["מראה חיבה לאנשים מוכרים", "משתמש בפעולות בכדי להראות שמחה או דאגה לאחרים", "מראה רצון לרצות אחרים", "להקשיב לסיפור לפחות 15 דקות", "מחקה תנועות פשוטות"]
 
+        } 
+        let local = true;
+        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentScore';
+        if (!local) {
+            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
+
+    componentDidMount() {
+        fetch(this.apiUrl + '?studentID=' + this.props.location.state.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("result= ", result);
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+    }
+
     getSmartOptID = (index) => { //מסיר אותו רק מהנראות, לא מהדאתא בייס, בכוונה
         var temp = this.state.Smartchallenges;
         if (index == 0)
