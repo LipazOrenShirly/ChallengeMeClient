@@ -19,21 +19,27 @@ body{
 }
 /*************ButtonYellow*****************/
 .btnYellow{
-    background-color:#FFE568 ;
-    border:none;
-    color: black;
+    background-color: #F5B5DB;
+    border: none;
+    /* margin: 0 1%; */
+    color: whitesmoke;
+    /* background-color:#FFE568 ; */
+    /* border:none; */
+    /* color: black; */
     font-weight: 600;
-    border-radius: 60px; 
+    border-radius: 3px; 
     width: 100%;
 }
 .btnYellow:hover{
     background-color:rgba(224, 129, 154, 0.801) ;
     color: black;
 }
-
+.roundedBtn{
+    border-radius: 24px; 
+}
 /*************inputRounded*****************/
 .inputRounded{
-    border-radius: 60px; 
+    border-radius: 24px; 
     text-align: center;
 }
 
