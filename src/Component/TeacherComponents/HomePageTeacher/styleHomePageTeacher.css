@@ -80,19 +80,20 @@ padding-top: 7px;
 }
 
 .classNameHome{
-    border: 2px solid black;
+    border: 1px solid rgb(115, 146, 142);
     height: 98px;
-    width: 100px;
+    /* width: 100px; */
     text-align: center;
     align-items: center;
     float: left;
     margin:10px;
     padding:0px;
-    background-color: #96C8C2;
+    background-color: rgb(156, 199, 194);
     font-weight: 700;
     color: white;
     margin-top:2px;
-    border-radius: 2px;
+    border-radius: 5px;
+    
 }
 .flex-container{
     display: flex;

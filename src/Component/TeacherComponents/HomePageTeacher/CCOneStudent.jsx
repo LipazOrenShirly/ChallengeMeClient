@@ -40,7 +40,7 @@ export default class CCOneStudent extends Component {
     render() {
         return (
 
-            <div className="classNameHome col-2" dir="rtl" >
+            <div className="classNameHome col-3" dir="rtl" >
                 <MdClose className="closeIcon" onClick={this.DeleteStudent}/>
                 <span className="verticalMiddle" onClick={() => this.props.SendDataToStudents(this.props.student)}>
                 {this.props.student.firstName}

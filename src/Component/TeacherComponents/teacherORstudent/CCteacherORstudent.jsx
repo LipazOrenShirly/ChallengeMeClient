@@ -25,9 +25,9 @@ export default class CCteacherORstudent extends Component {
             <div className="container-fluid col-xs-12" >
                 <div className="containerTeacherOrStudent">
                 <h1>האם אתה</h1>
-                <div className="col-12"><div className="text-center"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnYellow">מורה</button></div></div>
-                <div className="col-12">
-                <button type="button" className="btn btn-info btnYellow btnYellowTOS" onClick={this.heIsStudent}>תלמיד</button></div>
+                <div className="col-12"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkTotS col-5">מורה</button>
+                
+                <button type="button" className="btn btn-info btnpinkTotS btnYellowTOS col-5" onClick={this.heIsStudent}>תלמיד</button></div>
                 </div>
             </div>
         );

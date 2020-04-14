@@ -1,3 +1,20 @@
 .btnYellowTOS{
-    margin-top: 10%;
+    margin-top: 12%;
+}
+
+.containerTeacherOrStudent{
+ 
+  margin-top: 60%;
+
+}
+.btnpinkTotS{
+    background-color: #F5B5DB;
+    border: none;
+    margin: 0 1%;
+    color: whitesmoke;
+    height: 70px;
+}
+btnpinkTotS:hover{
+    background-color: rgb(245, 155, 209);
+
 }

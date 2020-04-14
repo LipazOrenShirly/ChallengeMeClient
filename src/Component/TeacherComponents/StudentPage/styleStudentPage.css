@@ -4,6 +4,7 @@
     font-size: 120%;
     text-shadow: 1px 1px rgba(147, 141, 160, 0.801);
     color: rgb(127, 116, 145);
+
 }
 /* *** */
 .textTilteChallStusent{
@@ -17,6 +18,8 @@ font-weight: 500;
     margin:2%;
     text-align: right;
     padding: 3%;
+    border-radius: 5px;
+
 }
 .oneChallengeDetails{
     text-decoration: underline;
@@ -26,25 +29,25 @@ font-weight: 500;
     margin-bottom: 2%;
 }
 .status1{
-    border: 1px solid green;
-    background-color: rgba(100, 241, 112, 0.8);
+    border: 1px solid #3fb181b2;
+    background-color: #38c08c42;
 }
 .iconStatus1{
-  color: rgba(100, 241, 112, 0.8);
+  color: #38c08ca1;
 }
 .status2{
-    border: 1px solid red;
-    background-color: rgba(240, 159, 180, 0.8);
+    border: 1px solid #fab0a8d8;
+    background-color: #fabfb8b7;
 }
 .iconStatus2{
-    color: rgba(240, 159, 180, 0.8);
+    color: #fabfb8d5;
 }
 .status3{
-    border: 1px solid orange;
-    background-color: rgba(252, 212, 102, 0.8);
+    border: 1px solid #f5da0c75;
+    background-color: #f5da0c56;
 }
 .iconStatus3{
-    color: rgba(252, 212, 102, 0.8);
+    color: #f7df297a;
     
 }
 .iconStatus1 , .iconStatus2, .iconStatus3{
