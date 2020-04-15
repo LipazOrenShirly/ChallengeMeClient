@@ -26,6 +26,7 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
+            isPhoneExist:false,
             student: {}
         }
         let local = true;
@@ -74,36 +75,43 @@ export default class CCAddNewChallenge extends Component {
             return jsonRes;
 
 
-            // fetch(this.apiUrl, {
-            //     method: 'POST',
-            //     body: JSON.stringify(student1),
-            //     headers: new Headers({
-            //         'Content-type': 'application/json; charset=UTF-8'
-            //     })
-            // })
-            //     .then(res => {
-            //         console.log('res=',res);
-            //         return res.json()
-            //     })
-            //     .then(
-            //         (result) => {
-            //             console.log("fetch POST= ", result);
-            //             this.setState({student:result},
-            //             Swal.fire({
-            //                 title: 'מעולה!',
-            //                 text: 'הוספת את התלמיד בהצלחה!',
-            //                 icon: 'success',
-            //                 confirmButtonColor: '#e0819a',
-            //             }));
-
-            //         },
-            //         (error) => {
-            //             console.log("err post=", error);
-            //         })
-
         }
     }
+    checkIfPhoneExist(e){
+        $('#phoneValuesError').empty();
 
+        var phone= parseInt(e.target.value);
+        console.log(phone);
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?phone=0' + phone 
+        , {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json; charset=UTF-8',
+          })
+        })
+        .then(res => {
+          console.log('res=', res);
+          console.log('res.status', res.status);
+          console.log('res.ok', res.ok);
+          return res.json();
+        })
+        .then(
+          (result) => {
+            console.log("Submit= ", result);
+            console.log("Submit= ", JSON.stringify(result));
+            if ( result != 0){ // כבר קיים השם משתמש הזה
+                this.setState({ HasSphoneValError: true})
+                $('#phoneValuesError').empty();
+                $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
+                }
+         
+          },
+          (error) => {
+            console.log("err get=", error);
+          });
+    
+    }
     CreateAndGoToStudentFeatures = async () => {
         var res = await this.createNewStudent();      
         this.props.history.push({
@@ -217,22 +225,28 @@ export default class CCAddNewChallenge extends Component {
                             this.setState({ Sphone });
                             console.log(e);
                         }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => { console.log(e) 
+                            this.checkIfPhoneExist(e)}} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
                             customFunc: phoneNum => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
+
+                              
                                 if (reg.test(phoneNum)) {
                                     return true;
-                                } else {
+                                
+                                }else {
                                     this.setState({ HasSphoneValError: true });
                                     return "is not a valid phone number";
                                 }
+                                
                             }
                         }}
                     />
                 </div>
+                <div className='errorInputPhone' id="phoneValuesError"></div>
 
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס

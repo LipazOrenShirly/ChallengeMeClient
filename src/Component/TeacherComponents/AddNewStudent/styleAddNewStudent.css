@@ -1,3 +1,8 @@
 .btnAddNewStudent{
     width: 100%;
 }
+.errorInputPhone{
+    color:red;
+    font-size: 16px;
+    
+}
