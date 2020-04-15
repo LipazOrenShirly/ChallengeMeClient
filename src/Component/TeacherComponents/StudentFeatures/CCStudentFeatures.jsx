@@ -28,7 +28,12 @@ class CCStudentFeatures extends Component {
     }
 
     componentDidMount() {
+        console.log( this.props.location.state.student.studentID);
         // גט לשאלות והתשובות
+        
+
+        console.log(this.props.location.state.student);
+        
         fetch(this.apiUrlStudentFeatures + '?studentID2=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
@@ -44,9 +49,10 @@ class CCStudentFeatures extends Component {
             })
             .then(
                 (result) => {
-                    console.log("QueAndAnsArr= ", result);
+                    console.log("QueAndAnsArr= ");
+                    console.log(result)
                     console.log("QueAndAnsArr length= ", result.length);
-                    this.setState({ QueAndAnsArr: result, newFeature: (result[0].answer == null ? true : false) })
+                    this.setState({ QueAndAnsArr: result, newFeature: (result.length == "undefine" ? true : false) })
                     console.log("אפיון חדש" + this.state.newFeature);
                 },
                 (error) => {

@@ -29,29 +29,32 @@ export default class CCStudents extends Component {
      componentDidMount = () => {
         $('#BTNsaveClassName').hide();
         $('#className').val(this.state.Class.className);
-        fetch(this.apiUrl + '?classID=' + this.state.Class.classID
-            , {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                })
-            })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                return res.json();
-            })
-            .then(
-                (result) => {
-                    console.log("StudentArr= ", result);
-                    this.setState({ StudentArr: result })
-                },
-                (error) => {
-                    console.log("err get=", error);
-                });
+        this.getStudentArr();
+     
     }
-
+    getStudentArr=()=>{
+        fetch(this.apiUrl + '?classID=' + this.state.Class.classID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log("StudentArr= ", result);
+                this.setState({ StudentArr: result })
+            },
+            (error) => {
+                console.log("err get=", error);
+            });
+    }
     EditClassName = () => { 
         $('#className').prop("disabled", false);
         $('#BTNeditClassName').hide();
@@ -92,6 +95,28 @@ export default class CCStudents extends Component {
               $('#className').prop("disabled", true);
     }
 
+    deleteStudent=(studentIdData)=>{
+        fetch(this.apiUrl + '?studentID=' + studentIdData, {
+            method: 'DELETE',
+            headers: new Headers({
+                'accept': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch DELETE= ", result);
+                    this.getStudentArr();
+                },
+                (error) => {
+                    console.log("err post=", error);
+                })
+           
+    }
+
     render() {
         return (
             <div className="container-fluid">
@@ -104,7 +129,7 @@ export default class CCStudents extends Component {
                 <div className="row col-12 flex-container">
                 {
                     this.state.StudentArr.map((item) =>
-                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDataToHomeTeacher2} />
+                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDeleteHomeTeacher2} SendDeleteStudents={this.deleteStudent}/>
                     )
                     }
                     </div>

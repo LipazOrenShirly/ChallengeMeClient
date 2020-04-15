@@ -23,7 +23,6 @@ const NavBar = () => {
           <NavLink to="/TeacherInfoScreen">פרטים אישיים</NavLink>
           <NavLink to="/Alerts">התרעות מערכת</NavLink>
           <NavLink to="/Messages">הודעות</NavLink>
-          <NavLink to="/AddNewChallenge">הוספת אתגר חדש</NavLink>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

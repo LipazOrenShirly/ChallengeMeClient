@@ -26,6 +26,7 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
+            student: {}
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -36,7 +37,7 @@ export default class CCAddNewChallenge extends Component {
 
     static contextType = ProjectContext;
 
-    createNewStudent = () => {
+    createNewStudent = async () => {
         const user = this.context;
 
         if (!this.state.HasSfirstNameValError &&
@@ -45,7 +46,7 @@ export default class CCAddNewChallenge extends Component {
             !this.state.HasSpasswordValError &&
             !this.state.HasSpassword2ValError
         ) {
-            var student = {
+            var student1 = {
                 firstName: this.state.SfirstName,
                 lastName: this.state.SlastName,
                 phone: this.state.Sphone,
@@ -54,40 +55,63 @@ export default class CCAddNewChallenge extends Component {
                 classID: this.props.location.state.classID,
                 teacherID: user.teacherID
             }
-            console.log('student = ' + student);
-
-            fetch(this.apiUrl, {
+            console.log('student1 = ' + student1);
+            var result = await fetch(this.apiUrl, {
                 method: 'POST',
-                body: JSON.stringify(student),
+                body: JSON.stringify(student1),
                 headers: new Headers({
                     'Content-type': 'application/json; charset=UTF-8'
                 })
             })
-                .then(res => {
-                    console.log('res=', res);
-                    return res.json()
-                })
-                .then(
-                    (result) => {
-                        console.log("fetch POST= ", result);
-                        Swal.fire({
-                            title: 'מעולה!',
-                            text: 'הוספת את התלמיד בהצלחה!',
-                            icon: 'success',
-                            confirmButtonColor: '#e0819a',
-                        });
-                    },
-                    (error) => {
-                        console.log("err post=", error);
-                    });
+            var jsonRes = await result.json();
+            this.setState({ student: jsonRes });
+            Swal.fire({
+                title: 'מעולה!',
+                text: 'הוספת את התלמיד בהצלחה!',
+                icon: 'success',
+                confirmButtonColor: '#e0819a',
+            })
+            return jsonRes;
+
+
+            // fetch(this.apiUrl, {
+            //     method: 'POST',
+            //     body: JSON.stringify(student1),
+            //     headers: new Headers({
+            //         'Content-type': 'application/json; charset=UTF-8'
+            //     })
+            // })
+            //     .then(res => {
+            //         console.log('res=',res);
+            //         return res.json()
+            //     })
+            //     .then(
+            //         (result) => {
+            //             console.log("fetch POST= ", result);
+            //             this.setState({student:result},
+            //             Swal.fire({
+            //                 title: 'מעולה!',
+            //                 text: 'הוספת את התלמיד בהצלחה!',
+            //                 icon: 'success',
+            //                 confirmButtonColor: '#e0819a',
+            //             }));
+
+            //         },
+            //         (error) => {
+            //             console.log("err post=", error);
+            //         })
+
         }
     }
 
-    CreateAndGoToStudentFeatures = () => {
-        this.createNewStudent();
+    CreateAndGoToStudentFeatures = async () => {
+        var res = await this.createNewStudent();      
         this.props.history.push({
             pathname: '/StudentFeatures',
-        });
+            state: { student: res[0] }
+        })
+      
+
     }
 
     CreateAndGoToHomePage = () => {

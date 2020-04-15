@@ -8,6 +8,7 @@ import CCClasses from './CCClasses';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import CCStudents from './CCStudents';
 import ProjectContext from '../../../Context/ProjectContext';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 
@@ -26,11 +27,11 @@ export default class CCHomePageTeacher extends Component {
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
     }
-    getDataOfMessagesNum=()=>{// runs every 30 seconds.
+    getDataOfMessagesNum = () => {// runs every 30 seconds.
         //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
-  
+
     }
-    
+
 
     getDataFromClasses = (data) => {
         this.setState({ class: data });
@@ -43,13 +44,13 @@ export default class CCHomePageTeacher extends Component {
             state: { student: data }
         })
     }
-    getFronStudents=(classID)=>{
+    getFronStudents = (classID) => {
         this.props.history.push({
-            pathname:'/AddNewStudent',
+            pathname: '/AddNewStudent',
             state: { classID: classID }
-        }) 
+        })
     }
-
+  
     render() {
 
         const user = this.context;
@@ -59,11 +60,18 @@ export default class CCHomePageTeacher extends Component {
             <div className="container-fluid">
                 <NavBar></NavBar><br /><br />
                 <SearchBarHomeTeacher countMessages={4} countAlerts={144} />
+
                 {this.state.studentPage == false &&
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
+
                 }
                 {this.state.studentPage == true &&
-                    <CCStudents class={this.state.class} SendtoStudents={this.getFronStudents} SendDataToHomeTeacher2={this.getDataFromStudents} />
+                    <div>
+                        <div className="col-12"> {/* חזור למסך הקודם */}
+                            <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
+                        </div>
+                        <CCStudents class={this.state.class} SendtoStudents={this.getFronStudents} SendDataToHomeTeacher2={this.getDataFromStudents}  />
+                    </div>
                 }
                 <Footer></Footer>
             </div>

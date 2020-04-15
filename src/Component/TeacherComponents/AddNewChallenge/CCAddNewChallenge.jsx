@@ -174,11 +174,16 @@ export default class CCAddNewChallenge extends Component {
             $('#TagsValuesError').append("חייב להוסיף לפחות תגית אחת");
             return;
         }
-        // if (parseInt($('#emotional').val()) + parseInt($('#social').val()) + parseInt($('#school').val()) != 100) {
-        //     $('#percentValuesError').empty();
-        //     $('#percentValuesError').append("האחוזים חייבים להשלים ל-100");
-        //     return;
-        // }
+        else {
+            $('#TagsValuesError').empty();
+        }
+        if ($('#DifLevelInput').val()=="") {
+            $('#DifValuesError').empty();
+            $('#DifValuesError').append("חייב למלא את רמת הקושי של האתגר");
+            return;
+        }else {
+            $('#DifValuesError').empty();
+        }
 
         console.log(this.state.chosenTagsID);
         const challenge = {
@@ -295,7 +300,7 @@ export default class CCAddNewChallenge extends Component {
                         <div>
                             <div className="form-group input-group col-12 bc" dir="rtl">
                                 <FreeSoloTags tags={this.state.tagsArr} onTagsChange={this.onTagsChange} />
-                                <div className='errorPercent' id="TagsValuesError"></div>
+                                <div className='errorInput' id="TagsValuesError"></div>
                             </div>
 
                             {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
@@ -311,6 +316,8 @@ export default class CCAddNewChallenge extends Component {
                                     <option value="5" >5</option>
                                 </select>
                             </div>
+                            <div className='errorInput' id="DifValuesError"></div>
+
 
                             <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
@@ -332,7 +339,6 @@ export default class CCAddNewChallenge extends Component {
                                         <span className="input-group-text spanCCEdit" id="basic-addon1">לימודי</span>
                                     </div>
                                 </div>
-                                <div className='errorPercent' id="percentValuesError"></div>
                             </div>
                             <div dir="rtl" >
                                 <Checkbox

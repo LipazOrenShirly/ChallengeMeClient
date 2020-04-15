@@ -4,6 +4,7 @@ import './styleHomePageTeacher.css';
 import CCStudents from './CCStudents';
 import localHost from '../../LittleComponents/LocalHost';
 import { MdClose } from  "react-icons/md";
+import Swal from 'sweetalert2';
 
 export default class CCOneStudent extends Component {
     constructor(props) {
@@ -16,26 +17,29 @@ export default class CCOneStudent extends Component {
     }
 
     DeleteStudent = () => {
-        fetch(this.apiUrl + '?studentID=' + this.props.student.studentID, {
-            method: 'DELETE',
-            headers: new Headers({
-                'accept': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch DELETE= ", result);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                })
-            .then(
-                window.location.reload());
-    }
+        Swal.fire({
+            title: 'האם אתה בטוח?',
+            text: "בלחיצה על כן, התלמיד וכל פרטיו יימחקו",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e0819a',
+            cancelButtonColor: '#867D95',
+            cancelButtonText:'בטל',
+            confirmButtonText: 'כן, מחק'
+          }).then((result) => {
+            if (result.value) {
+              Swal.fire({
+                title:'נמחק!',
+                text:'התלמיד נמחק בהצלחה',
+                icon:'success',
+                confirmButtonColor: '#e0819a',
+
+              })
+            
+              this.props.SendDeleteStudents(this.props.student.studentID);
+              }
+          })
+        }
 
     render() {
         return (
