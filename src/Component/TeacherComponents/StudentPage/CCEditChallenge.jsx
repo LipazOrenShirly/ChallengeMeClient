@@ -189,8 +189,8 @@ class CCEditChallenge extends Component {
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={()=> window.history.back()} size={40} />
                 </div>
+                <div className="titleChalengeinCCEDIT">{this.props.location.state.student.studentName}</div>
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
-                <div className="titleCategoryInCCEDIT">קטגוריה: {challenge.categoryName}</div>
                 <br />
 
                 <div><strong>:תאריך סיום האתגר</strong></div>
@@ -208,23 +208,7 @@ class CCEditChallenge extends Component {
                         <span class="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
                     </div>
                     <input type="text" className="form-control inputCCEdit" id="StatusInput" disabled />
-                </div>
-
-                <div><strong>:רמת קושי האתגר</strong></div>
-                <div className="col-12 input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsLevelInput}</span>
-                    </div>
-                    <select class="form-control inputCCEdit" id="DifLevelInput" disabled>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-
-                
+                </div>              
                 <div className="col-12">
                     <button id="deleteChallenge" className="btn btn-info btnDeleteChallenge" onClick={this.DeleteChallenge}>מחק את האתגר</button>
                 </div>

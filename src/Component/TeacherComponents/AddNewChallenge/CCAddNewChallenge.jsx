@@ -174,11 +174,11 @@ export default class CCAddNewChallenge extends Component {
             $('#TagsValuesError').append("חייב להוסיף לפחות תגית אחת");
             return;
         }
-        if (parseInt($('#emotional').val()) + parseInt($('#social').val()) + parseInt($('#school').val()) != 100) {
-            $('#percentValuesError').empty();
-            $('#percentValuesError').append("האחוזים חייבים להשלים ל-100");
-            return;
-        }
+        // if (parseInt($('#emotional').val()) + parseInt($('#social').val()) + parseInt($('#school').val()) != 100) {
+        //     $('#percentValuesError').empty();
+        //     $('#percentValuesError').append("האחוזים חייבים להשלים ל-100");
+        //     return;
+        // }
 
         console.log(this.state.chosenTagsID);
         const challenge = {
@@ -186,17 +186,24 @@ export default class CCAddNewChallenge extends Component {
             isPrivate: this.state.isPrivate,
             social: $('#social').val(),
             school: $('#school').val(),
-            emotional: $('#emotional').val()
+            emotional: $('#emotional').val(),
+            difficulty: $('#DifLevelInput').val()
         }
-        console.log('challenge = ' + challenge);
+        console.log(JSON.stringify(challenge));
 
-        fetch(this.apiUrl, {    //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
-            method: 'POST',
-            body: JSON.stringify(challenge),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
+        //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
+        fetch(this.apiUrl,
+            //  `
+            // ?challengeName=${challenge.challengeName}&isPrivate=${challenge.isPrivate}
+            // &social=${challenge.social}&emotional=${challenge.emotional}&difficulty=${challenge.difficulty}
+            // &studentID=${this.props.location.state.studentID}`,
+            {
+                method: 'POST',
+                // body: JSON.stringify(challenge),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8'
+                })
             })
-        })
             .then(res => {
                 console.log('res=', res);
                 return res.json()
@@ -293,24 +300,36 @@ export default class CCAddNewChallenge extends Component {
 
                             {/* <ChipsArray TagsArray={this.state.arr} SendNewArrToAddNewChallenge={this.getNewArrAfterDelete} /> */}
 
+                            <div className="purpule"><strong>:רמת קושי האתגר</strong></div>
+                            <div className="col-12 input-group mb-3">
+                                <select className="form-control inputCCEdit" id="DifLevelInput">
+                                    <option value="" >..בחר</option>
+                                    <option value="1" >1</option>
+                                    <option value="2" >2</option>
+                                    <option value="3" >3</option>
+                                    <option value="4" >4</option>
+                                    <option value="5" >5</option>
+                                </select>
+                            </div>
+
                             <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
                                 <div className="col-12 input-group mb-3">
-                                <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" defaultValue={0} min="0" max="100"></input>
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text spanCCEdit" id="basic-addon1">רגשי</span>
+                                    <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" defaultValue={0} min="0" max="100"></input>
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text spanCCEdit" id="basic-addon1">רגשי</span>
                                     </div>
                                 </div>
                                 <div className="col-12 input-group mb-3">
-                                <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" defaultValue={0} min="0" max="100"></input>
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text spanCCEdit" id="basic-addon1">חברתי</span>
+                                    <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" defaultValue={0} min="0" max="100"></input>
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text spanCCEdit" id="basic-addon1">חברתי</span>
                                     </div>
                                 </div>
                                 <div className="col-12 input-group mb-3">
-                                <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" defaultValue={0} min="0" max="100"></input>
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text spanCCEdit" id="basic-addon1">לימודי</span>
+                                    <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" defaultValue={0} min="0" max="100"></input>
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text spanCCEdit" id="basic-addon1">לימודי</span>
                                     </div>
                                 </div>
                                 <div className='errorPercent' id="percentValuesError"></div>

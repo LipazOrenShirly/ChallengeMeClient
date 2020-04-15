@@ -15,17 +15,20 @@ class CCStudentPage extends Component {
         }
     }
 
-    goToEditChallenge=(challenge)=>{
+    goToEditChallenge = (challenge) => {
         this.props.history.push({
-            pathname:'/EditChallenge',
-             state:{challenge: challenge }
-        })   
+            pathname: '/EditChallenge',
+            state: { 
+                challenge: challenge, 
+                student: this.props.location.state.student
+            }
+        })
     }
-    getDataFromChallenges=(studentID)=>{
+    getDataFromChallenges = (studentID) => {
         this.props.history.push({
-            pathname:'/AddChallengeToStudent',
-             state:{studentID: studentID }
-        })   
+            pathname: '/AddChallengeToStudent',
+            state: { studentID: studentID }
+        })
     }
 
     render() {
@@ -35,11 +38,14 @@ class CCStudentPage extends Component {
         return (
             <div>
                 <NavBar /><br />
-                <CCStudentDetails student = {student} />
-                <CCChallenges studentID = {student.studentID} goToEditChallenge = {this.goToEditChallenge} SendDataToStudentPage={this.getDataFromChallenges}  />
-                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick = { ()=> this.props.history.push('/StudentInfoScreen', {student: student} ) } >פרטי התלמיד</button></div>
-                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick = { ()=> this.props.history.push('/StudentFeatures', {student: student} ) } >אפיון התלמיד</button></div>
-                
+                {/* <CCStudentDetails student = {student} /> */}
+                <div>
+                    <p className="textStudentDetails"> התלמיד <strong>{student.firstName} {student.lastName}</strong></p>
+                </div>
+                <CCChallenges studentID={student.studentID} goToEditChallenge={this.goToEditChallenge} SendDataToStudentPage={this.getDataFromChallenges} />
+                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick={() => this.props.history.push('/StudentInfoScreen', { student: student })} >פרטי התלמיד</button></div>
+                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick={() => this.props.history.push('/StudentFeatures', { student: student })} >אפיון התלמיד</button></div>
+
                 <br /><br />
                 <Footer />
             </div>

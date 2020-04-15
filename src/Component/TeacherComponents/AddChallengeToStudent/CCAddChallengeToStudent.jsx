@@ -63,7 +63,7 @@ export default class CCAddChallengeToStudent extends Component {
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.Smartchallenges.map((item, key) =>
-                            <CConeSmartElementOffer item={item} index={key} studentID={this.props.studentID} SendSmartOptToAddChallenge={this.getSmartOptID} />
+                            <CConeSmartElementOffer item={item} index={key} studentID={this.props.location.state.studentID} SendSmartOptToAddChallenge={this.getSmartOptID} />
                         )}
 
                 </div>
@@ -71,10 +71,10 @@ export default class CCAddChallengeToStudent extends Component {
                 <div className="titleSmartDiv"><strong>:אופציות נוספות</strong></div>
                 <br />
                 <div className="form-group col-12">
-                    <button className="btn btn-info btnAddChallengeToStudent" onClick={() => this.props.history.push('/SearchChallenge', { studentID: this.props.studentID })}>חיפוש במאגר הגדול</button>
+                    <button className="btn btn-info btnAddChallengeToStudent" onClick={() => this.props.history.push('/SearchChallenge', { studentID: this.props.location.state.studentID })}>חיפוש במאגר הגדול</button>
                 </div>
                 <div className="form-group col-12">
-                    <button className="btn btn-info btnAddChallengeToStudent" onClick={() => this.props.history.push('/AddNewChallenge', { studentID: this.props.studentID })} >יצירת אתגר חדש</button>
+                    <button className="btn btn-info btnAddChallengeToStudent" onClick={() => this.props.history.push('/AddNewChallenge', { studentID: this.props.location.state.studentID })} >יצירת אתגר חדש</button>
                 </div>
 
 

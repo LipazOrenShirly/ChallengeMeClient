@@ -41,6 +41,7 @@ class CCExtraChallengeDetails extends Component {
         alert(DifLevelInput);
         alert(this.state.startDate);
         console.log(this.state.startDate.ToString("dd/mm/yyyy"));
+
         //כאן יהיה פקודת פוסט.. צריך לשים לב שהתאריך מגיע בצורה מוזרה
         event.preventDefault();
     }
@@ -65,17 +66,6 @@ class CCExtraChallengeDetails extends Component {
 
                             // placeholderText="Select a date between today and 5 days in the future"
                             />
-                        </div>
-                        <div className="purpule"><strong>:רמת קושי האתגר</strong></div>
-                        <div className="col-12 input-group mb-3">
-                            <select className="form-control inputCCEdit" id="DifLevelInput">
-                                <option value="" >..בחר</option>
-                                <option value="1" >1</option>
-                                <option value="2" >2</option>
-                                <option value="3" >3</option>
-                                <option value="4" >4</option>
-                                <option value="5" >5</option>
-                            </select>
                         </div>
                         <div className="form-group col-12">
                             <button className="btn btn-info createNewChallenge">שמור</button>
