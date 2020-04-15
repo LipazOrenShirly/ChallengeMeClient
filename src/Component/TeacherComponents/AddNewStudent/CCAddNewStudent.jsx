@@ -26,7 +26,7 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
-            isPhoneExist:false,
+            isPhoneExist: false,
             student: {}
         }
         let local = true;
@@ -76,57 +76,61 @@ export default class CCAddNewChallenge extends Component {
 
 
         }
+        else return 0;
     }
-    checkIfPhoneExist(e){
+    checkIfPhoneExist(e) {
         $('#phoneValuesError').empty();
 
-        var phone= parseInt(e.target.value);
+        var phone = parseInt(e.target.value);
         console.log(phone);
         // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
-        fetch(this.apiUrl + '?phone=0' + phone 
-        , {
-          method: 'GET',
-          headers: new Headers({
-            'Content-Type': 'application/json; charset=UTF-8',
-          })
-        })
-        .then(res => {
-          console.log('res=', res);
-          console.log('res.status', res.status);
-          console.log('res.ok', res.ok);
-          return res.json();
-        })
-        .then(
-          (result) => {
-            console.log("Submit= ", result);
-            console.log("Submit= ", JSON.stringify(result));
-            if ( result != 0){ // כבר קיים השם משתמש הזה
-                this.setState({ HasSphoneValError: true})
-                $('#phoneValuesError').empty();
-                $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
-                }
-         
-          },
-          (error) => {
-            console.log("err get=", error);
-          });
-    
+        fetch(this.apiUrl + '?phone=0' + phone
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result != 0) { // כבר קיים השם משתמש הזה
+                        this.setState({ HasSphoneValError: true })
+                        $('#phoneValuesError').empty();
+                        $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
+                    }
+
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+
     }
     CreateAndGoToStudentFeatures = async () => {
-        var res = await this.createNewStudent();      
-        this.props.history.push({
-            pathname: '/StudentFeatures',
-            state: { student: res[0] }
-        })
-      
+        var res = await this.createNewStudent();
+        if (res != 0) {
+            this.props.history.push({
+                pathname: '/StudentFeatures',
+                state: { student: res[0] }
+            })
 
+        }
     }
 
     CreateAndGoToHomePage = () => {
-        this.createNewStudent();
-        this.props.history.push({
-            pathname: '/HomePageTeacher',
-        })
+        var res = this.createNewStudent();
+        if (res != 0) {
+            this.props.history.push({
+                pathname: '/HomePageTeacher',
+            })
+        }
     }
 
     render() {
@@ -225,23 +229,25 @@ export default class CCAddNewChallenge extends Component {
                             this.setState({ Sphone });
                             console.log(e);
                         }}
-                        onBlur={(e) => { console.log(e) 
-                            this.checkIfPhoneExist(e)}} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => {
+                            console.log(e)
+                            this.checkIfPhoneExist(e)
+                        }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
                             customFunc: phoneNum => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
 
-                              
+
                                 if (reg.test(phoneNum)) {
                                     return true;
-                                
-                                }else {
+
+                                } else {
                                     this.setState({ HasSphoneValError: true });
                                     return "is not a valid phone number";
                                 }
-                                
+
                             }
                         }}
                     />
