@@ -7,6 +7,7 @@ import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-vali
 import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
 import ProjectContext from '../../../Context/ProjectContext';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 import $ from 'jquery';
@@ -129,6 +130,9 @@ export default class CCStudentInfoScreen extends Component {
         return (
             <div className="container-fluid">
                 <NavBar></NavBar>
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                </div>
                 <div className="col-12 turkiz">הוספת תלמיד חדש</div>
                 {/* <div className="col-12">לפני הוספת התלמיד נצטרך שתמלא כמה פרטים שיעזרו לנו בהמשך לאפיין את הילד כמו שצריך ויוכל להקל עלייך רבות בבחירת האתגרים</div> */}
                 <br />

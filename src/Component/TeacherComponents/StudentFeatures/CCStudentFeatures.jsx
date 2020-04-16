@@ -10,6 +10,7 @@ import $ from 'jquery';
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { TiArrowBack } from 'react-icons/ti';
 
 
 class CCStudentFeatures extends Component {
@@ -112,11 +113,30 @@ class CCStudentFeatures extends Component {
         console.log(this.state.QueAndAnsArr);
     }
 
+    goBack=()=>{
+            Swal.fire({
+                title: 'שים לב',
+                text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e0819a',
+                cancelButtonColor: '#867D95',
+                cancelButtonText: 'בטל',
+                confirmButtonText: 'כן, חזור'
+            }).then((result) => {
+                if (result.value) {  //אם בחר אישור
+                    window.history.back();
+                }
+            }) 
+    }
     render() {
         const { QueAndAnsArr } = this.state;
         return (
             <div className="container-fluid">
                 <NavBar />
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={this.goBack} size={40} />
+                </div>
                 <form onSubmit= {this.PostPutFeature}>
                     <div className="turkiz">האפיון של {this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
                     <div className="scalaDetails" dir="rtl">1- הכי חלש, 5- הכי חזק</div>

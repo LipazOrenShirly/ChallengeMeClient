@@ -6,6 +6,8 @@ import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
+import $ from 'jquery';
+import { TiArrowBack } from 'react-icons/ti';
 
 export default class CCnewTeacher extends Component {
     constructor(props) {
@@ -27,7 +29,7 @@ export default class CCnewTeacher extends Component {
             HaspasswordValError: true,
             Haspassword2ValError: true,
             HasschoolValError: true,
-            isUserNameExist:false
+            isUserNameExist: false
 
         }
         let local = true;
@@ -38,7 +40,7 @@ export default class CCnewTeacher extends Component {
     }
 
     Submit = (event) => {
-     
+
 
         if (!this.state.HasfirstNameValError &&
             !this.state.HaslastNameValError &&
@@ -48,83 +50,86 @@ export default class CCnewTeacher extends Component {
             !this.state.HaspasswordValError &&
             !this.state.Haspassword2ValError &&
             !this.state.HasschoolValError
-            )
-        {
-        console.log('state=' + this.state);
+        ) {
+            console.log('state=' + this.state);
 
-        var data = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            userName: this.state.userName,
-            mail: this.state.mail,
-            phone: this.state.phone,
-            password: this.state.password,
-            school: this.state.school
-        }
-        console.log('data=' + data);
-        fetch(this.apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
+            var data = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                userName: this.state.userName,
+                mail: this.state.mail,
+                phone: this.state.phone,
+                password: this.state.password,
+                school: this.state.school
+            }
+            console.log('data=' + data);
+            fetch(this.apiUrl, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8'
+                })
             })
-        })
+                .then(res => {
+                    console.log('res=', res);
+                    return res.json()
+                })
+                .then(
+                    (result) => {
+                        console.log("fetch POST= ", result);
+
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                    })
+                .then(
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text: 'הוספת בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    }).then(
+                        this.props.history.push({
+                            pathname: '/TeacherLogin',
+                        }))
+                );
+        }
+        event.preventDefault();
+    }
+
+    checkIfUserNameExist(e) {
+        var usernameNewTeacher = e.target.value;
+        $('#userNameValuesError').empty();
+
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?usernameNewTeacher=' + usernameNewTeacher
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
             })
             .then(
                 (result) => {
-                    console.log("fetch POST= ", result);
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result == 1) { // כבר קיים השם משתמש הזה
+                        this.setState({ HasuserNameValError: true });
+                        $('#userNameValuesError').empty();
+                        $('#userNameValuesError').append("this userName is already taken");
+                    }
 
                 },
                 (error) => {
-                    console.log("err post=", error);
-                })
-            .then(
-                Swal.fire({
-                  title: 'מעולה!',
-                  text: 'הוספת בהצלחה!',
-                  icon: 'success',
-                  confirmButtonColor: '#e0819a',
-                }).then(
-                this.props.history.push({
-                    pathname: '/TeacherLogin',
-                }))
-            );
-            }
-            event.preventDefault();
-    }
+                    console.log("err get=", error);
+                });
 
-    checkIfUserNameExist(e){
-        var username= e.target.value;
-        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
-        fetch(this.apiUrl + '?usernameNewTeacher=' + username 
-        , {
-          method: 'GET',
-          headers: new Headers({
-            'Content-Type': 'application/json; charset=UTF-8',
-          })
-        })
-        .then(res => {
-          console.log('res=', res);
-          console.log('res.status', res.status);
-          console.log('res.ok', res.ok);
-          return res.json();
-        })
-        .then(
-          (result) => {
-            console.log("Submit= ", result);
-            console.log("Submit= ", JSON.stringify(result));
-            if ( result == 1){ // כבר קיים השם משתמש הזה
-                 this.setState({isUserNameExist:true});
-                }
-         
-          },
-          (error) => {
-            console.log("err get=", error);
-          });
-    
     }
 
     render() {
@@ -142,7 +147,11 @@ export default class CCnewTeacher extends Component {
         return (
             <div className="container-fluid">
                 <div className="loginDiv">
+                    <div className="col-12"> {/* חזור למסך הקודם */}
+                        <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                    </div>
                     <Logo></Logo>
+
                     <form onSubmit={this.Submit}>
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
@@ -153,8 +162,7 @@ export default class CCnewTeacher extends Component {
                                     className: "form-control inputNewTeacher"
                                 }}
                                 value={firstName}
-                                validationCallback={(res) =>
-                                   { this.setState({ HasfirstNameValError: res })}
+                                validationCallback={(res) => { this.setState({ HasfirstNameValError: res }) }
                                 }
                                 onChange={(firstName, e) => { //כל שינוי הוא שומר בסטייט
                                     this.setState({ firstName });
@@ -169,7 +177,7 @@ export default class CCnewTeacher extends Component {
                                             // this.setState({ HasfirstNameValError: true });
                                             return "Name is required.";
                                         }
-                                        if (v.length < 2 ) {
+                                        if (v.length < 2) {
                                             // this.setState({ HasfirstNameValError: true });
                                             return "Name needs at least 2 length.";
                                         }
@@ -178,9 +186,9 @@ export default class CCnewTeacher extends Component {
                                 }}
                             />
                         </div>
-                        
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTLastName',
                                     type: 'text',
@@ -205,17 +213,18 @@ export default class CCnewTeacher extends Component {
                                             this.setState({ HaslastNameValError: true });
                                             return "Last Name is required.";
                                         }
-                                        if (v.length < 2 ) {
+                                        if (v.length < 2) {
                                             this.setState({ HaslastNameValError: true });
                                             return "Last Name needs at least 2 length.";
                                         }
                                         return true;
-                                    }}}
+                                    }
+                                }}
                             />
                         </div>
-                        
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTUserName',
                                     type: 'text',
@@ -231,8 +240,9 @@ export default class CCnewTeacher extends Component {
                                     this.setState({ userName });
                                     console.log(e);
                                 }}
-                                onBlur={(e) => { console.log(e) 
-                                this.checkIfUserNameExist(e)
+                                onBlur={(e) => {
+                                    console.log(e)
+                                    this.checkIfUserNameExist(e)
                                 }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
@@ -242,18 +252,16 @@ export default class CCnewTeacher extends Component {
                                             this.setState({ HasuserNameValError: true });
                                             return "Name is required.";
                                         }
-                                        if (this.state.isUserNameExist==true) { //לבדוק האם קיים בDB
-                                            this.setState({ HasuserNameValError: true });
-                                            return "this userName is already taken";
-                                        }
+
                                         return true;
                                     }
                                 }}
                             />
                         </div>
-                       
+                        <div className='errorInputuserName' id="userNameValuesError"></div>
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTMail',
                                     type: 'mail',
@@ -276,19 +284,19 @@ export default class CCnewTeacher extends Component {
                                     customFunc: mail => {
                                         const reg1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                                         if (reg1.test(String(mail).toLowerCase())) {
-                                          return true;
+                                            return true;
                                         } else {
                                             this.setState({ HasmailValError: true });
                                             return "is not a valid email address";
                                         }
-                                      }
+                                    }
                                 }}
                             />
 
                         </div>
-                        
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTPhone',
                                     type: 'text',
@@ -311,7 +319,7 @@ export default class CCnewTeacher extends Component {
                                     customFunc: phoneNum => {
                                         const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
                                         if (reg.test(phoneNum)) {
-                                          return true;
+                                            return true;
                                         } else {
                                             this.setState({ HasphoneValError: true });
                                             return "is not a valid phone number";
@@ -322,7 +330,7 @@ export default class CCnewTeacher extends Component {
                         </div>
 
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTPassword',
                                     type: 'password',
@@ -342,21 +350,21 @@ export default class CCnewTeacher extends Component {
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                                        customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
-                                            const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
-                                            if (reg.test(pas)) {
-                                              return true;
-                                            } else {
-                                                this.setState({ HaspasswordValError: true });
-                                                return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
-                                            }
+                                    customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
+                                        const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
+                                        if (reg.test(pas)) {
+                                            return true;
+                                        } else {
+                                            this.setState({ HaspasswordValError: true });
+                                            return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
                                         }
+                                    }
                                 }}
                             />
                         </div>
-                        
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'password2',
                                     type: 'password',
@@ -379,7 +387,7 @@ export default class CCnewTeacher extends Component {
                                     customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
                                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                                         if (reg.test(pas)) {
-                                            if(password2==password)
+                                            if (password2 == password)
                                                 return true;
                                             else {
                                                 this.setState({ Haspassword2ValError: true });
@@ -393,9 +401,9 @@ export default class CCnewTeacher extends Component {
                                 }}
                             />
                         </div>
-                        
+
                         <div className="form-group col-12">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTSchool',
                                     type: 'text',
@@ -420,7 +428,7 @@ export default class CCnewTeacher extends Component {
                                             this.setState({ HasschoolValError: true });
                                             return "School Name is required.";
                                         }
-                                        if (v.length < 2 ) {
+                                        if (v.length < 2) {
                                             this.setState({ HasschoolValError: true });
                                             return "School Name needs at least 2 length.";
                                         }

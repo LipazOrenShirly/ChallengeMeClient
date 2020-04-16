@@ -6,6 +6,7 @@ import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
 import SweetAlert from 'sweetalert2-react';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 export default class CCTeacherForgetPassword extends Component {
@@ -13,8 +14,8 @@ export default class CCTeacherForgetPassword extends Component {
         super(props);
         this.state = {
             mail: "",
-            showGood:false,
-            showBad:false,
+            showGood: false,
+            showBad: false,
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
@@ -41,9 +42,9 @@ export default class CCTeacherForgetPassword extends Component {
             .then(
                 (result) => {
                     console.log("Submit= ", result);
-                    if (result==1){
-                    this.setState({ showGood: true });
-                    this.props.history.push('/TeacherLogin');
+                    if (result == 1) {
+                        this.setState({ showGood: true });
+                        this.props.history.push('/TeacherLogin');
                     }
                     else {
                         this.setState({ showBad: true });
@@ -57,17 +58,23 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     render() {
-        const {mail}=this.state
+        const { mail } = this.state
         return (
             <div className="container-fluid">
-                <Logo></Logo>
-                <div className="col-10 ForgetPasswordDov" align="right">
-                    <div>?שכחת ססמה</div>
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                </div>
+                <div className="col-12">
+                    <img className="logoImgForget" src={require('../../../img/logoChallengeMe.svg')} />
+                </div>
+
+                <div className="col-10 ForgetPasswordDiv" align="right">
+                    <div><strong>?שכחת ססמה</strong></div>
                     <div className="marginBottom">לא נורא, הזן את כתובת המייל איתה נרשמת ונשלח לך סיסמה חדשה</div>
-                    <br />
+                    
                     <form onSubmit={this.Submit}>
                         <div className="form-group">
-                        <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     id: 'NewTMail',
                                     type: 'mail',
@@ -90,31 +97,31 @@ export default class CCTeacherForgetPassword extends Component {
                                     customFunc: mail => {
                                         const reg1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                                         if (reg1.test(String(mail).toLowerCase())) {
-                                          return true;
+                                            return true;
                                         } else {
                                             this.setState({ HasmailValError: true });
                                             return "is not a valid email address";
                                         }
-                                      }
+                                    }
                                 }}
                             />
-                       
+
                         </div>
                         <div className="text-center"><button type="submit" className="btn btn-light btnYellow roundedBtn" onClick={this.sendEmail}>שלח</button></div>
                         <SweetAlert
-        show={this.state.showGood}
-        title="הסיסמה שונתה!"
-        text="הססמה החדשה נשלחה לך למייל"
-        icon="success"
-        onConfirm={() => this.setState({ showGood: false })}
-      />
-      <SweetAlert
-        show={this.state.showBad}
-        title="אוי"
-        text="המייל לא נשלח, אנא נסה שנית"
-        icon="error"
-        onConfirm={() => this.setState({ showBad: false })}
-      />
+                            show={this.state.showGood}
+                            title="הסיסמה שונתה!"
+                            text="הססמה החדשה נשלחה לך למייל"
+                            icon="success"
+                            onConfirm={() => this.setState({ showGood: false })}
+                        />
+                        <SweetAlert
+                            show={this.state.showBad}
+                            title="אוי"
+                            text="המייל לא נשלח, אנא נסה שנית"
+                            icon="error"
+                            onConfirm={() => this.setState({ showBad: false })}
+                        />
                     </form>
                 </div>
                 <div className="divForgetPasswordIMG"><img className="ForgetPasswordIMG" src={require('../../../img/forgetPasswordImg.png')} />

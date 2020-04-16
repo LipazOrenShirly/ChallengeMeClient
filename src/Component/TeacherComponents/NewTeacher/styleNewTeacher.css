@@ -12,3 +12,7 @@ box-shadow: none !important
    padding-bottom: 30px;
 
 }
+.errorInputuserName{
+    color:red;
+    font-size: 14px;
+}
