@@ -199,13 +199,9 @@ export default class CCAddNewChallenge extends Component {
 
         //פקודת פוסט לאתגר החדש שמחזירה את האובייקט של האתגר שנוצר ומעבירה אותו לעמוד הבא
         fetch(this.apiUrl,
-            //  `
-            // ?challengeName=${challenge.challengeName}&isPrivate=${challenge.isPrivate}
-            // &social=${challenge.social}&emotional=${challenge.emotional}&difficulty=${challenge.difficulty}
-            // &studentID=${this.props.location.state.studentID}`,
             {
                 method: 'POST',
-                // body: JSON.stringify(challenge),
+                body: JSON.stringify(challenge),
                 headers: new Headers({
                     'Content-type': 'application/json; charset=UTF-8'
                 })
