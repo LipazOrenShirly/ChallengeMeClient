@@ -129,7 +129,7 @@ export default class CCStudents extends Component {
                 <div className="row col-12 flex-container">
                 {
                     this.state.StudentArr.map((item) =>
-                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDeleteHomeTeacher2} SendDeleteStudents={this.deleteStudent}/>
+                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDataToHomeTeacher2} SendDeleteStudents={this.deleteStudent}/>
                     )
                     }
                     </div>

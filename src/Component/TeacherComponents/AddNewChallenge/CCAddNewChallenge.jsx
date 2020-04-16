@@ -192,7 +192,8 @@ export default class CCAddNewChallenge extends Component {
             social: $('#social').val(),
             school: $('#school').val(),
             emotional: $('#emotional').val(),
-            difficulty: $('#DifLevelInput').val()
+            difficulty: $('#DifLevelInput').val(),
+            studentID: this.props.location.state.studentID
         }
         console.log(JSON.stringify(challenge));
 
