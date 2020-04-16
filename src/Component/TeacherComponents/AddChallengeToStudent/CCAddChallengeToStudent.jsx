@@ -13,7 +13,7 @@ export default class CCAddChallengeToStudent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Smartchallenges: ["מראה חיבה לאנשים מוכרים", "משתמש בפעולות בכדי להראות שמחה או דאגה לאחרים", "מראה רצון לרצות אחרים", "להקשיב לסיפור לפחות 15 דקות", "מחקה תנועות פשוטות"]
+            Smartchallenges: [],
 
         } 
         let local = true;
@@ -40,6 +40,7 @@ export default class CCAddChallengeToStudent extends Component {
             .then(
                 (result) => {
                     console.log("result= ", result);
+                    this.setState({Smartchallenges: result});
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -49,9 +50,19 @@ export default class CCAddChallengeToStudent extends Component {
     getSmartOptID = (index) => { //מסיר אותו רק מהנראות, לא מהדאתא בייס, בכוונה
         var temp = this.state.Smartchallenges;
         if (index == 0)
-            temp.splice(index, index + 1);
-        else temp.splice(index, index);
+            temp.splice(index, 1);
+        else temp.splice(index, 1);
         this.setState({ Smartchallenges: temp });
+    }
+
+    GoToExtraDetailsPage = (challenge) => {
+        this.props.history.push({
+            pathname: '/ExtraChallengeDetails',
+            state: { 
+                challenge: challenge,
+                studentID: this.props.location.state.studentID 
+            }
+        })
     }
 
     render() {
@@ -69,7 +80,8 @@ export default class CCAddChallengeToStudent extends Component {
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.Smartchallenges.map((item, key) =>
-                            <CConeSmartElementOffer item={item} index={key} studentID={this.props.location.state.studentID} SendSmartOptToAddChallenge={this.getSmartOptID} />
+                            <CConeSmartElementOffer challenge={item} index={key} key={item.challengeID} studentID={this.props.location.state.studentID} 
+                                SendSmartOptToAddChallenge={this.getSmartOptID} GoToExtraDetailsPage={this.GoToExtraDetailsPage}/>
                         )}
 
                 </div>

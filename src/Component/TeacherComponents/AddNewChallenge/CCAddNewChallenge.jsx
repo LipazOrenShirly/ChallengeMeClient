@@ -246,7 +246,9 @@ export default class CCAddNewChallenge extends Component {
                                 });
                                 this.props.history.push({
                                     pathname: '/ExtraChallengeDetails',
-                                    state: { challenge: this.state.newChallenge }
+                                    state: { 
+                                        challenge: this.state.newChallenge,
+                                        studentID: this.props.location.state.studentID }
                                 });
                             },
                             (error) => {

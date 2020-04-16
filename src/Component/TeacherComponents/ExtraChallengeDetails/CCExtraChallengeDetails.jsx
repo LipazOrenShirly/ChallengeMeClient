@@ -17,32 +17,86 @@ class CCExtraChallengeDetails extends Component {
         super(props);
         this.state = {
             startDate: null,
+            student: {}
         }
         let local = true;
-        this.apiUrlClass = 'http://localhost:' + { localHost }.localHost + '/api/Class';
-        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
+        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
+        this.apiUrStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
         }
     }
 
+    componentDidMount() {
+        fetch(this.apiUrStudent + '?studentID=' + this.props.location.state.studentID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log("Student= ", result[0]);
+                this.setState({ student: result[0] })
+            },
+            (error) => {
+                console.log("err get=", error);
+            });
+    }
 
     Submit = (event) => {
-        let DifLevelInput = $('#DifLevelInput').val();
-        if (DifLevelInput == "" || this.state.startDate == null) {
+        if (this.state.deadline == null) {
             Swal.fire({
                 title: 'שים לב',
-                text: 'כל הערכים צריכים להיות מלאים',
+                text: 'יש לבחור תאריך סיום לביצוע האתגר',
                 icon: 'warnning',
                 confirmButtonColor: '#e0819a',
             });
             return;
         }
-        alert(DifLevelInput);
-        alert(this.state.startDate);
-        console.log(this.state.startDate.ToString("dd/mm/yyyy"));
 
-        //כאן יהיה פקודת פוסט.. צריך לשים לב שהתאריך מגיע בצורה מוזרה
+        const studentChallenge = {
+            challengeID: this.props.location.state.challenge.challengeID,
+            studentID: this.props.location.state.studentID,
+            deadline: $('#DeadlineChallengeId').val().replace(/(..).(..).(....)/, "$3-$1-$2"),
+        }
+        console.log(studentChallenge);
+        fetch(this.apiUrl, {   
+            method: 'POST',
+            body: JSON.stringify(studentChallenge),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text: 'הוספת את האתגר בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    });
+                    this.props.history.push({
+                        pathname: '/StudentPage',
+                        state: {student: this.state.student}
+                    });
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+
         event.preventDefault();
     }
 
@@ -55,11 +109,11 @@ class CCExtraChallengeDetails extends Component {
                         <div className="purpule"><strong>:האתגר הנבחר</strong></div>
                         <div id="chosenChallenge"> {this.props.location.state.challenge.challengeName}</div>
                         <br />
-                        <div className="purpule"><strong>:תאריך סיום האתגר</strong></div>
+                        <div className="purpule"><strong>:תאריך סיום ביצוע האתגר</strong></div>
                         <div className="col-12 input-group mb-3 dp">
                             <DatePicker
-                                selected={this.state.startDate}
-                                onChange={date => this.setState({ startDate: date })}
+                                selected={this.state.deadline}
+                                onChange={date => this.setState({ deadline: date })}
                                 minDate={new Date()}
                                 className="form-control col-12 inputCCEdit"
                                 id="DeadlineChallengeId"

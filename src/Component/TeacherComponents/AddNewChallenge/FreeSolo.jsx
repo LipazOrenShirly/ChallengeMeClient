@@ -11,6 +11,7 @@ export default function FreeSolo(props) {
         freeSolo
         id="NewChallengeName"
         disableClearable
+        onInputChange={props.onInputChange}
         options={props.challenges.map((option) => option.challengeName)}
         renderInput={(params) => (
           <TextField

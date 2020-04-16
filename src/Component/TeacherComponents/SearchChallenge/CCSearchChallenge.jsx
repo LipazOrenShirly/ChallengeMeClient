@@ -20,6 +20,7 @@ class CCSearchChallenge extends Component {
             tagsArr: [],
             chosenTagsID: [],
             filteredChallenges: [],
+            filteredChallengesByName: []
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
@@ -76,8 +77,19 @@ class CCSearchChallenge extends Component {
                 });
     }
 
+    onInputChange = (event, value) => {
+        if(value == ""){         //אם אין תגיות או שמחקו את כולן אז ירוקן את הסטייט
+            this.setState({ filteredChallengesByName: [] });
+            return;
+        }
+        console.log(value);
+        var temp = this.state.challengesArr.filter((item) => item.challengeName.includes(value));
+        console.log(temp);
+        this.setState({filteredChallengesByName: temp});
+    }
+
     onTagsChange = (event, values) => {
-        if(values.length == 0){         //עם אין תגיות או שמחקו את כולן אז ירוקן את הסטייט
+        if(values.length == 0){         //אם אין תגיות או שמחקו את כולן אז ירוקן את הסטייט
             this.setState({ filteredChallenges: [] });
             return;
         }
@@ -114,6 +126,16 @@ class CCSearchChallenge extends Component {
                 });
     }
 
+    GoToExtraDetailPage = (challenge) => {
+        this.props.history.push({
+            pathname: '/ExtraChallengeDetails',
+            state: { 
+                challenge: challenge,
+                studentID: this.props.location.state.studentID 
+            }
+        })
+    }
+
     render() {
         return (
             <div className="container-fluid">
@@ -125,7 +147,7 @@ class CCSearchChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo challenges={this.state.challengesArr} />
+                        <FreeSolo challenges={this.state.challengesArr} onInputChange={this.onInputChange}/>
                     </div>
                     <div>
                         <div className="form-group input-group col-12 bc" dir="rtl">
@@ -135,20 +157,24 @@ class CCSearchChallenge extends Component {
                     </div>
                 </form>
 
+                <div className="col-12 turkiz">תוצאות חיפוש לפי שם</div>
+                <div className="col-12 DivAllTagsSearch">
+                    {
+                        this.state.filteredChallengesByName.map( (item) =>
+                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.studentID} GoToExtraDetailPage={this.GoToExtraDetailPage} />
+                        )}
+
+                </div>
+
+                <div className="col-12 turkiz">תוצאות חיפוש לפי תגיות</div>
                 <div className="col-12 DivAllTagsSearch">
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.filteredChallenges.map( (item) =>
-                            <CCOneSearchChallenge item={item.challengeName} studentID={this.props.studentID}  />
+                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.studentID} GoToExtraDetailPage={this.GoToExtraDetailPage} />
                         )}
 
                 </div>
-                {/* {this.state.filteredChallenges.map( (item) =>
-                    <div>
-                        <div>{item.challengeName}</div>
-                        <br />
-                    </div>
-                )} */}
                 <Footer />
             </div>
         );

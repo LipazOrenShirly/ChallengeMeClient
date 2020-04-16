@@ -21,15 +21,14 @@ export default class CCOneClass extends Component {
     deleteOption=()=>{
         this.props.SendSmartOptToAddChallenge(this.props.index);
     }
-    chooseOption = () => {
+    
 
-    }
     render() {
         return (
             <div className="DivOneSmart col-12" dir="rtl" >
                 
                 <MdClose className="col-2 closeIcon floatCrossIcon" onClick={this.deleteOption}/>
-                <span className="col-10 oneSmartText" onClick={this.chooseOption}>{this.props.item}</span>
+                <span className="col-10 oneSmartText" onClick={() => this.props.GoToExtraDetailsPage(this.props.challenge)}>{this.props.challenge.challengeName}</span>
                 <br/>
             </div>
         );

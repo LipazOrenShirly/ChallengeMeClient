@@ -16,16 +16,10 @@ export default class CCOneSearchChallenge extends Component {
         }
     }
 
-    
-
-    chooseOption = () => {
-
-    }
     render() {
         return (
-            <div className="DivOneTagsSearch col-12" dir="rtl" >
-                
-                <span className="col-10 oneTagsSearchText" onClick={this.chooseOption}>{this.props.item}</span>
+            <div className="DivOneTagsSearch col-12" dir="rtl" >               
+                <span className="col-10 oneTagsSearchText" onClick={() => this.props.GoToExtraDetailPage(this.props.challenge)}>{this.props.challenge.challengeName}</span>
                 <br/>
             </div>
         );
