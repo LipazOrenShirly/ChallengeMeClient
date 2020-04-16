@@ -52,7 +52,7 @@ class CCStudentFeatures extends Component {
                     console.log("QueAndAnsArr= ");
                     console.log(result)
                     console.log("QueAndAnsArr length= ", result.length);
-                    this.setState({ QueAndAnsArr: result, newFeature: (result.length == "undefine" ? true : false) })
+                    this.setState({ QueAndAnsArr: result, newFeature: (result[0].answer == null ? true : false) })
                     console.log("אפיון חדש" + this.state.newFeature);
                 },
                 (error) => {
