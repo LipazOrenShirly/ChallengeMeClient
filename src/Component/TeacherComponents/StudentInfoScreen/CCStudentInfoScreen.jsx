@@ -125,6 +125,42 @@ export default class CCStudentInfoScreen extends Component {
         }
     }
 
+    checkIfPhoneExist(e) {
+        $('#phoneValuesError').empty();
+
+        var phone = parseInt(e.target.value);
+        console.log(phone);
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?phone=0' + phone
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result != 0) { // כבר קיים השם משתמש הזה
+                        this.setState({ HasSphoneValError: true })
+                        $('#phoneValuesError').empty();
+                        $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
+                    }
+
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+
+    }
+
     render() {
         const { firstName, lastName, phone, password, password2, Sage, birthDate } = this.state;
         return (
@@ -133,7 +169,7 @@ export default class CCStudentInfoScreen extends Component {
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
-                <div className="col-12 turkiz">הוספת תלמיד חדש</div>
+                <div className="col-12 turkiz">עדכון פרטי התלמיד</div>
                 {/* <div className="col-12">לפני הוספת התלמיד נצטרך שתמלא כמה פרטים שיעזרו לנו בהמשך לאפיין את הילד כמו שצריך ויוכל להקל עלייך רבות בבחירת האתגרים</div> */}
                 <br />
 
@@ -224,7 +260,10 @@ export default class CCStudentInfoScreen extends Component {
                             this.setState({ phone });
                             console.log(e);
                         }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => {
+                            console.log(e);
+                            this.checkIfPhoneExist(e);
+                        }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
@@ -240,6 +279,7 @@ export default class CCStudentInfoScreen extends Component {
                         }}
                     />
                 </div>
+                <div className='errorInputPhone' id="phoneValuesError"></div>
 
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס

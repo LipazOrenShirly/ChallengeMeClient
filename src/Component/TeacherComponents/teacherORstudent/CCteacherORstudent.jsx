@@ -22,7 +22,7 @@ export default class CCteacherORstudent extends Component {
    
     render() {
         return (
-            <div className="container-fluid col-xs-12" >
+            <div className="container-fluid col-xs-12 screentos" >
                 <div className="containerTeacherOrStudent">
                 <h1>האם אתה</h1>
                 <div className="col-12"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkTotS col-5">מורה</button>

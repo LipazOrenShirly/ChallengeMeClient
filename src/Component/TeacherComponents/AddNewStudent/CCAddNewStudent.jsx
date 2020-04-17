@@ -230,16 +230,14 @@ export default class CCAddNewChallenge extends Component {
                             console.log(e);
                         }}
                         onBlur={(e) => {
-                            console.log(e)
-                            this.checkIfPhoneExist(e)
+                            console.log(e);
+                            this.checkIfPhoneExist(e);
                         }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
                             customFunc: phoneNum => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
-
-
                                 if (reg.test(phoneNum)) {
                                     return true;
 

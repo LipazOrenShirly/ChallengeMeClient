@@ -62,6 +62,23 @@ class CCStudentFeatures extends Component {
     }
 
     PostPutFeature = (event) => {
+        event.preventDefault();
+
+        var allFilled=true;
+        this.state.QueAndAnsArr.map( (item) => {
+            if (!(item.answer >=1 && item.answer <=5))
+            {
+                Swal.fire({
+                    title: 'אוי!',
+                    text: 'צריך שכל השדות יהיו ממולאים',
+                    icon: 'warning',
+                    confirmButtonColor: '#e0819a',
+                });
+                allFilled=false
+            }
+        });
+        if(allFilled==false)
+            return;
         const answers = this.state.QueAndAnsArr.map( (item) => {
             return {
                 questionID: item.questionID,
@@ -69,7 +86,7 @@ class CCStudentFeatures extends Component {
                 answer: item.answer
             }
         });
-            
+       
         console.log(answers); 
         console.log(this.state.newFeature); 
 
@@ -101,7 +118,6 @@ class CCStudentFeatures extends Component {
                 (error) => {
                     console.log("err post/put=", error);
                 });
-        event.preventDefault();
     }
 
     chooseAns = (e) => {

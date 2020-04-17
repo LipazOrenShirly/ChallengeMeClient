@@ -153,12 +153,12 @@ class CCSearchChallenge extends Component {
                         <div className="form-group input-group col-12 bc" dir="rtl">
                             <FreeSoloTags tags={this.state.tagsArr} onTagsChange={this.onTagsChange} />
                         </div>
-                        <br />
+                        
                     </div>
                 </form>
 
-                <div className="col-12 turkiz">תוצאות חיפוש לפי שם</div>
-                <div className="col-12 DivAllTagsSearch">
+                <div className="col-12 turkiz">תוצאת חיפוש לפי שם</div>
+                <div className="col-12 DivAllNameSearch">
                     {
                         this.state.filteredChallengesByName.map( (item) =>
                             <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.studentID} GoToExtraDetailPage={this.GoToExtraDetailPage} />
