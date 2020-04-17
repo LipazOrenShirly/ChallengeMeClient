@@ -114,3 +114,8 @@ box-shadow: none !important
     background-color:rgba(104, 104, 95, 0.842) ;
  
 }
+.errorfeature{
+    color:red;
+    font-weight: 600;
+    padding-bottom: 3%;
+}
