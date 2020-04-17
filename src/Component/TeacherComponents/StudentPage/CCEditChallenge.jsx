@@ -50,13 +50,17 @@ class CCEditChallenge extends Component {
     }
 
     UpdateChallenge = () => {
+        var statuss;
+        if($('#StatusInput').val()=='לא סימן כלום')
+            statuss=0;
+        else statuss = this.state.challenge.status;
         const challenge =
         {
             challengeID: this.state.challenge.challengeID,
             studentID: this.state.challenge.studentID,
             difficulty: $('#DifLevelInput').val(),
             deadline: $('#DeadlineInput').val(),
-            status: $('#StatusInput').val()
+            status: statuss
         }
         console.log(challenge);
 
@@ -78,6 +82,12 @@ class CCEditChallenge extends Component {
                 (result) => {
                     console.log("Student Challenges= ", result);
                     this.setState({ StudentChallenges: result });
+                    Swal.fire({
+                        title: 'יופי!',
+                        text: 'הפריטים עודכנו בהצלחה',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    })
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -123,7 +133,6 @@ class CCEditChallenge extends Component {
                         (error) => {
                             console.log("err post=", error);
                         });
-                // window.location.reload();
 
 
             }
@@ -158,12 +167,12 @@ class CCEditChallenge extends Component {
             }).then((result) => {
                 if (result.value) {
                     Swal.fire({
-                        title: 'אופס!',
+                        title: 'יופי!',
                         text: 'סטטוס האתגר אופס בהצלחה',
                         icon: 'success',
                         confirmButtonColor: '#e0819a',
                     })
-                    $('#StatusInput').val(0);
+                    $('#StatusInput').val('לא סימן כלום');
                     this.UpdateChallenge();
                 }
             })
