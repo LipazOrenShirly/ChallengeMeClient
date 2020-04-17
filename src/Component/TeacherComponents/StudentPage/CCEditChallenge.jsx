@@ -129,6 +129,7 @@ class CCEditChallenge extends Component {
                             })
                             this.props.history.push({
                                 pathname: '/StudentPage',
+                                state: {student: this.props.location.state.student}
                             })
                         },
                         (error) => {
