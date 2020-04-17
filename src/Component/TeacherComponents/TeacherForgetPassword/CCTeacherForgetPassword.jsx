@@ -17,10 +17,11 @@ export default class CCTeacherForgetPassword extends Component {
             showGood: false,
             showBad: false,
         }
-        let local = true;
+       
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/??????'; //להשלים!!
+          this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Teacher'; 
         }
     }
 
