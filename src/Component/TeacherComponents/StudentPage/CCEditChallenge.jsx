@@ -195,8 +195,8 @@ class CCEditChallenge extends Component {
 
                 <div><strong>:תאריך סיום האתגר</strong></div>
                 <div className="col-12 input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsDeadline}</span>
+                    <div className="input-group-prepend">
+                        <span className="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsDeadline}</span>
                     </div>
                     <input type="date" className="form-control inputCCEdit" id="DeadlineInput" disabled />
                 </div>
@@ -204,8 +204,8 @@ class CCEditChallenge extends Component {
 
                 <div><strong>:סטטוס האתגר </strong></div>
                 <div className="col-12 input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
+                    <div className="input-group-prepend">
+                        <span className="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
                     </div>
                     <input type="text" className="form-control inputCCEdit" id="StatusInput" disabled />
                 </div>              
