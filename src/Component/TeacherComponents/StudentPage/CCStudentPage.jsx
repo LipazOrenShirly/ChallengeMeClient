@@ -57,10 +57,10 @@ class CCStudentPage extends Component {
             }
         })
     }
-    getDataFromChallenges = (studentID) => {
+    getDataFromChallenges = (studentID, StudentChallenges) => {
         this.props.history.push({
             pathname: '/AddChallengeToStudent',
-            state: { studentID: studentID }
+            state: { studentID: studentID, StudentChallenges: StudentChallenges }
         })
     }
 

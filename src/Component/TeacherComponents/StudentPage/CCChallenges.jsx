@@ -45,7 +45,7 @@ class CCChallenges extends Component {
     }
 
     AddChallenge = () => {
-        this.props.SendDataToStudentPage(this.props.studentID);    }
+        this.props.SendDataToStudentPage(this.props.studentID, this.state.StudentChallenges);    }
 
     render() { 
         return ( 

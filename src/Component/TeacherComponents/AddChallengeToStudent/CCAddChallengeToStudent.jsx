@@ -15,11 +15,11 @@ export default class CCAddChallengeToStudent extends Component {
         this.state = {
             Smartchallenges: [],
 
-        } 
+        }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentScore';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentScore';
+            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentScore';
         }
     }
 
@@ -40,7 +40,11 @@ export default class CCAddChallengeToStudent extends Component {
             .then(
                 (result) => {
                     console.log("result= ", result);
-                    this.setState({Smartchallenges: result});
+                    //סינון מהתאגרים המומלצים את האתגרים שכבר שוייכו לילד ואז שמירה בסטייט
+                    const StudentChallenges = this.props.location.state.StudentChallenges;
+                    const StudentChallenges_ID = StudentChallenges.map( item => item.challengeID );
+                    const Smartchallenges = result.filter( item => !StudentChallenges_ID.includes(item.challengeID) );     
+                    this.setState({ Smartchallenges: Smartchallenges });
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -58,9 +62,9 @@ export default class CCAddChallengeToStudent extends Component {
     GoToExtraDetailsPage = (challenge) => {
         this.props.history.push({
             pathname: '/ExtraChallengeDetails',
-            state: { 
+            state: {
                 challenge: challenge,
-                studentID: this.props.location.state.studentID 
+                studentID: this.props.location.state.studentID
             }
         })
     }
@@ -73,15 +77,15 @@ export default class CCAddChallengeToStudent extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <div className="col-12 turkiz">יצירת אתגר לתלמיד</div>
-                
-                
+
+
                 <div className="titleSmartDiv"><strong>אתגרים שהוצעו ע"י המערכת בהתאם לאפיון</strong></div>
                 <div className="col-12 DivAllSmart">
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.Smartchallenges.map((item, key) =>
-                            <CConeSmartElementOffer challenge={item} index={key} key={item.challengeID} studentID={this.props.location.state.studentID} 
-                                SendSmartOptToAddChallenge={this.getSmartOptID} GoToExtraDetailsPage={this.GoToExtraDetailsPage}/>
+                            <CConeSmartElementOffer challenge={item} index={key} key={item.challengeID} studentID={this.props.location.state.studentID}
+                                SendSmartOptToAddChallenge={this.getSmartOptID} GoToExtraDetailsPage={this.GoToExtraDetailsPage} />
                         )}
 
                 </div>
