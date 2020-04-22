@@ -15,7 +15,7 @@ class CCStudentPage extends Component {
             StudentChallenges: [],
             hasFeature: false
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentFeatures';
