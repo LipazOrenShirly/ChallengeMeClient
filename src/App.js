@@ -11,7 +11,8 @@ import TeacherInfoScreen from './Component/TeacherComponents/TeacherInfoScreen/C
 import Alerts from './Component/TeacherComponents/Alerts/CCAlerts';
 import AlertsSetting from './Component/TeacherComponents/AlertsSetting/CCAlertsSetting';
 import Messages from './Component/TeacherComponents/Messages/CCMessages';
-import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
+import Chat from './Component/TeacherComponents/Messages/CCChat';
+import NewMessage from './Component/TeacherComponents/Messages/____CCNewMessage';
 import AddNewChallenge from './Component/TeacherComponents/AddNewChallenge/CCAddNewChallenge';
 import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
 import StudentPage from './Component/TeacherComponents/StudentPage/CCStudentPage';
@@ -63,6 +64,7 @@ function App() {
           <Route path="/StudentFeatures" component={StudentFeatures} />
           <Route path="/ExtraChallengeDetails" component={ExtraChallengeDetails} />
           <Route path="/SearchChallenge" component={SearchChallenge} />
+          <Route path="/Chat" component={Chat} />
 
           
         </Switch>

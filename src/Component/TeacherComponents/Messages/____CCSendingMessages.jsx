@@ -4,10 +4,10 @@ import './styleMessages.css'
 import { FaTrashAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { MdMail } from  "react-icons/md";
-import CCOneIncomeMessage from './CCOneIncomeMessage';
+import CCOneSendingM from './____CCOneSendingM';
 
 
-export default class CCIncomeMessages extends Component {
+export default class CCSendingMessages extends Component {
     constructor(props){
         super(props);
        
@@ -17,10 +17,10 @@ export default class CCIncomeMessages extends Component {
     render() {
         let key=[1,2]; //key from map
         return (
-            <div className="allIncomeMessages">
+            <div className="allSendingMessages">
                
-          <CCOneIncomeMessage index={key[0]}/>
-          <CCOneIncomeMessage index={key[1]}/>
+          <CCOneSendingM index={key[0]}/>
+          <CCOneSendingM index={key[1]}/>
            </div>
             
             
