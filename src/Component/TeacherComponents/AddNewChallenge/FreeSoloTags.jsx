@@ -23,7 +23,6 @@ export default function FreeSoloTags(props) {
         multiple
         id="tags-filled"
         options={props.tags.map((option) => option.tagName)}
-        freeSolo
         onChange={props.onTagsChange}
         renderTags={(value, getTagProps) =>
           value.map((option, index) => 

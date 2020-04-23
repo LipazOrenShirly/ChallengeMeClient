@@ -10,11 +10,11 @@ const SearchBarHomeTeacher = (props) => {
   return (
     <div className="row col-12">
       <div className="col-3 massegesTeacherHomePage">
-        {/* <Link to="/Messages"> */}
+         <Link to="/Messages" className="linkColor"> 
           <Badge badgeContent={props.countMessages} color="secondary">
             <MdMail size={40} />
           </Badge>
-        {/* </Link> */}
+        </Link> 
       </div>
 
       <div className="form-group col-6 searchTeacherHomePage">
@@ -22,7 +22,7 @@ const SearchBarHomeTeacher = (props) => {
       </div>
       <div className="col-3 alertsTeacherHomePage" >
 
-        <Link to="/Alerts">
+        <Link to="/Alerts" className="linkColor">
           <Badge badgeContent={props.countAlerts} color="secondary">
             <FaExclamationCircle size={40} />
           </Badge>

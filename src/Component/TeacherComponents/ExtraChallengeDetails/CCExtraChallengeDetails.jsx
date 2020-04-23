@@ -118,7 +118,7 @@ class CCExtraChallengeDetails extends Component {
                                 minDate={new Date()}
                                 className="form-control col-12 inputCCEdit"
                                 id="DeadlineChallengeId"
-
+                                required
                             // placeholderText="Select a date between today and 5 days in the future"
                             />
                         </div>

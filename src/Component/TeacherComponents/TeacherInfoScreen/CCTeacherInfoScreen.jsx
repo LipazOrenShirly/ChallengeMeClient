@@ -136,6 +136,40 @@ export default class CCTeacherInfoScreen extends Component {
             this.getInPlace(user)
         )
     }
+    checkIfUserNameExist = (e)=>{
+            var usernameNewTeacher = e.target.value;
+            $('#userNameValuesError').empty();
+    
+            // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+            fetch(this.apiUrl + '?usernameNewTeacher=' + usernameNewTeacher
+                , {
+                    method: 'GET',
+                    headers: new Headers({
+                        'Content-Type': 'application/json; charset=UTF-8',
+                    })
+                })
+                .then(res => {
+                    console.log('res=', res);
+                    console.log('res.status', res.status);
+                    console.log('res.ok', res.ok);
+                    return res.json();
+                })
+                .then(
+                    (result) => {
+                        console.log("Submit= ", result);
+                        console.log("Submit= ", JSON.stringify(result));
+                        if (result == 1) { // כבר קיים השם משתמש הזה
+                           if(usernameNewTeacher==this.state.teacher.userName)
+                                return;
+                            this.setState({ HasuserNameValError: true });
+                            $('#userNameValuesError').empty();
+                            $('#userNameValuesError').append("this userName is already taken");
+                        }
+                    },
+                    (error) => {
+                        console.log("err get=", error);
+                    });
+    }
 
     render() {
         const {
@@ -233,7 +267,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'שם משתמש',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-                                disabled
+                                
                                 value={userName}
                                 validationCallback={res =>
                                     this.setState({ HasuserNameValError: res, validate: false })
@@ -244,7 +278,7 @@ export default class CCTeacherInfoScreen extends Component {
                                 }}
                                 onBlur={(e) => {
                                     console.log(e)
-
+                                    this.checkIfUserNameExist(e)
                                 }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
@@ -254,15 +288,13 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HasuserNameValError: true });
                                             return "Name is required.";
                                         }
-                                        if (this.state.isUserNameExist == true) { //לבדוק האם קיים בDB
-                                            this.setState({ HasuserNameValError: true });
-                                            return "this userName is already taken";
-                                        }
+                                        
                                         return true;
                                     }
                                 }}
                             />
                         </div>
+                        <div className='errorInputuserName' id="userNameValuesError"></div>
 
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
