@@ -25,6 +25,8 @@ import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewS
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
+import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChallengePage';
+import CCStudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
@@ -32,7 +34,9 @@ import {ProjectProvider} from './Context/ProjectContext';
 function App() {
   const user = { 
     teacherID: '', 
-    setTeacher: (teacherIDfromDB) => { user.teacherID=teacherIDfromDB ;}
+    setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
+    studentID: '',
+    setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   }
 
   return (
@@ -63,6 +67,8 @@ function App() {
           <Route path="/ExtraChallengeDetails" component={ExtraChallengeDetails} />
           <Route path="/SearchChallenge" component={SearchChallenge} />
           <Route path="/Chat" component={Chat} />
+          <Route path="/ChallengePage" component={ChallengePage} />
+          <Route path="/CCStudentHomePage" component={CCStudentHomePage} />
 
           
         </Switch>
