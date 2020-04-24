@@ -25,15 +25,15 @@ export default class OneMessage extends Component {
     render() {
     const message = this.props.message;
         return (
-            <div className="container-fluid">
+            <div>
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
-                    <div className = 'incomingMessage'>{message.messageText}</div>
+                    <div style={{textAlign:"left"}} className = 'incomingMessage'>הודעה יוצאת {message.messageText}</div>
                     // להציג תאריך ושעה לכל הודעה
                 }
 
                 {message.messageByTeacher == false &&
-                    <div className = 'outgoingMessage'>{message.messageText}</div>
+                    <div style={{textAlign:"right"}} className = 'outgoingMessage'>הודעה נכנסת {message.messageText}</div>
                     // להציג תאריך ושעה לכל הודעה
                 }
             </div>

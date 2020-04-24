@@ -53,7 +53,7 @@ export default class StudentsWithMessage extends Component {
         return (
             <div className="container-fluid">
                 {this.state.studentIDArr.map( (item) =>
-                    <OneStudentsWithMessage studentID = {item} onClick = { () => this.props.goToChat(item)}/>
+                    <OneStudentsWithMessage studentID = {item.studentID} key = {item.studentID} goToChat={this.props.goToChat} />
                 )}       
             </div>
         );
