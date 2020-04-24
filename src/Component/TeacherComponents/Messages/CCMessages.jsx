@@ -34,36 +34,7 @@ export default class CCMessages extends Component {
         })
     }
 
-    // GoToIncomeMessages = () => {
-    //     if (this.state.IncomeMessages != true) {
-    //         this.setState({ IncomeMessages: true });
-    //     }
-
-    // }
-    // GoToSendingMessages = () => {
-    //     if (this.state.IncomeMessages != false) {
-    //         this.setState({ IncomeMessages: false });
-    //     }
-    // }
-
-    // linkToNewMessage = () => {
-    //     this.props.history.push({
-    //         pathname: '/NewMessage',
-    //     })
-    // }
-
     render() {
-        //  let whitch;
-        // let textFonts;
-        // if (this.state.IncomeMessages == true) {
-        //     whitch = <CCIncomeMessages />;
-        //     textFonts = <div className="col-12"><div id="INCOMEtext" className="col-6 turkiz floatLeft" onClick={this.GoToIncomeMessages}>הודעות נכנסות</div><div id="SENDINGtext" className="col-6 grey floatLeft" onClick={this.GoToSendingMessages}>הודעות יוצאות</div></div>;
-        // }
-        // else {
-        //     whitch = <CCSendingMessages />;
-        //     textFonts = <div className="col-12"><div id="INCOMEtext" className="col-6 grey floatLeft" onClick={this.GoToIncomeMessages}>הודעות נכנסות</div><div id="SENDINGtext" className="col-6 turkiz floatLeft" onClick={this.GoToSendingMessages}>הודעות יוצאות</div></div>;
-        // }
-
         return (
             <div className="container-fluid">
 
@@ -74,20 +45,6 @@ export default class CCMessages extends Component {
                 </div>
 
                 <StudentsWithMessage goToChat={this.goToChat} />
-
-                {/* <div className="row col-12 searchDiv">
-                    <div className="col-12 turkiz">הודעות</div>
-                    <div className="col-8 searchItselfDiv">
-                        <input type="text" className="form-control inputRounded" id="search" placeholder="חיפוש"></input>
-                    </div>
-                    <div className="col-8 addingAlertsDiv" onClick={this.linkToNewMessage}>
-                        <h5>שליחת הודעה חדשה</h5>
-                    </div>
-                    {textFonts}
-                </div>
-                <div className="allAlerts">
-                    {whitch}
-                </div> */}
 
                 <Footer></Footer>
             </div>
