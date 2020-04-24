@@ -42,8 +42,8 @@ export default class OneStudentsWithMessage extends Component {
             })
             .then(
                 (result) => {
-                    console.log("studentsArr= ", result);
-                    this.setState({ student: result });
+                    console.log("student= ", result[0]);
+                    this.setState({ student: result[0] });
                     this.getUnReadAmount();
                 },
                 (error) => {
@@ -53,8 +53,8 @@ export default class OneStudentsWithMessage extends Component {
 
     getUnReadAmount = () => {
         const user = this.context;
-        // פונקציה שצריכה להחזיר כמה הודעות שלא נקראו יש מהתלמיד
-        fetch(this.apiUrl + '?teacherID=' + user.teacherID + 'studentID=' + this.props.student.studentID
+        // פונקציה שמחזירה כמה הודעות שלא נקראו יש מהתלמיד
+        fetch(this.apiUrl + '?getter_teacherID=' + user.teacherID + '&sender_studentID=' + this.state.student.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -80,9 +80,10 @@ export default class OneStudentsWithMessage extends Component {
     render() {
     
         return (
-            <div className="container-fluid">
-                {this.props.student.firstName} {this.props.student.lastName}
-                להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד
+            <div onClick = { () => this.props.goToChat(this.state.student)}>
+                {this.state.student.firstName} {this.state.student.lastName}
+                <div>{this.state.UnReadCount}</div>  {/* להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
+                
             </div>
         );
     };
