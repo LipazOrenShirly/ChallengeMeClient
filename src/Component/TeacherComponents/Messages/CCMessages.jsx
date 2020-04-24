@@ -7,6 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import StudentsWithMessage from './CCStudentsWithMessage';
+import { TiArrowBack } from 'react-icons/ti';
 
 export default class CCMessages extends Component {
     constructor(props) {
@@ -67,6 +68,10 @@ export default class CCMessages extends Component {
             <div className="container-fluid">
 
                 <NavBar></NavBar>
+
+                <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                </div>
 
                 <StudentsWithMessage goToChat={this.goToChat} />
 

@@ -16,7 +16,8 @@ export default class Chat extends Component {
         this.state = {
             messagesArr: [],
             messageText: "",
-            newMessage: ""
+            newMessage: "",
+            sendDisabled: '',
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -80,14 +81,15 @@ export default class Chat extends Component {
 
     sendMessage = () => {
         const user = this.context;
+        const date = new Date();
 
         const message = {
             teacherID: user.teacherID,
             studentID: this.props.location.state.student.studentID,
             messageTitle: "",
             messageText: this.state.messageText,
-            messageDate: new Date(),
-            messageTime: new Date(),
+            messageDate: date.toISOString().split('T')[0],
+            messageTime: date.getHours() + ":" + date.getMinutes(),
             messageByTeacher: true,
         }
 
@@ -136,12 +138,12 @@ export default class Chat extends Component {
                         value={messageText}
                         onChange={(messageText, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ messageText });
-                            console.log(e);
+                            this.setState({ sendDisabled: e.target.value });
                         }}
                     />
                 </div>
 
-                <button onClick={() => this.sendMessage()}>שלח</button>
+                <button id='send' disabled={!this.state.sendDisabled} onClick={() => {this.sendMessage(); this.setState({messageText:""});}}>שלח</button>
 
                 <Footer></Footer>
 
