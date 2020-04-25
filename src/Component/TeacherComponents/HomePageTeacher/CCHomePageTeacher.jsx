@@ -38,7 +38,7 @@ export default class CCHomePageTeacher extends Component {
         //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
         const user = this.context;
 
-        // משיכה של מספר ההודעה שלו נקראו
+        // משיכה של מספר ההודעה שלא נקראו
         
         fetch(this.apiUrlMessage + '?teacherID_UnRead='+ user.teacherID
         , {

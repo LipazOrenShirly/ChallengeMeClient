@@ -1,0 +1,9 @@
+.grey{
+    font-weight: 500;
+    color: rgb(143, 134, 140);
+    text-align: center ;
+    padding-top: 5px;
+}
+.hiddendiv , .hiddendivIcon{
+    display: none;
+}

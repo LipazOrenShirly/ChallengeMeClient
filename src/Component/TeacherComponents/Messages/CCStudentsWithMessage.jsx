@@ -6,10 +6,10 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
-import OneStudentsWithMessage from './CCOneStudentsWithMessage';
+import CCOneStudentsWithMessage from './CCOneStudentsWithMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 
-export default class StudentsWithMessage extends Component {
+export default class CCStudentsWithMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {

@@ -7,10 +7,10 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
-import CCOneMessage from './CCOneMessage';
+import CCStudentOneMessage from './CCOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 
-export default class CCChat extends Component {
+export default class CCStudentChat extends Component {
     constructor(props) {
         super(props);
         this.state = {

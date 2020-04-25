@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 
-export default class OneStudentsWithMessage extends Component {
+export default class CCOneStudentsWithMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {

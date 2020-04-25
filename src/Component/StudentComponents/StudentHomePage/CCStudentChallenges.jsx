@@ -22,7 +22,7 @@ export default class CCStudentChallenges extends Component {
 
     componentDidMount() {
         const user = this.context;
-        fetch(this.apiUrl + '?studentID='+this.props.studentID
+        fetch(this.apiUrl + '?studentID='+user.studentID
         , {
             method: 'GET',
             headers: new Headers({
@@ -49,12 +49,12 @@ export default class CCStudentChallenges extends Component {
         const user = this.context;
 
         return (
-            <div className="container-fluid">
+            <div >
                 
-                <div className="col-12 turkiz">האתגרים שלי</div>
+                <div className="col-12 turkiz">האתגרים שלי:</div><br />
 
                 {this.state.StudentChallenges.map( (item) => 
-                    <CCOneStudentChallenges challenge={item} key={item.challengeID} onClick = { () => this.props.goToChallengePage(item)} />
+                    <CCOneStudentChallenges challenge={item} key={item.challengeID} goToChallengePage = {this.props.goToChallengePage} />
                 )}
 
             </div>

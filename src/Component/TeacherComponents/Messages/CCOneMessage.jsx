@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 
-export default class OneMessage extends Component {
+export default class CCOneMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {

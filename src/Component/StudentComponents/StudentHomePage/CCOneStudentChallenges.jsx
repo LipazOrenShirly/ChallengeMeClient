@@ -19,12 +19,10 @@ export default class CCOneStudentChallenges extends Component {
 
     render() {
         const user = this.context;
-
+        
         return (
-            <div className="container-fluid">
-                
-                <div className="col-12 turkiz">{this.props.challenge.challengeName} </div>
-
+            <div>               
+                <div className="col-12 turkiz" onClick={ () => this.props.goToChallengePage(this.props.challenge)}>{this.props.challenge.challengeName} </div>
             </div>
         )
     };
