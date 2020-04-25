@@ -117,7 +117,7 @@ export default class CCStudentsWithMessage extends Component {
                 {/* תלמידים שלמורה כבר יש שיחה איתם        */}
                 <div>
                     {this.state.studentIDArr.map((item) =>
-                        <OneStudentsWithMessage studentID={item} key={item} goToChat={this.props.goToChat} />
+                        <CCOneStudentsWithMessage studentID={item} key={item} goToChat={this.props.goToChat} />
                     )}
                 </div>
                 <br />

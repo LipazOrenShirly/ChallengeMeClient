@@ -71,7 +71,7 @@ export default class CCStudentHomePage extends Component {
                 <NavBar></NavBar><br /><br />
                 
                 <div className="col-3 massegesTeacherHomePage">
-                    <Link to="/StudentMessages" className="linkColor">
+                    <Link to="/StudentChat" className="linkColor">
                         <Badge badgeContent={this.state.countMessages} color="secondary">
                             <MdMail size={40} />
                         </Badge>

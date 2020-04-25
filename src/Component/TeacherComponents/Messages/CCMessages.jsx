@@ -44,7 +44,7 @@ export default class CCMessages extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
 
-                <StudentsWithMessage goToChat={this.goToChat} />
+                <CCStudentsWithMessage goToChat={this.goToChat} />
 
                 <Footer></Footer>
             </div>

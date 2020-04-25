@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
-import CCStudentOneMessage from './CCOneMessage';
+import CCStudentOneMessage from './CCStudentOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 
 export default class CCStudentChat extends Component {
@@ -34,7 +34,7 @@ export default class CCStudentChat extends Component {
 
     getMessages = () => {
         const user = this.context;
-        fetch(this.apiUrl + '?teacherID= '+ user.teacherID+ '&studentID=' + this.props.location.state.student.studentID
+        fetch(this.apiUrl + '?teacherID= '+ user.teacherID+ '&studentID=' + user.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -60,7 +60,7 @@ export default class CCStudentChat extends Component {
 
     changeAllMessageToRead = () => {
         const user = this.context;
-        fetch(this.apiUrl+'?teacherID= '+ user.teacherID + '&studentID=' + this.props.location.state.student.studentID, {
+        fetch(this.apiUrl+'?studentID=' + user.studentID, {
             method: 'PUT',
             headers: new Headers({
               'Content-type': 'application/json; charset=UTF-8' 
@@ -85,7 +85,7 @@ export default class CCStudentChat extends Component {
 
         const message = {
             teacherID: user.teacherID,
-            studentID: this.props.location.state.student.studentID,
+            studentID: user.studentID,
             messageTitle: "",
             messageText: this.state.messageText,
             messageDate: date.toISOString().split('T')[0],
@@ -123,8 +123,9 @@ export default class CCStudentChat extends Component {
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
+
                 {this.state.messagesArr.map((item) =>
-                    <OneMessage message={item} key={item.messageID} onClick={() => this.props.goToChat(item)} />
+                    <CCStudentOneMessage message={item} key={item.messageID} />
                 )}
 
                 <div className="form-group col-12">

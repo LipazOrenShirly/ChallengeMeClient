@@ -124,7 +124,7 @@ export default class CCChat extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 {this.state.messagesArr.map((item) =>
-                    <OneMessage message={item} key={item.messageID} onClick={() => this.props.goToChat(item)} />
+                    <CCOneMessage message={item} key={item.messageID} />
                 )}
 
                 <div className="form-group col-12">

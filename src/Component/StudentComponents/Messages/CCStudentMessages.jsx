@@ -7,6 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
+// import CCStudentsWithMessage from './CCStudentsWithMessage';
 
 export default class CCStudentMessages extends Component {
     constructor(props) {
@@ -43,7 +44,7 @@ export default class CCStudentMessages extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
 
-                <StudentsWithMessage goToChat={this.goToChat} />
+                {/* <CCStudentsWithMessage goToChat={this.goToChat} /> */}
 
                 <Footer></Footer>
             </div>

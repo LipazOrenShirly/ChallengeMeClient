@@ -28,12 +28,12 @@ export default class CCOneMessage extends Component {
             <div>
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
-                    <div style={{textAlign:"left"}} className = 'incomingMessage'>הודעה יוצאת {message.messageText}</div>
+                    <div style={{textAlign:"left"}} className = 'incomingMessage'> -הודעה יוצאת- {message.messageText}</div>
                     // להציג תאריך ושעה לכל הודעה
                 }
 
                 {message.messageByTeacher == false &&
-                    <div style={{textAlign:"right"}} className = 'outgoingMessage'>הודעה נכנסת {message.messageText}</div>
+                    <div style={{textAlign:"right"}} className = 'outgoingMessage'> -הודעה נכנסת- {message.messageText}</div>
                     // להציג תאריך ושעה לכל הודעה
                 }
             </div>
