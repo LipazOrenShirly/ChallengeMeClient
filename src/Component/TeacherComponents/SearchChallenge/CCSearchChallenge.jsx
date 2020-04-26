@@ -34,7 +34,7 @@ class CCSearchChallenge extends Component {
     }
 
     componentDidMount() {
-        fetch(this.apiUrl
+        fetch(this.apiUrl+"?studentID="+this.props.location.state.studentID 
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -163,7 +163,7 @@ class CCSearchChallenge extends Component {
                 <div className="col-12 DivAllNameSearch">
                     {
                         this.state.filteredChallengesByName.map( (item) =>
-                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.studentID} GoToExtraDetailPage={this.GoToExtraDetailPage} />
+                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.location.state.studentID } GoToExtraDetailPage={this.GoToExtraDetailPage} />
                         )}
 
                 </div>
@@ -173,7 +173,7 @@ class CCSearchChallenge extends Component {
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.filteredChallenges.map( (item) =>
-                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.studentID} GoToExtraDetailPage={this.GoToExtraDetailPage} />
+                            <CCOneSearchChallenge challenge={item} key={item.challengeID} studentID={this.props.location.state.studentID } GoToExtraDetailPage={this.GoToExtraDetailPage} />
                         )}
 
                 </div>

@@ -10,7 +10,7 @@ import TeacherInfoScreen from './Component/TeacherComponents/TeacherInfoScreen/C
 import Alerts from './Component/TeacherComponents/Alerts/CCAlerts';
 import AlertsSetting from './Component/TeacherComponents/AlertsSetting/CCAlertsSetting';
 import Messages from './Component/TeacherComponents/Messages/CCMessages';
-import NewMessage from './Component/TeacherComponents/Messages/CCNewMessage';
+import Chat from './Component/TeacherComponents/Messages/CCChat';
 import AddNewChallenge from './Component/TeacherComponents/AddNewChallenge/CCAddNewChallenge';
 import StudentsList from './Component/TeacherComponents/HomePageTeacher/CCStudents';
 import StudentPage from './Component/TeacherComponents/StudentPage/CCStudentPage';
@@ -24,6 +24,10 @@ import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewS
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
+import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChallengePage';
+import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
+import StudentMessages from './Component/StudentComponents/Messages/CCStudentMessages'
+import StudentChat from './Component/StudentComponents/Messages/CCStudentChat'
 
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 
@@ -33,8 +37,10 @@ import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
   const user = { 
-    teacherID: '', 
-    setTeacher: (teacherIDfromDB) => { user.teacherID=teacherIDfromDB ;}
+    teacherID: 8, 
+    setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
+    studentID: 21,
+    setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   }
 
   return (
@@ -51,7 +57,6 @@ function App() {
           <Route path="/Alerts" component={Alerts} />
           <Route path="/AlertsSetting" component={AlertsSetting} />
           <Route path="/Messages" component={Messages} />
-          <Route path="/NewMessage" component={NewMessage} />
           <Route path="/AddNewChallenge" component={AddNewChallenge} />
           <Route path="/StudentsList" component={StudentsList} />
           <Route path="/StudentPage" component={StudentPage} />
@@ -65,6 +70,11 @@ function App() {
           <Route path="/StudentFeatures" component={StudentFeatures} />
           <Route path="/ExtraChallengeDetails" component={ExtraChallengeDetails} />
           <Route path="/SearchChallenge" component={SearchChallenge} />
+          <Route path="/Chat" component={Chat} />
+          <Route path="/ChallengePage" component={ChallengePage} />
+          <Route path="/StudentHomePage" component={StudentHomePage} />
+          <Route path="/StudentMessages" component={StudentMessages} />
+          <Route path="/StudentChat" component={StudentChat} />
 
           
         </Switch>

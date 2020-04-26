@@ -9,8 +9,7 @@ import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import CCStudents from './CCStudents';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
-
-
+import localHost from '../../LittleComponents/LocalHost';
 
 export default class CCHomePageTeacher extends Component {
 
@@ -19,7 +18,14 @@ export default class CCHomePageTeacher extends Component {
         this.state = {
             class: {},
             studentPage: false,
+            countMessages: null,
+
         };
+        let local = true;
+        this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        if (!local) {
+            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+        }
     }
     static contextType = ProjectContext;
 
@@ -27,11 +33,35 @@ export default class CCHomePageTeacher extends Component {
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
     }
+
     getDataOfMessagesNum = () => {// runs every 30 seconds.
         //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
+        const user = this.context;
 
+        // משיכה של מספר ההודעה שלא נקראו
+        
+        fetch(this.apiUrlMessage + '?teacherID_UnRead='+ user.teacherID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log("countMessages= ", result);
+                this.setState({countMessages: result});
+            },
+            (error) => {
+                console.log("err get=", error);
+            });
     }
-
 
     getDataFromClasses = (data) => {
         this.setState({ class: data });
@@ -52,19 +82,17 @@ export default class CCHomePageTeacher extends Component {
     }
   
     render() {
-
         const user = this.context;
-        console.log("teacherID from context = " + user.teacherID);
-
         return (
             <div className="container-fluid">
-                <NavBar></NavBar><br /><br />
-                <SearchBarHomeTeacher countMessages={4} countAlerts={144} />
+                <NavBar /><br /><br />
+
+                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={144} />
 
                 {this.state.studentPage == false &&
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
-
                 }
+
                 {this.state.studentPage == true &&
                     <div>
                         <div className="col-12"> {/* חזור למסך הקודם */}
@@ -73,10 +101,10 @@ export default class CCHomePageTeacher extends Component {
                         <CCStudents class={this.state.class} SendtoStudents={this.getFronStudents} SendDataToHomeTeacher2={this.getDataFromStudents}  />
                     </div>
                 }
-                <Footer></Footer>
+
+                <Footer />
             </div>
         )
-
     };
 }
 

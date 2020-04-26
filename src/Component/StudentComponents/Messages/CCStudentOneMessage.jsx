@@ -6,13 +6,12 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
-import CCStudentsWithMessage from './CCStudentsWithMessage';
-import { TiArrowBack } from 'react-icons/ti';
 
-export default class CCMessages extends Component {
+export default class OneMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -23,30 +22,20 @@ export default class CCMessages extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount() {
-        
-    }
-
-    goToChat = (student) => {
-        this.props.history.push({
-            pathname: '/Chat',
-            state: { student: student }
-        })
-    }
-
     render() {
+    const message = this.props.message;
         return (
-            <div className="container-fluid">
+            <div>
+                {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
+                {message.messageByTeacher &&
+                    <div style={{textAlign:"left"}} className = 'incomingMessage'> -הודעה יוצאת- {message.messageText}</div>
+                    // להציג תאריך ושעה לכל הודעה
+                }
 
-                <NavBar></NavBar>
-
-                <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
-                </div>
-
-                <CCStudentsWithMessage goToChat={this.goToChat} />
-
-                <Footer></Footer>
+                {message.messageByTeacher == false &&
+                    <div style={{textAlign:"right"}} className = 'outgoingMessage'> -הודעה נכנסת- {message.messageText}</div>
+                    // להציג תאריך ושעה לכל הודעה
+                }
             </div>
         );
     };

@@ -3,7 +3,6 @@ import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import { MdCreate } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
-import { FaTrashAlt } from "react-icons/fa";
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import './styleStudentPage.css';

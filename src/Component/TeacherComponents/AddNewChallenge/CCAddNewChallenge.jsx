@@ -37,7 +37,7 @@ export default class CCAddNewChallenge extends Component {
 
     }
     componentDidMount() {
-        fetch(this.apiUrl
+        fetch(this.apiUrl+"?studentID="+this.props.location.state.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
