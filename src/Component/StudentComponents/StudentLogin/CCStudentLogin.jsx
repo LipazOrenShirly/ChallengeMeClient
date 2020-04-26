@@ -15,34 +15,28 @@ export default class CCStudentLogin extends Component {
     this.state = {
       teachersFromDB: [],
       validate: false,
-      Username: "",
+      Phone: "",
       Password: "",
-      newPassword1: "",
-      newPassword2: "",
-      HasUserNameValError: true,
+      HasPhoneValError: true,
       HasPasswordError: true,
-      HasnewPassword1Error: true,
-      HasnewPassword2Error: true,
-      showChangePassword: false,
     };
     let local = true;
-    this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/...';
+    this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     if (!local) {
-      this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/...'; 
+      this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student'; 
     }
   }
 
   componentDidMount = () => {
     //לפני שעולה העמוד- אם קיימים שם משתמש וססמה בלוקל סטורז' תביא אותם למקומות המתאימים
-    let un = localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "";
-    this.setState({ Username: un });
-    let ps = localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "";
+    let un = localStorage.getItem('SPhone') != null ? localStorage.getItem('SPhone') + '' : "";
+    this.setState({ Phone: un });
+    let ps = localStorage.getItem('Spassword') != null ? localStorage.getItem('Spassword') + '' : "";
     this.setState({ Password: ps });
-    if (this.state.Username != null)
-      this.setState({ HasUserNameValError: false });
+    if (this.state.Phone != null)
+      this.setState({ HasPhoneValError: false });
     if (this.state.Password != null)
       this.setState({ HasPasswordError: false });
-    // $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
   }
 
   NewStudentAlert = () => {
@@ -64,66 +58,29 @@ export default class CCStudentLogin extends Component {
       })
   }
 
-  saveCredentials = (Username, Password) => {
+  saveCredentials = (Phone, Password) => {
     // שמירה של השם משתמש והסיסמה בסשן סטורג' כדי שתהיה בדיקה של פרטי החיבור בטעינה של כל עמוד בהמשך
-    sessionStorage.setItem('password', Password);
-    sessionStorage.setItem('username', Username);
+    sessionStorage.setItem('Spassword', Password);
+    sessionStorage.setItem('SPhone', Phone);
 
     //אם מסומן זכור אותי שומר בלוקל סטורז
     if ($('#remember').prop('checked') === true) {
-      localStorage.setItem('username', Username);
-      localStorage.setItem('password', Password);
+      localStorage.setItem('SPhone', Phone);
+      localStorage.setItem('Spassword', Password);
     }
   }
 
   static contextType = ProjectContext;
 
-  SubmitNewPassword = (event) => {
-    this.setState({ showChangePassword: false });
-    const { Username, newPassword1 } = this.state;
-    this.saveCredentials(Username, newPassword1);
-    const user = this.context;
-    fetch(this.apiUrl + '?teacherID=' + user.teacherID + '&password=' + this.state.newPassword1
-      , {
-        method: 'PUT',
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-        })
-      })
-      .then(res => {
-        console.log('res=', res);
-        console.log('res.status', res.status);
-        console.log('res.ok', res.ok);
-        return res.json();
-      })
-      .then(
-        (result) => {
-          console.log("Submit= ", result);
-          console.log("Submit= ", JSON.stringify(result));
-          Swal.fire({
-            title: 'מעולה!',
-            text: 'הסיסמה שונתה בהצלחה',
-            icon: 'success',
-            confirmButtonColor: '#e0819a',
-          })
-            .then(
-              this.props.history.push('/HomePageTeacher/'));
-        },
-        (error) => {
-          console.log("err get=", error);
-        });
-    event.preventDefault();
-  }
-
   Submit = (event) => {
     const user = this.context;
-    if (!this.state.HasUserNameValError && !this.state.HasPasswordError) //אם אין הערות
+    if (!this.state.HasPhoneValError && !this.state.HasPasswordError) //אם אין הערות
     {
-      const { Username, Password } = this.state;
-      this.saveCredentials(Username, Password);
+      const { Phone, Password } = this.state;
+      this.saveCredentials(Phone, Password);
 
       //בעזרת גט בודק אם השם משתמש וססמה קיימים במערכת
-      fetch(this.apiUrl + '?username=' + Username + '&password=' + Password
+      fetch(this.apiUrl + '?phone=' + Phone + '&password=' + Password
         , {
           method: 'GET',
           headers: new Headers({
@@ -138,16 +95,12 @@ export default class CCStudentLogin extends Component {
         })
         .then(
           (result) => {
-            console.log("Submit= ", result);
-            console.log("Submit= ", JSON.stringify(result));
-            if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
-              user.setTeacher(result.TeacherID); //אם קיים אז תשמור בקונטקט
-              if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
-                this.props.history.push('/HomePageTeacher/');
-              else {//אם זה סיסמה זמנית אז
-                this.setState({ showChangePassword: true });
+            console.log("Submit= ", result[0]);
+            if (result != 0) { //אם המורה קיים בדאטה בייס
+              user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
+              user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט
+              this.props.history.push('/StudentHomePage');
               }
-            }
             else {
               $('#errorFromServer').empty();
               $('#errorFromServer').append("שם המשתמש או הסיסמה אינם נכונים");//הודעה למשתמש
@@ -160,17 +113,9 @@ export default class CCStudentLogin extends Component {
     event.preventDefault();
   }
 
-  onRecieveNewPassword = () => {
-    //take the password and change the db
-    let p1 = $('#swal-input1').val();
-    let p2 = $('#swal-input2').val();
-    alert("new password is: " + p1);
-    this.setState({ showChangePassword: false });
-  }
-
   render() {
     const {
-      Username,
+      Phone,
       Password,
       validate,
       newPassword1, newPassword2
@@ -182,22 +127,22 @@ export default class CCStudentLogin extends Component {
           <div className="col-12">
             <img className="logoImgLoginTeacher" src={require('../../../img/logoChallengeMe.svg')} />
           </div>
-          <form onSubmit={this.state.showChangePassword ? this.SubmitNewPassword : this.Submit}>
+          <form onSubmit={this.Submit}>
             <div className="form-group col-12">
             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
-                            id: 'unameId',
+                            id: 'phone',
                             type: 'text',
                             placeholder: 'מספר הפלאפון של התלמיד',
                             className: "form-control inputRounded"
                         }}
 
-                        value={Username}
+                        value={Phone}
                         validationCallback={res =>
-                            this.setState({ HasUsernameValError: res, validate: false })
+                            this.setState({ HasPhoneValError: res, validate: false })
                         }
-                        onChange={(Username, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ Username });
+                        onChange={(Phone, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ Phone });
                             console.log(e);
                         }}
                         onBlur={(e) => {
@@ -206,12 +151,12 @@ export default class CCStudentLogin extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                            customFunc: Username => {
+                            customFunc: Phone => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
-                                if (reg.test(Username)) {
+                                if (reg.test(Phone)) {
                                     return true;
                                 } else {
-                                    this.setState({ HasUserNameValError: true });
+                                    this.setState({ HasPhoneValError: true });
                                     return "is not a valid phone number";
                                 }
                             }
@@ -224,7 +169,7 @@ export default class CCStudentLogin extends Component {
                         attributesInput={{
                             id: 'apasswordId',
                             type: 'password',
-                            placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
+                            placeholder: 'הזן סיסמה',
                             className: "form-control inputRounded"
                         }}
 
@@ -251,10 +196,8 @@ export default class CCStudentLogin extends Component {
                             }
                         }}
                     />
-            
             </div>
 
-         
             <div className="rememberMeDivStudent">
               <label className="rememberStudent">
                 זכור אותי&nbsp;&nbsp;

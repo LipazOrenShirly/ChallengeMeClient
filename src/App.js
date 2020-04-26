@@ -37,9 +37,9 @@ import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
   const user = { 
-    teacherID: 8, 
+    teacherID: "", 
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
-    studentID: 21,
+    studentID: "",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   }
 
