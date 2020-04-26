@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../../css/Style.css';
+import './styleStudentHomePage.css';
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import ProjectContext from '../../../Context/ProjectContext';
@@ -15,11 +16,15 @@ export default class CCStudentHomePage extends Component {
         super(props);
         this.state = {
             countMessages: null,
+            FirstAndLastName:{firstName:"", lastName:""},
+            AvatarID: null,
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 
@@ -33,8 +38,34 @@ export default class CCStudentHomePage extends Component {
     }
 
     componentDidMount = () => {
+        this.getNameAndAvatarNum();
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
+    }
+    getNameAndAvatarNum = () => {
+        const user = this.context;
+        console.log(user.studentID);
+        fetch(this.apiUrlStudent + '?studentIDGivesName='+ user.studentID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log("NameAndAvatarID= ", result[0]);
+                this.setState({FirstAndLastName:  { firstName :result[0].firstName ,lastName: result[0].lastName}, AvatarID:result[0].avatarID});
+            },
+            (error) => {
+                console.log("err get=", error);
+            });
     }
 
     getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
@@ -67,20 +98,20 @@ export default class CCStudentHomePage extends Component {
         const user = this.context;
 
         return (
-            <div className="container-fluid">
-                <NavBar></NavBar><br /><br />
-                
-                <div className="col-3 massegesTeacherHomePage">
-                    <Link to="/StudentChat" className="linkColor">
-                        <Badge badgeContent={this.state.countMessages} color="secondary">
+            <div className="container-fluid studentPage">
+               <br />
+                <div className="headLineHomePage row" dir="rtl">
+                    <img className="emptyUserImg" src={require('../../../img/emptyUserImg.png')} />
+                   <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div></div>
+                <div className="col-12 massegesTeacherHomePage" onClick={()=>alert("jjj")}>
+                    
+                        <Badge badgeContent={this.state.countMessages}  color="secondary">
                             <MdMail size={40} />
                         </Badge>
-                    </Link>
                 </div>
 
                 <CCStudentChallenges goToChallengePage={this.goToChallengePage} />
 
-                <Footer></Footer>
             </div>
         )
     };
