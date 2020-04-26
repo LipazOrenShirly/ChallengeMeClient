@@ -1,0 +1,60 @@
+.logoImgLoginTeacher{
+    padding-top: 10%;
+    width: 100%;
+    padding-bottom: 10%;
+}
+
+/* for large device */
+@media (min-device-width: 500px) {
+.logoImgLoginTeacher{
+    padding:0px;
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}}
+.rememberMeDivStudent{
+    /* background-color: rgba(255,105,180,0.8); */
+    background-color: rgba(124, 187, 245, 0.912);
+
+    margin-top: 7%;
+}
+
+/* for large device */
+@media (min-device-width: 500px) {
+    .rememberMeDiv{
+        margin-top: 0px;
+    
+    }
+}
+.rememberStudent{
+    margin: 5px 0;
+}
+.studentPage{
+    background-image: url('../../../img/ggg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+h5{
+    padding-top: 2%;
+    font-size: 20px;
+    text-shadow: 1px 1px rgb(78, 92, 95);
+    color: rgb(98, 130, 134);
+}
+h6{
+    position: fixed;
+    bottom: 10px;
+    
+    width: 100%;
+    text-shadow: 1px 1px rgb(78, 92, 95);
+    color: rgb(98, 130, 134);
+}
+.react-inputs-validation__error___2aXSp , .errorFromServer{
+    color:red;
+    font-size: 16px;
+}
+
+/*************popup*****************/
+
+#newPassword1Div ,#newPassword2Div{
+    display: none;
+}

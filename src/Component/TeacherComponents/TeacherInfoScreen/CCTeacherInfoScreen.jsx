@@ -477,8 +477,8 @@ export default class CCTeacherInfoScreen extends Component {
                         </div>
 
                         <div className="col-12" >
-                            <button type="submit" id="save" className="btn btn-info col-8 btnYellow"  >עדכן פרטים</button>
-                            <button type="button" id="cancel" className="btn btn-info col-4 btnYellow cencelBtn" onClick={this.btnClick} >בטל</button>
+                            <button type="submit" id="save" className="btn btn-info col-8 btnPink"  >עדכן פרטים</button>
+                            <button type="button" id="cancel" className="btn btn-info col-4 btnPink cencelBtn" onClick={this.btnClick} >בטל</button>
                         </div>
                     </form>
                 </div>

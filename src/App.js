@@ -6,7 +6,6 @@ import NewTeacher from './Component/TeacherComponents/NewTeacher/CCNewTeacher';
 import TeacherForgetPassword from './Component/TeacherComponents/TeacherForgetPassword/CCTeacherForgetPassword';
 import TeacherLogin from './Component/TeacherComponents/TeacherLogin/CCTeacherLogin';
 import teacherORstudent from './Component/TeacherComponents/teacherORstudent/CCteacherORstudent';
-import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import TeacherInfoScreen from './Component/TeacherComponents/TeacherInfoScreen/CCTeacherInfoScreen';
 import Alerts from './Component/TeacherComponents/Alerts/CCAlerts';
 import AlertsSetting from './Component/TeacherComponents/AlertsSetting/CCAlertsSetting';
@@ -25,6 +24,9 @@ import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewS
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
+
+import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
+
 
 import {ProjectProvider} from './Context/ProjectContext';
 

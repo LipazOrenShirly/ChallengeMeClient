@@ -108,7 +108,7 @@ export default class CCTeacherForgetPassword extends Component {
                             />
 
                         </div>
-                        <div className="text-center"><button type="submit" className="btn btn-light btnYellow roundedBtn" onClick={this.sendEmail}>שלח</button></div>
+                        <div className="text-center"><button type="submit" className="btn btn-light btnPink roundedBtn" onClick={this.sendEmail}>שלח</button></div>
                         <SweetAlert
                             show={this.state.showGood}
                             title="הסיסמה שונתה!"

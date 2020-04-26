@@ -439,7 +439,7 @@ export default class CCnewTeacher extends Component {
                         </div>
 
                         <div className="col-12">
-                            <button type="submit" id="submit" className="btn btn-info btnYellow">כניסה</button>
+                            <button type="submit" id="submit" className="btn btn-info btnPink">כניסה</button>
                         </div>
                     </form>
                 </div>

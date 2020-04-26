@@ -313,13 +313,13 @@ export default class CCTeacherLogin extends Component {
             }
 
             <div className="rememberMeDiv">
-              <label>
+              <label className="rememberTeacher">
                 זכור אותי&nbsp;&nbsp;
                 <input type="checkbox" name="remember" id="remember" />
               </label>
             </div><br />
             <div className="col-12">
-              <button type="submit" id="submit" className="btn btn-info btnYellow roundedBtn">כניסה</button>
+              <button type="submit" id="submit" className="btn btn-info btnPink roundedBtn">כניסה</button>
               <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
             </div>
             <h5 onClick={this.ForgetPassword}> שכחתי סיסמה</h5>

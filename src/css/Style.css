@@ -18,11 +18,11 @@ body{
     float: left;
 }
 /*************ButtonYellow*****************/
-.btnYellow{
-    background-color: #F5B5DB;
+.btnPink , .btnYellow{
+   
     border: none;
     /* margin: 0 1%; */
-    color: whitesmoke;
+    
     /* background-color:#FFE568 ; */
     /* border:none; */
     /* color: black; */
@@ -30,9 +30,17 @@ body{
     border-radius: 3px; 
     width: 100%;
 }
-.btnYellow:hover{
+.btnPink{
+    background-color: #F5B5DB;
+    color: whitesmoke;
+}
+.btnPink:hover{
     background-color:rgba(224, 129, 154, 0.801) ;
     color: black;
+}
+.btnYellow{
+    background-color: rgb(255,255,102);
+    color:rgb(90, 90, 90);
 }
 .roundedBtn{
     border-radius: 24px; 

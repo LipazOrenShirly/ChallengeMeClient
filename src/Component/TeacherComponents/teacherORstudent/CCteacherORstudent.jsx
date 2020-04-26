@@ -10,9 +10,9 @@ export default class CCteacherORstudent extends Component {
     }
 
     heIsStudent=()=>{
-        // this.props.history.push({
-        //     pathname:'/StudentLogin',
-        // })     
+        this.props.history.push({
+            pathname:'/StudentLogin',
+        })     
     }
     heIsTeacher=()=>{
         this.props.history.push({
@@ -27,7 +27,7 @@ export default class CCteacherORstudent extends Component {
                 <h1>האם אתה</h1>
                 <div className="col-12"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkTotS col-5">מורה</button>
                 
-                <button type="button" className="btn btn-info btnpinkTotS btnYellowTOS col-5" onClick={this.heIsStudent}>תלמיד</button></div>
+                <button type="button" className="btn btn-info btnpinkTotS btnPinkTOS col-5" onClick={this.heIsStudent}>תלמיד</button></div>
                 </div>
             </div>
         );

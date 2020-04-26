@@ -81,9 +81,9 @@ class CCStudentPage extends Component {
                 {this.state.hasFeature == false &&
                     <div className="errorfeature">על מנת להוסיף אתגרים לתלמיד עליך להשלים את אפיון התלמיד</div>
                 }
-                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick={() => this.props.history.push('/StudentFeatures', { student: student })} >אפיון התלמיד</button></div>
+                <div className="col-12"><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentFeatures', { student: student })} >אפיון התלמיד</button></div>
 
-                <div className="col-12"><button className="btn btn-info btnYellow eddChallengeBTN" onClick={() => this.props.history.push('/StudentInfoScreen', { student: student })} >פרטי התלמיד</button></div>
+                <div className="col-12"><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentInfoScreen', { student: student })} >פרטי התלמיד</button></div>
 
                 <br /><br />
                 <Footer />

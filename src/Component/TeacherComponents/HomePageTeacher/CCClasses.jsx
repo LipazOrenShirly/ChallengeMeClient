@@ -144,7 +144,7 @@ export default class CCClasses extends Component {
                             <input type="text" id="newClass" className="form-control inputRounded" placeholder="כתוב שם כיתה" required />
                         </div>
                         <div className="col-12">
-                            <button type="submit" id="submit" className="btn btn-info btnYellow">הוסף כיתה</button>
+                            <button type="submit" id="submit" className="btn btn-info btnPink">הוסף כיתה</button>
                         </div>
                     </form>
                 }
