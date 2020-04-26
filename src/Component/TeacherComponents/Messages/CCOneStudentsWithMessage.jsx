@@ -27,6 +27,7 @@ export default class CCOneStudentsWithMessage extends Component {
 
     componentDidMount() {
         const user = this.context;
+        // מחזירה אובייקט של תלמיד
         fetch(this.apiUrlStudent + '?studentID=' + this.props.studentID
             , {
                 method: 'GET',
@@ -82,7 +83,7 @@ export default class CCOneStudentsWithMessage extends Component {
         return (
             <div onClick = { () => this.props.goToChat(this.state.student)}>
                 {this.state.student.firstName} {this.state.student.lastName}
-                <div>{this.state.UnReadCount}</div>  {/* להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
+                <div>{this.state.UnReadCount != 0 && this.state.UnReadCount}</div>  {/* להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
                 
             </div>
         );
