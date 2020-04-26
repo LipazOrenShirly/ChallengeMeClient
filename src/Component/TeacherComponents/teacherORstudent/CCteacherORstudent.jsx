@@ -11,7 +11,7 @@ export default class CCteacherORstudent extends Component {
 
     heIsStudent=()=>{
         this.props.history.push({
-            pathname:'/StudentHomePage',
+            pathname:'/StudentLogin',
         })     
     }
     heIsTeacher=()=>{
