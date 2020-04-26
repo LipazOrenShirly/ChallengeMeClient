@@ -60,10 +60,11 @@ export default class CCStudents extends Component {
         $('#BTNeditClassName').hide();
         $('#BTNsaveClassName').show();
     }
-    AddStudent=()=>{
-        this.props.SendtoStudents(this.props.class.classID);
 
+    AddStudent=()=>{
+        this.props.goToAddNewStudent(this.props.class.classID);
     }
+
     UpdateClassName = () => {
         var updatedClass = {
             className: $('#className').val(),
@@ -129,7 +130,7 @@ export default class CCStudents extends Component {
                 <div className="row col-12 flex-container">
                 {
                     this.state.StudentArr.map((item) =>
-                        <CCOneStudent key = {item.studentID} student={item} SendDataToStudents={this.props.SendDataToHomeTeacher2} SendDeleteStudents={this.deleteStudent}/>
+                        <CCOneStudent key = {item.studentID} student={item} goToStudentPage={this.props.goToStudentPage} SendDeleteStudents={this.deleteStudent}/>
                     )
                     }
                     </div>
