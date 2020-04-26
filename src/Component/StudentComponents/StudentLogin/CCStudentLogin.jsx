@@ -56,9 +56,12 @@ export default class CCStudentLogin extends Component {
 
   ForgetPassword = () => {
     //כשלוחצים על שכחתי סיסמה מועבר לעמוד מתאים
-    this.props.history.push({
-      pathname: '/TeacherForgetPassword',
-    })
+    Swal.fire({
+        title: 'אוי',
+        text: 'עלייך לבקש מהמחנך שיאפס לך את הסיסמה',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(135, 181, 189)',
+      })
   }
 
   saveCredentials = (Username, Password) => {
@@ -181,139 +184,77 @@ export default class CCStudentLogin extends Component {
           </div>
           <form onSubmit={this.state.showChangePassword ? this.SubmitNewPassword : this.Submit}>
             <div className="form-group col-12">
-              <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                attributesInput={{
-                  id: 'unameId',
-                  type: 'text',
-                  placeholder: 'הכנס שם משתמש',
-                  className: "form-control inputRounded"
-                }}
+            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'unameId',
+                            type: 'text',
+                            placeholder: 'מספר הפלאפון של התלמיד',
+                            className: "form-control inputRounded"
+                        }}
 
-                value={Username}
-                validationCallback={res =>
-                  this.setState({ HasUserNameValError: res, validate: false })
-                }
-                onChange={(Username, e) => { //כל שינוי הוא שומר בסטייט
-                  this.setState({ Username });
-                  console.log(e);
-                }}
-                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                validationOption={{
-                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                  msgOnError: "נא לכתוב שם משתמש",
-                }}
-              />
+                        value={Username}
+                        validationCallback={res =>
+                            this.setState({ HasUsernameValError: res, validate: false })
+                        }
+                        onChange={(Username, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ Username });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => {
+                            console.log(e);
+                        }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: Username => {
+                                const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
+                                if (reg.test(Username)) {
+                                    return true;
+                                } else {
+                                    this.setState({ HasUserNameValError: true });
+                                    return "is not a valid phone number";
+                                }
+                            }
+                        }}
+                    />
+            
             </div>
             <div className="form-group col-12">
-              <Textbox
-                attributesInput={{
-                  id: 'apasswordId',
-                  type: 'password',
-                  placeholder: 'הכנס סיסמה',
-                  className: "form-control inputRounded"
-                }}
-                value={Password} // Optional.[String].Default: "".
-                validationCallback={res =>
-                  this.setState({ HasPasswordError: res, validate: false })
-                }
-                onChange={(Password, e) => {
-                  this.setState({ Password });
-                  console.log(e);
-                }} // Required.[Func].Default: () => {}. Will return the value.
-                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                validationOption={{
-                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                  customFunc: pas => { //Minimum eight characters, at least one letter, one number and                      :
-                    const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
-                    if (reg.test(pas)) {
-                      return true;
-                    } else {
-                      this.setState({ HasPasswordError: true });
-                      return "Minimum eight characters, at least one letter, one number and one special character";
-                    }
-                  }
-                }}
-              />
+            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            id: 'apasswordId',
+                            type: 'password',
+                            placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
+                            className: "form-control inputRounded"
+                        }}
+
+                        value={Password}
+                        validationCallback={res =>
+                            this.setState({ HasPasswordError: res, validate: false })
+                        }
+                        onChange={(Password, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ Password });
+                            console.log(e);
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
+                                const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+                                if (reg.test(pas)) {
+                                    return true;
+                                } else {
+                                    this.setState({ HasPasswordError: true });
+                                    return "Minimum 5 characters, at least one letter and one number";
+                                }
+                            }
+                        }}
+                    />
+            
             </div>
 
-            {/* אם הסיסמה זמנית מראה את 2 השדות לכתיבת סיסמה חדשה */}
-            {this.state.showChangePassword &&
-              <div>
-                <div className="form-group col-12">הסיסמה שלך זמנית, עליך לבחור סיסמה חדשה</div>
-                <div className="form-group col-12">
-                  <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                    attributesInput={{
-                      id: 'newPassword1',
-                      type: 'password',
-                      placeholder: 'הזן ססמה חדשה',
-                      className: "form-control inputRounded"
-                    }}
-                    value={newPassword1}
-                    validationCallback={res =>
-                      this.setState({ HasnewPassword1Error: res, validate: false })
-                    }
-                    onChange={(newPassword1, e) => { //כל שינוי הוא שומר בסטייט
-                      this.setState({ newPassword1 });
-                      console.log(e);
-                    }}
-                    onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                    validationOption={{
-                      check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                      required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                      customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
-                        const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
-                        if (reg.test(pas)) {
-                          return true;
-                        } else {
-                          this.setState({ HasnewPassword1Error: true });
-                          return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
-                        }
-                      }
-                    }}
-                  />
-                </div>
-                <div className="form-group col-12">
-                  <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                    attributesInput={{
-                      id: 'newPassword2',
-                      type: 'password',
-                      placeholder: 'הזן ססמה בשנית',
-                      className: "form-control inputRounded"
-                    }}
-                    value={newPassword2}
-                    validationCallback={res =>
-                      this.setState({ HasnewPassword2Error: res, validate: false })
-                    }
-                    onChange={(newPassword2, e) => { //כל שינוי הוא שומר בסטייט
-                      this.setState({ newPassword2 });
-                      console.log(e);
-                    }}
-                    onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                    validationOption={{
-                      check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                      required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                      customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
-                        const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
-                        if (reg.test(pas)) {
-                          if (newPassword2 == newPassword1)
-                            return true;
-                          else {
-                            this.setState({ HasnewPassword2Error: true });
-                            return "not like first password";
-                          }
-                        } else {
-                          this.setState({ HasnewPassword2Error: true });
-                          return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
-                        }
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            }
-
+         
             <div className="rememberMeDivStudent">
               <label className="rememberStudent">
                 זכור אותי&nbsp;&nbsp;
