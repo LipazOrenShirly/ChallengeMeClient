@@ -15,7 +15,6 @@
 .rememberMeDivStudent{
     /* background-color: rgba(255,105,180,0.8); */
     background-color: rgba(124, 187, 245, 0.912);
-
     margin-top: 7%;
 }
 
@@ -29,11 +28,7 @@
 .rememberStudent{
     margin: 5px 0;
 }
-.studentPage{
-    background-image: url('../../../img/ggg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+
 h5{
     padding-top: 2%;
     font-size: 20px;

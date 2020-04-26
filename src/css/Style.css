@@ -70,3 +70,11 @@ body{
     text-align: center ;
     padding-top: 5px;
 }
+
+/* **************student********* */
+
+.studentPage{
+    background-image: url('../img/ggg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
