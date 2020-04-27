@@ -50,13 +50,13 @@ export default class CCStudentChallenges extends Component {
 
         return (
             <div >
-                
-                <div className="col-12 turkiz">האתגרים שלי:</div><br />
-
-                {this.state.StudentChallenges.map( (item) => 
-                    <CCOneStudentChallenges challenge={item} key={item.challengeID} goToChallengePage = {this.props.goToChallengePage} />
+                <br/>
+                <div className="col-12 btnMassagesReadText">:האתגרים שלי</div><br />
+                <div className="challengeShowStudents">
+                {this.state.StudentChallenges.map( (item, key) => 
+                    <CCOneStudentChallenges countChallenges={this.state.StudentChallenges.length} challenge={item} index={key} goToChallengePage = {this.props.goToChallengePage} />
                 )}
-
+</div>
             </div>
         )
     };

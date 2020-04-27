@@ -63,9 +63,9 @@ export default class CCChallengePage extends Component {
         const dateDiff = parseInt((deadline-today) / (1000 * 60 * 60 * 24), 10);
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid studentPage">
 
-                <NavBar></NavBar><br /><br />
+               <br />
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
@@ -84,7 +84,6 @@ export default class CCChallengePage extends Component {
                 <button id='fail' onClick={ (e) => this.updateStatus(e.target.id) } >לא מצליח</button>
                 <button id='help' onClick={ (e) => this.updateStatus(e.target.id) } >צריך עזרה</button>
 
-                <Footer></Footer>
 
             </div>
         )

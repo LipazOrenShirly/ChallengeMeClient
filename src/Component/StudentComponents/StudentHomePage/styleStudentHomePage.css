@@ -9,5 +9,60 @@
 .helloName{
     padding-top:5% ;
     padding-right: 3%;
-}
+    font-size: 25px;
+    font-weight: 600;
+    /* text-shadow: 1px 1px rgb(78, 92, 95); */
+    color: rgb(98, 130, 134);
 
+}
+.messagesS{
+    margin-top: 2%;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 15%;
+}
+.btnMassagesRead{
+    margin-top:3% ;
+}
+.btnMassagesReadText{
+    font-size: 25px;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+.challengeReadText{
+    font-size: 25px;
+    color:  rgb(85, 85, 85);
+}
+.oneDiv{
+    padding: 3% 0 ;
+}
+.challengeShowStudents{
+    height: 280px;
+    overflow: scroll;
+}
+.avatarClassDiv > img{
+    height: 100px;
+    margin-left: 2%;
+    
+}
+.avatarClassDiv {
+    text-align: left !important;
+}
+#talkbubble {
+    width: 120px;
+    height: 80px;
+    background: whitesmoke;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  #talkbubble:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 26px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-right: 26px solid whitesmoke;
+    border-bottom: 13px solid transparent;
+  }
