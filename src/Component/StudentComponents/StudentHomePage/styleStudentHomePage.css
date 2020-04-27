@@ -45,6 +45,7 @@
 }
 .avatarClassDiv {
     text-align: left !important;
+          
 }
 #talkbubble {
     width: 120px;
@@ -66,3 +67,68 @@
     border-right: 26px solid whitesmoke;
     border-bottom: 13px solid transparent;
   }
+.successHomePage{
+    margin-left: -60px;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background-color: rgba(57, 230, 198, 0.644);
+    border: none;
+    align-items: center;
+}
+.successHomePage > .MdCheckHomePage{
+    margin-right: -7px;
+    margin-top: -3px;
+}
+
+  /* *******one challengePage****** */
+
+.imageOneChallenge{
+    height: 250px;
+    width: 100%;
+    padding:0px;
+}
+.challengeName{
+    color: teal;
+    font-weight: 700;
+}
+.dedlineTextChallengePage{
+    color:rgb(223, 77, 113);
+    margin-top: 2%;
+    /* font-size: 23px; */
+}
+.dedlineDateTextChallengePage{
+    font-size: 25px;
+    color:rgb(223, 77, 113);
+    font-weight: 600;
+}
+
+
+.btnSuccess , .btnFail , .btnHelp{
+    height: 100px;
+    border-radius: 50%;
+    width: 100px;
+    border:none;
+}
+.btnSuccess{
+background-color: #39E6C6;
+}
+.btnFail{
+background-color: #FD658B;
+}
+.btnHelp{
+background-color: #FFBE3D;
+}
+.textSeccesNotOrHelp{
+padding: 0px;
+text-align: center;
+}
+.statusSentence{
+    color:rgb(223, 77, 113);
+    margin-top: 2%;
+}
+.FaPencilAlt{
+    margin-top: -40px;
+    margin-left: 40px;
+}
+

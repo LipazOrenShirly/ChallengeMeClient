@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../../css/Style.css';
 import ProjectContext from '../../../Context/ProjectContext';
 import localHost from '../../LittleComponents/LocalHost';
+import { MdCheck } from 'react-icons/md';
 
 export default class CCOneStudentChallenges extends Component {
 
@@ -17,16 +18,18 @@ export default class CCOneStudentChallenges extends Component {
 
     componentDidMount() {
         const user = this.context;
+        console.log(this.props.challenge);
+        
     }
 
     render() {
         const user = this.context;
         
         return (
-            <div className={this.props.index +" d-flex align-items-center justify-content-center oneDiv"} style={{backgroundColor:this.state.backColor[(this.props.index)%9]}}>               
-                <div className="col-12 challengeReadText"  onClick={ () => this.props.goToChallengePage(this.props.challenge)} >{this.props.challenge.challengeName} </div>
+            <div className={this.props.index +" d-flex align-items-center justify-content-center oneDiv"} dir="rtl" style={{backgroundColor:this.state.backColor[(this.props.index)%9]}}>    
+ { this.props.challenge.status == '1' ?  <div><button className="btn btn-info successHomePage" id='success' ><MdCheck className="MdCheckHomePage" size={30}/></button></div> :<div></div>}
+                <div className="col-12 challengeReadText"  onClick={ () => this.props.goToChallengePage(this.props.challenge,this.props.index)} >{this.props.challenge.challengeName} </div>
             </div>
         )
     };
 }
-
