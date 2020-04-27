@@ -13,10 +13,12 @@ export default class CCStudentsWithMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            studentIDArr: [],
+            studentsWithChat: [],
             Students: [],
             studentsWithNoChat: [],
             searchInput: "",
+            searchStudentsWithChat: [],
+            searchStudentsWithNoChat: []
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -31,6 +33,7 @@ export default class CCStudentsWithMessage extends Component {
 
     componentDidMount() {
         const user = this.context;
+        // מושך רשימה של כל התלמידים שיש למורה שיחה איתם ואת כמות ההודעות שלא נקראו ומסדר לפי הכי חדש
         fetch(this.apiUrl + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
@@ -46,13 +49,14 @@ export default class CCStudentsWithMessage extends Component {
             })
             .then(
                 (result) => {
-                    console.log("studentsArr= ", result);
-                    this.setState({ studentIDArr: result })
+                    console.log("studentsWithChat= ", result);
+                    this.setState({ studentsWithChat: result })
                 },
                 (error) => {
                     console.log("err get=", error);
                 });
 
+        // מחזיר את כל התלמידים של המורה
         fetch(this.apiUrlStudent + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
@@ -70,6 +74,11 @@ export default class CCStudentsWithMessage extends Component {
                 (result) => {
                     console.log("Students= ", result);
                     this.setState({ Students: result });
+                    const studentsWithNoChat = this.state.Students.filter((item) =>
+                        !this.state.studentsWithChat.includes(item.studentID)
+                    );
+                    this.setState({ studentsWithNoChat: studentsWithNoChat }); // שמירת התלמידים המסוננים בסטייט
+                    console.log(this.state.studentsWithNoChat);
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -78,21 +87,23 @@ export default class CCStudentsWithMessage extends Component {
 
     searchStudents = (searchInput, e) => {
         this.setState({ searchInput });
-        console.log(this.state.searchInput);
-        console.log(this.state.studentIDArr);
+        console.log(searchInput);
 
-        if (searchInput == "") {  //אם מוחקים הכל מהשדה אז הרשימה תתרוקן
-            this.setState({ studentsWithNoChat: [] });
-        }
-        else {   // אם השדה לא ריק אז מוצאים תלמידים מתאימים לחיפוש
-            // סינון התלמידים שכבר יש איתם שיחות מתוך כל התלמידים של המורה
-            const studentsWithNoChat = this.state.Students.filter((item) =>
-                item.firstName.concat(' ', item.lastName).includes(searchInput) && !this.state.studentIDArr.includes(item.studentID)
-            );
-            this.setState({ studentsWithNoChat: studentsWithNoChat }); // שמירת התלמידים המסוננים בסטייט
-            console.log(this.state.studentsWithNoChat);
-        }
+        // תלמידים שיש להם צ'ט
+        const searchStudentsWithChat = this.state.Students.filter((item) =>
+            item.firstName.concat(' ', item.lastName).includes(searchInput) && this.state.studentsWithChat.includes(item.studentID)
+        );
+        this.setState({ searchStudentsWithChat });
+        console.log(this.state.searchStudentsWithChat);
+
+        // תלמידים שאין להם צ'ט
+        const searchStudentsWithNoChat = this.state.Students.filter((item) =>
+            item.firstName.concat(' ', item.lastName).includes(searchInput) && !this.state.studentsWithChat.includes(item.studentID)
+        );
+        this.setState({ searchStudentsWithNoChat });
+        console.log(this.state.searchStudentsWithNoChat);
     }
+
 
     render() {
         const searchInput = this.state.searchInput;
@@ -113,19 +124,39 @@ export default class CCStudentsWithMessage extends Component {
                     />
                 </div>
 
-                <div className="col-12 turkiz">שיחות קיימות</div>
-                {/* תלמידים שלמורה כבר יש שיחה איתם        */}
-                <div>
-                    {this.state.studentIDArr.map((item) =>
-                        <CCOneStudentsWithMessage studentID={item} key={item} goToChat={this.props.goToChat} />
-                    )}
-                </div>
-                <br />
+                {/* תלמידים שלמורה כבר יש שיחה איתם מסודרים לפי הכי חדש */}
+                {this.state.searchInput == "" &&
+                    <div>
+                        {this.state.studentsWithChat.map((item) =>
+                            <CCOneStudentsWithMessage studentID={item} key={item} goToChat={this.props.goToChat} />
+                        )}
+                    </div>
+                }
+                {/* תלמידים שלמורה אין שיחה איתם */}
+                {this.state.searchInput == "" &&
+                    <div>
+                        {this.state.studentsWithNoChat.map((item) =>
+                            <CCOneStudentsWithMessage studentID={item.studentID} key={item.studentID} goToChat={this.props.goToChat} />
+                        )}
+                    </div>
+                }
 
-                {/* מציג תלמידים מהשדה חיפוש (תלמידים שאין איתם שיחה עדיין */}
-                <div className="col-12 turkiz">תוצאת חיפוש תלמיד</div>
-                {this.state.studentsWithNoChat.map((item) =>
-                    <div onClick={ () => this.props.goToChat(item) }>{item.firstName} {item.lastName}</div>)}
+                {/* תוצאות מהחיפוש - מציג תלמידים שיש להם צ'ט */}
+                {this.state.searchInput != "" &&
+                    <div>
+                        {this.state.searchStudentsWithChat.map((item) =>
+                            <CCOneStudentsWithMessage studentID={item.studentID} key={item.studentID} goToChat={this.props.goToChat} />
+                        )}
+                    </div>
+                }
+                {/* תוצאות מהחיפוש - מציג תלמידים שאין להם צ'ט */}
+                {this.state.searchInput != "" &&
+                    <div>
+                        {this.state.searchStudentsWithNoChat.map((item) =>
+                            <CCOneStudentsWithMessage studentID={item.studentID} key={item.studentID} goToChat={this.props.goToChat} />
+                        )}
+                    </div>
+                }
             </div>
         );
     };

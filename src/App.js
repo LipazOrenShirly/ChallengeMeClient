@@ -25,6 +25,7 @@ import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStu
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
 import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChallengePage';
+import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/CCStudentsSearchResult';
 
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
 import StudentMessages from './Component/StudentComponents/Messages/CCStudentMessages'
@@ -75,8 +76,7 @@ function App() {
           <Route path="/StudentHomePage" component={StudentHomePage} />
           <Route path="/StudentMessages" component={StudentMessages} />
           <Route path="/StudentChat" component={StudentChat} />
-
-          
+          <Route path="/StudentsSearchResult" component={StudentsSearchResult} />          
         </Switch>
       </ProjectProvider>
     </div>

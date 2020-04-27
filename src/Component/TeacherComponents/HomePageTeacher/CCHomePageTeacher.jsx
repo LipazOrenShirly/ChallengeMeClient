@@ -10,7 +10,7 @@ import CCStudents from './CCStudents';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
 import localHost from '../../LittleComponents/LocalHost';
-
+import CCStudentsSearchResult from './CCStudentsSearchResult';
 export default class CCHomePageTeacher extends Component {
 
     constructor(props) {
@@ -19,7 +19,7 @@ export default class CCHomePageTeacher extends Component {
             class: {},
             studentPage: false,
             countMessages: null,
-
+            input: "",
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -68,26 +68,35 @@ export default class CCHomePageTeacher extends Component {
         this.setState({ studentPage: true })
     }
 
-    getDataFromStudents = (data) => {
+    goToStudentPage = (data) => {
         this.props.history.push({
             pathname: '/StudentPage',
             state: { student: data }
         })
     }
-    getFronStudents = (classID) => {
+
+    goToAddNewStudent = (classID) => {
         this.props.history.push({
             pathname: '/AddNewStudent',
             state: { classID: classID }
         })
     }
-  
+    
+    sendInputToHomePage = (input) => {
+        this.setState({input: input});
+        console.log(this.state.input);
+    }
+
     render() {
         const user = this.context;
         return (
             <div className="container-fluid">
                 <NavBar /><br /><br />
 
-                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={144} />
+                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={144} sendInputToHomePage = {this.sendInputToHomePage}/>
+                {this.state.input != "" && 
+                <CCStudentsSearchResult input={this.state.input} goToStudentPage={this.goToStudentPage}/>
+                }
 
                 {this.state.studentPage == false &&
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
@@ -98,7 +107,7 @@ export default class CCHomePageTeacher extends Component {
                         <div className="col-12"> {/* חזור למסך הקודם */}
                             <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
                         </div>
-                        <CCStudents class={this.state.class} SendtoStudents={this.getFronStudents} SendDataToHomeTeacher2={this.getDataFromStudents}  />
+                        <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage}  />
                     </div>
                 }
 
