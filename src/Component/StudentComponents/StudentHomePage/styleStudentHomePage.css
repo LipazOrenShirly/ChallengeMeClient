@@ -35,8 +35,9 @@
     padding: 3% 0 ;
 }
 .challengeShowStudents{
-    height: 280px;
-    overflow: scroll;
+    height: 300px;
+     overflow: scroll; 
+   
 }
 .avatarClassDiv > img{
     height: 100px;
