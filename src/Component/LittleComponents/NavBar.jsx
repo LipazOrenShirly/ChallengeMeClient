@@ -13,7 +13,6 @@ import { NavLink, Link } from 'react-router-dom';
 const NavBar = () => {
   const user = useContext(ProjectContext);
 
-  console.log("teacherID from context = " + user.teacherID);
   return (
     <Navbar className="colorNav" expand="lg">
       <Navbar.Brand><Link to="/HomePageTeacher"><img src={require('../../img/logoSmall.svg')}></img></Link></Navbar.Brand>
