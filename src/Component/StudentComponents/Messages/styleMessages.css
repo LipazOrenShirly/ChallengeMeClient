@@ -7,3 +7,20 @@
 .hiddendiv , .hiddendivIcon{
     display: none;
 }
+.messagesDiv{
+    height: 80%;
+    overflow: scroll; 
+
+}
+.MdSend{
+    transform: rotate(180deg);
+}
+.sendBackGround{
+    background-color: rgb(1, 153, 153);
+    border: none;
+}
+.mp0{
+    margin: 0px;
+    padding: 0px;
+    
+}

@@ -9,6 +9,7 @@ import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
 import CCStudentOneMessage from './CCStudentOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
+import { MdSend } from 'react-icons/md';
 
 export default class CCStudentChat extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ export default class CCStudentChat extends Component {
 
     getMessages = () => {
         const user = this.context;
-        fetch(this.apiUrl + '?teacherID= '+ user.teacherID+ '&studentID=' + user.studentID
+        fetch(this.apiUrl + '?teacherID= ' + user.teacherID + '&studentID=' + user.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -60,23 +61,23 @@ export default class CCStudentChat extends Component {
 
     changeAllMessageToRead = () => {
         const user = this.context;
-        fetch(this.apiUrl+'?studentID=' + user.studentID, {
+        fetch(this.apiUrl + '?studentID=' + user.studentID, {
             method: 'PUT',
             headers: new Headers({
-              'Content-type': 'application/json; charset=UTF-8' 
+                'Content-type': 'application/json; charset=UTF-8'
             })
-          })
+        })
             .then(res => {
-              console.log('res=', res);
-              return res.json()
+                console.log('res=', res);
+                return res.json()
             })
             .then(
-              (result) => {
-                console.log("fetch PUT= ", result);
-              },
-              (error) => {
-                console.log("err post=", error);
-              });
+                (result) => {
+                    console.log("fetch PUT= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
     }
 
     sendMessage = () => {
@@ -117,36 +118,41 @@ export default class CCStudentChat extends Component {
     render() {
         const messageText = this.state.messageText;
         return (
-            <div className="container-fluid">
-                <NavBar></NavBar>
+            <div className="container-fluid studentPage">
 
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
-
-                {this.state.messagesArr.map((item) =>
-                    <CCStudentOneMessage message={item} key={item.messageID} />
-                )}
-
-                <div className="form-group col-12">
-                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                <div className='messagesDiv'>
+                    {this.state.messagesArr.map((item) =>
+                        <CCStudentOneMessage message={item} key={item.messageID} />
+                    )}
+                </div>
+             
+                <div class="input-group mb-3 mp0">
+                    <div class="input-group-prepend mp0">
+                        <button class="input-group-text sendBackGround" id='send' disabled={!this.state.sendDisabled} onClick={() => { if(messageText!="")this.sendMessage(); this.setState({ messageText: "" }); }}><MdSend class="MdSend" color='rgb(163,233,255)'/></button>
+                    </div>
+               <input type="text" className="form-control" id='messageText' placeholder='כתוב הודעה'
+               defaultValue={messageText} onChange={(messageText, e) => {this.setState({ messageText });this.setState({ sendDisabled: e.target.value });}}
+               />
+               {/* <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
                             id: 'messageText',
                             type: 'text',
                             placeholder: 'כתוב הודעה',
-                            className: "form-control inputNewTeacher"
+                            className: "form-control inputNewTeacher mp0"
                         }}
                         value={messageText}
+
                         onChange={(messageText, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ messageText });
                             this.setState({ sendDisabled: e.target.value });
                         }}
-                    />
-                </div>
+                    /> */}
+                   </div>
+                   
 
-                <button id='send' disabled={!this.state.sendDisabled} onClick={() => {this.sendMessage(); this.setState({messageText:""});}}>שלח</button>
-
-                <Footer></Footer>
 
             </div>
         );
