@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import '../../../css/Style.css';
-import './styleMessages.css'
+import './styleMessagesStudent.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
@@ -31,6 +31,7 @@ export default class CCStudentChat extends Component {
 
     componentDidMount() {
         this.getMessages();
+        setInterval(this.getMessages, 5000);//כל 5 שניות בודק אם יש הודעות חדשות
     }
 
     getMessages = () => {
@@ -91,7 +92,7 @@ export default class CCStudentChat extends Component {
             messageText: this.state.messageText,
             messageDate: date.toISOString().split('T')[0],
             messageTime: date.getHours() + ":" + date.getMinutes(),
-            messageByTeacher: true,
+            messageByTeacher: false,
         }
 
         fetch(this.apiUrl, {
@@ -115,48 +116,37 @@ export default class CCStudentChat extends Component {
                 });
     }
     clickSend = () => {
-        if (this.state.messageText != "")
+
+        const reg = /^[\s]+$/
+        if (!(reg.test(this.state.messageText) || this.state.messageText == ""))
             this.sendMessage();
         this.setState({ messageText: "" });
-        console.log("yy")
     }
     render() {
         const messageText = this.state.messageText;
         return (
             <div className="container-fluid studentPage">
 
-                <div className="col-12"> {/* חזור למסך הקודם */}
+                <div className="row upChat"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+              <p className="returnHomePageP"> חזור למסך הבית </p>
                 </div>
                 <div className='messagesDiv'>
-                    {this.state.messagesArr.map((item) =>
+                    {this.state.messagesArr.slice(0).reverse().map((item) =>
                         <CCStudentOneMessage message={item} key={item.messageID} />
                     )}
                 </div>
 
-                <div className="input-group mb-3 mp0">
+                <div className="input-group mb-3 mp0 sendMesInputDiv">
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend class="MdSend" color='rgb(163,233,255)' /></button>
                     </div>
-                    <input type="text" className="form-control" id='messageText' placeholder='כתוב הודעה'
+                    <input type="text" className="form-control inputNewTeacher"  id='messageText' placeholder='כתוב הודעה'
                         value={messageText} onChange={(e) => {
                             this.setState({ messageText: e.target.value });
                         }}
                     />
-                    {/* <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                        attributesInput={{
-                            id: 'messageText',
-                            type: 'text',
-                            placeholder: 'כתוב הודעה',
-                            className: "form-control inputNewTeacher mp0"
-                        }}
-                        value={messageText}
-
-                        onChange={(messageText, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ messageText });
-                            this.setState({ sendDisabled: e.target.value });
-                        }}
-                    /> */}
+               
                 </div>
 
 

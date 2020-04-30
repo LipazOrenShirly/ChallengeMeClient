@@ -1,4 +1,4 @@
-.grey{
+/* .grey{
     font-weight: 500;
     color: rgb(143, 134, 140);
     text-align: center ;
@@ -6,34 +6,37 @@
 }
 .hiddendiv , .hiddendivIcon{
     display: none;
+} */
+.returnHomePageP{
+padding: 5px;
+color:grey;
+margin: 3px;
 }
-.upChatT{
+.upChat{
     margin-left: 0px;
-    /* background-color: rgba(255, 255, 255, 0.432); */
-    border-bottom: solid rgb(147, 126, 151);
+    background-color: rgba(255, 255, 255, 0.432);
+    border-bottom: solid teal;
 }
-.sendBackGroundTeacher{
-    background-color: rgb(200, 133, 245);
-    border: none;
- 
-}
-.messagesDivT{
-    height: 70%;
+.messagesDiv{
+    height: 80%;
     overflow: scroll; 
     display: flex; 
     flex-direction: column-reverse;
 
 }
-.MdSendT{
+.MdSend{
     transform: rotate(180deg);
 }
-
+.sendBackGround{
+    background-color: rgb(1, 153, 153);
+    border: none;
+}
 .mp0{
     margin: 0px;
     padding: 0px;
     
 }
-.sendMesInputDivT{
+.sendMesInputDiv{
     position: fixed;
     bottom: 15px;
     padding-bottom: 0px;
@@ -44,7 +47,7 @@
     background-color: teal;
 } */
 
-.outgoingMessageDivT , .incomingMessageDivT {
+.outgoingMessageDiv , .incomingMessageDiv {
     /* border-radius: 24px; */
     word-wrap: break-word;
     width:auto;
@@ -55,12 +58,12 @@
     border-radius: .4em;
     
 }
-.outgoingMessageDivT{
+.outgoingMessageDiv{
     text-align:right;
-    background-color: #F5B5DB;
+    background-color: rgb(117, 200, 255);
 }
 
-.outgoingMessageDivT:after{
+.outgoingMessageDiv:after{
     content: '';
 	position: absolute;
 	right: 0;
@@ -72,14 +75,14 @@
 	border-top: 0;
 	margin-top: -5%;
     margin-right: -15px;
-    border-left-color: #F5B5DB;
+    border-left-color: rgb(117, 200, 255);
 }
 
-.incomingMessageDivT{
+.incomingMessageDiv{
     text-align: left !important;
     background-color: rgb(245, 246, 247);
 }
-.incomingMessageDivT::after{
+.incomingMessageDiv::after{
     content: '';
 	position: absolute;
 	left: 0;

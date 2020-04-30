@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import '../../../css/Style.css';
-import './styleMessages.css'
+import './styleMessagesStudent.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';

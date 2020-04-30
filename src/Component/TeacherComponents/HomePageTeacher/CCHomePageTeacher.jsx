@@ -34,10 +34,10 @@ export default class CCHomePageTeacher extends Component {
 
     componentDidMount = () => {
         this.getDataOfMessagesNum();
-        setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
+        setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
 
-    getDataOfMessagesNum = () => {// runs every 30 seconds.
+    getDataOfMessagesNum = () => {// runs every 5 seconds.
         //כאן צריך לעשות משיכה של מספר ההודעות וההתרעות שיש למורה הספיציפי הזה
         const user = this.context;
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import '../../../css/Style.css';
-import './styleMessages.css'
+import './styleMessagesStudent.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
@@ -23,17 +23,24 @@ export default class OneMessage extends Component {
     static contextType = ProjectContext;
 
     render() {
-    const message = this.props.message;
+        const message = this.props.message;
         return (
-            <div>
+            <div className="">
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
-                    <div style={{textAlign:"right"}} className = 'outgoingMessage'> -הודעה יוצאת- {message.messageText}</div>
+                    <div className='d-flex justify-content-start' >
+                        <div className="incomingMessageDiv">
+                            {message.messageText}
+                        </div></div>
                     // להציג תאריך ושעה לכל הודעה
                 }
 
                 {message.messageByTeacher == false &&
-                    <div style={{textAlign:"left"}} className = 'incomingMessage'> -הודעה נכנסת- {message.messageText}</div>
+                    <div className='d-flex justify-content-end'>
+                        <div className="outgoingMessageDiv">
+                            {message.messageText}
+                        </div>
+                        </div>
                     // להציג תאריך ושעה לכל הודעה
                 }
             </div>

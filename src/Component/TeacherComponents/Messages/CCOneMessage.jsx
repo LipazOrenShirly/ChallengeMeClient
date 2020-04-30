@@ -25,18 +25,26 @@ export default class CCOneMessage extends Component {
     render() {
     const message = this.props.message;
         return (
-            <div>
-                {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
-                {message.messageByTeacher &&
-                    <div style={{textAlign:"left"}} className = 'incomingMessage'> -הודעה יוצאת- {message.messageText}</div>
-                    // להציג תאריך ושעה לכל הודעה
-                }
+      
+             <div className="">
+             {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
+             {message.messageByTeacher == false &&
+                 <div className='d-flex justify-content-start' >
+                     <div className="incomingMessageDivT">
+                         {message.messageText}
+                     </div></div>
+                 // להציג תאריך ושעה לכל הודעה
+             }
 
-                {message.messageByTeacher == false &&
-                    <div style={{textAlign:"right"}} className = 'outgoingMessage'> -הודעה נכנסת- {message.messageText}</div>
-                    // להציג תאריך ושעה לכל הודעה
-                }
-            </div>
+             {message.messageByTeacher &&
+                 <div className='d-flex justify-content-end'>
+                     <div className="outgoingMessageDivT">
+                         {message.messageText}
+                     </div>
+                     </div>
+                 // להציג תאריך ושעה לכל הודעה
+             }
+         </div>
         );
     };
 }

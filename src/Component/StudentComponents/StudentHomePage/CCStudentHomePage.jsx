@@ -41,7 +41,7 @@ export default class CCStudentHomePage extends Component {
     componentDidMount = () => {
         this.getNameAndAvatarNum();
         this.getDataOfMessagesNum();
-        setInterval(this.getDataOfMessagesNum, 30000); // runs every 30 seconds.
+        setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
     getNameAndAvatarNum = () => {
         const user = this.context;
