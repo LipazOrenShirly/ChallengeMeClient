@@ -93,6 +93,7 @@ export default class CCChallengePage extends Component {
 
     AddPhoto=()=>{
         //כאן יהיה ייבוא מהגלריה או מהמצלמה
+        
     }
 
     render() {

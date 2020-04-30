@@ -25,7 +25,7 @@ export default class OneMessage extends Component {
     render() {
         const message = this.props.message;
         return (
-            <div className="">
+            <div>
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
