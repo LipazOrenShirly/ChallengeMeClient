@@ -26,16 +26,15 @@ export default class OneMessage extends Component {
         const message = this.props.message;
         return (
             <div>
-                 
-                {this.props.dateTitle && <div>תאריך</div>}
-
+                {/* מדפיס תאריך */}
+                {this.props.dateTitle && <div>{this.props.message.messageDate}</div>}
+                
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
                         <div className="incomingMessageDiv">
                             {message.messageText} <p className="pMesLeft">{message.messageTime}</p>
                         </div></div>
-                    // להציג תאריך ושעה לכל הודעה
                 }
 
                 {message.messageByTeacher == false &&
@@ -43,8 +42,7 @@ export default class OneMessage extends Component {
                         <div className="outgoingMessageDiv">
                             {message.messageText} <p className="pMesRight">{message.messageTime}</p>
                         </div>
-                        </div>
-                    // להציג תאריך ושעה לכל הודעה
+                    </div>
                 }
             </div>
         );
