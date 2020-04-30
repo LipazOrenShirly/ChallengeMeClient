@@ -19,12 +19,15 @@ export default class CCHomePageTeacher extends Component {
             class: {},
             studentPage: false,
             countMessages: null,
+            countAlerts: null,
             input: "",
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {
             this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlAlert = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
         }
     }
     static contextType = ProjectContext;
@@ -39,28 +42,50 @@ export default class CCHomePageTeacher extends Component {
         const user = this.context;
 
         // משיכה של מספר ההודעה שלא נקראו
-        
-        fetch(this.apiUrlMessage + '?teacherID_UnRead='+ user.teacherID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
+        fetch(this.apiUrlMessage + '?teacherID_UnRead=' + user.teacherID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
             })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log("countMessages= ", result);
-                this.setState({countMessages: result});
-            },
-            (error) => {
-                console.log("err get=", error);
-            });
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("countMessages= ", result);
+                    this.setState({ countMessages: result });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+
+        // משיכה של מספר ההתראות שלא נקראו
+        fetch(this.apiUrlAlert + '?teacherID_UnRead=' + user.teacherID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("countAlerts= ", result);
+                    this.setState({ countAlerts: result });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
     }
 
     getDataFromClasses = (data) => {
@@ -81,9 +106,9 @@ export default class CCHomePageTeacher extends Component {
             state: { classID: classID }
         })
     }
-    
+
     sendInputToHomePage = (input) => {
-        this.setState({input: input});
+        this.setState({ input: input });
         console.log(this.state.input);
     }
 
@@ -93,9 +118,9 @@ export default class CCHomePageTeacher extends Component {
             <div className="container-fluid">
                 <NavBar /><br /><br />
 
-                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={144} sendInputToHomePage = {this.sendInputToHomePage}/>
-                {this.state.input != "" && 
-                <CCStudentsSearchResult input={this.state.input} goToStudentPage={this.goToStudentPage}/>
+                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={this.state.countAlerts} sendInputToHomePage={this.sendInputToHomePage} />
+                {this.state.input != "" &&
+                    <CCStudentsSearchResult input={this.state.input} goToStudentPage={this.goToStudentPage} />
                 }
 
                 {this.state.studentPage == false &&
@@ -107,7 +132,7 @@ export default class CCHomePageTeacher extends Component {
                         <div className="col-12"> {/* חזור למסך הקודם */}
                             <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
                         </div>
-                        <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage}  />
+                        <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
                     </div>
                 }
 
