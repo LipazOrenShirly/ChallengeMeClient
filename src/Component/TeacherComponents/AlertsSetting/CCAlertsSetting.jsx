@@ -10,7 +10,7 @@ import localHost from '../../LittleComponents/LocalHost';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import Swal from 'sweetalert2';
 
-export default class CCAlerts extends Component {
+export default class CCAlertsSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
