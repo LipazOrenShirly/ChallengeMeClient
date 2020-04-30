@@ -35,6 +35,9 @@ class CCStudentPage extends Component {
     componentDidMount() {
         const user = this.context;
         var studentID = this.props.location.state.student.studentID;
+        this.getMessagesCount();
+        setInterval(this.getMessagesCount, 5000); // runs every 5 seconds.
+
         // בדיקה האם המורה כבר מילא את האפיון של התלמיד
         fetch(this.apiUrlStudentFeatures + '?studentID=' + studentID
             , {
@@ -58,7 +61,11 @@ class CCStudentPage extends Component {
                 (error) => {
                     console.log("err get=", error);
                 });
+    }
 
+    getMessagesCount = () => {
+        const user = this.context;
+        var studentID = this.props.location.state.student.studentID;
         // פונקציה שמחזירה כמה הודעות שלא נקראו יש מהתלמיד
         fetch(this.apiUrlMessage + '?getter_teacherID=' + user.teacherID + '&sender_studentID=' + studentID
             , {
@@ -99,6 +106,13 @@ class CCStudentPage extends Component {
         })
     }
 
+    goToChat = (student) => {
+        this.props.history.push({
+            pathname: '/Chat',
+            state: { student: student }
+        })
+    }
+
     render() {
         const student = this.props.location.state.student;
         console.log("dddddd");
@@ -108,11 +122,11 @@ class CCStudentPage extends Component {
                 <NavBar /><br />
                 {/* <CCStudentDetails student = {student} /> */}
 
-                <Link to="/Messages" className="linkColor">
-                    <Badge badgeContent={this.state.UnReadMesgCount} color="secondary">
+                <div className="linkColor">
+                    <Badge badgeContent={this.state.UnReadMesgCount} color="secondary" onClick={() => this.goToChat(student)}>
                         <MdMail size={40} />
                     </Badge>
-                </Link>
+                </div>
                 <div>
                     <p className="textStudentDetails"> התלמיד <strong>{student.firstName} {student.lastName}</strong></p>
                 </div>
