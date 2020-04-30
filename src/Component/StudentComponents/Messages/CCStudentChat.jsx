@@ -114,7 +114,12 @@ export default class CCStudentChat extends Component {
                     console.log("err post=", error);
                 });
     }
-
+    clickSend = () => {
+        if (this.state.messageText != "")
+            this.sendMessage();
+        this.setState({ messageText: "" });
+        console.log("yy")
+    }
     render() {
         const messageText = this.state.messageText;
         return (
@@ -128,15 +133,17 @@ export default class CCStudentChat extends Component {
                         <CCStudentOneMessage message={item} key={item.messageID} />
                     )}
                 </div>
-             
-                <div class="input-group mb-3 mp0">
-                    <div class="input-group-prepend mp0">
-                        <button class="input-group-text sendBackGround" id='send' disabled={!this.state.sendDisabled} onClick={() => { if(messageText!="")this.sendMessage(); this.setState({ messageText: "" }); }}><MdSend class="MdSend" color='rgb(163,233,255)'/></button>
+
+                <div className="input-group mb-3 mp0">
+                    <div className="input-group-prepend mp0">
+                        <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend class="MdSend" color='rgb(163,233,255)' /></button>
                     </div>
-               <input type="text" className="form-control" id='messageText' placeholder='כתוב הודעה'
-               defaultValue={messageText} onChange={(messageText, e) => {this.setState({ messageText });this.setState({ sendDisabled: e.target.value });}}
-               />
-               {/* <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                    <input type="text" className="form-control" id='messageText' placeholder='כתוב הודעה'
+                        value={messageText} onChange={(e) => {
+                            this.setState({ messageText: e.target.value });
+                        }}
+                    />
+                    {/* <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
                             id: 'messageText',
                             type: 'text',
@@ -150,8 +157,8 @@ export default class CCStudentChat extends Component {
                             this.setState({ sendDisabled: e.target.value });
                         }}
                     /> */}
-                   </div>
-                   
+                </div>
+
 
 
             </div>
