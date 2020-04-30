@@ -32,6 +32,7 @@ export default class CCChat extends Component {
 
     componentDidMount() {
         this.getMessages();
+        this.changeAllMessageToRead();
         setInterval(this.getMessages, 5000);//כל 5 שניות בודק אם יש הודעות חדשות
     }
 
@@ -54,7 +55,6 @@ export default class CCChat extends Component {
                 (result) => {
                     console.log("messagesArr= ", result);
                     this.setState({ messagesArr: result });
-                    this.changeAllMessageToRead();
                 },
                 (error) => {
                     console.log("err get=", error);

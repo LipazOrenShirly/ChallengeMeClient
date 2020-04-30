@@ -31,6 +31,7 @@ export default class CCStudentChat extends Component {
 
     componentDidMount() {
         this.getMessages();
+        this.changeAllMessageToRead();
         setInterval(this.getMessages, 5000);//כל 5 שניות בודק אם יש הודעות חדשות
     }
 
@@ -53,7 +54,6 @@ export default class CCStudentChat extends Component {
                 (result) => {
                     console.log("messagesArr= ", result);
                     this.setState({ messagesArr: result });
-                    this.changeAllMessageToRead();
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -118,9 +118,10 @@ export default class CCStudentChat extends Component {
     clickSend = () => {
 
         const reg = /^[\s]+$/
-        if (!(reg.test(this.state.messageText) || this.state.messageText == ""))
+        if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
             this.sendMessage();
-        this.setState({ messageText: "" });
+            this.setState({ messageText: "" });
+        }
     }
     render() {
         const messageText = this.state.messageText;
@@ -129,7 +130,7 @@ export default class CCStudentChat extends Component {
 
                 <div className="row upChat"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
-              <p className="returnHomePageP"> חזור למסך הבית </p>
+                    <p className="returnHomePageP"> חזור למסך הבית </p>
                 </div>
                 <div className='messagesDiv'>
                     {this.state.messagesArr.slice(0).reverse().map((item) =>
@@ -141,12 +142,12 @@ export default class CCStudentChat extends Component {
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend className="MdSend" color='rgb(163,233,255)' /></button>
                     </div>
-                    <input type="text" className="form-control inputNewTeacher"  id='messageText' placeholder='כתוב הודעה'
+                    <input type="text" className="form-control inputNewTeacher" id='messageText' placeholder='כתוב הודעה'
                         value={messageText} onChange={(e) => {
                             this.setState({ messageText: e.target.value });
                         }}
                     />
-               
+
                 </div>
 
 
