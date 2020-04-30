@@ -6,6 +6,10 @@ import CCChallenges from './CCChallenges';
 import CCStudentDetails from './CCStudentDetails';
 import './styleStudentPage.css'
 import localHost from '../../LittleComponents/LocalHost';
+import { NavLink, Link } from 'react-router-dom';
+import Badge from '@material-ui/core/Badge';
+import { MdMail } from "react-icons/md";
+import ProjectContext from '../../../Context/ProjectContext';
 
 class CCStudentPage extends Component {
     constructor(props) {
@@ -13,18 +17,26 @@ class CCStudentPage extends Component {
         this.state = {
             Student: {},
             StudentChallenges: [],
-            hasFeature: false
+            hasFeature: false,
+            UnReadMesgCount: null,
         }
         let local = true;
-        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
+        this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
+        this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentFeatures';
+            this.apiUrlStudentFeatures = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentFeatures';
+            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
         }
-      
     }
 
+    static contextType = ProjectContext;
+
     componentDidMount() {
-        fetch(this.apiUrl + '?studentID=' + this.props.location.state.student.studentID
+        const user = this.context;
+        var studentID = this.props.location.state.student.studentID;
+        // בדיקה האם המורה כבר מילא את האפיון של התלמיד
+        fetch(this.apiUrlStudentFeatures + '?studentID=' + studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -42,6 +54,29 @@ class CCStudentPage extends Component {
                     console.log("Featerus= ");
                     console.log(result);
                     this.setState({ hasFeature: result.length == 0 ? false : true });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+
+        // פונקציה שמחזירה כמה הודעות שלא נקראו יש מהתלמיד
+        fetch(this.apiUrlMessage + '?getter_teacherID=' + user.teacherID + '&sender_studentID=' + studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("studentsArr= ", result);
+                    this.setState({ UnReadMesgCount: result });
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -72,6 +107,12 @@ class CCStudentPage extends Component {
             <div>
                 <NavBar /><br />
                 {/* <CCStudentDetails student = {student} /> */}
+
+                <Link to="/Messages" className="linkColor">
+                    <Badge badgeContent={this.state.UnReadMesgCount} color="secondary">
+                        <MdMail size={40} />
+                    </Badge>
+                </Link>
                 <div>
                     <p className="textStudentDetails"> התלמיד <strong>{student.firstName} {student.lastName}</strong></p>
                 </div>
