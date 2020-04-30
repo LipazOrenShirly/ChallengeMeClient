@@ -7,6 +7,37 @@
 .hiddendiv , .hiddendivIcon{
     display: none;
 }
+/* oneStudentWithMessage */
+.SwithMesDiv{
+    margin: 1px;
+    padding: 2% 3%;
+}
+
+.fixLeft{
+    position: absolute;
+    left: 15px;
+    padding-left: 0px;
+    background-color: #F5B5DB;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+}
+.rowOneSwithMes{
+    height: 50px;
+    text-align: right;
+    width: 100%;
+    /* margin-bottom: 2%; */
+    /* border-bottom: solid rgb(147, 126, 151); */
+
+}
+.rowOneSwithMes > .emptyUserImg{
+height: 100%;
+}
+
+
+
+/* chat */
 .upChatT{
     margin-left: 0px;
     /* background-color: rgba(255, 255, 255, 0.432); */

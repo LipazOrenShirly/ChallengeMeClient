@@ -79,13 +79,24 @@ export default class CCOneStudentsWithMessage extends Component {
     }
 
     render() {
-    
-        return (
-            <div onClick = { () => this.props.goToChat(this.state.student)}>
-                {this.state.student.firstName} {this.state.student.lastName}
-                <div>{this.state.UnReadCount != 0 && this.state.UnReadCount}</div>  {/* להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
-                
+
+        return (<div>
+            <div className="row rowOneSwithMes d-flex justify-content-end">
+                <div dir="rtl" className="SwithMesDiv row" onClick={() => this.props.goToChat(this.state.student)}>
+                    <div>   {this.state.student.firstName} {this.state.student.lastName}</div>
+                    {
+                        this.state.UnReadCount != 0 &&
+                        <div className="fixLeft">{this.state.UnReadCount}</div>
+                    }
+
+                    {/* <div className="fixLeft">{this.state.UnReadCount != 0 && this.state.UnReadCount}</div>  להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
+
+                </div>
+                <img className="emptyUserImg" src={require('../../../img/emptyUserImg.png')} />
+
             </div>
+            <hr />
+        </div>
         );
     };
 }
