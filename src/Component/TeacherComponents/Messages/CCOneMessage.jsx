@@ -24,16 +24,18 @@ export default class CCOneMessage extends Component {
 
     render() {
         const message = this.props.message;
-        var date = this.props.message.messageDate;
-        var currDate = new Date();
-        currDate = currDate.getHours() + ":" + currDate.getMinutes();
+        var messageDate = this.props.message.messageDate.replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של ההודעה
+        var currDate = new Date().toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של היום
         var today = 'היום';
+        var yesterday = 'אתמול';
+        var shilshom = 'שלשום';
+        var dateShow = messageDate == currDate ? today : messageDate;
         return (
 
             <div>
                 {/* מדפיס תאריך */}
-                {this.props.dateTitle && <div> {date == currDate ? today : date}</div>}
-                
+                {this.props.dateTitle && <div> {dateShow}</div>}
+
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-start' >

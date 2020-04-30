@@ -24,11 +24,17 @@ export default class OneMessage extends Component {
 
     render() {
         const message = this.props.message;
+        var messageDate = this.props.message.messageDate.replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של ההודעה
+        var currDate = new Date().toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של היום
+        var today = 'היום';
+        var yesterday = 'אתמול';
+        var shilshom = 'שלשום';
+        var dateShow = messageDate == currDate ? today : messageDate;
         return (
             <div>
                 {/* מדפיס תאריך */}
-                {this.props.dateTitle && <div>{this.props.message.messageDate}</div>}
-                
+                {this.props.dateTitle && <div> {dateShow}</div>}
+
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
