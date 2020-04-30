@@ -133,8 +133,12 @@ export default class CCChat extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <div className='messagesDivT'>
-                    {this.state.messagesArr.slice(0).reverse().map((item) =>
-                        <CCOneMessage message={item} key={item.messageID} />
+                    {this.state.messagesArr.slice(0).reverse().map((item, index, array) => {
+                        var prevDate = index != 0 ? array[index-1].messageDate : '';
+                        var currDate = item.messageDate;
+                        var diffDate = index == 0 ? true : (prevDate != currDate ? true : false);
+                        return <CCOneMessage message={item} key={item.messageID} dateTitle={diffDate}/>
+                    }
                     )}
                 </div>
                 {/* <div className="form-group col-12">

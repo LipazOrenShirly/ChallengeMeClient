@@ -23,28 +23,31 @@ export default class CCOneMessage extends Component {
     static contextType = ProjectContext;
 
     render() {
-    const message = this.props.message;
+        const message = this.props.message;
         return (
-      
-             <div>
-             {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
-             {message.messageByTeacher == false &&
-                 <div className='d-flex justify-content-start' >
-                     <div className="incomingMessageDivT"><p className="pMesLeft">10:25</p>
-                         {message.messageText}
-                     </div></div>
-                 // להציג תאריך ושעה לכל הודעה
-             }
 
-             {message.messageByTeacher &&
-                 <div className='d-flex justify-content-end'>
-                     <div className="outgoingMessageDivT">
-                         {message.messageText} <p className="pMesRight">10:25</p>
-                     </div>
-                     </div>
-                 // להציג תאריך ושעה לכל הודעה
-             }
-         </div>
+            <div>
+                
+                {this.props.dateTitle && <div>תאריך</div>}
+
+                {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
+                {message.messageByTeacher == false &&
+                    <div className='d-flex justify-content-start' >
+                        <div className="incomingMessageDivT"><p className="pMesLeft">{message.messageTime}</p>
+                            {message.messageText}
+                        </div></div>
+                    // להציג תאריך ושעה לכל הודעה
+                }
+
+                {message.messageByTeacher &&
+                    <div className='d-flex justify-content-end'>
+                        <div className="outgoingMessageDivT">
+                            {message.messageText} <p className="pMesRight">{message.messageTime}</p>
+                        </div>
+                    </div>
+                    // להציג תאריך ושעה לכל הודעה
+                }
+            </div>
         );
     };
 }
