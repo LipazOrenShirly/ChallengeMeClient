@@ -30,7 +30,7 @@ export default class OneMessage extends Component {
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
                         <div className="incomingMessageDiv">
-                            {message.messageText}
+                            {message.messageText} <p className="pMesLeft">10:25</p>
                         </div></div>
                     // להציג תאריך ושעה לכל הודעה
                 }
@@ -38,7 +38,7 @@ export default class OneMessage extends Component {
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-end'>
                         <div className="outgoingMessageDiv">
-                            {message.messageText}
+                            {message.messageText} <p className="pMesRight">10:25</p>
                         </div>
                         </div>
                     // להציג תאריך ושעה לכל הודעה

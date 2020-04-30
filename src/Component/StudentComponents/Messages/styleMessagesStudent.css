@@ -96,3 +96,16 @@ margin: 3px;
 	margin-top: -5%;
 	margin-left: -15px;
 }
+.pMesLeft{
+    /* font-size: 80%; */
+    float: right;
+    margin:0px;
+    padding-left: 20px ;
+    color: grey;
+}
+.pMesRight{
+    float: left;
+    margin:0px;
+    padding-right: 20px ;
+    color: grey;
+}
