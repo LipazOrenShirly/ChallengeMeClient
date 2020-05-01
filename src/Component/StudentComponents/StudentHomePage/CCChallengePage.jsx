@@ -24,6 +24,7 @@ export default class CCChallengePage extends Component {
         this.state = {
             StudentChallenges: [],
             statusSentence:"",
+            dataImg:"",
         };
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
@@ -38,7 +39,36 @@ export default class CCChallengePage extends Component {
     componentDidMount() {
         const user = this.context;
         this.btnColor();
+        this.getImage();
     }
+
+    getImage = () => {
+        fetch(this.apiUrl + '?studentID=' + this.props.location.state.challenge.studentID +'&challengeID='+this.props.location.state.challenge.challengeID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({dataImg:result})
+                },
+                (error) => {
+                    console.log("err get=", error);
+                })
+            .then(() => {
+
+            });
+    }
+
     btnColor=()=>{
       var status = this.props.location.state.challenge.status;
       if(status == 1 ){
@@ -108,7 +138,7 @@ export default class CCChallengePage extends Component {
         const today = new Date();
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
         console.log(this.props.location.state)
-        const dataImg = "dddddddddddddddddddddddddddddd"
+        
         return (
             <div className="container-fluid studentPage">
 
@@ -117,7 +147,7 @@ export default class CCChallengePage extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <br/>
-                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${dataImg}`} /><FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto}/></div>
+                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${this.state.dataImg}`} /><FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto}/></div>
 
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
                 <div className="col-12 challengeReadText challengeName">{challenge.challengeName} </div>

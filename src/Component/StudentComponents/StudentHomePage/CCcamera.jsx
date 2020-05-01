@@ -47,13 +47,14 @@ export default class CCcamera extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
-
+                    window.history.back()
+                    
                 },
                 (error) => {
                     console.log("err post=", error);
                 })
             .then(
-
+                
 
             );
 
