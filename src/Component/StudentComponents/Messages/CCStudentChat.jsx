@@ -133,10 +133,10 @@ export default class CCStudentChat extends Component {
                     <p className="returnHomePageP"> חזור למסך הבית </p>
                 </div>
                 <div className='messagesDiv'>
-                    {this.state.messagesArr.slice(0).reverse().map((item, index, array) => {
-                        var prevDate = index != 0 ? array[index - 1].messageDate : '';
+                    {this.state.messagesArr.map((item, index, array) => {
+                        var prevDate = index != array.length-1 ? array[index + 1].messageDate : '';
                         var currDate = item.messageDate;
-                        var diffDate = index == 0 ? true : (prevDate != currDate ? true : false);
+                        var diffDate = index == array.length-1 ? true : (prevDate != currDate ? true : false);
                         return <CCStudentOneMessage message={item} key={item.messageID} dateTitle={diffDate} />
                     }
                     )}

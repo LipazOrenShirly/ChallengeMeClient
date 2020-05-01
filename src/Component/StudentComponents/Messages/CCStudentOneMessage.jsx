@@ -24,10 +24,16 @@ export default class OneMessage extends Component {
 
     render() {
         const message = this.props.message;
+        var messageDate = this.props.message.messageDate.replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של ההודעה
+        var currDate = new Date().toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של היום
+        var today = 'היום';
+        var yesterday = 'אתמול';
+        var shilshom = 'שלשום';
+        var dateShow = messageDate == currDate ? today : messageDate;
         return (
             <div>
-                 
-                {this.props.dateTitle && <div>תאריך</div>}
+                {/* מדפיס תאריך */}
+                {this.props.dateTitle && <div> {dateShow}</div>}
 
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
@@ -35,7 +41,6 @@ export default class OneMessage extends Component {
                         <div className="incomingMessageDiv">
                             {message.messageText} <p className="pMesLeft">{message.messageTime}</p>
                         </div></div>
-                    // להציג תאריך ושעה לכל הודעה
                 }
 
                 {message.messageByTeacher == false &&
@@ -43,8 +48,7 @@ export default class OneMessage extends Component {
                         <div className="outgoingMessageDiv">
                             {message.messageText} <p className="pMesRight">{message.messageTime}</p>
                         </div>
-                        </div>
-                    // להציג תאריך ושעה לכל הודעה
+                    </div>
                 }
             </div>
         );
