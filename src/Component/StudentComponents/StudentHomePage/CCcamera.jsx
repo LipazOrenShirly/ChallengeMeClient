@@ -33,7 +33,8 @@ export default class CCcamera extends Component {
             studentID:this.props.location.state.challenge.studentID,
             challengeID:this.props.location.state.challenge.challengeID,
         }
-        fetch(this.apiUrlStudentChallenge, {
+        fetch(this.apiUrlStudentChallenge +"/AddImg" 
+            , {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: new Headers({
