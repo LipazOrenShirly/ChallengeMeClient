@@ -133,7 +133,7 @@ export default class CCClasses extends Component {
                 <div className="myClasses">הכיתות שלי</div>
                 <div className="row col-12 flex-container">
                     {this.state.classesArr.map((item) =>
-                        <CCOneClass key={item.classID} class={item} SendClassNameToClasses={this.getClassNameFromOneClass} SendDataToClasses={this.getDataFromOneClass} />
+                        <CCOneClass key={item.classID} className={item} SendClassNameToClasses={this.getClassNameFromOneClass} SendDataToClasses={this.getDataFromOneClass} />
                     )}
                 </div>
                 <div className="AddnewClass" id="AddnewClass" onClick={this.AddClass}>הוספת כיתה +</div>

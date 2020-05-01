@@ -132,7 +132,7 @@ export default class CCHomePageTeacher extends Component {
                         <div className="col-12"> {/* חזור למסך הקודם */}
                             <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
                         </div>
-                        <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
+                        <CCStudents className={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
                     </div>
                 }
 

@@ -114,7 +114,7 @@ export default class CCChallengePage extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <br/>
-                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${dataImg}`} /><FaPencilAlt class="FaPencilAlt" onClick={this.AddPhoto}/></div>
+                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${dataImg}`} /><FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto}/></div>
 
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
                 <div className="col-12 challengeReadText challengeName">{challenge.challengeName} </div>
