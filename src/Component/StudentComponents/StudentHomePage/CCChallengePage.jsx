@@ -94,8 +94,11 @@ export default class CCChallengePage extends Component {
     
     AddPhoto=()=>{
         //כאן יהיה ייבוא מהגלריה או מהמצלמה
-        this.props.history.push('/camera');
-        
+        this.props.history.push({
+            pathname:'/camera',
+    state:{challenge: this.props.location.state.challenge}
+        })
+    
     }
 
     render() {
