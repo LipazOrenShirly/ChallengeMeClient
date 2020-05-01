@@ -116,7 +116,7 @@ export default class CCStudentHomePage extends Component {
 
                 <CCStudentChallenges goToChallengePage={this.goToChallengePage} />
                 <div className="row" style={{marginTop:'2%'}}>
-                   <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/ChickAvatarImg.png')} /></div>
+                   <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/p3.png')} /></div>
                    <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
                 </div>
             </div>

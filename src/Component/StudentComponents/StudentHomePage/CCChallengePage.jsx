@@ -9,6 +9,7 @@ import { MdClose } from 'react-icons/md';
 import { MdCheck } from 'react-icons/md';
 import { AiOutlineExclamation } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
+import camera from './CCcamera';
 
 
 import $ from 'jquery';
@@ -90,9 +91,10 @@ export default class CCChallengePage extends Component {
                     console.log("err get=", error);
                 });
     }
-
+    
     AddPhoto=()=>{
         //כאן יהיה ייבוא מהגלריה או מהמצלמה
+        this.props.history.push('/camera');
         
     }
 
@@ -103,6 +105,7 @@ export default class CCChallengePage extends Component {
         const today = new Date();
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
         console.log(this.props.location.state)
+        const dataImg = "dddddddddddddddddddddddddddddd"
         return (
             <div className="container-fluid studentPage">
 
@@ -111,11 +114,11 @@ export default class CCChallengePage extends Component {
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <br/>
-                <div className="row"><img className="imageOneChallenge" src={require('../../../img/dog.jpg')} /><FaPencilAlt class="FaPencilAlt" onClick={this.AddPhoto}/></div>
+                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${dataImg}`} /><FaPencilAlt class="FaPencilAlt" onClick={this.AddPhoto}/></div>
 
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
                 <div className="col-12 challengeReadText challengeName">{challenge.challengeName} </div>
-
+            
                 {
                     challenge.status != 0 ? <div className="statusSentence">{this.state.statusSentence}</div> :
                         dateDiff > 30 ?

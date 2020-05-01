@@ -28,10 +28,10 @@ import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChall
 import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/CCStudentsSearchResult';
 
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
-import StudentMessages from './Component/StudentComponents/Messages/CCStudentMessages'
-import StudentChat from './Component/StudentComponents/Messages/CCStudentChat'
+import StudentMessages from './Component/StudentComponents/Messages/CCStudentMessages';
+import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
-
+import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
@@ -76,7 +76,10 @@ function App() {
           <Route path="/StudentHomePage" component={StudentHomePage} />
           <Route path="/StudentMessages" component={StudentMessages} />
           <Route path="/StudentChat" component={StudentChat} />
-          <Route path="/StudentsSearchResult" component={StudentsSearchResult} />          
+          <Route path="/StudentsSearchResult" component={StudentsSearchResult} />    
+          <Route path="/camera" component={camera} />    
+
+                
         </Switch>
       </ProjectProvider>
     </div>
