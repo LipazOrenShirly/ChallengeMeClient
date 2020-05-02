@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import '../../../css/Style.css';
 import './styleStudentHomePage.css';
-import Footer from '../../LittleComponents/Footer';
-import NavBar from '../../LittleComponents/NavBar';
 import ProjectContext from '../../../Context/ProjectContext';
 import CCStudentChallenges from './CCStudentChallenges';
-import { MdMail } from "react-icons/md";
-import { Link } from 'react-router-dom';
-import Badge from '@material-ui/core/Badge';
 import localHost from '../../LittleComponents/LocalHost';
 import "animate.css";
 export default class CCStudentHomePage extends Component {
@@ -18,7 +13,7 @@ export default class CCStudentHomePage extends Component {
             countMessages: null,
             FirstAndLastName: { firstName: "", lastName: "" },
             AvatarID: null,
-            avatarSentances:["!המשך כך","!אתה מסוגל","!תעבור עוד אתגרים כדי שאוכל לגדול","!אתה תותח"]
+            avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"]
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -31,10 +26,10 @@ export default class CCStudentHomePage extends Component {
 
     static contextType = ProjectContext;
 
-    goToChallengePage = (challenge , index) => {
+    goToChallengePage = (challenge, index) => {
         this.props.history.push({
             pathname: '/ChallengePage',
-            state: { challenge: challenge , index:index}
+            state: { challenge: challenge, index: index }
         })
     }
 
@@ -97,27 +92,31 @@ export default class CCStudentHomePage extends Component {
 
     render() {
         const user = this.context;
-        var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0 ;
-        
+        var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
+
         return (
             <div className="container-fluid studentPage">
                 <br />
+                {/* פרטי התלמיד */}
                 <div className="headLineHomePage row col-12" dir="rtl">
                     <img className="emptyUserImg" src={require('../../../img/emptyUserImg.png')} />
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
+                {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
-                    <div className="btnMassagesReadText"> יש לך {this.state.countMessages} הודעות חדשות</div>
-                    <div ><button className="btn btn-info btnYellow roundedBtn btnMassagesRead">לקריאה לחץ כאן</button></div>
+                        <div className="btnMassagesReadText"> יש לך {this.state.countMessages} הודעות חדשות</div>
+                        <div ><button className="btn btn-info btnYellow roundedBtn btnMassagesRead">לקריאה לחץ כאן</button></div>
                     </div>
-                     
                 </div>
 
+                {/* האתגרים של התלמיד */}
                 <CCStudentChallenges goToChallengePage={this.goToChallengePage} />
-                <div className="row" style={{marginTop:'2%'}}>
-                   <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/p3.png')} /></div>
-                   <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
+
+                {/* אווטאר */}
+                <div className="row" style={{ marginTop: '2%' }}>
+                    <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/p3.png')} /></div>
+                    <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
                 </div>
             </div>
         )
