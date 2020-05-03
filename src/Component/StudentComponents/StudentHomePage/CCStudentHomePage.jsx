@@ -10,12 +10,12 @@ export default class CCStudentHomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            countMessages: null,
+            countMessages: 0,
             FirstAndLastName: { firstName: "", lastName: "" },
             Avatar: null,
             avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
-            SuccessCount:0
-        
+            SuccessCount: 0
+
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -88,7 +88,7 @@ export default class CCStudentHomePage extends Component {
             .then(
                 (result) => {
                     console.log("count= ", result);
-                 this.setState({SuccessCount:result});
+                    this.setState({ SuccessCount: result });
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -113,7 +113,8 @@ export default class CCStudentHomePage extends Component {
             .then(
                 (result) => {
                     console.log("countMessages= ", result);
-                    this.setState({ countMessages: result });
+                    if (result > 0 && this.state.countMessages !== result)
+                        this.setState({ countMessages: result });
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -123,8 +124,8 @@ export default class CCStudentHomePage extends Component {
     render() {
         const user = this.context;
         var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
-        const {SuccessCount}=this.state;
-        var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1  ;
+        const { SuccessCount } = this.state;
+        var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1;
         return (
             <div className="container-fluid studentPage">
                 <br />
@@ -148,7 +149,7 @@ export default class CCStudentHomePage extends Component {
                 {
                     this.state.Avatar != null &&
                     <div className="row" style={{ marginTop: '2%' }}>
-                        <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + avatarLevel+'.png')} /></div>
+                        <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + avatarLevel + '.png')} /></div>
                         <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
                     </div>
                 }
