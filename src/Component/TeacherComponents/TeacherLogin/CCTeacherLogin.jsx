@@ -7,6 +7,7 @@ import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2'
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 export default class CCTeacherLogin extends Component {
@@ -173,6 +174,9 @@ export default class CCTeacherLogin extends Component {
 
     return (
       <div className="container-fluid">
+         <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                </div>
         <div className="loginDiv">
           <div className="col-12">
             <img className="logoImgLoginTeacher" src={require('../../../img/logoChallengeMe.svg')} />
