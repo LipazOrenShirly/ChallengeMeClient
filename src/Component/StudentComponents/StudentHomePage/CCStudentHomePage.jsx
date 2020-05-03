@@ -12,8 +12,10 @@ export default class CCStudentHomePage extends Component {
         this.state = {
             countMessages: null,
             FirstAndLastName: { firstName: "", lastName: "" },
-            AvatarID: null,
-            avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"]
+            Avatar: null,
+            avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
+            SuccessCount:0
+        
         };
         let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -33,11 +35,13 @@ export default class CCStudentHomePage extends Component {
         })
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.getNameAndAvatarNum();
+        this.getSuccessCount();
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
+
     getNameAndAvatarNum = () => {
         const user = this.context;
         console.log(user.studentID);
@@ -57,13 +61,39 @@ export default class CCStudentHomePage extends Component {
             .then(
                 (result) => {
                     console.log("NameAndAvatarID= ", result[0]);
-                    this.setState({ FirstAndLastName: { firstName: result[0].firstName, lastName: result[0].lastName }, AvatarID: result[0].avatarID });
+                    this.setState({ FirstAndLastName: { firstName: result[0].firstName, lastName: result[0].lastName }, Avatar: result[0].avatar });
+                    if (result[0].avatar == null)
+                        this.props.history.push('/ChooseAvatar')
                 },
                 (error) => {
                     console.log("err get=", error);
                 });
     }
-
+    getSuccessCount = () => {
+        const user = this.context;
+        console.log(user.studentID);
+        fetch(this.apiUrlStudent + '/SuccessCount?studentID=' + user.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("count= ", result);
+                 this.setState({SuccessCount:result});
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+    }
     getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
 
         const user = this.context;
@@ -93,7 +123,8 @@ export default class CCStudentHomePage extends Component {
     render() {
         const user = this.context;
         var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
-
+        const {SuccessCount}=this.state;
+        var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1  ;
         return (
             <div className="container-fluid studentPage">
                 <br />
@@ -114,10 +145,14 @@ export default class CCStudentHomePage extends Component {
                 <CCStudentChallenges goToChallengePage={this.goToChallengePage} />
 
                 {/* אווטאר */}
-                <div className="row" style={{ marginTop: '2%' }}>
-                    <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/p3.png')} /></div>
-                    <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
-                </div>
+                {
+                    this.state.Avatar != null &&
+                    <div className="row" style={{ marginTop: '2%' }}>
+                        <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + avatarLevel+'.png')} /></div>
+                        <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
+                    </div>
+                }
+
             </div>
         )
     };

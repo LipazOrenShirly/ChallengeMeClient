@@ -32,15 +32,16 @@ import StudentMessages from './Component/StudentComponents/Messages/CCStudentMes
 import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
+import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 
 import {ProjectProvider} from './Context/ProjectContext';
 
 
 function App() {
   const user = { 
-    teacherID: 8, 
+    teacherID: "", 
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
-    studentID: 21,
+    studentID: "",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   }
 
@@ -78,8 +79,9 @@ function App() {
           <Route path="/StudentChat" component={StudentChat} />
           <Route path="/StudentsSearchResult" component={StudentsSearchResult} />    
           <Route path="/camera" component={camera} />    
+          <Route path="/ChooseAvatar" component={ChooseAvatar} />    
 
-                
+          
         </Switch>
       </ProjectProvider>
     </div>
