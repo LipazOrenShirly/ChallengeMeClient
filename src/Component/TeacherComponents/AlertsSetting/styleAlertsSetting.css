@@ -11,3 +11,8 @@
 .SwitchDiv{
     right: 0px;
 }
+.alertSettingsTitle{
+    font-weight: 600;
+    font-size: 120%;
+    color: hotpink;
+}

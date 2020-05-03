@@ -5,6 +5,8 @@ import './styleAlerts.css'
 import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import CCOneAlert from './CCOneAlert';
+import { FiSettings } from 'react-icons/fi';
+
 
 export default class CCAlerts extends Component {
     constructor(props){
@@ -27,8 +29,8 @@ linkToAlertsSetting=()=>{
                 <input type="text" className="form-control inputRounded" id="search"  placeholder="חיפוש"></input>
                 </div>
                 
-                <div className="col-8 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
-               <h5>עריכת הגדרות להתראות</h5>
+                <div className="col-12 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
+               <h5 >עריכת הגדרות להתראות<FiSettings style={{marginLeft:"3%"}} size={25}/></h5>
                 </div>
             </div>
            <div className="allAlerts"> 
