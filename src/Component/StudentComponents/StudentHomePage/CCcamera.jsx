@@ -3,6 +3,7 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import { TiArrowBack } from 'react-icons/ti';
 import 'react-html5-camera-photo/build/css/index.css';
 import localHost from '../../LittleComponents/LocalHost';
+import FileBase64 from 'react-file-base64';
 
 export default class CCcamera extends Component {
 
@@ -10,7 +11,8 @@ export default class CCcamera extends Component {
         super(props);
         this.state = {
             imageDetails: false,
-            dataUriImage: ""
+            dataUriImage: "",
+            file:null
         };
         let local = true;
         this.apiUrlStudentChallenge = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
@@ -20,9 +22,15 @@ export default class CCcamera extends Component {
     }
 
     handleTakePhoto = (dataUri) => {
+        // dataUri --> base64
         this.setState({ dataUriImage: dataUri })
         this.setState({ imageDetails: true })
     }
+    getFiles(files) {
+        // console.log(files.base64)
+       this.setState({ dataUriImage: files.base64 })
+       this.setState({ imageDetails: true })
+   }
 
     saveImage = () => {
         var data = {
@@ -51,7 +59,7 @@ export default class CCcamera extends Component {
                     console.log("err post=", error);
                 });
     }
-
+   
     render() {
         return (
             <div>
@@ -60,7 +68,16 @@ export default class CCcamera extends Component {
                 </div>
                 { // לפני שמצלמים כאשר עדיין אין תמונה
                     this.state.imageDetails == false &&
-                    <Camera isImageMirror={true} sizeFactor={0.5} onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} />
+                    
+                    <div className="col-12" style={{ padding: '0px' }}>
+                        <p className="cameraP">צלם תמונה</p>
+                            <Camera isImageMirror={true} sizeFactor={0.5} onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} />
+                   <p className="cameraP">או בחר מהגלריה</p>
+                   
+                    <FileBase64
+                    multiple={false}
+                    onDone={this.getFiles.bind(this)} />
+                     </div>
                 }
                 { // אחרי שמצלמים
                     this.state.imageDetails &&

@@ -132,3 +132,10 @@ text-align: center;
     margin-left: 40px;
 }
 
+.cameraP{
+    font-size: 25px;
+    font-weight: 500;
+    background-color: rgba(252, 229, 246, 0.432);
+    color: rgb(255, 119, 221);
+    
+}

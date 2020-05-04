@@ -18,6 +18,7 @@
     "react-bootstrap-sweetalert": "^5.1.9",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.0",
+    "react-file-base64": "^1.0.3",
     "react-horizontal-scroll-container": "^1.0.1",
     "react-horizontal-scrolling-menu": "^0.7.7",
     "react-html5-camera-photo": "^1.5.4",

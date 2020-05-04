@@ -32,6 +32,7 @@ import StudentMessages from './Component/StudentComponents/Messages/CCStudentMes
 import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
+
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 
 import {ProjectProvider} from './Context/ProjectContext';
@@ -80,7 +81,7 @@ function App() {
           <Route path="/StudentsSearchResult" component={StudentsSearchResult} />    
           <Route path="/camera" component={camera} />    
           <Route path="/ChooseAvatar" component={ChooseAvatar} />    
-
+          
           
         </Switch>
       </ProjectProvider>
