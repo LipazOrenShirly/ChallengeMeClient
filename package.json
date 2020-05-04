@@ -24,6 +24,7 @@
     "react-horizontal-scrolling-menu": "^0.7.7",
     "react-html5-camera-photo": "^1.5.4",
     "react-icons": "^3.9.0",
+    "react-image-file-resizer": "^0.2.3",
     "react-inputs-validation": "^4.4.1",
     "react-popup": "^0.10.0",
     "react-router-dom": "^5.1.2",

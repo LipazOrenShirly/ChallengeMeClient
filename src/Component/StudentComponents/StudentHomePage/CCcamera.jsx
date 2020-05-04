@@ -1,9 +1,11 @@
+import Resizer from 'react-image-file-resizer';
 import React, { Component } from 'react';
-import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
+// import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import { TiArrowBack } from 'react-icons/ti';
 import 'react-html5-camera-photo/build/css/index.css';
 import localHost from '../../LittleComponents/LocalHost';
-import FileBase64 from 'react-file-base64';
+// import FileBase64 from 'react-file-base64';
+
 
 export default class CCcamera extends Component {
 
@@ -12,13 +14,15 @@ export default class CCcamera extends Component {
         this.state = {
             imageDetails: false,
             dataUriImage: "",
-            file:null
+            file: null
         };
-        let local = false;
+        let local = true;
         this.apiUrlStudentChallenge = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         if (!local) {
             this.apiUrlStudentChallenge = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
         }
+        this.getFiles = this.getFiles.bind(this);
+
     }
 
     handleTakePhoto = (dataUri) => {
@@ -26,11 +30,30 @@ export default class CCcamera extends Component {
         this.setState({ dataUriImage: dataUri })
         this.setState({ imageDetails: true })
     }
-    getFiles(files) {
-        // console.log(files.base64)
-       this.setState({ dataUriImage: files.base64 })
-       this.setState({ imageDetails: true })
-   }
+    getFiles(e) {
+        // alert(files.base64);
+        // console.log(files);
+        var fileInput = false;
+        if(e.target.files[0]) {
+            fileInput = true;
+        }
+        if(fileInput) {
+        
+        Resizer.imageFileResizer(
+            e.target.files[0], //is the file of the new image that can now be uploaded...
+            300, // is the maxWidth of the  new image
+            300, // is the maxHeight of the  new image
+            'PNG', // is the compressFormat of the  new image
+            50, // is the quality of the  new image
+            0, // is the rotatoion of the  new image
+            uri => { this.setState({ dataUriImage: uri })},  // is the callBack function of the new image URI
+            'base64'  // is the output type of the new image
+        );
+        }
+        // 
+        // console.log(this.state.dataUriImage)
+        this.setState({ imageDetails: true })
+    }
 
     saveImage = () => {
         var data = {
@@ -59,7 +82,7 @@ export default class CCcamera extends Component {
                     console.log("err post=", error);
                 });
     }
-   
+
     render() {
         return (
             <div>
@@ -68,26 +91,28 @@ export default class CCcamera extends Component {
                 </div>
                 { // לפני שמצלמים כאשר עדיין אין תמונה
                     this.state.imageDetails == false &&
-                    
+
                     <div className="col-12" style={{ padding: '0px' }}>
                         <p className="cameraP">צלם תמונה</p>
-                            <Camera isImageMirror={true} sizeFactor={0.5} onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} />
-                   <p className="cameraP">או בחר מהגלריה</p>
-                   
-                    <FileBase64
-                    multiple={false}
-                    onDone={this.getFiles.bind(this)} />
-                     </div>
-                }
-                { // אחרי שמצלמים
-                    this.state.imageDetails &&
-                    <div>
-                        <img className="imageOneChallenge" src={this.state.dataUriImage} />
-                        <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
-                        <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
+                        {/* <Camera isImageMirror={true} sizeFactor={0.5} onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} /> */}
+                        <p className="cameraP">או בחר מהגלריה</p>
+                        <div>
+                            <input type="file" onChange={this.getFiles} />
+                        </div>
+                        {/* <FileBase64
+                            multiple={false}
+                            onDone={this.getFiles.bind(this)} /> */}
                     </div>
                 }
-            </div>
+                { // אחרי שמצלמים
+                            this.state.imageDetails &&
+                            <div>
+                                <img className="imageOneChallenge" src={this.state.dataUriImage} />
+                                <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
+                                <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
+                            </div>
+                        }
+                    </div>
         )
     };
 }

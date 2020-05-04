@@ -17,7 +17,7 @@ export default class CCStudentHomePage extends Component {
             SuccessCount: 0
 
         };
-        let local = false;
+        let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

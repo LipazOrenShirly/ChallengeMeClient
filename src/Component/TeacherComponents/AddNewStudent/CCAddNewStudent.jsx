@@ -29,7 +29,7 @@ export default class CCAddNewChallenge extends Component {
             isPhoneExist: false,
             student: {}
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';

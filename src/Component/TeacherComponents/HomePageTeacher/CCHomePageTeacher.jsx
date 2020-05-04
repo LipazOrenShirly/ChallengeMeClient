@@ -22,7 +22,7 @@ export default class CCHomePageTeacher extends Component {
             countAlerts: null,
             input: "",
         };
-        let local = false;
+        let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {

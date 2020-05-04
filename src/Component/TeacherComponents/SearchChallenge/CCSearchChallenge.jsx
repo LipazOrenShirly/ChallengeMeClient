@@ -22,7 +22,7 @@ class CCSearchChallenge extends Component {
             filteredChallenges: [],
             filteredChallengesByName: []
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
         this.apiUrlChallengeTags = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
