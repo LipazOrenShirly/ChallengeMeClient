@@ -20,7 +20,7 @@ export default class CCStudentsWithMessage extends Component {
             searchStudentsWithChat: [],
             searchStudentsWithNoChat: []
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

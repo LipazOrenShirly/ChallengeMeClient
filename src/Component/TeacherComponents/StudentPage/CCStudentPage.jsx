@@ -20,7 +20,7 @@ class CCStudentPage extends Component {
             hasFeature: false,
             UnReadMesgCount: null,
         }
-        let local = true;
+        let local = false;
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
 

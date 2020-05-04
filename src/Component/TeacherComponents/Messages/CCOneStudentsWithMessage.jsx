@@ -14,7 +14,7 @@ export default class CCOneStudentsWithMessage extends Component {
             student: {},
             UnReadCount: null,
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

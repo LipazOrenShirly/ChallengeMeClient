@@ -14,7 +14,7 @@ export default class CCStudentMessages extends Component {
         super(props);
         this.state = {
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
