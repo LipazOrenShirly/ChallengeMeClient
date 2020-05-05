@@ -1,13 +1,22 @@
 .headLineHomePage{
  height: 10%;   
  text-align: right;
- padding-right: 2%;
+ margin: 0px ;
+ 
 }
-.headLineHomePage > .emptyUserImg{
+/* .headLineHomePage > .lableImg{
     height: 100%;
 }
+.lableImg > .emptyUserImg{
+    height: 100%;
+} */
+.emptyUserImg{
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
 .helloName{
-    padding-top:5% ;
+    padding-top:7% ;
     padding-right: 3%;
     font-size: 25px;
     font-weight: 600;
@@ -19,12 +28,14 @@
     margin-top: 2%;
     background-color: rgba(255, 255, 255, 0.7);
     height: 15%;
+    padding-bottom: 2%;
 }
 .btnMassagesRead{
-    margin-top:3% ;
+    margin-top: 3%;
 }
 .btnMassagesReadText{
     font-size: 25px;
+    padding: 3% 0;
     /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 .challengeReadText{
@@ -80,11 +91,13 @@
     margin-right: -7px;
     margin-top: -3px;
 }
-
+#fileImgStudent{
+    display: none;
+}
   /* *******one challengePage****** */
 
 .imageOneChallenge{
-    height: 250px;
+    height: 100%;
     width: 100%;
     padding:0px;
 }
@@ -138,4 +151,8 @@ text-align: center;
     background-color: rgba(252, 229, 246, 0.432);
     color: rgb(255, 119, 221);
     
+}
+.imageTaken{
+    width: 100%;
+   padding: 0px;
 }

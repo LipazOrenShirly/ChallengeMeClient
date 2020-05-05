@@ -28,7 +28,6 @@ import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChall
 import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/CCStudentsSearchResult';
 
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
-import StudentMessages from './Component/StudentComponents/Messages/CCStudentMessages';
 import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
@@ -40,9 +39,9 @@ import {ProjectProvider} from './Context/ProjectContext';
 
 function App() {
   const user = { 
-    teacherID: "", 
+    teacherID: "8", 
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
-    studentID: "",
+    studentID: "21",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   }
 
@@ -76,7 +75,6 @@ function App() {
           <Route path="/Chat" component={Chat} />
           <Route path="/ChallengePage" component={ChallengePage} />
           <Route path="/StudentHomePage" component={StudentHomePage} />
-          <Route path="/StudentMessages" component={StudentMessages} />
           <Route path="/StudentChat" component={StudentChat} />
           <Route path="/StudentsSearchResult" component={StudentsSearchResult} />    
           <Route path="/camera" component={camera} />    

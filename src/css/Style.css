@@ -74,8 +74,24 @@ body{
 /* **************student********* */
 
 .studentPage{
-    background-image: url('../img/ggg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+    /* background: url('/img/ggg.png') no-repeat center center fixed;
+    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
 
+    background-image: url('/img/ggg.png') ; 
+    
+    background-size: cover;
+    padding:0px;
+    margin:0px;
+    height: 100vh;
+    text-align: center;
+  
+}
+
+.mp0{
+    margin: 0px;
+    padding: 0px;
 }

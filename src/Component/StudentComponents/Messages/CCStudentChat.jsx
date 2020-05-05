@@ -126,7 +126,7 @@ export default class CCStudentChat extends Component {
     render() {
         const messageText = this.state.messageText;
         return (
-            <div className="container-fluid studentPage">
+            <div className="studentPage">
 
                 <div className="row upChat"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
@@ -142,7 +142,7 @@ export default class CCStudentChat extends Component {
                     )}
                 </div>
 
-                <div className="input-group mb-3 mp0 sendMesInputDiv">
+                <div className="input-group mp0 sendMesInputDiv">
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend className="MdSend" color='rgb(163,233,255)' /></button>
                     </div>

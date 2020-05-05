@@ -24,7 +24,7 @@ export default class CCcamera extends Component {
         this.getFiles = this.getFiles.bind(this);
 
     }
-
+    
     handleTakePhoto = (dataUri) => {
         // dataUri --> base64
         this.setState({ dataUriImage: dataUri })
@@ -34,21 +34,21 @@ export default class CCcamera extends Component {
         // alert(files.base64);
         // console.log(files);
         var fileInput = false;
-        if(e.target.files[0]) {
+        if (e.target.files[0]) {
             fileInput = true;
         }
-        if(fileInput) {
-        
-        Resizer.imageFileResizer(
-            e.target.files[0], //is the file of the new image that can now be uploaded...
-            300, // is the maxWidth of the  new image
-            300, // is the maxHeight of the  new image
-            'PNG', // is the compressFormat of the  new image
-            50, // is the quality of the  new image
-            0, // is the rotatoion of the  new image
-            uri => { this.setState({ dataUriImage: uri })},  // is the callBack function of the new image URI
-            'base64'  // is the output type of the new image
-        );
+        if (fileInput) {
+
+            Resizer.imageFileResizer(
+                e.target.files[0], //is the file of the new image that can now be uploaded...
+                500, // is the maxWidth of the  new image
+                300, // is the maxHeight of the  new image
+                'PNG', // is the compressFormat of the  new image
+                50, // is the quality of the  new image
+                0, // is the rotatoion of the  new image
+                uri => { this.setState({ dataUriImage: uri }) },  // is the callBack function of the new image URI
+                'base64'  // is the output type of the new image
+            );
         }
         // 
         // console.log(this.state.dataUriImage)
@@ -85,7 +85,7 @@ export default class CCcamera extends Component {
 
     render() {
         return (
-            <div>
+            <div className="studentPage">
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
@@ -93,9 +93,9 @@ export default class CCcamera extends Component {
                     this.state.imageDetails == false &&
 
                     <div className="col-12" style={{ padding: '0px' }}>
-                        <p className="cameraP">צלם תמונה</p>
+
                         {/* <Camera isImageMirror={true} sizeFactor={0.5} onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} /> */}
-                        <p className="cameraP">או בחר מהגלריה</p>
+                        <p className="cameraP">בחר תמונה לעלות לאתגר זה</p>
                         <div>
                             <input type="file" onChange={this.getFiles} />
                         </div>
@@ -105,12 +105,15 @@ export default class CCcamera extends Component {
                     </div>
                 }
                 { // אחרי שמצלמים
-                            this.state.imageDetails &&
-                            <div>
-                                <img className="imageOneChallenge" src={this.state.dataUriImage} />
-                                <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
-                                <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
-                            </div>
+                    this.state.imageDetails &&
+                    <div className="imageTaken">
+                        <div>
+                            <img src={this.state.dataUriImage} />
+                        </div>
+                        <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
+                        <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
+                    </div>
+                            
                         }
                     </div>
         )

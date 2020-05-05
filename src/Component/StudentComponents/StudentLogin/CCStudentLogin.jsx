@@ -5,7 +5,7 @@ import './stayleStudentLogin.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { TiArrowBack } from 'react-icons/ti';
 
 
@@ -122,7 +122,7 @@ export default class CCStudentLogin extends Component {
     } = this.state;
 
     return (
-      <div className="container-fluid studentPage">
+      <div className="studentPage">
          <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>

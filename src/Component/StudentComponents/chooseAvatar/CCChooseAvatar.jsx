@@ -14,7 +14,7 @@ export default class CCChooseAvatar extends Component {
         super(props);
         this.state = {
             pageText: 0,
-            avatarChosen:""
+            avatarChosen: ""
         };
         let local = true;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -31,7 +31,7 @@ export default class CCChooseAvatar extends Component {
 
 
     chooseAvatar = (avatarName) => {
-        this.setState({avatarChosen:avatarName})
+        this.setState({ avatarChosen: avatarName })
         const user = this.context;
         console.log(user.studentID);
         fetch(this.apiUrlStudent + '?studentID=' + user.studentID + '&avatar=' + avatarName
@@ -57,7 +57,7 @@ export default class CCChooseAvatar extends Component {
                 (error) => {
                     console.log("err get=", error);
                 });
-                               
+
 
     }
 
@@ -68,10 +68,10 @@ export default class CCChooseAvatar extends Component {
     render() {
 
         return (
-            <div className="container-fluid studentPage">
+            <div className="studentPage">
                 <div className="d-flex justify-content-start" style={{ padding: '2%', color: 'rgb(46, 46, 124)' }}>
                     <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
-                    </div>
+                </div>
                 <div className="d-flex align-items-center justify-content-center" style={{ height: '66%' }}>
                     {this.state.pageText == 0 &&
                         <div id="pageTextID">
@@ -87,9 +87,9 @@ export default class CCChooseAvatar extends Component {
                         <div className="animated slideInRight">
                             <div className="welcomeDivText col-12">בחר את האווטר שילווה אותך</div>
                             <div className="row">
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/pinguin4.png')} onClick={()=>this.chooseAvatar('pinguin')} /></div>
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/chicken/chicken4.png')} onClick={()=>this.chooseAvatar('chicken')} /></div>
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/turtle/turtle4.png')} onClick={()=>this.chooseAvatar('turtle')} /></div>
+                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/pinguin4.png')} onClick={() => this.chooseAvatar('pinguin')} /></div>
+                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/chicken/chicken4.png')} onClick={() => this.chooseAvatar('chicken')} /></div>
+                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/turtle/turtle4.png')} onClick={() => this.chooseAvatar('turtle')} /></div>
 
                             </div>
 
@@ -100,10 +100,10 @@ export default class CCChooseAvatar extends Component {
                         <div className="animated slideInRight">
                             <div className="welcomeDivText col-12">האווטר נבחר בהצלחה!</div>
                             <div className="row">
-                                <div className="d-flex align-items-center justify-content-center animated tada slow infinite col-12 avatarClassDiv" > <img src={require('../../../img/avatars/'+this.state.avatarChosen+'/'+this.state.avatarChosen +'1.png')} /></div>
+                                <div className="d-flex align-items-center justify-content-center animated tada slow infinite col-12 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.avatarChosen + '/' + this.state.avatarChosen + '1.png')} /></div>
 
                             </div>
-                            <button className="btn btn-info btnStudent" onClick={()=>this.props.history.push('/StudentHomePage')} >התחל</button>
+                            <button className="btn btn-info btnStudent" onClick={() => this.props.history.push('/StudentHomePage')} >התחל</button>
 
                         </div>
                     }

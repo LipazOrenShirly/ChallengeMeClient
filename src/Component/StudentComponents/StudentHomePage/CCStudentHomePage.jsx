@@ -5,6 +5,9 @@ import ProjectContext from '../../../Context/ProjectContext';
 import CCStudentChallenges from './CCStudentChallenges';
 import localHost from '../../LittleComponents/LocalHost';
 import "animate.css";
+import Resizer from 'react-image-file-resizer';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+
 export default class CCStudentHomePage extends Component {
 
     constructor(props) {
@@ -14,7 +17,9 @@ export default class CCStudentHomePage extends Component {
             FirstAndLastName: { firstName: "", lastName: "" },
             Avatar: null,
             avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
-            SuccessCount: 0
+            SuccessCount: 0,
+            dataUriImageStudent: "",
+            dataImg: ""
 
         };
         let local = true;
@@ -24,6 +29,8 @@ export default class CCStudentHomePage extends Component {
             this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
             this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
+        this.getFiles = this.getFiles.bind(this);
+
     }
 
     static contextType = ProjectContext;
@@ -36,10 +43,38 @@ export default class CCStudentHomePage extends Component {
     }
 
     componentDidMount() {
+        this.getImage();
         this.getNameAndAvatarNum();
         this.getSuccessCount();
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
+    }
+    getImage = () => {
+        const user = this.context;
+        fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + user.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    //console.log(result);
+                    this.setState({ dataImg: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                })
+            .then(() => {
+
+            });
     }
 
     getNameAndAvatarNum = () => {
@@ -120,6 +155,58 @@ export default class CCStudentHomePage extends Component {
                     console.log("err get=", error);
                 });
     }
+    getFiles = (e) => {
+        var fileInput = false;
+        if (e.target.files[0]) {
+            fileInput = true;
+        }
+        if (fileInput) {
+
+            Resizer.imageFileResizer(
+                e.target.files[0], //is the file of the new image that can now be uploaded...
+                300, // is the maxWidth of the  new image
+                300, // is the maxHeight of the  new image
+                'PNG', // is the compressFormat of the  new image
+                50, // is the quality of the  new image
+                0, // is the rotatoion of the  new image
+                uri => { this.saveImg(uri); },  // is the callBack function of the new image URI
+                'base64'  // is the output type of the new image
+            );
+
+        }
+        // 
+        // console.log(this.state.dataUriImage)
+
+    }
+    saveImg = (uri) => {
+        this.setState({ dataUriImageStudent: uri });
+        console.log(uri)
+        const user = this.context;
+        var data = {
+            image: uri,
+            studentID: user.studentID,
+        }
+        fetch(this.apiUrlStudent + "/AddImgStudent"
+            , {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8'
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                    this.getImage();
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }
 
     render() {
         const user = this.context;
@@ -127,13 +214,19 @@ export default class CCStudentHomePage extends Component {
         const { SuccessCount } = this.state;
         var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1;
         return (
-            <div className="container-fluid studentPage">
-                <br />
+            <div className="studentPage">
+           <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}>
+                    <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
+                </div>     
                 {/* פרטי התלמיד */}
-                <div className="headLineHomePage row col-12" dir="rtl">
-                    <img className="emptyUserImg" src={require('../../../img/emptyUserImg.png')} />
+                <div className="headLineHomePage row" dir="rtl">
+                    <input type="file" id="fileImgStudent" onChange={this.getFiles} />
+                    <label for="fileImgStudent" class="lableImg">
+                        <img className="emptyUserImg" style={{margin:'5px'}} src={`data:image/jpeg;base64,${this.state.dataImg}`} />
+                    </label>
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
+                <br/>
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
@@ -148,7 +241,7 @@ export default class CCStudentHomePage extends Component {
                 {/* אווטאר */}
                 {
                     this.state.Avatar != null &&
-                    <div className="row" style={{ marginTop: '2%' }}>
+                    <div className="row" style={{ margin: '0px', marginTop: '2%', padding: '0px' }}>
                         <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + avatarLevel + '.png')} /></div>
                         <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
                     </div>

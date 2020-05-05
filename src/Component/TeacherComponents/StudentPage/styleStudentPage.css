@@ -22,8 +22,11 @@ font-weight: 500;
 
 }
 .oneChallengeDetails{
-    text-decoration: underline;
+    /* text-decoration: underline; */
     
+}
+.deadlineDiv{
+    color:rgb(148, 3, 116);
 }
 .eddChallengeBTN{
     margin-bottom: 2%;
@@ -63,6 +66,10 @@ font-weight: 500;
     display: flex;
     right: 0px;
     color: rgba(147, 141, 160, 0.801);
+}
+.remainDaysDiv{
+    color:red;
+    font-weight: 500;
 }
 /* ***EDIT**** */
 .titleChalengeinCCEDIT{

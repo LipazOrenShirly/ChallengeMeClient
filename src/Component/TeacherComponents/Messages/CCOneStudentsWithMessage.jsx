@@ -13,6 +13,7 @@ export default class CCOneStudentsWithMessage extends Component {
         this.state = {
             student: {},
             UnReadCount: null,
+            dataImg:""
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -27,6 +28,7 @@ export default class CCOneStudentsWithMessage extends Component {
 
     componentDidMount() {
         const user = this.context;
+        this.getImage();
         // מחזירה אובייקט של תלמיד
         fetch(this.apiUrlStudent + '?studentID=' + this.props.studentID
             , {
@@ -51,7 +53,33 @@ export default class CCOneStudentsWithMessage extends Component {
                     console.log("err get=", error);
                 });
     }
+    getImage = () => {
+        
+        fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + this.props.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    //console.log(result);
+                    this.setState({ dataImg: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                })
+            .then(() => {
 
+            });
+    }
     getUnReadAmount = () => {
         const user = this.context;
         // פונקציה שמחזירה כמה הודעות שלא נקראו יש מהתלמיד
@@ -83,7 +111,7 @@ export default class CCOneStudentsWithMessage extends Component {
         return (<div>
             <div className="row rowOneSwithMes d-flex justify-content-end">
                 <div dir="rtl" className="SwithMesDiv row" onClick={() => this.props.goToChat(this.state.student)}>
-                    <div>   {this.state.student.firstName} {this.state.student.lastName}</div>
+                    <div className="d-flex align-items-center">   {this.state.student.firstName} {this.state.student.lastName}</div>
                     {
                         this.state.UnReadCount != 0 &&
                         <div className="fixLeft">{this.state.UnReadCount}</div>
@@ -92,7 +120,7 @@ export default class CCOneStudentsWithMessage extends Component {
                     {/* <div className="fixLeft">{this.state.UnReadCount != 0 && this.state.UnReadCount}</div>  להציג איכשהו כמה הודעות שלא נקראו יש מהתלמיד */}
 
                 </div>
-                <img className="emptyUserImg" src={require('../../../img/emptyUserImg.png')} />
+                <img className="emptyUserImgMes" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
 
             </div>
             <hr />

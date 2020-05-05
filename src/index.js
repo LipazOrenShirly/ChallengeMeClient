@@ -8,7 +8,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.render(
-<BrowserRouter basename={window.location.pathname || ""}>
+    // <BrowserRouter basename={window.location.pathname || ""}>
+
+<BrowserRouter>
     <App />
 </BrowserRouter>
     , document.getElementById('root'));

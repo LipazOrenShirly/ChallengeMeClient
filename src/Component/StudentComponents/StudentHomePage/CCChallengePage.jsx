@@ -10,6 +10,9 @@ import { MdCheck } from 'react-icons/md';
 import { AiOutlineExclamation } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
 import $ from 'jquery';
+import { MdSend } from 'react-icons/md';
+import Swal from 'sweetalert2';
+
 
 export default class CCChallengePage extends Component {
 
@@ -19,11 +22,14 @@ export default class CCChallengePage extends Component {
             StudentChallenges: [],
             statusSentence: "",
             dataImg: "",
+            messageShow:false,
         };
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
+        this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
+            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
         }
     }
 
@@ -78,13 +84,17 @@ export default class CCChallengePage extends Component {
             $('#success').css('background-color', 'rgb(167, 167, 167)');
             $('#fail').css('background-color', 'rgb(167, 167, 167)');
             $('#help').css('background-color', '#FFBE3D');
-            this.setState({ statusSentence: "סימנת שאתה זקוק לעזרה, הודעה נשלחה למחנך והוא ייצור איתך קשר בקרוב" });
+            
+            this.setState({ statusSentence: "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה" });
         }
     }
 
     updateStatus = (e) => {
         var id = e.currentTarget.id;
         const studentChallenge = this.props.location.state.challenge;
+        if(id=='help'){
+            this.setState({messageShow:true});
+        }
         studentChallenge.status = (id == 'success' ? '1' : (id == 'fail' ? '2' : '3'));
 
         fetch(this.apiUrl + '?challengeID=' + studentChallenge.challengeID + '&studentID=' + studentChallenge.studentID + '&status=' + studentChallenge.status,
@@ -117,6 +127,53 @@ export default class CCChallengePage extends Component {
             state: { challenge: this.props.location.state.challenge }
         })
     }
+    clickSend = () => {
+        const reg = /^[\s]+$/
+        if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
+            this.sendMessage();
+            this.setState({ messageText: "" });
+        }
+    }
+    sendMessage = () => {
+        const user = this.context;
+        const date = new Date();
+
+        const message = {
+            teacherID: user.teacherID,
+            studentID: user.studentID,
+            messageTitle: "",
+            messageText: this.state.messageText,
+            messageDate: date.toISOString().split('T')[0],
+            messageTime: date.getHours() + ":" + date.getMinutes(),
+            messageByTeacher: false,
+        }
+
+        fetch(this.apiUrlMessage, {
+            method: 'POST',
+            body: JSON.stringify(message),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                    this.setState({messageShow:false})
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text:'ההודעה נשלחה בהצלחה',
+                        icon: 'success',
+                        confirmButtonColor: 'rgb(135, 181, 189)',
+                    });
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }
 
     render() {
         const user = this.context;
@@ -126,14 +183,15 @@ export default class CCChallengePage extends Component {
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
 
         return (
-            <div className="container-fluid studentPage">
+            <div className="studentPage">
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <br />
                 {/* תמונת האתגר */}
-                <div className="row"><img className="imageOneChallenge" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
-                    <FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto} /> 
+                <div className="row mp0">
+                    <img className="imageOneChallenge" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
+                    <FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto} />
                 </div>
                 {/* מספר האתגר */}
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
@@ -147,9 +205,27 @@ export default class CCChallengePage extends Component {
                                 <div className="col-12 dedlineDateTextChallengePage">{challenge.deadline}</div></div>
                             : <div className="col-12 dedlineDateTextChallengePage">נותרו {dateDiff} ימים <br />לסיום האתגר</div>
                 }
-                <br /><br />
+                <br />
+                {
+                    this.state.messageShow &&
+                    
+                    <div className="input-group mb-3 mp0">
+                        <div className="input-group-prepend mp0">
+                            <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend className="MdSend" color='rgb(163,233,255)' /></button>
+                        </div>
+                        <input type="text" className="form-control inputNewTeacher" id='messageText' placeholder='כתוב הודעה'
+                            value={this.state.messageText} onChange={(e) => {
+                                this.setState({ messageText: e.target.value });
+                            }}
+                        />
+                    </div>
+                   
+                    
+
+                }
+                <br />
                 {/* כפתורי סטטוס אתגר */}
-                <div className="row d-flex justify-content-around" style={{ padding: '0px' }}>
+                <div className="row mp0 d-flex justify-content-around" style={{ padding: '0px' }}>
                     <div className="col-4" style={{ padding: '0px' }}>
                         <div className="col-12">
                             <button className="btn btn-info btnFail Stat2" id='fail' onClick={this.updateStatus} ><MdClose size={50} /></button>

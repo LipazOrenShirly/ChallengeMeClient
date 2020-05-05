@@ -50,8 +50,8 @@ export default class CCStudentChallenges extends Component {
 
         return (
             <div >
-                <br/>
-                <div className="col-12 btnMassagesReadText">:האתגרים שלי</div><br />
+                
+                <div className="col-12 btnMassagesReadText">:האתגרים שלי</div>
                 <div className="challengeShowStudents">
                 {this.state.StudentChallenges.map( (item, key) => 
                     <CCOneStudentChallenges countChallenges={this.state.StudentChallenges.length} challenge={item} index={key} goToChallengePage = {this.props.goToChallengePage} />
