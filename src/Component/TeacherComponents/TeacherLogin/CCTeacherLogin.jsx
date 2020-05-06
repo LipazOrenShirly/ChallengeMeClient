@@ -33,17 +33,18 @@ export default class CCTeacherLogin extends Component {
     }
   }
 
-  componentDidMount = () => {
-    //לפני שעולה העמוד- אם קיימים שם משתמש וססמה בלוקל סטורז' תביא אותם למקומות המתאימים
-    let un = localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "";
-    this.setState({ Username: un });
-    let ps = localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "";
-    this.setState({ Password: ps });
-    if (this.state.Username != null)
+  static contextType = ProjectContext;
+
+  async componentDidMount () {
+    //לפני שעולה העמוד- אם קיימים שם משתמש וסיסמה בלוקל סטורז' אז תשמור אותם בסטייט כדי שיירשמו באינפוטים
+    var un = await localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "";
+    var ps = await localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "";
+    await this.setState({ Username: un, Password: ps });
+    // אם השם משתמש והסיסמא לא ריקים אז תעדכן בסטייט שלא צריכה להופיע הערה
+    if (this.state.Username != "")
       this.setState({ HasUserNameValError: false });
-    if (this.state.Password != null)
+    if (this.state.Password != "")
       this.setState({ HasPasswordError: false });
-    // $('#apasswordId').val(localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "");
   }
 
   NewTeacher = () => {
@@ -69,15 +70,13 @@ export default class CCTeacherLogin extends Component {
     if ($('#remember').prop('checked') === true) {
       localStorage.setItem('username', Username);
       localStorage.setItem('password', Password);
+      localStorage.setItem('userType', 'teacher');
     }
   }
-
-  static contextType = ProjectContext;
 
   SubmitNewPassword = (event) => {
     this.setState({ showChangePassword: false });
     const { Username, newPassword1 } = this.state;
-    this.saveCredentials(Username, newPassword1);
     const user = this.context;
     fetch(this.apiUrl + '?teacherID=' + user.teacherID + '&password=' + this.state.newPassword1
       , {
@@ -96,6 +95,7 @@ export default class CCTeacherLogin extends Component {
         (result) => {
           console.log("Submit= ", result);
           console.log("Submit= ", JSON.stringify(result));
+          this.saveCredentials(Username, newPassword1); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
           Swal.fire({
             title: 'מעולה!',
             text: 'הסיסמה שונתה בהצלחה',
@@ -112,13 +112,12 @@ export default class CCTeacherLogin extends Component {
   }
 
   Submit = (event) => {
+    console.log(this.state);
     const user = this.context;
     if (!this.state.HasUserNameValError && !this.state.HasPasswordError) //אם אין הערות
     {
       const { Username, Password } = this.state;
-      this.saveCredentials(Username, Password);
-
-      //בעזרת גט בודק אם השם משתמש וססמה קיימים במערכת
+      //בעזרת גט בודק אם השם משתמש והסיסמה קיימים במערכת
       fetch(this.apiUrl + '?username=' + Username + '&password=' + Password
         , {
           method: 'GET',
@@ -137,6 +136,7 @@ export default class CCTeacherLogin extends Component {
             console.log("Submit= ", result);
             console.log("Submit= ", JSON.stringify(result));
             if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
+              this.saveCredentials(Username, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setTeacher(result.TeacherID); //אם קיים אז תשמור בקונטקט
               if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
                 this.props.history.push('/HomePageTeacher/');
@@ -156,13 +156,13 @@ export default class CCTeacherLogin extends Component {
     event.preventDefault();
   }
 
-  onRecieveNewPassword = () => {
-    //take the password and change the db
-    let p1 = $('#swal-input1').val();
-    let p2 = $('#swal-input2').val();
-    alert("new password is: " + p1);
-    this.setState({ showChangePassword: false });
-  }
+  // onRecieveNewPassword = () => {
+  //   //take the password and change the db
+  //   let p1 = $('#swal-input1').val();
+  //   let p2 = $('#swal-input2').val();
+  //   alert("new password is: " + p1);
+  //   this.setState({ showChangePassword: false });
+  // }
 
   render() {
     const {

@@ -27,15 +27,16 @@ export default class CCStudentLogin extends Component {
     }
   }
 
-  componentDidMount = () => {
+  static contextType = ProjectContext;
+
+  async componentDidMount () {
     //לפני שעולה העמוד- אם קיימים שם משתמש וססמה בלוקל סטורז' תביא אותם למקומות המתאימים
-    let un = localStorage.getItem('SPhone') != null ? localStorage.getItem('SPhone') + '' : "";
-    this.setState({ Phone: un });
-    let ps = localStorage.getItem('Spassword') != null ? localStorage.getItem('Spassword') + '' : "";
-    this.setState({ Password: ps });
-    if (this.state.Phone != null)
+    let un = await localStorage.getItem('SPhone') != null ? localStorage.getItem('SPhone') + '' : "";
+    let ps = await localStorage.getItem('Spassword') != null ? localStorage.getItem('Spassword') + '' : "";
+    await this.setState({ Phone: un, Password: ps });
+    if (this.state.Phone != "")
       this.setState({ HasPhoneValError: false });
-    if (this.state.Password != null)
+    if (this.state.Password != "")
       this.setState({ HasPasswordError: false });
   }
 
@@ -67,18 +68,15 @@ export default class CCStudentLogin extends Component {
     if ($('#remember').prop('checked') === true) {
       localStorage.setItem('SPhone', Phone);
       localStorage.setItem('Spassword', Password);
+      localStorage.setItem('userType', 'student');
     }
   }
-
-  static contextType = ProjectContext;
 
   Submit = (event) => {
     const user = this.context;
     if (!this.state.HasPhoneValError && !this.state.HasPasswordError) //אם אין הערות
     {
       const { Phone, Password } = this.state;
-      this.saveCredentials(Phone, Password);
-
       //בעזרת גט בודק אם השם משתמש וססמה קיימים במערכת
       fetch(this.apiUrl + '?phone=' + Phone + '&password=' + Password
         , {
@@ -96,7 +94,8 @@ export default class CCStudentLogin extends Component {
         .then(
           (result) => {
             console.log("Submit= ", result[0]);
-            if (result != 0) { //אם המורה קיים בדאטה בייס
+            if (result != 0) { //אם התלמיד קיים בדאטה בייס
+              this.saveCredentials(Phone, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
               user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט
               this.props.history.push('/StudentHomePage');

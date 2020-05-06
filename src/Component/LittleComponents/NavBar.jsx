@@ -22,7 +22,7 @@ const NavBar = () => {
           <NavLink to="/TeacherInfoScreen">הפרטים שלי</NavLink>
           <NavLink to="/Alerts">התרעות מערכת</NavLink>
           <NavLink to="/Messages">הודעות</NavLink>
-          <NavLink to="/TeacherLogin" onClick={ () => sessionStorage.clear() }>התנתק</NavLink>
+          <NavLink to="/TeacherLogin" onClick={ () => {sessionStorage.clear(); localStorage.clear();} }>התנתק</NavLink>
 
           {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

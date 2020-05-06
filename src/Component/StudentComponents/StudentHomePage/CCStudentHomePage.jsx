@@ -49,6 +49,7 @@ export default class CCStudentHomePage extends Component {
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
+
     getImage = () => {
         const user = this.context;
         fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + user.studentID
@@ -215,18 +216,19 @@ export default class CCStudentHomePage extends Component {
         var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1;
         return (
             <div className="studentPage">
-           <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}>
+                <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}
+                        onClick={() => { sessionStorage.clear(); localStorage.clear(); this.props.history.push('/'); }}>
                     <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
-                </div>     
+                </div>
                 {/* פרטי התלמיד */}
                 <div className="headLineHomePage row" dir="rtl">
                     <input type="file" id="fileImgStudent" onChange={this.getFiles} />
-                    <label for="fileImgStudent" class="lableImg">
-                        <img className="emptyUserImg" style={{margin:'5px'}} src={`data:image/jpeg;base64,${this.state.dataImg}`} />
+                    <label for="fileImgStudent" className="lableImg">
+                        <img className="emptyUserImg" style={{ margin: '5px' }} src={`data:image/jpeg;base64,${this.state.dataImg}`} />
                     </label>
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
-                <br/>
+                <br />
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
