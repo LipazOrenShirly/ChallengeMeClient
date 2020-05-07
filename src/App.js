@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomePageTeacher from './Component/TeacherComponents/HomePageTeacher/CCHomePageTeacher';
 import NewTeacher from './Component/TeacherComponents/NewTeacher/CCNewTeacher';
@@ -26,36 +26,63 @@ import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeD
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
 import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChallengePage';
 import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/CCStudentsSearchResult';
-
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
 import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
-
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 
-import {ProjectProvider} from './Context/ProjectContext';
+import { ProjectProvider } from './Context/ProjectContext';
+import checkCredentials from './Component/LittleComponents/checkCredentials';
 
 
 function App() {
-  const user = { 
-    teacherID: "", 
+  const user = {
+    teacherID: "",
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
     studentID: "",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
-  }
+  };
+
+  const PrivateRoute = (children, ...rest) => {
+    console.log(children);
+    console.log(...rest);
+    // var { username, password } = sessionStorage;
+    // console.log(username, password );
+    // var teacherID = checkCredentials(username, password);
+    // console.log(teacherID );
+
+    // if (teacherID != 0 ) 
+    //   user.setTeacher(teacherID);  //אם קיים אז תשמור בקונטקט
+    // console.log(user.teacherID );
+
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+          checkCredentials(sessionStorage.username, sessionStorage.password, user) != 0 ? (children.children) : (<Redirect to="/" />)
+        }
+      />
+    )
+  };
 
   return (
     <div className="App">
       <ProjectProvider value={user}>
         <Switch>
           <Route exact path="/" component={teacherORstudent} />
+          <Route exact path="/teacherORstudent" component={teacherORstudent} />
           <Route path="/TeacherLogin" component={TeacherLogin} />
           <Route path="/StudentLogin" component={StudentLogin} />
           <Route path="/NewTeacher" component={NewTeacher} />
           <Route path="/TeacherForgetPassword" component={TeacherForgetPassword} />
-          <Route path="/HomePageTeacher" component={HomePageTeacher} />
-          <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} />
+
+          <PrivateRoute exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRoute>
+          {/* <Route path="/HomePageTeacher" component={HomePageTeacher} /> */}
+          
+          <PrivateRoute exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRoute>
+          {/* <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} /> */}
+
           <Route path="/Alerts" component={Alerts} />
           <Route path="/AlertsSetting" component={AlertsSetting} />
           <Route path="/Messages" component={Messages} />
@@ -76,11 +103,11 @@ function App() {
           <Route path="/ChallengePage" component={ChallengePage} />
           <Route path="/StudentHomePage" component={StudentHomePage} />
           <Route path="/StudentChat" component={StudentChat} />
-          <Route path="/StudentsSearchResult" component={StudentsSearchResult} />    
-          <Route path="/camera" component={camera} />    
-          <Route path="/ChooseAvatar" component={ChooseAvatar} />    
-          
-          
+          <Route path="/StudentsSearchResult" component={StudentsSearchResult} />
+          <Route path="/camera" component={camera} />
+          <Route path="/ChooseAvatar" component={ChooseAvatar} />
+
+
         </Switch>
       </ProjectProvider>
     </div>
