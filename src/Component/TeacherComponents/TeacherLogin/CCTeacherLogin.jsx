@@ -175,7 +175,7 @@ export default class CCTeacherLogin extends Component {
     return (
       <div className="container-fluid">
          <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/teacherORstudent')} size={40} />
+                    <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/')} size={40} />
                 </div>
         <div className="loginDiv">
           <div className="col-12">

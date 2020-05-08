@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import localHost from '../../LittleComponents/LocalHost';
 import '../../../css/Style.css';
 import './styleMessages.css'
-import Footer from '../../LittleComponents/Footer';
-import NavBar from '../../LittleComponents/NavBar';
-import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import CCOneStudentsWithMessage from './CCOneStudentsWithMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
@@ -31,10 +28,10 @@ export default class CCStudentsWithMessage extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount() {
-        const user = this.context;
+    async componentDidMount() {
+        const user = await this.context;
         // מושך רשימה של כל התלמידים שיש למורה שיחה איתם ואת כמות ההודעות שלא נקראו ומסדר לפי הכי חדש
-        fetch(this.apiUrl + '?teacherID=' + user.teacherID
+        await fetch(this.apiUrl + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -57,7 +54,7 @@ export default class CCStudentsWithMessage extends Component {
                 });
 
         // מחזיר את כל התלמידים של המורה
-        fetch(this.apiUrlStudent + '?teacherID=' + user.teacherID
+        await fetch(this.apiUrlStudent + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({

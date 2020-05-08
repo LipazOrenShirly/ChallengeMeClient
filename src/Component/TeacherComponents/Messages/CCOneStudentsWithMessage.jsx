@@ -13,8 +13,8 @@ export default class CCOneStudentsWithMessage extends Component {
         super(props);
         this.state = {
             student: {},
-            UnReadCount: null,
-            dataImg:EmptyImgStudentBase64
+            UnReadCount: 0,
+            dataImg: EmptyImgStudentBase64
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
@@ -27,11 +27,11 @@ export default class CCOneStudentsWithMessage extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount() {
-        const user = this.context;
-        this.getImage();
+    async componentDidMount() {
+        const user = await this.context;
+        await this.getImage();
         // מחזירה אובייקט של תלמיד
-        fetch(this.apiUrlStudent + '?studentID=' + this.props.studentID
+        await fetch(this.apiUrlStudent + '?studentID=' + this.props.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -54,8 +54,8 @@ export default class CCOneStudentsWithMessage extends Component {
                     console.log("err get=", error);
                 });
     }
+    
     getImage = () => {
-        
         fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + this.props.studentID
             , {
                 method: 'GET',

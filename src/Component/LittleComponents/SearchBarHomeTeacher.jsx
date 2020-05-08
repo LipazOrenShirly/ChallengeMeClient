@@ -32,19 +32,8 @@ export default class SearchBarHomeTeacher extends Component {
         </div>
 
         <div className="form-group col-6 searchTeacherHomePage">
-          {/* <input type="text" className="form-control inputRounded" id="search" value={input} placeholder="חיפוש" onChange={(input, e) => this.handleInputChange(input, e)}></input> */}
-          <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-            attributesInput={{
-              id: 'search',
-              type: 'text',
-              placeholder: 'חפש תלמיד',
-              className: "form-control inputRounded"
-            }}
-            value={input}
-            onChange={(input, e) => {
-              this.setState({input});
-              this.props.sendInputToHomePage(input);
-            }}
+          <input type="text" className="form-control inputRounded" id="search" placeholder='חפש תלמיד'
+            value={input} onChange={(e) => {this.setState({input: e.target.value}); this.props.sendInputToHomePage(e);}}
           />
         </div>
 

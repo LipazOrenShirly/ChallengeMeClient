@@ -10,7 +10,8 @@ import CCStudents from './CCStudents';
 import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
 import localHost from '../../LittleComponents/LocalHost';
-import CCStudentsSearchResult from './CCStudentsSearchResult';
+import CCOneStudent from './CCOneStudent';
+
 export default class CCHomePageTeacher extends Component {
 
     constructor(props) {
@@ -21,11 +22,14 @@ export default class CCHomePageTeacher extends Component {
             countMessages: null,
             countAlerts: null,
             input: "",
+            studentsArr: [],
         };
         let local = true;
+        this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {
+            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
             this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
             this.apiUrlAlert = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
         }
@@ -107,20 +111,49 @@ export default class CCHomePageTeacher extends Component {
         })
     }
 
-    sendInputToHomePage = (input) => {
-        this.setState({ input: input });
-        console.log(this.state.input);
+    sendInputToHomePage = (e) => {
+        this.setState({ input: e.target.value });
+
+        //מחזיר תלמידים שמתאימים לאינפוט
+        const user = this.context;
+        fetch(this.apiUrl + '?teacherID=' + user.teacherID + '&name=' + e.target.value
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("studentsArr= ", result);
+                    this.setState({ studentsArr: result });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
     }
 
     render() {
         const user = this.context;
+        var { input } = this.state
         return (
             <div className="container-fluid">
                 <NavBar /><br /><br />
 
                 <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={this.state.countAlerts} sendInputToHomePage={this.sendInputToHomePage} />
+
                 {this.state.input != "" &&
-                    <CCStudentsSearchResult input={this.state.input} goToStudentPage={this.goToStudentPage} />
+                    <div className="row col-12">
+                        {this.state.studentsArr.map((item) =>
+                            <CCOneStudent key={item.studentID} student={item} goToStudentPage={this.goToStudentPage} />
+                        )}
+                    </div>
                 }
 
                 {this.state.studentPage == false &&

@@ -38,7 +38,7 @@ export default class CCMessages extends Component {
         return (
             <div className="container-fluid">
 
-                <NavBar></NavBar>
+                <NavBar />
 
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
@@ -46,7 +46,7 @@ export default class CCMessages extends Component {
 
                 <CCStudentsWithMessage goToChat={this.goToChat} />
 
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     };
