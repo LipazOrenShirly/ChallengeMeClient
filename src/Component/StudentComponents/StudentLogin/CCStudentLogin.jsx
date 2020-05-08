@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
-import '../../../css/Style.css';
 import './stayleStudentLogin.css';
+import '../../../css/Style.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
@@ -123,7 +123,7 @@ export default class CCStudentLogin extends Component {
     return (
       <div className="studentPage">
          <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                    <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/teacherORstudent')} size={40} />
                 </div>
         <div className="loginDiv">
           <div className="col-12">

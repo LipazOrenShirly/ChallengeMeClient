@@ -77,11 +77,11 @@ function App() {
           <Route path="/NewTeacher" component={NewTeacher} />
           <Route path="/TeacherForgetPassword" component={TeacherForgetPassword} />
 
-          <PrivateRoute exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRoute>
-          {/* <Route path="/HomePageTeacher" component={HomePageTeacher} /> */}
+          {/* <PrivateRoute exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRoute> */}
+          <Route path="/HomePageTeacher" component={HomePageTeacher} />
           
-          <PrivateRoute exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRoute>
-          {/* <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} /> */}
+          {/* <PrivateRoute exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRoute> */}
+          <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} />
 
           <Route path="/Alerts" component={Alerts} />
           <Route path="/AlertsSetting" component={AlertsSetting} />

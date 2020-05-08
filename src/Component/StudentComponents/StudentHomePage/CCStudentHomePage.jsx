@@ -7,6 +7,7 @@ import localHost from '../../LittleComponents/LocalHost';
 import "animate.css";
 import Resizer from 'react-image-file-resizer';
 import { RiLogoutBoxLine } from 'react-icons/ri';
+import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 
 export default class CCStudentHomePage extends Component {
 
@@ -19,7 +20,7 @@ export default class CCStudentHomePage extends Component {
             avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
             SuccessCount: 0,
             dataUriImageStudent: "",
-            dataImg: ""
+            dataImg: EmptyImgStudentBase64
 
         };
         let local = true;

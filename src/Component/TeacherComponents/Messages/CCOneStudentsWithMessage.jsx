@@ -6,6 +6,7 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
+import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 
 export default class CCOneStudentsWithMessage extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class CCOneStudentsWithMessage extends Component {
         this.state = {
             student: {},
             UnReadCount: null,
-            dataImg:""
+            dataImg:EmptyImgStudentBase64
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';

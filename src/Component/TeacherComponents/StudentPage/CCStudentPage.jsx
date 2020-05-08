@@ -9,6 +9,7 @@ import localHost from '../../LittleComponents/LocalHost';
 import { NavLink, Link } from 'react-router-dom';
 import Badge from '@material-ui/core/Badge';
 import { MdMail } from "react-icons/md";
+import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 import ProjectContext from '../../../Context/ProjectContext';
 
 class CCStudentPage extends Component {
@@ -19,7 +20,7 @@ class CCStudentPage extends Component {
             StudentChallenges: [],
             hasFeature: false,
             UnReadMesgCount: null,
-            dataImg: "",
+            dataImg: EmptyImgStudentBase64,
         }
         let local = true;
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';

@@ -12,7 +12,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import $ from 'jquery';
 import { MdSend } from 'react-icons/md';
 import Swal from 'sweetalert2';
-
+import EmptyImgChallengeBase64 from '../../LittleComponents/emptyImgChallenge';
 
 export default class CCChallengePage extends Component {
 
@@ -21,7 +21,7 @@ export default class CCChallengePage extends Component {
         this.state = {
             StudentChallenges: [],
             statusSentence: "",
-            dataImg: "",
+            dataImg: EmptyImgChallengeBase64,
             messageShow:false,
         };
         let local = true;
