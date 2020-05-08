@@ -17,8 +17,6 @@ import StudentPage from './Component/TeacherComponents/StudentPage/CCStudentPage
 import StudentDetails from './Component/TeacherComponents/StudentPage/CCStudentDetails';
 import StudentInfoScreen from './Component/TeacherComponents/StudentInfoScreen/CCStudentInfoScreen';
 import EditChallenge from './Component/TeacherComponents/StudentPage/CCEditChallenge';
-import InputTests from './Component/InputTests/InputTests';
-import InputTests2 from './Component/InputTests/InputTests2';
 import AddChallengeToStudent from './Component/TeacherComponents/AddChallengeToStudent/CCAddChallengeToStudent';
 import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewStudent';
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
@@ -29,12 +27,10 @@ import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
 import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
-import camera from './Component/StudentComponents/StudentHomePage/CCcamera';
+import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 
 import { ProjectProvider } from './Context/ProjectContext';
-import checkCredentials from './Component/LittleComponents/checkCredentials';
-
 
 function App() {
   const user = {
@@ -44,45 +40,74 @@ function App() {
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   };
 
-  const PrivateRoute = (children, ...rest) => {
-    console.log(children);
-    console.log(...rest);
-    // var { username, password } = sessionStorage;
-    // console.log(username, password );
-    // var teacherID = checkCredentials(username, password);
-    // console.log(teacherID );
+  // const PrivateRouteT = (children, ...rest) => {
+  //   console.log(children);
+  //   console.log(...rest);
+  //   return (
+  //     <Route
+  //       {...rest}
+  //       render={({ location }) =>
+  //       user.teacherID != "" ? children.children : <Redirect to="/" />
+  //       }
+  //     />
+  //   )
+  // };
 
-    // if (teacherID != 0 ) 
-    //   user.setTeacher(teacherID);  //אם קיים אז תשמור בקונטקט
-    // console.log(user.teacherID );
-
-    return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          checkCredentials(sessionStorage.username, sessionStorage.password, user) != 0 ? (children.children) : (<Redirect to="/" />)
-        }
-      />
-    )
-  };
+  // const PrivateRouteS = (children, ...rest) => {
+  //   console.log(children);
+  //   console.log(...rest);
+  //   return (
+  //     <Route
+  //       {...rest}
+  //       render={({ location }) =>
+  //         (user.teacherID != "" && user.studentID != "") ? children.children : <Redirect to="/" />
+  //       }
+  //     />
+  //   )
+  // };
 
   return (
     <div className="App">
       <ProjectProvider value={user}>
         <Switch>
+
+          {/* <Route exact path="/" component={teacherORstudent} />
+          <Route path="/TeacherLogin" component={TeacherLogin} />
+          <Route path="/StudentLogin" component={StudentLogin} />
+
+          <PrivateRouteT exact path="/NewTeacher"><NewTeacher /></PrivateRouteT>          
+          <PrivateRouteT exact path="/TeacherForgetPassword"><TeacherForgetPassword /></PrivateRouteT>          
+          <PrivateRouteT exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRouteT>          
+          <PrivateRouteT exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRouteT>
+          <PrivateRouteT exact path="/Alerts"><Alerts /></PrivateRouteT>          
+          <PrivateRouteT exact path="/AlertsSetting"><AlertsSetting /></PrivateRouteT>          
+          <PrivateRouteT exact path="/Messages"><Messages /></PrivateRouteT>          
+          <PrivateRouteT exact path="/AddNewChallenge"><AddNewChallenge /></PrivateRouteT>          
+          <PrivateRouteT exact path="/StudentsList"><StudentsList /></PrivateRouteT>          
+          <PrivateRouteT exact path="/StudentPage"><StudentPage /></PrivateRouteT>          
+          <PrivateRouteT exact path="/StudentDetails"><StudentDetails /></PrivateRouteT>          
+          <PrivateRouteT exact path="/StudentInfoScreen"><StudentInfoScreen /></PrivateRouteT>          
+          <PrivateRouteT exact path="/EditChallenge"><EditChallenge /></PrivateRouteT>                  
+          <PrivateRouteT exact path="/AddChallengeToStudent"><AddChallengeToStudent /></PrivateRouteT>          
+          <PrivateRouteT exact path="/AddNewStudent"><AddNewStudent /></PrivateRouteT>          
+          <PrivateRouteT exact path="/StudentFeatures"><StudentFeatures /></PrivateRouteT>          
+          <PrivateRouteT exact path="/ExtraChallengeDetails"><ExtraChallengeDetails /></PrivateRouteT>          
+          <PrivateRouteT exact path="/SearchChallenge"><SearchChallenge /></PrivateRouteT>          
+          <PrivateRouteT exact path="/Chat"><Chat /></PrivateRouteT>          
+          <PrivateRouteS exact path="/ChallengePage"><ChallengePage /></PrivateRouteS>          
+          <PrivateRouteS exact path="/StudentHomePage"><StudentHomePage /></PrivateRouteS>          
+          <PrivateRouteS exact path="/StudentChat"><StudentChat /></PrivateRouteS>          
+          <PrivateRouteT exact path="/StudentsSearchResult"><StudentsSearchResult /></PrivateRouteT>          
+          <PrivateRouteS exact path="/camera"><Camera /></PrivateRouteS>          
+          <PrivateRouteS exact path="/ChooseAvatar"><ChooseAvatar /></PrivateRouteS>           */}
+
           <Route exact path="/" component={teacherORstudent} />
-          <Route exact path="/teacherORstudent" component={teacherORstudent} />
           <Route path="/TeacherLogin" component={TeacherLogin} />
           <Route path="/StudentLogin" component={StudentLogin} />
           <Route path="/NewTeacher" component={NewTeacher} />
           <Route path="/TeacherForgetPassword" component={TeacherForgetPassword} />
-
-          {/* <PrivateRoute exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRoute> */}
-          <Route path="/HomePageTeacher" component={HomePageTeacher} />
-          
-          {/* <PrivateRoute exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRoute> */}
+          <Route path="/HomePageTeacher" component={HomePageTeacher} />         
           <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} />
-
           <Route path="/Alerts" component={Alerts} />
           <Route path="/AlertsSetting" component={AlertsSetting} />
           <Route path="/Messages" component={Messages} />
@@ -92,8 +117,6 @@ function App() {
           <Route path="/StudentDetails" component={StudentDetails} />
           <Route path="/StudentInfoScreen" component={StudentInfoScreen} />
           <Route path="/EditChallenge" component={EditChallenge} />
-          <Route path="/InputTests" component={InputTests} />
-          <Route path="/InputTests2" component={InputTests2} />
           <Route path="/AddChallengeToStudent" component={AddChallengeToStudent} />
           <Route path="/AddNewStudent" component={AddNewStudent} />
           <Route path="/StudentFeatures" component={StudentFeatures} />
@@ -104,9 +127,8 @@ function App() {
           <Route path="/StudentHomePage" component={StudentHomePage} />
           <Route path="/StudentChat" component={StudentChat} />
           <Route path="/StudentsSearchResult" component={StudentsSearchResult} />
-          <Route path="/camera" component={camera} />
+          <Route path="/camera" component={Camera} />
           <Route path="/ChooseAvatar" component={ChooseAvatar} />
-
 
         </Switch>
       </ProjectProvider>

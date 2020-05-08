@@ -15,7 +15,6 @@ export default class CCAlertsSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasSettings: false,
       alertSettingID: null,
       checkedSuccess: false,
       checkedFailure: false,
@@ -54,7 +53,6 @@ export default class CCAlertsSettings extends Component {
           if (result.AlertSettingID == 0) //אם אין למורה הזה עדיין הגדרות תצא מהפונקציה ואל תכניס כלום לסטייט
             return;
           this.setState({   // רק אם יש למורה כבר הגדרות נגיע לפה ונכניס לסטייט
-            hasSettings: true,
             alertSettingID: result.AlertSettingID,
             checkedSuccess: result.AlertPositive,
             checkedFailure: result.AlertNegative,
@@ -67,45 +65,6 @@ export default class CCAlertsSettings extends Component {
         },
         (error) => {
           console.log("err get=", error);
-        });
-  }
-
-  postSettings = () => {
-    const user = this.context;
-
-    var settings = {
-      teacherID: user.teacherID,
-      alertPositive: this.state.checkedSuccess,
-      alertNegative: this.state.checkedFailure,
-      alertHelp: this.state.checkedNeedHelp,
-      alertLate: this.state.checkedReachDadline,
-      alertPreDate: this.state.daysPreDadline,
-      alertIdle:  this.state.daysIdleStudent,
-    }
-    fetch(this.apiUrl, {
-      method: 'POST',
-      body: JSON.stringify(settings),
-      headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8'
-      })
-    })
-      .then(res => {
-        console.log('res=', res);
-        return res.json()
-      })
-      .then(
-        (result) => {
-          console.log("fetch POST= ", result);
-          this.setState({ hasSettings: true, alertSettingID: result });
-          Swal.fire({
-            title: 'מעולה!',
-            text: 'הגדרות להתראות נשמרו בהצלחה!',
-            icon: 'success',
-            confirmButtonColor: '#e0819a',
-          });
-        },
-        (error) => {
-          console.log("err post=", error);
         });
   }
 
@@ -209,7 +168,7 @@ export default class CCAlertsSettings extends Component {
             </select>
           </div>   
           <br />
-          <button className="btn btn-info btnPink" style={{marginBottom:'30px'}} onClick={() => this.state.hasSettings ? this.putSettings() : this.postSettings()}>שמור</button>
+          <button className="btn btn-info btnPink" style={{marginBottom:'30px'}} onClick={() => this.putSettings()}>שמור</button>
         </div>
         <Footer />
       </div>
