@@ -14,6 +14,7 @@ export default class CCTeacherForgetPassword extends Component {
         super(props);
         this.state = {
             mail: "",
+            username: "",
             showGood: false,
             showBad: false,
         }
@@ -26,7 +27,7 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     Submit = (event) => {
-        fetch(this.apiUrl + '?mail=' + this.state.mail,
+        fetch(this.apiUrl + '?mail=' + this.state.mail+'&username='+this.state.username,
             {
                 method: 'GET',
                 // mode: 'no-cors',
@@ -59,7 +60,7 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     render() {
-        const { mail } = this.state
+        const { mail, username } = this.state;
         return (
             <div className="container-fluid">
                 <div className="col-12"> {/* חזור למסך הקודם */}
@@ -106,8 +107,13 @@ export default class CCTeacherForgetPassword extends Component {
                                     }
                                 }}
                             />
-
                         </div>
+
+                        <div className="form-group">
+                            <input type='text' className="form-control col-12 inputRounded" placeholder='שם משתמש'
+                                value={username} onChange={ (e) => this.setState({username: e.target.value}) }/>
+                        </div>
+
                         <div className="text-center"><button type="submit" className="btn btn-light btnPink roundedBtn" onClick={this.sendEmail}>שלח</button></div>
                         <SweetAlert
                             show={this.state.showGood}
