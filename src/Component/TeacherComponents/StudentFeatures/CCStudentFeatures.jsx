@@ -20,12 +20,12 @@ class CCStudentFeatures extends Component {
             QueAndAnsArr: [],
             newFeature: false,
         }
-        let local = true;
+        let local = false;
         this.apiUrlFeaturesQuestion = 'http://localhost:' + { localHost }.localHost + '/api/FeaturesQuestion';
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         if (!local) {
-            this.apiUrlFeaturesQuestion = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/FeaturesQuestion';
-            this.apiUrlStudentFeatures = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentFeatures';
+            this.apiUrlFeaturesQuestion = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/FeaturesQuestion';
+            this.apiUrlStudentFeatures = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentFeatures';
         }
     }
 

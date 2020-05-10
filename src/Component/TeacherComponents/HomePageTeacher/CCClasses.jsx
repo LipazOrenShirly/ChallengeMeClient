@@ -14,10 +14,10 @@ export default class CCClasses extends Component {
             classesArr: [],
             showAddClass: false,
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Class';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Class';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Class';
         }
     }
 

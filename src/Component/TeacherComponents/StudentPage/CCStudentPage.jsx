@@ -22,15 +22,15 @@ class CCStudentPage extends Component {
             UnReadMesgCount: null,
             dataImg: EmptyImgStudentBase64,
         }
-        let local = true;
+        let local = false;
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
 
         if (!local) {
-            this.apiUrlStudentFeatures = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentFeatures';
-            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
-            this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrlStudentFeatures = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentFeatures';
+            this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
 
         }
     }

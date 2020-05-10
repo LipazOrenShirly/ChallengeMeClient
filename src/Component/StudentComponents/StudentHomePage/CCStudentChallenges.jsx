@@ -11,10 +11,10 @@ export default class CCStudentChallenges extends Component {
         this.state = {
             StudentChallenges: [],
         };
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
         }
     }
     

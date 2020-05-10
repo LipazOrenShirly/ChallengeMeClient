@@ -25,12 +25,12 @@ export default class CCStudentHomePage extends Component {
             dataImg: EmptyImgStudentBase64
 
         };
-        let local = true;
+        let local = false;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
-            this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
         this.getFiles = this.getFiles.bind(this);
 

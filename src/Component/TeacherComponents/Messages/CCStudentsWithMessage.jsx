@@ -17,12 +17,12 @@ export default class CCStudentsWithMessage extends Component {
             searchStudentsWithChat: [],
             searchStudentsWithNoChat: []
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
-            this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 
