@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 export default class CCOneSearchChallenge extends Component {
     constructor(props) {
         super(props);
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Class';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Class';

@@ -16,7 +16,7 @@ export default class CCOneStudentsWithMessage extends Component {
             UnReadCount: 0,
             dataImg: EmptyImgStudentBase64
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

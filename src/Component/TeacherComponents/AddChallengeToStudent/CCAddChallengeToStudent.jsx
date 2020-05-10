@@ -16,7 +16,7 @@ export default class CCAddChallengeToStudent extends Component {
             Smartchallenges: [],
 
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentScore';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentScore';

@@ -16,7 +16,7 @@ export default class CCcamera extends Component {
             dataUriImage: "",
             file: null
         };
-        let local = false;
+        let local = true;
         this.apiUrlStudentChallenge = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         if (!local) {
             this.apiUrlStudentChallenge = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';

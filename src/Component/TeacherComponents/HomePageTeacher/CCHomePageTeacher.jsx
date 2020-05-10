@@ -24,7 +24,7 @@ export default class CCHomePageTeacher extends Component {
             input: "",
             studentsArr: [],
         };
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';

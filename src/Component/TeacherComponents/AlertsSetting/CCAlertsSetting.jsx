@@ -23,7 +23,7 @@ export default class CCAlertsSettings extends Component {
       daysPreDadline:'10',
       daysIdleStudent:'14'
     };
-    let local = false;
+    let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/AlertSettings';
     if (!local) {
       this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/AlertSettings';
