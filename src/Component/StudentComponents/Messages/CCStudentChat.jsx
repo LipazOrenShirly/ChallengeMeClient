@@ -20,7 +20,7 @@ export default class CCStudentChat extends Component {
             newMessage: "",
             sendDisabled: '',
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
