@@ -20,7 +20,6 @@ export default class CCStudentHomePage extends Component {
             avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
             // SuccessCount: 0,
             // ChallengesCount: 0,
-            // SuccessRatio: 0,
             avatarLevel: 1,
             dataUriImageStudent: "",
             dataImg: EmptyImgStudentBase64
@@ -131,7 +130,6 @@ export default class CCStudentHomePage extends Component {
                     this.setState({ 
                         // SuccessCount: result[0], 
                         // ChallengesCount: result[1],
-                        // SuccessRatio: result[0] / result[1] * 100 / 20,
                         avatarLevel:  Math.min(Math.ceil(result[0] / result[1] * 100 / 20), 5)       
                     });
                 },
@@ -139,8 +137,8 @@ export default class CCStudentHomePage extends Component {
                     console.log("err get=", error);
                 });
     }
-    getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
 
+    getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
         const user = this.context;
         fetch(this.apiUrlMessage + '?studentID_UnRead=' + user.studentID
             , {
@@ -165,13 +163,13 @@ export default class CCStudentHomePage extends Component {
                     console.log("err get=", error);
                 });
     }
+
     getFiles = (e) => {
         var fileInput = false;
         if (e.target.files[0]) {
             fileInput = true;
         }
         if (fileInput) {
-
             Resizer.imageFileResizer(
                 e.target.files[0], //is the file of the new image that can now be uploaded...
                 300, // is the maxWidth of the  new image
@@ -184,10 +182,8 @@ export default class CCStudentHomePage extends Component {
             );
 
         }
-        // 
-        // console.log(this.state.dataUriImage)
-
     }
+
     saveImg = (uri) => {
         this.setState({ dataUriImageStudent: uri });
         console.log(uri)
@@ -221,8 +217,6 @@ export default class CCStudentHomePage extends Component {
     render() {
         const user = this.context;
         var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
-        // const { SuccessCount } = this.state;
-        // var avatarLevel = SuccessCount > 4 ? 5 : SuccessCount + 1;
         return (
             <div className="studentPage">
                 <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}
