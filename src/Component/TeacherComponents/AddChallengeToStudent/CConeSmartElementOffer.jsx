@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 export default class CCOneClass extends Component {
     constructor(props) {
         super(props);
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Class';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Class';

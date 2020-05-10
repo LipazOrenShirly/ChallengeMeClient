@@ -4,7 +4,7 @@ import ProjectContext from '../../Context/ProjectContext';
 
 const checkCredentials = (username, password, user) => {
 
-    let local = true;
+    let local = false;
     var apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
     var apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     if (!local) {

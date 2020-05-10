@@ -16,7 +16,7 @@ export default class CCChooseAvatar extends Component {
             pageText: 0,
             avatarChosen: ""
         };
-        let local = true;
+        let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';

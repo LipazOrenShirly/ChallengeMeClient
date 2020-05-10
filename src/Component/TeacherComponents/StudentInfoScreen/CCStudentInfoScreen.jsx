@@ -30,7 +30,7 @@ export default class CCStudentInfoScreen extends Component {
             Haspassword2ValError: false,
             birthDate: "",
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
