@@ -17,17 +17,19 @@ export default class CCTeacherForgetPassword extends Component {
             username: "",
             showGood: false,
             showBad: false,
+            HasUserNameValError: true,
+            HasmailValError: true
         }
-       
+
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
-          this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Teacher'; 
+            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
         }
     }
 
     Submit = (event) => {
-        fetch(this.apiUrl + '?mail=' + this.state.mail+'&username='+this.state.username,
+        fetch(this.apiUrl + '?mail=' + this.state.mail + '&username=' + this.state.username,
             {
                 method: 'GET',
                 // mode: 'no-cors',
@@ -73,7 +75,7 @@ export default class CCTeacherForgetPassword extends Component {
                 <div className="col-10 ForgetPasswordDiv" align="right">
                     <div><strong>?שכחת ססמה</strong></div>
                     <div className="marginBottom">לא נורא, הזן את כתובת המייל איתה נרשמת ונשלח לך סיסמה חדשה</div>
-                    
+
                     <form onSubmit={this.Submit}>
                         <div className="form-group">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
@@ -102,7 +104,7 @@ export default class CCTeacherForgetPassword extends Component {
                                             return true;
                                         } else {
                                             this.setState({ HasmailValError: true });
-                                            return "is not a valid email address";
+                                            return "נא לכתוב כתובת מייל";
                                         }
                                     }
                                 }}
@@ -110,11 +112,33 @@ export default class CCTeacherForgetPassword extends Component {
                         </div>
 
                         <div className="form-group">
-                            <input type='text' className="form-control col-12 inputRounded" placeholder='שם משתמש'
-                                value={username} onChange={ (e) => this.setState({username: e.target.value}) }/>
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                                attributesInput={{
+                                    id: 'unameId',
+                                    type: 'text',
+                                    placeholder: 'הכנס שם משתמש',
+                                    className: "form-control col-12 inputRounded"
+                                }}
+
+                                value={username}
+                                validationCallback={res =>
+                                    this.setState({ HasUserNameValError: res, validate: false })
+                                }
+                                onChange={(username, e) => { //כל שינוי הוא שומר בסטייט
+                                    this.setState({ username });
+                                    console.log(e);
+                                }}
+                                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                                validationOption={{
+                                    check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                                    required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                                    msgOnError: "נא לכתוב שם משתמש",
+                                }}
+                            />
                         </div>
 
-                        <div className="text-center"><button type="submit" className="btn btn-light btnPink roundedBtn" onClick={this.sendEmail}>שלח</button></div>
+                        <div className="text-center"><button disabled={this.state.HasUserNameValError || this.state.HasmailValError} type="submit" className="btn btn-light btnPink roundedBtn">שלח</button></div>
+
                         <SweetAlert
                             show={this.state.showGood}
                             title="הסיסמה שונתה!"
@@ -133,7 +157,7 @@ export default class CCTeacherForgetPassword extends Component {
                 </div>
                 <div className="divForgetPasswordIMG"><img className="ForgetPasswordIMG" src={require('../../../img/forgetPasswordImg.png')} />
                 </div>
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     };

@@ -227,15 +227,16 @@ export default class CCTeacherLogin extends Component {
                 validationOption={{
                   check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                   required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                  customFunc: pas => { //Minimum eight characters, at least one letter, one number and                      :
-                    const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
-                    if (reg.test(pas)) {
-                      return true;
-                    } else {
-                      this.setState({ HasPasswordError: true });
-                      return "Minimum eight characters, at least one letter, one number and one special character";
-                    }
-                  }
+                  msgOnError: "נא לכתוב סיסמה",
+                  // customFunc: pas => { //Minimum eight characters, at least one letter, one number and                      :
+                  //   const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
+                  //   if (reg.test(pas)) {
+                  //     return true;
+                  //   } else {
+                  //     this.setState({ HasPasswordError: true });
+                  //     return "Minimum eight characters, at least one letter, one number and one special character";
+                  //   }
+                  // }
                 }}
               />
             </div>
