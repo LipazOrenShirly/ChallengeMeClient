@@ -11,7 +11,8 @@ import FreeSolo from './FreeSolo';
 import Swal from 'sweetalert2';
 import Checkbox from '@material-ui/core/Checkbox';
 import localHost from '../../LittleComponents/LocalHost';
-
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 import $ from 'jquery';
 
 export default class CCAddNewChallenge extends Component {
@@ -24,20 +25,23 @@ export default class CCAddNewChallenge extends Component {
             newChallenge: {},
             showTags: false,
             isPrivate: false,
+            valueEmotional: 0,
+            valueSocial: 0,
+            valueSchool: 0,
         }
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
         this.apiUrlChallengeTag = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Challenge';
-            this.apiUrlTags  = 'http://proj.ruppin.ac.il/igroup2/prod'+  '/api/Tag';
-        this.apiUrlChallengeTag  = 'http://proj.ruppin.ac.il/igroup2/prod'+  '/api/ChallengeTag';
+            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Challenge';
+            this.apiUrlTags = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Tag';
+            this.apiUrlChallengeTag = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/ChallengeTag';
         }
 
     }
     componentDidMount() {
-        fetch(this.apiUrl+"?studentID="+this.props.location.state.studentID
+        fetch(this.apiUrl + "?studentID=" + this.props.location.state.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -168,7 +172,6 @@ export default class CCAddNewChallenge extends Component {
 
     Submit = (event) => {
         event.preventDefault();
-
         // בניית אובייקט אתגר שישלח בפקודת פוסט
 
         if (this.state.chosenTagsID.length == 0) {
@@ -179,11 +182,11 @@ export default class CCAddNewChallenge extends Component {
         else {
             $('#TagsValuesError').empty();
         }
-        if ($('#DifLevelInput').val()=="") {
+        if ($('#DifLevelInput').val() == "") {
             $('#DifValuesError').empty();
             $('#DifValuesError').append("חייב למלא את רמת הקושי של האתגר");
             return;
-        }else {
+        } else {
             $('#DifValuesError').empty();
         }
 
@@ -248,9 +251,10 @@ export default class CCAddNewChallenge extends Component {
                                 });
                                 this.props.history.push({
                                     pathname: '/ExtraChallengeDetails',
-                                    state: { 
+                                    state: {
                                         challenge: this.state.newChallenge,
-                                        studentID: this.props.location.state.studentID }
+                                        studentID: this.props.location.state.studentID
+                                    }
                                 });
                             },
                             (error) => {
@@ -278,6 +282,7 @@ export default class CCAddNewChallenge extends Component {
 
 
     render() {
+        const { valueEmotional, valueSocial, valueSchool } = this.state;
         return (
             <div className="container-fluid">
                 <NavBar></NavBar>
@@ -320,27 +325,41 @@ export default class CCAddNewChallenge extends Component {
                             <div className='errorInput' id="DifValuesError"></div>
 
 
-                            <div>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
+                            <div style={{ textAlign: 'right', paddingRight: '15px' }}>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
-                                <div className="col-12 input-group mb-3">
-                                    <input type="number" id="emotional" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="רגשי" defaultValue={0} min="0" max="100"></input>
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text spanCCEdit" id="basic-addon1">רגשי</span>
-                                    </div>
-                                </div>
-                                <div className="col-12 input-group mb-3">
-                                    <input type="number" id="social" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="חברתי" defaultValue={0} min="0" max="100"></input>
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text spanCCEdit" id="basic-addon1">חברתי</span>
-                                    </div>
-                                </div>
-                                <div className="col-12 input-group mb-3">
-                                    <input type="number" id="school" style={{ textAlign: "center" }} className="form-control inputNewTeacher" placeholder="לימודי" defaultValue={0} min="0" max="100"></input>
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text spanCCEdit" id="basic-addon1">לימודי</span>
-                                    </div>
-                                </div>
+                                <div className="titleTypeAddChallenge">רגשי</div>
+                                <Slider
+                                    value={valueEmotional}
+                                    min={0}
+                                    step={1}
+                                    max={100}
+                                    scale={(x) => x}
+                                    onChange={(e, newVal) => this.setState({ valueEmotional: newVal })}
+                                    valueLabelDisplay="auto"
+                                />
+                                <div className="titleTypeAddChallenge">חברתי</div>
+                                <Slider
+                                    value={valueSocial}
+                                    min={0}
+                                    step={1}
+                                    max={100}
+                                    scale={(x) => x}
+                                    onChange={(e, newVal) => this.setState({ valueSocial: newVal })}
+                                    valueLabelDisplay="auto"
+                                />
+                                <div className="titleTypeAddChallenge">לימודי</div>
+                                <Slider
+                                    value={valueSchool}
+                                    min={0}
+                                    step={1}
+                                    max={100}
+                                    scale={(x) => x}
+                                    onChange={(e, newVal) => this.setState({ valueSchool: newVal })}
+                                    valueLabelDisplay="auto"
+                                />
+
                             </div>
+
                             <div dir="rtl" >
                                 <Checkbox
                                     checked={this.state.checked}

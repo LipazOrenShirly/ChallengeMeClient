@@ -123,14 +123,23 @@ export default class CCChat extends Component {
             this.sendMessage();
         this.setState({ messageText: "" });
     }
+    goToHomePageStudent=()=>{
+        var s=this.props.location.state.student;
+        this.props.history.push({
+            pathname: '/StudentPage',
+            state: { student: s }
+        })
+    }
     render() {
         const messageText = this.state.messageText;
         return (
             <div className="container-fluid">
                 <NavBar></NavBar>
 
-                <div className="row upChatT"> {/* חזור למסך הקודם */}
+                <div className="row upChatT mp0 align-items-center"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                <div className="nameGoToHomeS" onClick={this.goToHomePageStudent}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
+                
                 </div>
                 <div className='messagesDivT'>
                     {this.state.messagesArr.map((item, index, array) => {
