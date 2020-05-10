@@ -5,6 +5,8 @@ import CCOneClass from './CCOneClass';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
+import Swal from 'sweetalert2';
+
 
 export default class CCClasses extends Component {
     constructor(props) {
@@ -45,6 +47,8 @@ export default class CCClasses extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -54,6 +58,12 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -72,7 +82,9 @@ export default class CCClasses extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -81,6 +93,12 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
     }
@@ -108,7 +126,9 @@ export default class CCClasses extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -118,6 +138,12 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(
                 this.setState({ showAddClass: false })

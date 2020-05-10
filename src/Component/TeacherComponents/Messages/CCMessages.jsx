@@ -8,6 +8,8 @@ import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import CCStudentsWithMessage from './CCStudentsWithMessage';
 import { TiArrowBack } from 'react-icons/ti';
+import Swal from 'sweetalert2';
+
 
 export default class CCMessages extends Component {
     constructor(props) {

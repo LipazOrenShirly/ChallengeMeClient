@@ -10,6 +10,8 @@ import { TiArrowBack } from 'react-icons/ti';
 import CCOneMessage from './CCOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import { MdSend } from 'react-icons/md';
+import Swal from 'sweetalert2';
+
 
 
 export default class CCChat extends Component {
@@ -49,6 +51,8 @@ export default class CCChat extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -58,6 +62,12 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -71,7 +81,9 @@ export default class CCChat extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -79,6 +91,12 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -105,7 +123,9 @@ export default class CCChat extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -114,6 +134,12 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
     clickSend = () => {
@@ -123,8 +149,8 @@ export default class CCChat extends Component {
             this.sendMessage();
         this.setState({ messageText: "" });
     }
-    goToHomePageStudent=()=>{
-        var s=this.props.location.state.student;
+    goToHomePageStudent = () => {
+        var s = this.props.location.state.student;
         this.props.history.push({
             pathname: '/StudentPage',
             state: { student: s }
@@ -138,15 +164,15 @@ export default class CCChat extends Component {
 
                 <div className="row upChatT mp0 align-items-center"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
-                <div className="nameGoToHomeS" onClick={this.goToHomePageStudent}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
-                
+                    <div className="nameGoToHomeS" onClick={this.goToHomePageStudent}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
+
                 </div>
                 <div className='messagesDivT'>
                     {this.state.messagesArr.map((item, index, array) => {
-                        var prevDate = index != array.length-1 ? array[index+1].messageDate : '';
+                        var prevDate = index != array.length - 1 ? array[index + 1].messageDate : '';
                         var currDate = item.messageDate;
-                        var diffDate = index == array.length-1 ? true : (prevDate != currDate ? true : false);
-                        return <CCOneMessage message={item} key={item.messageID} dateTitle={diffDate}/>
+                        var diffDate = index == array.length - 1 ? true : (prevDate != currDate ? true : false);
+                        return <CCOneMessage message={item} key={item.messageID} dateTitle={diffDate} />
                     }
                     )}
                 </div>

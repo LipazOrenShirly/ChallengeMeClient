@@ -3,6 +3,8 @@ import localHost from '../../LittleComponents/LocalHost';
 import './styleStudentPage.css';
 import '../../../css/Style.css';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
+
 
 class CCOneChallenge extends Component {
     constructor(props) {

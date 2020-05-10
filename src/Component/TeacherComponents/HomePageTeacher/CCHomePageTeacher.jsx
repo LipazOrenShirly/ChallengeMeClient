@@ -11,6 +11,7 @@ import ProjectContext from '../../../Context/ProjectContext';
 import { TiArrowBack } from 'react-icons/ti';
 import localHost from '../../LittleComponents/LocalHost';
 import CCOneStudent from './CCOneStudent';
+import Swal from 'sweetalert2';
 
 export default class CCHomePageTeacher extends Component {
 
@@ -57,6 +58,8 @@ export default class CCHomePageTeacher extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -66,6 +69,12 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
         // משיכה של מספר ההתראות שלא נקראו
@@ -80,6 +89,8 @@ export default class CCHomePageTeacher extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -89,6 +100,12 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -127,6 +144,8 @@ export default class CCHomePageTeacher extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -136,6 +155,12 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

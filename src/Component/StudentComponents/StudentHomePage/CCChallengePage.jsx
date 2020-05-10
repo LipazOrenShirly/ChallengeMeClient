@@ -22,7 +22,7 @@ export default class CCChallengePage extends Component {
             StudentChallenges: [],
             statusSentence: "",
             dataImg: EmptyImgChallengeBase64,
-            messageShow:false,
+            messageShow: false,
         };
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
@@ -53,6 +53,8 @@ export default class CCChallengePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -62,6 +64,12 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(() => {
 
@@ -84,7 +92,7 @@ export default class CCChallengePage extends Component {
             $('#success').css('background-color', 'rgb(167, 167, 167)');
             $('#fail').css('background-color', 'rgb(167, 167, 167)');
             $('#help').css('background-color', '#FFBE3D');
-            
+
             this.setState({ statusSentence: "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה" });
         }
     }
@@ -92,8 +100,8 @@ export default class CCChallengePage extends Component {
     updateStatus = (e) => {
         var id = e.currentTarget.id;
         const studentChallenge = this.props.location.state.challenge;
-        if(id=='help'){
-            this.setState({messageShow:true});
+        if (id == 'help') {
+            this.setState({ messageShow: true });
         }
         studentChallenge.status = (id == 'success' ? '1' : (id == 'fail' ? '2' : '3'));
 
@@ -108,6 +116,8 @@ export default class CCChallengePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -117,6 +127,12 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -157,21 +173,29 @@ export default class CCChallengePage extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
-                    this.setState({messageShow:false})
+                    this.setState({ messageShow: false })
                     Swal.fire({
                         title: 'מעולה!',
-                        text:'ההודעה נשלחה בהצלחה',
+                        text: 'ההודעה נשלחה בהצלחה',
                         icon: 'success',
                         confirmButtonColor: 'rgb(135, 181, 189)',
                     });
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -208,7 +232,7 @@ export default class CCChallengePage extends Component {
                 <br />
                 {
                     this.state.messageShow &&
-                    
+
                     <div className="input-group mb-3 mp0">
                         <div className="input-group-prepend mp0">
                             <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend className="MdSend" color='rgb(163,233,255)' /></button>
@@ -219,8 +243,8 @@ export default class CCChallengePage extends Component {
                             }}
                         />
                     </div>
-                   
-                    
+
+
 
                 }
                 <br />

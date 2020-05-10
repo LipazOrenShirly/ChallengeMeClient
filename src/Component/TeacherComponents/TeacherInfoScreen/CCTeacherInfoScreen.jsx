@@ -32,11 +32,11 @@ export default class CCTeacherInfoScreen extends Component {
             HasschoolValError: true,
             showPassword2: false
         }
-       
+
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
-          this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Teacher'; 
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
         }
     }
 
@@ -60,6 +60,8 @@ export default class CCTeacherInfoScreen extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -70,6 +72,12 @@ export default class CCTeacherInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(() => {
 
@@ -106,7 +114,9 @@ export default class CCTeacherInfoScreen extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -120,6 +130,12 @@ export default class CCTeacherInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err PUT=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
         event.preventDefault();
         // window.location.reload();
@@ -136,39 +152,47 @@ export default class CCTeacherInfoScreen extends Component {
             this.getInPlace(user)
         )
     }
-    checkIfUserNameExist = (e)=>{
-            var usernameNewTeacher = e.target.value;
-            $('#userNameValuesError').empty();
-    
-            // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
-            fetch(this.apiUrl + '?usernameNewTeacher=' + usernameNewTeacher
-                , {
-                    method: 'GET',
-                    headers: new Headers({
-                        'Content-Type': 'application/json; charset=UTF-8',
+    checkIfUserNameExist = (e) => {
+        var usernameNewTeacher = e.target.value;
+        $('#userNameValuesError').empty();
+
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?usernameNewTeacher=' + usernameNewTeacher
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result == 1) { // כבר קיים השם משתמש הזה
+                        if (usernameNewTeacher == this.state.teacher.userName)
+                            return;
+                        this.setState({ HasuserNameValError: true });
+                        $('#userNameValuesError').empty();
+                        $('#userNameValuesError').append("this userName is already taken");
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
                     })
-                })
-                .then(res => {
-                    console.log('res=', res);
-                    console.log('res.status', res.status);
-                    console.log('res.ok', res.ok);
-                    return res.json();
-                })
-                .then(
-                    (result) => {
-                        console.log("Submit= ", result);
-                        console.log("Submit= ", JSON.stringify(result));
-                        if (result == 1) { // כבר קיים השם משתמש הזה
-                           if(usernameNewTeacher==this.state.teacher.userName)
-                                return;
-                            this.setState({ HasuserNameValError: true });
-                            $('#userNameValuesError').empty();
-                            $('#userNameValuesError').append("this userName is already taken");
-                        }
-                    },
-                    (error) => {
-                        console.log("err get=", error);
-                    });
+                });
     }
 
     render() {
@@ -267,7 +291,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'שם משתמש',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-                                
+
                                 value={userName}
                                 validationCallback={res =>
                                     this.setState({ HasuserNameValError: res, validate: false })
@@ -288,7 +312,7 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HasuserNameValError: true });
                                             return "Name is required.";
                                         }
-                                        
+
                                         return true;
                                     }
                                 }}

@@ -3,7 +3,7 @@ import '../../../css/Style.css';
 import './styleSearchChallenge.css';
 import localHost from '../../LittleComponents/LocalHost';
 //import { FaTrashAlt } from "react-icons/fa";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 
 export default class CCOneSearchChallenge extends Component {

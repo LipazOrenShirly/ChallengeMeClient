@@ -23,8 +23,9 @@ const checkCredentials = (username, password, user) => {
             console.log('res=', res);
             console.log('res.status', res.status);
             console.log('res.ok', res.ok);
-            return res.json();
-        })
+            if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();        })
         .then(
             (result) => {
                 console.log("Submit= ", result);

@@ -4,6 +4,7 @@ import '../../../css/Style.css';
 import './styleteacherORstudent.css'
 import localHost from '../../LittleComponents/LocalHost';
 import ProjectContext from '../../../Context/ProjectContext';
+import Swal from 'sweetalert2';
 
 export default class CCteacherORstudent extends Component {
 
@@ -55,6 +56,8 @@ export default class CCteacherORstudent extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -69,6 +72,12 @@ export default class CCteacherORstudent extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -86,6 +95,8 @@ export default class CCteacherORstudent extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -99,6 +110,12 @@ export default class CCteacherORstudent extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

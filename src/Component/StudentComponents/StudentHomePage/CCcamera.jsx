@@ -5,6 +5,7 @@ import { TiArrowBack } from 'react-icons/ti';
 import 'react-html5-camera-photo/build/css/index.css';
 import localHost from '../../LittleComponents/LocalHost';
 // import FileBase64 from 'react-file-base64';
+import Swal from 'sweetalert2';
 
 
 export default class CCcamera extends Component {
@@ -71,7 +72,9 @@ export default class CCcamera extends Component {
             })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -80,6 +83,12 @@ export default class CCcamera extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
                 });
     }
 

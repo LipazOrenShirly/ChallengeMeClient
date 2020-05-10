@@ -5,6 +5,8 @@ import './styleMessages.css'
 import ProjectContext from '../../../Context/ProjectContext';
 import CCOneStudentsWithMessage from './CCOneStudentsWithMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
+import Swal from 'sweetalert2';
+
 
 export default class CCStudentsWithMessage extends Component {
     constructor(props) {
@@ -42,6 +44,8 @@ export default class CCStudentsWithMessage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -51,6 +55,12 @@ export default class CCStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
         // מחזיר את כל התלמידים של המורה
@@ -65,6 +75,8 @@ export default class CCStudentsWithMessage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -79,6 +91,12 @@ export default class CCStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

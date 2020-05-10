@@ -7,6 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import CConeSmartElementOffer from './CConeSmartElementOffer';
 import { TiArrowBack } from 'react-icons/ti';
+import Swal from 'sweetalert2';
 
 
 export default class CCAddChallengeToStudent extends Component {
@@ -35,6 +36,8 @@ export default class CCAddChallengeToStudent extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -42,12 +45,18 @@ export default class CCAddChallengeToStudent extends Component {
                     console.log("result= ", result);
                     //סינון מהתאגרים המומלצים את האתגרים שכבר שוייכו לילד ואז שמירה בסטייט
                     const StudentChallenges = this.props.location.state.StudentChallenges;
-                    const StudentChallenges_ID = StudentChallenges.map( item => item.challengeID );
-                    const Smartchallenges = result.filter( item => !StudentChallenges_ID.includes(item.challengeID) );     
+                    const StudentChallenges_ID = StudentChallenges.map(item => item.challengeID);
+                    const Smartchallenges = result.filter(item => !StudentChallenges_ID.includes(item.challengeID));
                     this.setState({ Smartchallenges: Smartchallenges });
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

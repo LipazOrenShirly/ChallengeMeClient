@@ -24,18 +24,18 @@ class CCStudentFeatures extends Component {
         this.apiUrlFeaturesQuestion = 'http://localhost:' + { localHost }.localHost + '/api/FeaturesQuestion';
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         if (!local) {
-            this.apiUrlFeaturesQuestion = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/FeaturesQuestion';
-            this.apiUrlStudentFeatures = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentFeatures';
+            this.apiUrlFeaturesQuestion = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/FeaturesQuestion';
+            this.apiUrlStudentFeatures = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentFeatures';
         }
     }
 
     componentDidMount() {
-        console.log( this.props.location.state.student.studentID);
+        console.log(this.props.location.state.student.studentID);
         // גט לשאלות והתשובות
-        
+
 
         console.log(this.props.location.state.student);
-        
+
         fetch(this.apiUrlStudentFeatures + '?studentID2=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
@@ -47,6 +47,8 @@ class CCStudentFeatures extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -59,37 +61,42 @@ class CCStudentFeatures extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
     PostPutFeature = (event) => {
         event.preventDefault();
 
-        var allFilled=true;
-        this.state.QueAndAnsArr.map( (item) => {
-            if (!(item.answer >=1 && item.answer <=5))
-            {
+        var allFilled = true;
+        this.state.QueAndAnsArr.map((item) => {
+            if (!(item.answer >= 1 && item.answer <= 5)) {
                 Swal.fire({
                     title: 'אוי!',
                     text: 'צריך שכל השדות יהיו ממולאים',
                     icon: 'warning',
                     confirmButtonColor: '#e0819a',
                 });
-                allFilled=false
+                allFilled = false
             }
         });
-        if(allFilled==false)
+        if (allFilled == false)
             return;
-        const answers = this.state.QueAndAnsArr.map( (item) => {
+        const answers = this.state.QueAndAnsArr.map((item) => {
             return {
                 questionID: item.questionID,
                 studentID: this.props.location.state.student.studentID,
                 answer: item.answer
             }
         });
-       
-        console.log(answers); 
-        console.log(this.state.newFeature); 
+
+        console.log(answers);
+        console.log(this.state.newFeature);
 
         fetch(this.apiUrlStudentFeatures, {
             method: this.state.newFeature ? 'POST' : 'PUT',
@@ -100,7 +107,9 @@ class CCStudentFeatures extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -118,6 +127,12 @@ class CCStudentFeatures extends Component {
                 },
                 (error) => {
                     console.log("err post/put=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -130,21 +145,21 @@ class CCStudentFeatures extends Component {
         console.log(this.state.QueAndAnsArr);
     }
 
-    goBack=()=>{
-            Swal.fire({
-                title: 'שים לב',
-                text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#e0819a',
-                cancelButtonColor: '#867D95',
-                cancelButtonText: 'בטל',
-                confirmButtonText: 'כן, חזור'
-            }).then((result) => {
-                if (result.value) {  //אם בחר אישור
-                    window.history.back();
-                }
-            }) 
+    goBack = () => {
+        Swal.fire({
+            title: 'שים לב',
+            text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e0819a',
+            cancelButtonColor: '#867D95',
+            cancelButtonText: 'בטל',
+            confirmButtonText: 'כן, חזור'
+        }).then((result) => {
+            if (result.value) {  //אם בחר אישור
+                window.history.back();
+            }
+        })
     }
     render() {
         const { QueAndAnsArr } = this.state;
@@ -154,7 +169,7 @@ class CCStudentFeatures extends Component {
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={this.goBack} size={40} />
                 </div>
-                <form onSubmit= {this.PostPutFeature}>
+                <form onSubmit={this.PostPutFeature}>
                     <div className="turkiz">האפיון של {this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
                     <div className="scalaDetails" dir="rtl">1- הכי חלש, 5- הכי חזק</div>
                     <br />

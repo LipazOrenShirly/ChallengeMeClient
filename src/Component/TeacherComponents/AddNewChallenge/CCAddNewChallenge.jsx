@@ -34,9 +34,9 @@ export default class CCAddNewChallenge extends Component {
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
         this.apiUrlChallengeTag = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
         if (!local) {
-            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Challenge';
-            this.apiUrlTags  = 'https://proj.ruppin.ac.il/igroup2/prod'+  '/api/Tag';
-        this.apiUrlChallengeTag  = 'https://proj.ruppin.ac.il/igroup2/prod'+  '/api/ChallengeTag';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Challenge';
+            this.apiUrlTags = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Tag';
+            this.apiUrlChallengeTag = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/ChallengeTag';
         }
 
     }
@@ -52,6 +52,8 @@ export default class CCAddNewChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -61,6 +63,12 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
         fetch(this.apiUrlTags
@@ -74,6 +82,8 @@ export default class CCAddNewChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -83,6 +93,12 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -113,6 +129,8 @@ export default class CCAddNewChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -122,6 +140,12 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(() => {
                 if (returnChallenge != null) {
@@ -213,7 +237,9 @@ export default class CCAddNewChallenge extends Component {
             })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -259,10 +285,22 @@ export default class CCAddNewChallenge extends Component {
                             },
                             (error) => {
                                 console.log("err post=", error);
+                                Swal.fire({
+                                    title: 'אוי',
+                                    text: 'הפעולה נכשלה, נסה שנית',
+                                    icon: 'warning',
+                                    confirmButtonColor: '#e0819a',
+                                })
                             });
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

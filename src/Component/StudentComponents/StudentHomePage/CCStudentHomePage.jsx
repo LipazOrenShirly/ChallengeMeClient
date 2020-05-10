@@ -8,6 +8,7 @@ import "animate.css";
 import Resizer from 'react-image-file-resizer';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
+import Swal from 'sweetalert2';
 
 export default class CCStudentHomePage extends Component {
 
@@ -52,7 +53,7 @@ export default class CCStudentHomePage extends Component {
             state: { challenge: challenge, index: index }
         })
     }
-    
+
     getImage = () => {
         const user = this.context;
         fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + user.studentID
@@ -66,6 +67,8 @@ export default class CCStudentHomePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -75,6 +78,12 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(() => {
 
@@ -95,6 +104,8 @@ export default class CCStudentHomePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -106,6 +117,12 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
     getSuccessCount = () => {
@@ -122,19 +139,27 @@ export default class CCStudentHomePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
                 (result) => {
                     console.log("count= ", result);
-                    this.setState({ 
+                    this.setState({
                         // SuccessCount: result[0], 
                         // ChallengesCount: result[1],
-                        avatarLevel:  Math.min(Math.ceil(result[0] / result[1] * 100 / 20), 5)       
+                        avatarLevel: Math.min(Math.ceil(result[0] / result[1] * 100 / 20), 5)
                     });
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -151,6 +176,8 @@ export default class CCStudentHomePage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -161,6 +188,12 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -202,7 +235,9 @@ export default class CCStudentHomePage extends Component {
             })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -211,6 +246,12 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -220,7 +261,7 @@ export default class CCStudentHomePage extends Component {
         return (
             <div className="studentPage">
                 <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}
-                        onClick={() => { sessionStorage.clear(); localStorage.clear(); this.props.history.push('/'); }}>
+                    onClick={() => { sessionStorage.clear(); localStorage.clear(); this.props.history.push('/'); }}>
                     <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
                 </div>
                 {/* פרטי התלמיד */}

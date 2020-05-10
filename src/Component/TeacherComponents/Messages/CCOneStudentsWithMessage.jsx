@@ -7,6 +7,8 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
+import Swal from 'sweetalert2';
+
 
 export default class CCOneStudentsWithMessage extends Component {
     constructor(props) {
@@ -42,6 +44,8 @@ export default class CCOneStudentsWithMessage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -52,9 +56,15 @@ export default class CCOneStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
-    
+
     getImage = () => {
         fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + this.props.studentID
             , {
@@ -67,6 +77,8 @@ export default class CCOneStudentsWithMessage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -76,6 +88,12 @@ export default class CCOneStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
             .then(() => {
 
@@ -95,6 +113,8 @@ export default class CCOneStudentsWithMessage extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -104,6 +124,12 @@ export default class CCOneStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 

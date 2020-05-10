@@ -6,6 +6,8 @@ import Footer from '../../LittleComponents/Footer';
 import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
+import Swal from 'sweetalert2';
+
 
 export default class OneMessage extends Component {
     constructor(props) {

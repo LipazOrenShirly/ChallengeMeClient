@@ -45,8 +45,9 @@ class CCSearchChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
-                return res.json();
-            })
+                if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();            })
             .then(
                 (result) => {
                     console.log("challengesArr= ", result);
@@ -54,6 +55,12 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
                 });
 
         fetch(this.apiUrlTags
@@ -67,8 +74,9 @@ class CCSearchChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
-                return res.json();
-            })
+                if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();            })
             .then(
                 (result) => {
                     console.log("tagsArr= ", result);
@@ -76,6 +84,12 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
                 });
     }
 
@@ -116,8 +130,9 @@ class CCSearchChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
-                return res.json();
-            })
+                if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();            })
             .then(
                 (result) => {
                     console.log("tagsArr= ", result);
@@ -125,6 +140,12 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
                 });
     }
 

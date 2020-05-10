@@ -9,6 +9,8 @@ import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import localHost from '../../LittleComponents/LocalHost';
 import { MdCreate } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
+import Swal from 'sweetalert2';
+
 
 import $ from 'jquery';
 
@@ -22,46 +24,54 @@ export default class CCStudents extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
-    
-     componentDidMount = () => {
+
+    componentDidMount = () => {
         $('#BTNsaveClassName').hide();
         $('#className').val(this.state.Class.className);
         this.getStudentArr();
-     
+
     }
-    getStudentArr=()=>{
+    getStudentArr = () => {
         fetch(this.apiUrl + '?classID=' + this.state.Class.classID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
             })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log("StudentArr= ", result);
-                this.setState({ StudentArr: result })
-            },
-            (error) => {
-                console.log("err get=", error);
-            });
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("StudentArr= ", result);
+                    this.setState({ StudentArr: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
-    EditClassName = () => { 
+    EditClassName = () => {
         $('#className').prop("disabled", false);
         $('#BTNeditClassName').hide();
         $('#BTNsaveClassName').show();
     }
 
-    AddStudent=()=>{
+    AddStudent = () => {
         this.props.goToAddNewStudent(this.props.class.classID);
     }
 
@@ -77,26 +87,34 @@ export default class CCStudents extends Component {
             method: 'PUT',
             body: JSON.stringify(updatedClass),
             headers: new Headers({
-              'Content-type': 'application/json; charset=UTF-8' 
+                'Content-type': 'application/json; charset=UTF-8'
             })
-          })
+        })
             .then(res => {
-              console.log('res=', res);
-              return res.json()
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
-              (result) => {
-                console.log("fetch PUT= ", result);
-              },
-              (error) => {
-                console.log("err post=", error);
-              });
-              $('#BTNsaveClassName').hide();
-              $('#BTNeditClassName').show();
-              $('#className').prop("disabled", true);
+                (result) => {
+                    console.log("fetch PUT= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+        $('#BTNsaveClassName').hide();
+        $('#BTNeditClassName').show();
+        $('#className').prop("disabled", true);
     }
 
-    deleteStudent=(studentIdData)=>{
+    deleteStudent = (studentIdData) => {
         fetch(this.apiUrl + '?studentID=' + studentIdData, {
             method: 'DELETE',
             headers: new Headers({
@@ -105,7 +123,9 @@ export default class CCStudents extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -114,26 +134,32 @@ export default class CCStudents extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 })
-           
+
     }
 
     render() {
         return (
             <div className="container-fluid">
                 <div className="row EditNameClassDiv">
-                    <input type="text" className = "classInput" id = "className" disabled ></input>
-                <div className="iconEditNameClassDiv" id="BTNeditClassName" onClick={this.EditClassName}><MdCreate /></div>
-                <div className="iconEditNameClassDiv" id="BTNsaveClassName" visibility = 'hidden' onClick={this.UpdateClassName}><IoMdCheckmark /></div>
+                    <input type="text" className="classInput" id="className" disabled ></input>
+                    <div className="iconEditNameClassDiv" id="BTNeditClassName" onClick={this.EditClassName}><MdCreate /></div>
+                    <div className="iconEditNameClassDiv" id="BTNsaveClassName" visibility='hidden' onClick={this.UpdateClassName}><IoMdCheckmark /></div>
                 </div>
-                <br/>
+                <br />
                 <div className="row col-12 flex-container">
-                {
-                    this.state.StudentArr.map((item) =>
-                        <CCOneStudent key = {item.studentID} student={item} goToStudentPage={this.props.goToStudentPage} SendDeleteStudents={this.deleteStudent}/>
-                    )
+                    {
+                        this.state.StudentArr.map((item) =>
+                            <CCOneStudent key={item.studentID} student={item} goToStudentPage={this.props.goToStudentPage} SendDeleteStudents={this.deleteStudent} />
+                        )
                     }
-                    </div>
+                </div>
 
                 <div className="AddnewStudent" id="AddnewStudent" onClick={this.AddStudent}>הוספת תלמיד +</div>
             </div>

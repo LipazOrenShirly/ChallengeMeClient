@@ -20,8 +20,8 @@ export default class CCAlertsSettings extends Component {
       checkedFailure: false,
       checkedNeedHelp: false,
       checkedReachDadline: false,
-      daysPreDadline:'10',
-      daysIdleStudent:'14'
+      daysPreDadline: '10',
+      daysIdleStudent: '14'
     };
     let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/AlertSettings';
@@ -45,6 +45,8 @@ export default class CCAlertsSettings extends Component {
         console.log('res=', res);
         console.log('res.status', res.status);
         console.log('res.ok', res.ok);
+        if (!res.ok)
+          throw new Error('Network response was not ok.');
         return res.json();
       })
       .then(
@@ -58,13 +60,19 @@ export default class CCAlertsSettings extends Component {
             checkedFailure: result.AlertNegative,
             checkedNeedHelp: result.AlertHelp,
             checkedReachDadline: result.AlertLate,
-            daysPreDadline:result.AlertPreDate,
-            daysIdleStudent:result.AlertIdle,
+            daysPreDadline: result.AlertPreDate,
+            daysIdleStudent: result.AlertIdle,
           });
           console.log(this.state);
         },
         (error) => {
           console.log("err get=", error);
+          Swal.fire({
+            title: 'אוי',
+            text: 'הפעולה נכשלה, נסה שנית',
+            icon: 'warning',
+            confirmButtonColor: '#e0819a',
+          })
         });
   }
 
@@ -90,7 +98,9 @@ export default class CCAlertsSettings extends Component {
     })
       .then(res => {
         console.log('res=', res);
-        return res.json()
+        if (!res.ok)
+          throw new Error('Network response was not ok.');
+        return res.json();
       })
       .then(
         (result) => {
@@ -104,6 +114,12 @@ export default class CCAlertsSettings extends Component {
         },
         (error) => {
           console.log("err put=", error);
+          Swal.fire({
+            title: 'אוי',
+            text: 'הפעולה נכשלה, נסה שנית',
+            icon: 'warning',
+            confirmButtonColor: '#e0819a',
+          })
         });
   }
 
@@ -114,7 +130,7 @@ export default class CCAlertsSettings extends Component {
       checkedReachDadline,
       daysPreDadline,
       daysIdleStudent
-      } = this.state;
+    } = this.state;
     return (
       <div className="container-fluid">
         <NavBar />
@@ -128,17 +144,17 @@ export default class CCAlertsSettings extends Component {
 
           <div className="row">
             <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שהצליח אתגר</div>
-              <Switch id="SwitchSuccess" className="Switches" onChange={(checked) => this.setState({ checkedSuccess: checked })} checked={checkedSuccess} onColor="#CFA6D6" />
+            <Switch id="SwitchSuccess" className="Switches" onChange={(checked) => this.setState({ checkedSuccess: checked })} checked={checkedSuccess} onColor="#CFA6D6" />
           </div>
           <br />
           <div className="row">
             <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שלא הצליח אתגר</div>
-              <Switch id="SwitchFailure" className="Switches" onChange={(checked) => this.setState({ checkedFailure: checked })} checked={checkedFailure} onColor="#CFA6D6" />
+            <Switch id="SwitchFailure" className="Switches" onChange={(checked) => this.setState({ checkedFailure: checked })} checked={checkedFailure} onColor="#CFA6D6" />
           </div>
           <br />
           <div className="row">
             <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שהוא צריך עזרה</div>
-              <Switch id="SwitchNeedHelp" className="Switches" onChange={(checked) => this.setState({ checkedNeedHelp: checked })} checked={checkedNeedHelp} onColor="#CFA6D6" />
+            <Switch id="SwitchNeedHelp" className="Switches" onChange={(checked) => this.setState({ checkedNeedHelp: checked })} checked={checkedNeedHelp} onColor="#CFA6D6" />
           </div>
           <br />
           <div className="row" style={{ padding: '2%' }}>
@@ -148,8 +164,8 @@ export default class CCAlertsSettings extends Component {
           <br />
 
           <div className="AlertSettingText">מספר ימים לפני קבלת ההתראה שעומד להגיע הדדליין</div>
-          <div className="SwitchDiv" style={{marginTop:'3%'}}>
-            <select value={daysPreDadline} dir="rtl" className="custom-select inputNewTeacher"  onChange={(e)=>this.setState({daysPreDadline:e.target.value})}>
+          <div className="SwitchDiv" style={{ marginTop: '3%' }}>
+            <select value={daysPreDadline} dir="rtl" className="custom-select inputNewTeacher" onChange={(e) => this.setState({ daysPreDadline: e.target.value })}>
               <option value="2">יומיים לפני</option>
               <option value="5">חמישה ימים לפני</option>
               <option value="10">עשרה ימים לפני</option>
@@ -159,16 +175,16 @@ export default class CCAlertsSettings extends Component {
 
           <br />
           <div className="AlertSettingText">קבלת התראה כאשר תלמיד לא נכנס לאפליקציה מספר ימים</div>
-          <div className="SwitchDiv" style={{marginTop:'3%'}}>
-            <select value={daysIdleStudent} dir="rtl" className="custom-select inputNewTeacher" onChange={(e)=>this.setState({daysIdleStudent:e.target.value})}>
+          <div className="SwitchDiv" style={{ marginTop: '3%' }}>
+            <select value={daysIdleStudent} dir="rtl" className="custom-select inputNewTeacher" onChange={(e) => this.setState({ daysIdleStudent: e.target.value })}>
               <option value="7">שבוע</option>
               <option value="14">שבועיים</option>
               <option value="21">שלושה שבועות</option>
               <option value="28">חודש</option>
             </select>
-          </div>   
+          </div>
           <br />
-          <button className="btn btn-info btnPink" style={{marginBottom:'30px'}} onClick={() => this.putSettings()}>שמור</button>
+          <button className="btn btn-info btnPink" style={{ marginBottom: '30px' }} onClick={() => this.putSettings()}>שמור</button>
         </div>
         <Footer />
       </div>

@@ -63,7 +63,26 @@ export default class CCAddNewChallenge extends Component {
                 headers: new Headers({
                     'Content-type': 'application/json; charset=UTF-8'
                 })
+            }).then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
+                .then(
+                    (result) => {
+                        console.log("fetch POST= ", result);
+
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        })
+                    });
             var jsonRes = await result.json();
             this.setState({ student: jsonRes });
             Swal.fire({
@@ -95,6 +114,8 @@ export default class CCAddNewChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -110,6 +131,12 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
     }

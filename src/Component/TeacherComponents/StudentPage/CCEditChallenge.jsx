@@ -22,9 +22,9 @@ class CCEditChallenge extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         if (!local) {
-            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
         }
-      
+
     }
 
     componentDidMount = () => {
@@ -42,7 +42,7 @@ class CCEditChallenge extends Component {
                 statusWord = "צריך עזרה"
                 break;
             default:
-                statusWord="לא סימן כלום"
+                statusWord = "לא סימן כלום"
         }
         $('#StatusInput').val(statusWord);
         $('#DifLevelInput').val(challenge.difficulty);
@@ -51,8 +51,8 @@ class CCEditChallenge extends Component {
 
     UpdateChallenge = () => {
         var statuss;
-        if($('#StatusInput').val()=='לא סימן כלום')
-            statuss=0;
+        if ($('#StatusInput').val() == 'לא סימן כלום')
+            statuss = 0;
         else statuss = this.state.challenge.status;
         const challenge =
         {
@@ -76,6 +76,8 @@ class CCEditChallenge extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -91,6 +93,12 @@ class CCEditChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -115,7 +123,9 @@ class CCEditChallenge extends Component {
                 })
                     .then(res => {
                         console.log('res=', res);
-                        return res.json()
+                        if (!res.ok)
+                            throw new Error('Network response was not ok.');
+                        return res.json();
                     })
                     .then(
                         (result) => {
@@ -128,11 +138,17 @@ class CCEditChallenge extends Component {
                             })
                             this.props.history.push({
                                 pathname: '/StudentPage',
-                                state: {student: this.props.location.state.student}
+                                state: { student: this.props.location.state.student }
                             })
                         },
                         (error) => {
                             console.log("err post=", error);
+                            Swal.fire({
+                                title: 'אוי',
+                                text: 'הפעולה נכשלה, נסה שנית',
+                                icon: 'warning',
+                                confirmButtonColor: '#e0819a',
+                            })
                         });
 
 
@@ -187,7 +203,7 @@ class CCEditChallenge extends Component {
         $('#DifLevelInput').prop("disabled", false);
 
     }
-    
+
     render() {
         console.log(this.props.location.state.challenge);
         const challenge = this.props.location.state.challenge;
@@ -197,7 +213,7 @@ class CCEditChallenge extends Component {
             <div>
                 <NavBar />
                 <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={()=> window.history.back()} size={40} />
+                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
                 <div className="titleChalengeinCCEDIT">{this.props.location.state.student.studentName}</div>
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
@@ -218,7 +234,7 @@ class CCEditChallenge extends Component {
                         <span className="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
                     </div>
                     <input type="text" className="form-control inputCCEdit" id="StatusInput" disabled />
-                </div>              
+                </div>
                 <div className="col-12">
                     <button id="deleteChallenge" className="btn btn-info btnDeleteChallenge" onClick={this.DeleteChallenge}>מחק את האתגר</button>
                 </div>

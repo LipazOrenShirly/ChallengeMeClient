@@ -35,7 +35,7 @@ export default class CCnewTeacher extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
-            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Teacher';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
         }
     }
 
@@ -72,7 +72,9 @@ export default class CCnewTeacher extends Component {
             })
                 .then(res => {
                     console.log('res=', res);
-                    return res.json()
+                    if (!res.ok)
+                        throw new Error('Network response was not ok.');
+                    return res.json();
                 })
                 .then(
                     (result) => {
@@ -81,6 +83,12 @@ export default class CCnewTeacher extends Component {
                     },
                     (error) => {
                         console.log("err post=", error);
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        })
                     })
                 .then(
                     Swal.fire({
@@ -113,6 +121,8 @@ export default class CCnewTeacher extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -128,6 +138,12 @@ export default class CCnewTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
     }

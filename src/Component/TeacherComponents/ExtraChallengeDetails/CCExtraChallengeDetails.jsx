@@ -23,33 +23,41 @@ class CCExtraChallengeDetails extends Component {
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
-            this.apiUrStudent  = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
+            this.apiUrStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 
     componentDidMount() {
         fetch(this.apiUrStudent + '?studentID=' + this.props.location.state.studentID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
             })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log("Student= ", result[0]);
-                this.setState({ student: result[0] })
-            },
-            (error) => {
-                console.log("err get=", error);
-            });
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Student= ", result[0]);
+                    this.setState({ student: result[0] })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     Submit = (event) => {
@@ -69,7 +77,7 @@ class CCExtraChallengeDetails extends Component {
             deadline: $('#DeadlineChallengeId').val().replace(/(..).(..).(....)/, "$3-$1-$2"),
         }
         console.log(studentChallenge);
-        fetch(this.apiUrl, {   
+        fetch(this.apiUrl, {
             method: 'POST',
             body: JSON.stringify(studentChallenge),
             headers: new Headers({
@@ -78,7 +86,9 @@ class CCExtraChallengeDetails extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -91,11 +101,17 @@ class CCExtraChallengeDetails extends Component {
                     });
                     this.props.history.push({
                         pathname: '/StudentPage',
-                        state: {student: this.state.student}
+                        state: { student: this.state.student }
                     });
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
 
         event.preventDefault();

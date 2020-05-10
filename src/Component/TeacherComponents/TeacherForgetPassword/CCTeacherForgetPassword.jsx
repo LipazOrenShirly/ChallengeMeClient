@@ -4,6 +4,7 @@ import './styleTeacherForgetPassword.css'
 import Footer from '../../LittleComponents/Footer';
 import Logo from '../../LittleComponents/Logo'
 import localHost from '../../LittleComponents/LocalHost';
+import Swal from 'sweetalert2';
 import SweetAlert from 'sweetalert2-react';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import { TiArrowBack } from 'react-icons/ti';
@@ -41,6 +42,8 @@ export default class CCTeacherForgetPassword extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -57,6 +60,12 @@ export default class CCTeacherForgetPassword extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
         event.preventDefault();
     }

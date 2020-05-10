@@ -4,7 +4,7 @@ import './styleAddChallengeToStudent.css';
 import localHost from '../../LittleComponents/LocalHost';
 //import { FaTrashAlt } from "react-icons/fa";
 import { MdClose } from  "react-icons/md";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 
 export default class CCOneClass extends Component {

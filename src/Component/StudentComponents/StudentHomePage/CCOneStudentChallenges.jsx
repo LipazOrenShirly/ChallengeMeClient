@@ -3,6 +3,7 @@ import '../../../css/Style.css';
 import ProjectContext from '../../../Context/ProjectContext';
 import localHost from '../../LittleComponents/LocalHost';
 import { MdCheck } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
 export default class CCOneStudentChallenges extends Component {
 

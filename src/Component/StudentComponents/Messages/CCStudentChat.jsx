@@ -10,6 +10,8 @@ import { TiArrowBack } from 'react-icons/ti';
 import CCStudentOneMessage from './CCStudentOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import { MdSend } from 'react-icons/md';
+import Swal from 'sweetalert2';
+
 
 export default class CCStudentChat extends Component {
     constructor(props) {
@@ -48,6 +50,8 @@ export default class CCStudentChat extends Component {
                 console.log('res=', res);
                 console.log('res.status', res.status);
                 console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
@@ -57,6 +61,12 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -70,7 +80,9 @@ export default class CCStudentChat extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -78,6 +90,12 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -104,7 +122,9 @@ export default class CCStudentChat extends Component {
         })
             .then(res => {
                 console.log('res=', res);
-                return res.json()
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
             })
             .then(
                 (result) => {
@@ -113,6 +133,12 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
     clickSend = () => {
@@ -134,9 +160,9 @@ export default class CCStudentChat extends Component {
                 </div>
                 <div className='messagesDiv'>
                     {this.state.messagesArr.map((item, index, array) => {
-                        var prevDate = index != array.length-1 ? array[index + 1].messageDate : '';
+                        var prevDate = index != array.length - 1 ? array[index + 1].messageDate : '';
                         var currDate = item.messageDate;
-                        var diffDate = index == array.length-1 ? true : (prevDate != currDate ? true : false);
+                        var diffDate = index == array.length - 1 ? true : (prevDate != currDate ? true : false);
                         return <CCStudentOneMessage message={item} key={item.messageID} dateTitle={diffDate} />
                     }
                     )}

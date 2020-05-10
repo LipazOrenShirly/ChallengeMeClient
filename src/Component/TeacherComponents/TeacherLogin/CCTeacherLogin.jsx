@@ -5,9 +5,10 @@ import './styleTeacherLogin.css';
 import localHost from '../../LittleComponents/LocalHost';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import { TiArrowBack } from 'react-icons/ti';
+import { Alert } from 'reactstrap';
 
 
 export default class CCTeacherLogin extends Component {
@@ -29,13 +30,13 @@ export default class CCTeacherLogin extends Component {
     let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
     if (!local) {
-      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Teacher'; 
+      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
     }
   }
 
   static contextType = ProjectContext;
 
-  async componentDidMount () {
+  async componentDidMount() {
     //לפני שעולה העמוד- אם קיימים שם משתמש וסיסמה בלוקל סטורז' אז תשמור אותם בסטייט כדי שיירשמו באינפוטים
     var un = await localStorage.getItem('username') != null ? localStorage.getItem('username') + '' : "";
     var ps = await localStorage.getItem('password') != null ? localStorage.getItem('password') + '' : "";
@@ -89,8 +90,10 @@ export default class CCTeacherLogin extends Component {
         console.log('res=', res);
         console.log('res.status', res.status);
         console.log('res.ok', res.ok);
-        return res.json();
-      })
+        if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();      
+        })
       .then(
         (result) => {
           console.log("Submit= ", result);
@@ -107,6 +110,12 @@ export default class CCTeacherLogin extends Component {
         },
         (error) => {
           console.log("err get=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
         });
     event.preventDefault();
   }
@@ -129,7 +138,9 @@ export default class CCTeacherLogin extends Component {
           console.log('res=', res);
           console.log('res.status', res.status);
           console.log('res.ok', res.ok);
-          return res.json();
+          if (!res.ok)
+            throw new Error('Network response was not ok.');
+          return res.json();        
         })
         .then(
           (result) => {
@@ -151,6 +162,13 @@ export default class CCTeacherLogin extends Component {
           },
           (error) => {
             console.log("err get=", error);
+            Swal.fire({
+              title: 'אוי',
+              text: 'הפעולה נכשלה, נסה שנית',
+              icon: 'warning',
+              confirmButtonColor: '#e0819a',
+            })
+          
           });
     }
     event.preventDefault();
@@ -174,9 +192,9 @@ export default class CCTeacherLogin extends Component {
 
     return (
       <div className="container-fluid">
-         <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/')} size={40} />
-                </div>
+        <div className="col-12"> {/* חזור למסך הקודם */}
+          <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/')} size={40} />
+        </div>
         <div className="loginDiv">
           <div className="col-12">
             <img className="logoImgLoginTeacher" src={require('../../../img/logoChallengeMe.svg')} />
