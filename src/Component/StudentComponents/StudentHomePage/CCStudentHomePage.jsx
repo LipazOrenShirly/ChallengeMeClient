@@ -19,6 +19,8 @@ export default class CCStudentHomePage extends Component {
             Avatar: null,
             avatarSentances: ["!המשך כך", "!אתה מסוגל", "!תעבור עוד אתגרים כדי שאוכל לגדול", "!אתה תותח"],
             SuccessCount: 0,
+            ChallengesCount: 0,
+            SuccessRatio: 0,
             dataUriImageStudent: "",
             dataImg: EmptyImgStudentBase64
 
@@ -36,13 +38,6 @@ export default class CCStudentHomePage extends Component {
 
     static contextType = ProjectContext;
 
-    goToChallengePage = (challenge, index) => {
-        this.props.history.push({
-            pathname: '/ChallengePage',
-            state: { challenge: challenge, index: index }
-        })
-    }
-
     componentDidMount() {
         this.getImage();
         this.getNameAndAvatarNum();
@@ -51,6 +46,13 @@ export default class CCStudentHomePage extends Component {
         setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
 
+    goToChallengePage = (challenge, index) => {
+        this.props.history.push({
+            pathname: '/ChallengePage',
+            state: { challenge: challenge, index: index }
+        })
+    }
+    
     getImage = () => {
         const user = this.context;
         fetch(this.apiUrlStudent + '/ImageStudent?studentID=' + user.studentID
@@ -125,7 +127,11 @@ export default class CCStudentHomePage extends Component {
             .then(
                 (result) => {
                     console.log("count= ", result);
-                    this.setState({ SuccessCount: result });
+                    this.setState({ 
+                        SuccessCount: result[0], 
+                        ChallengesCount: result[1],
+                        SuccessRatio: result[0] / result[1] * 100  
+                    });
                 },
                 (error) => {
                     console.log("err get=", error);
