@@ -14,7 +14,7 @@ export default class CCOneClass extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Class';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Class';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Class';
         }
     }
 

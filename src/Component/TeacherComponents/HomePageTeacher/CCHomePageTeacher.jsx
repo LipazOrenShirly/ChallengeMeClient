@@ -29,9 +29,9 @@ export default class CCHomePageTeacher extends Component {
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
-            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
-            this.apiUrlAlert = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlAlert = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
         }
     }
     static contextType = ProjectContext;

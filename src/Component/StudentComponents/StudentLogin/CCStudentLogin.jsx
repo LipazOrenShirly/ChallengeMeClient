@@ -23,7 +23,7 @@ export default class CCStudentLogin extends Component {
     let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     if (!local) {
-      this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student'; 
+      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student'; 
     }
   }
 

@@ -27,9 +27,9 @@ class CCSearchChallenge extends Component {
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
         this.apiUrlChallengeTags = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Challenge';
-            this.apiUrlTags = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Tag';
-            this.apiUrlChallengeTags = 'http://proj.ruppin.ac.il/igroup2/prod'+'/api/ChallengeTag';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Challenge';
+            this.apiUrlTags = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Tag';
+            this.apiUrlChallengeTags = 'https://proj.ruppin.ac.il/igroup2/prod'+'/api/ChallengeTag';
         }
     }
 

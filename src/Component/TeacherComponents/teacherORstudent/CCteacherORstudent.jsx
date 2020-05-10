@@ -16,8 +16,8 @@ export default class CCteacherORstudent extends Component {
         this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrlTeacher = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
-            this.apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 

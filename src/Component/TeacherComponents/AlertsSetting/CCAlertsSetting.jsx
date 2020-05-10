@@ -26,7 +26,7 @@ export default class CCAlertsSettings extends Component {
     let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/AlertSettings';
     if (!local) {
-      this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/AlertSettings';
+      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/AlertSettings';
     }
   }
 

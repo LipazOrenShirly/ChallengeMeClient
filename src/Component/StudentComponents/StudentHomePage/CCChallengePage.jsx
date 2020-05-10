@@ -28,8 +28,8 @@ export default class CCChallengePage extends Component {
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
-            this.apiUrlMessage = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
+            this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
         }
     }
 

@@ -8,8 +8,8 @@ const checkCredentials = (username, password, user) => {
     var apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
     var apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     if (!local) {
-        apiUrlTeacher = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
-        apiUrlStudent = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+        apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
+        apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
     }
 
     fetch(apiUrlTeacher + '?username=' + username + '&password=' + password

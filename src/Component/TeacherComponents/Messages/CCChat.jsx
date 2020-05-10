@@ -24,7 +24,7 @@ export default class CCChat extends Component {
         let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
         }
     }
 

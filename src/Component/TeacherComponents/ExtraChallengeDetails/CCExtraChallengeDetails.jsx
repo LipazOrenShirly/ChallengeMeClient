@@ -23,8 +23,8 @@ class CCExtraChallengeDetails extends Component {
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
-            this.apiUrl = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
-            this.apiUrStudent  = 'http://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student';
+            this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/StudentChallenge';
+            this.apiUrStudent  = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student';
         }
     }
 
