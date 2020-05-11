@@ -149,7 +149,7 @@ export default class CCStudentHomePage extends Component {
                     this.setState({
                         // SuccessCount: result[0], 
                         // ChallengesCount: result[1],
-                        avatarLevel: Math.min(Math.ceil(result[0] / result[1] * 100 / 20), 5)
+                        avatarLevel: Math.max(Math.ceil(result[0] / result[1] * 100 / 20), 1) //מינימום 1
                     });
                 },
                 (error) => {
