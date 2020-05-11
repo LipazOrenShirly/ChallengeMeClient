@@ -9,7 +9,7 @@ import Resizer from 'react-image-file-resizer';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 import Swal from 'sweetalert2';
-
+import NotificationButton from '../../../NotificationButton';
 export default class CCStudentHomePage extends Component {
 
     constructor(props) {
@@ -273,6 +273,9 @@ export default class CCStudentHomePage extends Component {
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
                 <br />
+                <div>
+                    <NotificationButton />
+                </div>
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
