@@ -134,7 +134,6 @@ export default class CCnewTeacher extends Component {
                         $('#userNameValuesError').empty();
                         $('#userNameValuesError').append("this userName is already taken");
                     }
-
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -145,7 +144,48 @@ export default class CCnewTeacher extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
+    }
 
+    checkIfPhoneExist(e) {
+        var phoneInput = e.target.value;
+        this.setState({ phone: "" })
+        //$('#PhoneValuesError').empty();
+
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?phone=' + phoneInput
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result == 1) { // כבר קיים מספר הטלפון הזה
+                        this.setState({ HasphoneValError: true });
+                        $('#PhoneValuesError').empty();
+                        $('#PhoneValuesError').append("מספר הטלפון הזה כבר קיים במערכת");
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     render() {
@@ -328,7 +368,10 @@ export default class CCnewTeacher extends Component {
                                     this.setState({ phone });
                                     console.log(e);
                                 }}
-                                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                                onBlur={(e) => { 
+                                    console.log(phone);
+                                    this.checkIfPhoneExist(e); 
+                                }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
@@ -338,12 +381,13 @@ export default class CCnewTeacher extends Component {
                                             return true;
                                         } else {
                                             this.setState({ HasphoneValError: true });
-                                            return "is not a valid phone number";
+                                            return "מספר הטלפון לא תקין";
                                         }
                                     }
                                 }}
                             />
                         </div>
+                        <div className='errorInputuserName' id="PhoneValuesError"></div>
 
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
