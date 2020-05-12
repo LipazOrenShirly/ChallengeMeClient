@@ -13,16 +13,16 @@ export const initializeFirebase = () => {
 }
 
 export const askForPermissioToReceiveNotifications = async () => {
-  alert('askForPermissioToReceiveNotifications');
   try {
     const messaging = firebase.messaging();
     await messaging.requestPermission();
     const token = await messaging.getToken();
     console.log('user token:', token);
     alert(token);
-    
     return token;
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error(error);
   }
 }
