@@ -23,6 +23,6 @@ export const askForPermissioToReceiveNotifications = async () => {
     
     return token;
   } catch (error) {
-    console.error(error);
+    console.error("j"+error);
   }
 }
