@@ -254,6 +254,9 @@ export default class CCStudentHomePage extends Component {
                     })
                 });
     }
+    try=()=>{
+      
+    }
 
     render() {
         const user = this.context;
@@ -274,7 +277,7 @@ export default class CCStudentHomePage extends Component {
                 </div>
                 <br />
                 <div>
-                    <NotificationButton />
+                    <NotificationButton onClick={this.try}/>
                 </div>
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
