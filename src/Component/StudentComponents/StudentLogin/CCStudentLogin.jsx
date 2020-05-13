@@ -140,16 +140,16 @@ export default class CCStudentLogin extends Component {
     });
   }
 
-  sendPasswordRestartRequestToTeacher = () => {
+  sendPasswordRestartRequestToTeacher = async () => {
     const user = this.context;
     var student = this.state.student;
     // ליצור התראה ולעשות לה פוסט לטבלת התראות
-    var alertTitle = ' ' + student.FirstName + ' ' + student.LastName + ' ביקש לאפס סיסמה ';
-    var alertText = 'אנא אפס סיסמה לתלמיד ותמסור לו את הסיסמה החדשה';
+    var alertTitle = await ' ' + student.FirstName + ' ' + student.LastName + ' ביקש לאפס סיסמה ';
+    var alertText = await 'אנא אפס סיסמה לתלמיד ותמסור לו את הסיסמה החדשה';
 
-    const date = new Date();
+    const date = await new Date();
 
-    var alert = {
+    var alert = await {
       teacherID: student.TeacherID,
       studentID: student.StudentID,
       alertTitle: alertTitle,
@@ -158,7 +158,7 @@ export default class CCStudentLogin extends Component {
       alertTime: date.getHours() + ":" + date.getMinutes(),
     }
 
-    fetch(this.apiUrlAlert, {
+    await fetch(this.apiUrlAlert, {
       method: 'POST',
       body: JSON.stringify(alert),
       headers: new Headers({
@@ -192,8 +192,8 @@ export default class CCStudentLogin extends Component {
         });
 
     // להביא מהדאטה בייס את הטוקן של המורה
-    var teacherToken = '';
-    fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + this.state.student.TeacherID
+    var teacherToken = await '';
+    await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + this.state.student.TeacherID
       , {
         method: 'GET',
         headers: new Headers({
@@ -233,7 +233,7 @@ export default class CCStudentLogin extends Component {
         });
 
     // לעשות פוסט לפיירבייס
-    var notification = {
+    var notification = await {
       "notification": {
         "title": alertTitle,
         "body": alertText,
@@ -242,7 +242,7 @@ export default class CCStudentLogin extends Component {
       },
       "to": teacherToken
     }
-    fetch("https://fcm.googleapis.com/fcm/send", {
+    await fetch("https://fcm.googleapis.com/fcm/send", {
       method: 'POST',
       body: JSON.stringify(notification),
       headers: new Headers({
