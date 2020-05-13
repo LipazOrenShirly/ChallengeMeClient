@@ -24,7 +24,7 @@ export default class CCChallengePage extends Component {
             dataImg: EmptyImgChallengeBase64,
             messageShow: false,
         };
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {

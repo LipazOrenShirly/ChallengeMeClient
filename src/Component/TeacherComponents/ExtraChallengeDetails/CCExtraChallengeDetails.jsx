@@ -19,7 +19,7 @@ class CCExtraChallengeDetails extends Component {
             startDate: null,
             student: {}
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

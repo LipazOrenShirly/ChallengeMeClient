@@ -26,7 +26,7 @@ export default class CCStudentHomePage extends Component {
             dataImg: EmptyImgStudentBase64
 
         };
-        let local = false;
+        let local = true;
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
@@ -254,9 +254,7 @@ export default class CCStudentHomePage extends Component {
                     })
                 });
     }
-    try=()=>{
-      
-    }
+   
 
     render() {
         const user = this.context;
@@ -277,7 +275,7 @@ export default class CCStudentHomePage extends Component {
                 </div>
                 <br />
                 <div>
-                    <NotificationButton onClick={this.try}/>
+                    <NotificationButton />
                 </div>
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >

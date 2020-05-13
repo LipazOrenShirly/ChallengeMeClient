@@ -7,7 +7,7 @@ import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
 import { TiArrowBack } from 'react-icons/ti';
-
+import { askForPermissioToReceiveNotifications } from '../../../push-notification';
 
 export default class CCStudentLogin extends Component {
   constructor(props) {
@@ -20,16 +20,16 @@ export default class CCStudentLogin extends Component {
       HasPhoneValError: true,
       HasPasswordError: true,
     };
-    let local = false;
+    let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     if (!local) {
-      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Student'; 
+      this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
     }
   }
 
   static contextType = ProjectContext;
 
-  async componentDidMount () {
+  async componentDidMount() {
     //לפני שעולה העמוד- אם קיימים שם משתמש וססמה בלוקל סטורז' תביא אותם למקומות המתאימים
     let un = await localStorage.getItem('SPhone') != null ? localStorage.getItem('SPhone') + '' : "";
     let ps = await localStorage.getItem('Spassword') != null ? localStorage.getItem('Spassword') + '' : "";
@@ -42,21 +42,21 @@ export default class CCStudentLogin extends Component {
 
   NewStudentAlert = () => {
     Swal.fire({
-        title: 'המתן',
-        text: 'המחנך שלך צריך ליצור בשבילך משתמש',
-        icon: 'warning',
-        confirmButtonColor: 'rgb(135, 181, 189)',
-      })
+      title: 'המתן',
+      text: 'המחנך שלך צריך ליצור בשבילך משתמש',
+      icon: 'warning',
+      confirmButtonColor: 'rgb(135, 181, 189)',
+    })
   }
 
   ForgetPassword = () => {
     //כשלוחצים על שכחתי סיסמה מועבר לעמוד מתאים
     Swal.fire({
-        title: 'אוי',
-        text: 'עלייך לבקש מהמחנך שיאפס לך את הסיסמה',
-        icon: 'warning',
-        confirmButtonColor: 'rgb(135, 181, 189)',
-      })
+      title: 'אוי',
+      text: 'עלייך לבקש מהמחנך שיאפס לך את הסיסמה',
+      icon: 'warning',
+      confirmButtonColor: 'rgb(135, 181, 189)',
+    })
   }
 
   saveCredentials = (Phone, Password) => {
@@ -71,6 +71,8 @@ export default class CCStudentLogin extends Component {
       localStorage.setItem('userType', 'student');
     }
   }
+
+
 
   Submit = (event) => {
     const user = this.context;
@@ -91,16 +93,22 @@ export default class CCStudentLogin extends Component {
           console.log('res.ok', res.ok);
           if (!res.ok)
             throw new Error('Network response was not ok.');
-          return res.json();        })
+          return res.json();
+        })
         .then(
           (result) => {
             console.log("Submit= ", result[0]);
             if (result != 0) { //אם התלמיד קיים בדאטה בייס
+              
               this.saveCredentials(Phone, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
               user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט
+              var  StudentToken = "";
+              StudentToken = askForPermissioToReceiveNotifications();
+              this.saveStudentToken(StudentToken);
+              
               this.props.history.push('/StudentHomePage');
-              }
+            }
             else {
               $('#errorFromServer').empty();
               $('#errorFromServer').append("שם המשתמש או הסיסמה אינם נכונים");//הודעה למשתמש
@@ -118,6 +126,50 @@ export default class CCStudentLogin extends Component {
     }
     event.preventDefault();
   }
+  saveStudentToken = (token) => {
+    const user = this.context;
+    var promise = Promise.resolve(token);
+    var tokenn = promise.then(function(val) { 
+      console.log(val); 
+      return val;
+  });
+    var data = {
+      StudentID: user.studentID,
+      StudentToken: tokenn
+    }
+    console.log(tokenn);
+    
+    
+    console.log(data);
+    fetch(this.apiUrl + '/studentToken', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8'
+      })
+    })
+      .then(res => {
+        console.log('res=', res);
+        if (!res.ok)
+          throw new Error('Network response was not ok.');
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+
+        },
+        (error) => {
+          console.log("err post=", error);
+          Swal.fire({
+            title: 'אוי',
+            text: 'הפעולה נכשלה, נסה שנית',
+            icon: 'warning',
+            confirmButtonColor: '#e0819a',
+          })
+        });
+  }
+
 
   render() {
     const {
@@ -129,82 +181,82 @@ export default class CCStudentLogin extends Component {
 
     return (
       <div className="studentPage">
-         <div className="col-12"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/')} size={40} />
-                </div>
+        <div className="col-12"> {/* חזור למסך הקודם */}
+          <TiArrowBack className="iconArrowBack" onClick={() => this.props.history.push('/')} size={40} />
+        </div>
         <div className="loginDiv">
           <div className="col-12">
             <img className="logoImgLoginTeacher" src={require('../../../img/logoChallengeMe.svg')} />
           </div>
           <form onSubmit={this.Submit}>
             <div className="form-group col-12">
-            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                        attributesInput={{
-                            id: 'phone',
-                            type: 'text',
-                            placeholder: 'מספר הפלאפון של התלמיד',
-                            className: "form-control inputRounded"
-                        }}
+              <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                attributesInput={{
+                  id: 'phone',
+                  type: 'text',
+                  placeholder: 'מספר הפלאפון של התלמיד',
+                  className: "form-control inputRounded"
+                }}
 
-                        value={Phone}
-                        validationCallback={res =>
-                            this.setState({ HasPhoneValError: res, validate: false })
-                        }
-                        onChange={(Phone, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ Phone });
-                            console.log(e);
-                        }}
-                        onBlur={(e) => {
-                            console.log(e);
-                        }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                        validationOption={{
-                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                            customFunc: Phone => {
-                                const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
-                                if (reg.test(Phone)) {
-                                    return true;
-                                } else {
-                                    this.setState({ HasPhoneValError: true });
-                                    return "is not a valid phone number";
-                                }
-                            }
-                        }}
-                    />
-            
+                value={Phone}
+                validationCallback={res =>
+                  this.setState({ HasPhoneValError: res, validate: false })
+                }
+                onChange={(Phone, e) => { //כל שינוי הוא שומר בסטייט
+                  this.setState({ Phone });
+                  console.log(e);
+                }}
+                onBlur={(e) => {
+                  console.log(e);
+                }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                validationOption={{
+                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  customFunc: Phone => {
+                    const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
+                    if (reg.test(Phone)) {
+                      return true;
+                    } else {
+                      this.setState({ HasPhoneValError: true });
+                      return "is not a valid phone number";
+                    }
+                  }
+                }}
+              />
+
             </div>
             <div className="form-group col-12">
-            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                        attributesInput={{
-                            id: 'apasswordId',
-                            type: 'password',
-                            placeholder: 'הזן סיסמה',
-                            className: "form-control inputRounded"
-                        }}
+              <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                attributesInput={{
+                  id: 'apasswordId',
+                  type: 'password',
+                  placeholder: 'הזן סיסמה',
+                  className: "form-control inputRounded"
+                }}
 
-                        value={Password}
-                        validationCallback={res =>
-                            this.setState({ HasPasswordError: res, validate: false })
-                        }
-                        onChange={(Password, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ Password });
-                            console.log(e);
-                        }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                        validationOption={{
-                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                            customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
-                                const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
-                                if (reg.test(pas)) {
-                                    return true;
-                                } else {
-                                    this.setState({ HasPasswordError: true });
-                                    return "Minimum 5 characters, at least one letter and one number";
-                                }
-                            }
-                        }}
-                    />
+                value={Password}
+                validationCallback={res =>
+                  this.setState({ HasPasswordError: res, validate: false })
+                }
+                onChange={(Password, e) => { //כל שינוי הוא שומר בסטייט
+                  this.setState({ Password });
+                  console.log(e);
+                }}
+                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                validationOption={{
+                  check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                  required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
+                    const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+                    if (reg.test(pas)) {
+                      return true;
+                    } else {
+                      this.setState({ HasPasswordError: true });
+                      return "Minimum 5 characters, at least one letter and one number";
+                    }
+                  }
+                }}
+              />
             </div>
 
             <div className="rememberMeDivStudent">

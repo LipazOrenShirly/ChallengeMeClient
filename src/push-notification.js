@@ -13,13 +13,13 @@ export const initializeFirebase = () => {
 }
 
 export const askForPermissioToReceiveNotifications = async () => {
+ 
   try {
     const messaging = firebase.messaging();
     await messaging.requestPermission();
     const token = await messaging.getToken();
     console.log('user token:', token);
     alert(token);
-    xxx(token);
     return token;
   } 
   
@@ -27,38 +27,12 @@ export const askForPermissioToReceiveNotifications = async () => {
     console.error(error);
   }
 }
-const xxx=(token)=>{
-var x= {
-  "notification": {
-      "title": "Firebase",
-      "body": "Firebase is awesome",
-      "click_action": "https://challengeme.netlify.app/",
-      "icon": "http://url-to-an-icon/icon.png"
-  },
-  "to": token
-}
-fetch("https://fcm.googleapis.com/fcm/send" , {
-  method: 'POST',
-  body:JSON.stringify(x),
-  headers: new Headers({
-      'Content-type': 'application/json; charset=UTF-8' ,
-      'Authorization':'key=AAAAB9pd-t0:APA91bFqlbdOGpqVbNifFlo-_2p9uPFoFqqi0iY5O-_bFjMuzYgVlxC7uC9xRQEprfEqdiDjsNEremg7RWBHlyMQhlhC1Hxo_ZPUsjCYTPUS3nu4cMQJ3tXhUImmftNhg3TPjlN1Wq1G'
 
-  })
-})
-  .then(res => {
-      console.log('res=', res);
-      if (!res.ok)
-          throw new Error('Network response was not ok.');
-      return res.json();
-  })
-  .then(
-      (result) => {
-          console.log("fetch POST= ", result);
-      
-      },
-      (error) => {
-          console.log("err post=", error);
-         
+    // גם אם הבנאדם מחובר לאפליקציה יקבל אלרט
+    export const waitForMassege=()=>{
+      const messaging = firebase.messaging();
+      messaging.onMessage(payload => {  
+        console.log("Message received. ", payload);
+        const { title, ...options } = payload.notification;
       });
     }

@@ -13,7 +13,7 @@ export default class CCteacherORstudent extends Component {
         this.state = {
             showRender: false
         }
-        let local = false;
+        let local = true;
         this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {

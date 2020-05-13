@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomePageTeacher from './Component/TeacherComponents/HomePageTeacher/CCHomePageTeacher';
@@ -29,16 +29,21 @@ import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
-
+import {waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
 
 function App() {
   const user = {
-    teacherID: "8",
+    teacherID: "",
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
     studentID: "",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
   };
+
+  useEffect (()=>{
+    waitForMassege();
+  },[])
+
 
   // const PrivateRouteT = (children, ...rest) => {
   //   console.log(children);

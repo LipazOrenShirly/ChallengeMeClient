@@ -29,7 +29,7 @@ export default class CCAddNewChallenge extends Component {
             valueSocial: 0,
             valueSchool: 0,
         }
-        let local = false;
+        let local = true;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
         this.apiUrlTags = 'http://localhost:' + { localHost }.localHost + '/api/Tag';
         this.apiUrlChallengeTag = 'http://localhost:' + { localHost }.localHost + '/api/ChallengeTag';
