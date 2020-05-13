@@ -5,6 +5,7 @@ import './styleteacherORstudent.css'
 import localHost from '../../LittleComponents/LocalHost';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
+import { askForPermissioToReceiveNotifications } from '../../../push-notification';
 
 export default class CCteacherORstudent extends Component {
 
@@ -66,6 +67,7 @@ export default class CCteacherORstudent extends Component {
                     console.log("Submit= ", JSON.stringify(result));
                     if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
                         user.setTeacher(result.TeacherID); //אם קיים אז תשמור בקונטקט
+                        this.saveTeacherToken(); //יצירת תוקן למשתמש ושמירה שלו בטבלת תלמידים
                         if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
                             this.props.history.push('/HomePageTeacher/');
                     }
@@ -80,6 +82,45 @@ export default class CCteacherORstudent extends Component {
                     })
                 });
     }
+
+    saveTeacherToken = async () => {
+        const user = await this.context;
+        
+        var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
+        var tokenString = await Promise.resolve(token).then((val) => val);
+        var data = await {
+          teacherID: user.teacherID,
+          teacherToken: tokenString
+        }  
+        
+        //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
+        await fetch(this.apiUrlTeacher + '/teacherToken', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: new Headers({
+            'Content-type': 'application/json; charset=UTF-8'
+          })
+        })
+          .then(res => {
+            console.log('res=', res);
+            if (!res.ok)
+              throw new Error('Network response was not ok.');
+            return res.json();
+          })
+          .then(
+            (result) => {
+              console.log("fetch POST= ", result);
+            },
+            (error) => {
+              console.log("err post=", error);
+              Swal.fire({
+                title: 'אוי',
+                text: 'הפעולה נכשלה, נסה שנית',
+                icon: 'warning',
+                confirmButtonColor: '#e0819a',
+              })
+            });
+      }
 
     checkStudentCredentials = (Spassword, SPhone) => {
         const user = this.context;
@@ -105,6 +146,7 @@ export default class CCteacherORstudent extends Component {
                     if (result != 0) { //אם התלמיד קיים בדאטה בייס
                         user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
                         user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט
+                        this.saveStudentToken(); //יצירת תוקן למשתמש ושמירה שלו בטבלת תלמידים
                         this.props.history.push('/StudentHomePage');
                     }
                 },
@@ -118,6 +160,46 @@ export default class CCteacherORstudent extends Component {
                     })
                 });
     }
+
+    saveStudentToken = async () => {
+        const user = await this.context;
+        
+        var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
+        var tokenString = await Promise.resolve(token).then((val) => val);
+        user.setStudentToken(tokenString);           
+        var data = await {
+          studentID: user.studentID,
+          studentToken: tokenString
+        }  
+        
+        //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
+        await fetch(this.apiUrlStudent + '/studentToken', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: new Headers({
+            'Content-type': 'application/json; charset=UTF-8'
+          })
+        })
+          .then(res => {
+            console.log('res=', res);
+            if (!res.ok)
+              throw new Error('Network response was not ok.');
+            return res.json();
+          })
+          .then(
+            (result) => {
+              console.log("fetch POST= ", result);
+            },
+            (error) => {
+              console.log("err post=", error);
+              Swal.fire({
+                title: 'אוי',
+                text: 'הפעולה נכשלה, נסה שנית',
+                icon: 'warning',
+                confirmButtonColor: '#e0819a',
+              })
+            });
+      }
 
     heIsStudent = () => {
         this.props.history.push({
