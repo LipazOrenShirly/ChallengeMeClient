@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import SearchBarHomeTeacher from '../../LittleComponents/SearchBarHomeTeacher';
 import { TiArrowBack } from 'react-icons/ti';
 import { Alert } from 'reactstrap';
+import { askForPermissioToReceiveNotifications } from '../../../push-notification';
 
 
 export default class CCTeacherLogin extends Component {
@@ -149,6 +150,7 @@ export default class CCTeacherLogin extends Component {
             if (result.TeacherID != 0) { //אם המורה קיים בדאטה בייס
               this.saveCredentials(Username, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setTeacher(result.TeacherID); //אם קיים אז תשמור בקונטקט
+              this.saveTeacherToken(); //יצירת תוקן למשתמש ושמירה שלו בטבלת תלמידים
               if (result.TempPassword == 0)//אם לא סיסמה זמנית תעבור לעמוד הבא
                 this.props.history.push('/HomePageTeacher/');
               else {//אם זה סיסמה זמנית אז
@@ -172,6 +174,45 @@ export default class CCTeacherLogin extends Component {
           });
     }
     event.preventDefault();
+  }
+
+  saveTeacherToken = async () => {
+    const user = await this.context;
+    
+    var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
+    var tokenString = await Promise.resolve(token).then((val) => val);
+    var data = await {
+      teacherID: user.teacherID,
+      teacherToken: tokenString
+    }  
+    
+    //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
+    await fetch(this.apiUrl + '/teacherToken', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8'
+      })
+    })
+      .then(res => {
+        console.log('res=', res);
+        if (!res.ok)
+          throw new Error('Network response was not ok.');
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+        },
+        (error) => {
+          console.log("err post=", error);
+          Swal.fire({
+            title: 'אוי',
+            text: 'הפעולה נכשלה, נסה שנית',
+            icon: 'warning',
+            confirmButtonColor: '#e0819a',
+          })
+        });
   }
 
   // onRecieveNewPassword = () => {

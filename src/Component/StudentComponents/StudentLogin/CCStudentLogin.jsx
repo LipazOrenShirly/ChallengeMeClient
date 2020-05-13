@@ -96,17 +96,13 @@ export default class CCStudentLogin extends Component {
           return res.json();
         })
         .then(
-          (result) => {
+           (result) => { 
             console.log("Submit= ", result[0]);
-            if (result != 0) { //אם התלמיד קיים בדאטה בייס
-              
+            if (result != 0) { //אם התלמיד קיים בדאטה בייס             
               this.saveCredentials(Phone, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
-              user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט
-              var  StudentToken = "";
-              StudentToken = askForPermissioToReceiveNotifications();
-              this.saveStudentToken(StudentToken);
-              
+              user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט            
+              this.saveStudentToken(); //יצירת תוקן למשתמש ושמירה שלו בטבלת תלמידים
               this.props.history.push('/StudentHomePage');
             }
             else {
@@ -126,22 +122,19 @@ export default class CCStudentLogin extends Component {
     }
     event.preventDefault();
   }
-  saveStudentToken = (token) => {
-    const user = this.context;
-    var promise = Promise.resolve(token);
-    var tokenn = promise.then(function(val) { 
-      console.log(val); 
-      return val;
-  });
-    var data = {
-      StudentID: user.studentID,
-      StudentToken: tokenn
-    }
-    console.log(tokenn);
+
+  saveStudentToken = async () => {
+    const user = await this.context;
     
+    var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
+    var tokenString = await Promise.resolve(token).then((val) => val);
+    var data = await {
+      studentID: user.studentID,
+      studentToken: tokenString
+    }  
     
-    console.log(data);
-    fetch(this.apiUrl + '/studentToken', {
+    //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
+    await fetch(this.apiUrl + '/studentToken', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: new Headers({
@@ -157,7 +150,6 @@ export default class CCStudentLogin extends Component {
       .then(
         (result) => {
           console.log("fetch POST= ", result);
-
         },
         (error) => {
           console.log("err post=", error);
@@ -169,7 +161,6 @@ export default class CCStudentLogin extends Component {
           })
         });
   }
-
 
   render() {
     const {
