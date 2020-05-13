@@ -258,6 +258,7 @@ export default class CCStudentHomePage extends Component {
 
     render() {
         const user = this.context;
+        var token = user.studentToken;
         var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
         return (
             <div className="studentPage">
@@ -275,7 +276,7 @@ export default class CCStudentHomePage extends Component {
                 </div>
                 <br />
                 <div>
-                    <NotificationButton />
+                    <NotificationButton token = {token}/>
                 </div>
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >

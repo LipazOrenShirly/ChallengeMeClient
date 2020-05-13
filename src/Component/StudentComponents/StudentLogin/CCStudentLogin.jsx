@@ -101,7 +101,7 @@ export default class CCStudentLogin extends Component {
             if (result != 0) { //אם התלמיד קיים בדאטה בייס             
               this.saveCredentials(Phone, Password); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
               user.setStudent(result[0].studentID); //אם קיים אז תשמור בקונטקט
-              user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט            
+              user.setTeacher(result[0].teacherID); //אם קיים אז תשמור בקונטקט 
               this.saveStudentToken(); //יצירת תוקן למשתמש ושמירה שלו בטבלת תלמידים
               this.props.history.push('/StudentHomePage');
             }
@@ -128,6 +128,7 @@ export default class CCStudentLogin extends Component {
     
     var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
     var tokenString = await Promise.resolve(token).then((val) => val);
+    user.setStudentToken(tokenString);           
     var data = await {
       studentID: user.studentID,
       studentToken: tokenString

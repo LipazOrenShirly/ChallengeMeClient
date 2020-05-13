@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomePageTeacher from './Component/TeacherComponents/HomePageTeacher/CCHomePageTeacher';
@@ -29,7 +29,7 @@ import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
-import {waitForMassege} from './push-notification';
+import { waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
 
 function App() {
@@ -38,6 +38,8 @@ function App() {
     setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
     studentID: "",
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
+    studentToken: "",
+    setStudentToken: (studentToken) => user.studentToken = studentToken,
   };
 
   useEffect (()=>{
