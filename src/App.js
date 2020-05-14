@@ -48,7 +48,7 @@ function App() {
 
   useEffect (()=>{
      initializeFirebase();
-    // waitForMassege();
+     waitForMassege();
 
   },[])
 
