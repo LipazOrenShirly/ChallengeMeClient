@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="App">
-      <ReactNotification />
+      {/* <ReactNotification /> */}
 
       <ProjectProvider value={user}>
         <Switch>
