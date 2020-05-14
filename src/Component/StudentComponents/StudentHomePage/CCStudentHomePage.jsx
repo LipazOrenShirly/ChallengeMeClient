@@ -279,7 +279,7 @@ export default class CCStudentHomePage extends Component {
                     <NotificationButton token = {token}/>
                 </div>
                 {/* הודעות של התלמיד */}
-                <div onClick={() => this.props.history.push('/StudentChat')} className="messagesS col-12 d-flex align-items-center justify-content-center" >
+                <div onClick={() => this.props.history.push('/StudentChat',{FirstAndLastName:this.state.FirstAndLastName})} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
                         <div className="btnMassagesReadText"> יש לך {this.state.countMessages} הודעות חדשות</div>
                         <div ><button className="btn btn-info btnYellow roundedBtn btnMassagesRead">לקריאה לחץ כאן</button></div>

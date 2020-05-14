@@ -11,6 +11,7 @@ import CCStudentOneMessage from './CCStudentOneMessage';
 import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 import { MdSend } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import { askForPermissioToReceiveNotifications } from '../../../push-notification';
 
 
 export default class CCStudentChat extends Component {
@@ -140,14 +141,91 @@ export default class CCStudentChat extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
+
     }
     clickSend = () => {
 
         const reg = /^[\s]+$/
         if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
             this.sendMessage();
+            this.sendNotificationToTeacher();
             this.setState({ messageText: "" });
         }
+    }
+    sendNotificationToTeacher = async () => {
+        const user = this.context;
+        var teacherToken = await '';
+        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("student= ", result);
+                    if (result == null)
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        });
+                    else {
+                        teacherToken = result;
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+        var alertTitle = "יש לך הודעה חדשה מ " + this.props.FirstAndLastName.firstName + ' ' + this.props.FirstAndLastName.lastName;
+       var alertText = this.state.messageText;
+        // לעשות פוסט לפיירבייס
+        var notification = await {
+            "notification": {
+                "title": alertTitle,
+                "body": alertText,
+                "click_action": "https://challengeme.netlify.app/",
+                "icon": "http://url-to-an-icon/icon.png"
+      },
+            "to": teacherToken
+        }
+        await fetch("https://fcm.googleapis.com/fcm/send", {
+            method: 'POST',
+            body: JSON.stringify(notification),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'key=AAAAB9pd-t0:APA91bFqlbdOGpqVbNifFlo-_2p9uPFoFqqi0iY5O-_bFjMuzYgVlxC7uC9xRQEprfEqdiDjsNEremg7RWBHlyMQhlhC1Hxo_ZPUsjCYTPUS3nu4cMQJ3tXhUImmftNhg3TPjlN1Wq1G'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
     }
     render() {
         const messageText = this.state.messageText;

@@ -18,7 +18,9 @@ const sendNotification=(token)=>{
         "title": "Firebase",
         "body": "Firebase is awesome",
         "click_action": "https://challengeme.netlify.app/",
-        "icon": "http://url-to-an-icon/icon.png"
+        "icon": "http://url-to-an-icon/icon.png",
+        // "data": {"show": "true"}
+
     },
     "to": token
   }
