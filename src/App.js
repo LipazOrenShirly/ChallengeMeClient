@@ -30,7 +30,7 @@ import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLo
 import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 import { waitForMassege} from './push-notification';
-// import { ProjectProvider } from './Context/ProjectContext';
+import { ProjectProvider } from './Context/ProjectContext';
 // import ReactNotification from 'react-notifications-component';
 // import 'react-notifications-component/dist/theme.css';
  import { initializeFirebase } from './push-notification.js';
