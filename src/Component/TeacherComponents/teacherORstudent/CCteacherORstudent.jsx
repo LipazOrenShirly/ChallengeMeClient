@@ -219,12 +219,11 @@ export default class CCteacherORstudent extends Component {
         message: "teodosii@react-notifications-component",
         type: "success",
         insert: "top",
-        container: "top-right",
+        container: "top-center",
         animationIn: ["animated", "fadeIn"],
         animationOut: ["animated", "fadeOut"],
         dismiss: {
-          duration: 5000,
-          onScreen: true
+          duration: 3000,
         }
       });
     }

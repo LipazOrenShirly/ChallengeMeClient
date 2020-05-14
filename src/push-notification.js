@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import { store } from 'react-notifications-component';
+import React from 'react';
 
 export const initializeFirebase = () => {
   firebase.initializeApp({
@@ -33,6 +35,20 @@ export const askForPermissioToReceiveNotifications = async () => {
       const messaging = firebase.messaging();
       messaging.onMessage(payload => {  
         console.log("Message received. ", payload);
-        const { title, ...options } = payload.notification;
+        const { title,body,click_action } = payload.notification;
+          store.addNotification({
+            title: title,
+            message:body,
+            type: "success",
+            insert: "top",
+            container: "top-center",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            
+            dismiss: {
+              duration: 3000,
+            }
+          });
+          
       });
     }
