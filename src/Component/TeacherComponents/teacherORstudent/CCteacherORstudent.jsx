@@ -6,6 +6,7 @@ import localHost from '../../LittleComponents/LocalHost';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
 import { askForPermissioToReceiveNotifications } from '../../../push-notification';
+import { store } from 'react-notifications-component';
 
 export default class CCteacherORstudent extends Component {
 
@@ -212,6 +213,22 @@ export default class CCteacherORstudent extends Component {
         })
     }
 
+    Callnotification=()=>{
+      store.addNotification({
+        title: "Wonderful!",
+        message: "teodosii@react-notifications-component",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true
+        }
+      });
+    }
+
     render() {
         return (
             <div className="container-fluid col-xs-12 screentos" >
@@ -220,7 +237,10 @@ export default class CCteacherORstudent extends Component {
                     <div className="col-12"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkTotS col-5">מורה</button>
 
                         <button type="button" className="btn btn-info btnpinkTotS btnPinkTOS col-5" onClick={this.heIsStudent}>תלמיד</button></div>
-                </div>}
+                
+                <button type="button" className="btn btn-info"onClick={this.Callnotification}>notificationnn</button>
+                </div>
+                }
             </div>
         );
     };

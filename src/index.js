@@ -14,7 +14,7 @@ ReactDOM.render(
     <App />
 </BrowserRouter>
     , document.getElementById('root'));
-    initializeFirebase();
+    // initializeFirebase();
 
 // If you want your app to work offline and load fsaster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -31,6 +31,10 @@ import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
 import { waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { initializeFirebase } from './push-notification.js';
+
 
 function App() {
   const user = {
@@ -43,71 +47,19 @@ function App() {
   };
 
   useEffect (()=>{
+    initializeFirebase();
     waitForMassege();
+
   },[])
 
 
-  // const PrivateRouteT = (children, ...rest) => {
-  //   console.log(children);
-  //   console.log(...rest);
-  //   return (
-  //     <Route
-  //       {...rest}
-  //       render={({ location }) =>
-  //       user.teacherID != "" ? children.children : <Redirect to="/" />
-  //       }
-  //     />
-  //   )
-  // };
-
-  // const PrivateRouteS = (children, ...rest) => {
-  //   console.log(children);
-  //   console.log(...rest);
-  //   return (
-  //     <Route
-  //       {...rest}
-  //       render={({ location }) =>
-  //         (user.teacherID != "" && user.studentID != "") ? children.children : <Redirect to="/" />
-  //       }
-  //     />
-  //   )
-  // };
 
   return (
     <div className="App">
+      <ReactNotification />
+
       <ProjectProvider value={user}>
         <Switch>
-
-          {/* <Route exact path="/" component={teacherORstudent} />
-          <Route path="/TeacherLogin" component={TeacherLogin} />
-          <Route path="/StudentLogin" component={StudentLogin} />
-
-          <PrivateRouteT exact path="/NewTeacher"><NewTeacher /></PrivateRouteT>          
-          <PrivateRouteT exact path="/TeacherForgetPassword"><TeacherForgetPassword /></PrivateRouteT>          
-          <PrivateRouteT exact path="/HomePageTeacher"><HomePageTeacher /></PrivateRouteT>          
-          <PrivateRouteT exact path="/TeacherInfoScreen"><TeacherInfoScreen /></PrivateRouteT>
-          <PrivateRouteT exact path="/Alerts"><Alerts /></PrivateRouteT>          
-          <PrivateRouteT exact path="/AlertsSetting"><AlertsSetting /></PrivateRouteT>          
-          <PrivateRouteT exact path="/Messages"><Messages /></PrivateRouteT>          
-          <PrivateRouteT exact path="/AddNewChallenge"><AddNewChallenge /></PrivateRouteT>          
-          <PrivateRouteT exact path="/StudentsList"><StudentsList /></PrivateRouteT>          
-          <PrivateRouteT exact path="/StudentPage"><StudentPage /></PrivateRouteT>          
-          <PrivateRouteT exact path="/StudentDetails"><StudentDetails /></PrivateRouteT>          
-          <PrivateRouteT exact path="/StudentInfoScreen"><StudentInfoScreen /></PrivateRouteT>          
-          <PrivateRouteT exact path="/EditChallenge"><EditChallenge /></PrivateRouteT>                  
-          <PrivateRouteT exact path="/AddChallengeToStudent"><AddChallengeToStudent /></PrivateRouteT>          
-          <PrivateRouteT exact path="/AddNewStudent"><AddNewStudent /></PrivateRouteT>          
-          <PrivateRouteT exact path="/StudentFeatures"><StudentFeatures /></PrivateRouteT>          
-          <PrivateRouteT exact path="/ExtraChallengeDetails"><ExtraChallengeDetails /></PrivateRouteT>          
-          <PrivateRouteT exact path="/SearchChallenge"><SearchChallenge /></PrivateRouteT>          
-          <PrivateRouteT exact path="/Chat"><Chat /></PrivateRouteT>          
-          <PrivateRouteS exact path="/ChallengePage"><ChallengePage /></PrivateRouteS>          
-          <PrivateRouteS exact path="/StudentHomePage"><StudentHomePage /></PrivateRouteS>          
-          <PrivateRouteS exact path="/StudentChat"><StudentChat /></PrivateRouteS>          
-          <PrivateRouteT exact path="/StudentsSearchResult"><StudentsSearchResult /></PrivateRouteT>          
-          <PrivateRouteS exact path="/camera"><Camera /></PrivateRouteS>          
-          <PrivateRouteS exact path="/ChooseAvatar"><ChooseAvatar /></PrivateRouteS>           */}
-
           <Route exact path="/" component={teacherORstudent} />
           <Route path="/TeacherLogin" component={TeacherLogin} />
           <Route path="/StudentLogin" component={StudentLogin} />
@@ -139,7 +91,8 @@ function App() {
 
         </Switch>
       </ProjectProvider>
-    </div>
+
+      </div>
   );
 }
 
