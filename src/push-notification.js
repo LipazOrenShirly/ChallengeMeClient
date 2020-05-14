@@ -21,7 +21,7 @@ export const askForPermissioToReceiveNotifications = async () => {
     await messaging.requestPermission();
     const token = await messaging.getToken();
     console.log('user token:', token);
-    alert(token);
+
     return token;
   }
 
