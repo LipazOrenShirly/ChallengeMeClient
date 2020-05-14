@@ -25,8 +25,10 @@ export default class CCStudentChat extends Component {
         }
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
         }
     }
 
@@ -143,13 +145,13 @@ export default class CCStudentChat extends Component {
                 });
 
     }
-    clickSend = () => {
+    clickSend = async () => {
 
-        const reg = /^[\s]+$/
+        const reg = await /^[\s]+$/;
         if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
-            this.sendMessage();
-            this.sendNotificationToTeacher();
-            this.setState({ messageText: "" });
+            await this.sendMessage();
+            await this.sendNotificationToTeacher();
+            await this.setState({ messageText: "" });
         }
     }
     sendNotificationToTeacher = async () => {
@@ -193,8 +195,9 @@ export default class CCStudentChat extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
-        var alertTitle = "יש לך הודעה חדשה מ " + this.props.FirstAndLastName.firstName + ' ' + this.props.FirstAndLastName.lastName;
+        var alertTitle = "יש לך הודעה חדשה מ" + this.props.location.state.FirstAndLastName.firstName + ' ' + this.props.location.state.FirstAndLastName.lastName;
        var alertText = this.state.messageText;
+       
         // לעשות פוסט לפיירבייס
         var notification = await {
             "notification": {

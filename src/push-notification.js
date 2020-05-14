@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { store } from 'react-notifications-component';
-import React from 'react';
+
 
 export const initializeFirebase = () => {
   firebase.initializeApp({
@@ -15,7 +15,7 @@ export const initializeFirebase = () => {
 }
 
 export const askForPermissioToReceiveNotifications = async () => {
- 
+
   try {
     const messaging = firebase.messaging();
     await messaging.requestPermission();
@@ -23,32 +23,31 @@ export const askForPermissioToReceiveNotifications = async () => {
     console.log('user token:', token);
     alert(token);
     return token;
-  } 
-  
+  }
+
   catch (error) {
     console.error(error);
   }
 }
 
-    // גם אם הבנאדם מחובר לאפליקציה יקבל אלרט
-    export const waitForMassege=()=>{
-      const messaging = firebase.messaging();
-      messaging.onMessage(payload => {  
-        console.log("Message received. ", payload);
-        const { title,body,click_action } = payload.notification;
-          store.addNotification({
-            title: title,
-            message:body,
-            type: "success",
-            insert: "top",
-            container: "top-center",
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "fadeOut"],
-            
-            dismiss: {
-              duration: 3000,
-            }
-          });
-          
-      });
-    }
+// גם אם הבנאדם מחובר לאפליקציה יקבל אלרט
+export const waitForMassege = () => {
+  const messaging = firebase.messaging();
+  messaging.onMessage(payload => {
+    console.log("Message received. ", payload);
+    const { title, body } = payload.notification;
+    store.addNotification({
+      title: title,
+      message: body,
+      type: "success",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 3000,
+      }
+    });
+
+  });
+}
