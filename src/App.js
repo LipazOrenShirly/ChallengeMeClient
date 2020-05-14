@@ -32,7 +32,7 @@ import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAva
 import { waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
+// import 'react-notifications-component/dist/theme.css';
 import { initializeFirebase } from './push-notification.js';
 
 
@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <ReactNotification /> */}
+      <ReactNotification />
 
       <ProjectProvider value={user}>
         <Switch>
