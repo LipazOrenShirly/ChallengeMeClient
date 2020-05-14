@@ -33,7 +33,7 @@ import { waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
 // import ReactNotification from 'react-notifications-component';
 // import 'react-notifications-component/dist/theme.css';
-// import { initializeFirebase } from './push-notification.js';
+ import { initializeFirebase } from './push-notification.js';
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
   };
 
   useEffect (()=>{
-    // initializeFirebase();
+     initializeFirebase();
     // waitForMassege();
 
   },[])
