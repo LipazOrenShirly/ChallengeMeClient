@@ -32,8 +32,8 @@ import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAva
 import { waitForMassege} from './push-notification';
 import { ProjectProvider } from './Context/ProjectContext';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
- import { initializeFirebase } from './push-notification.js';
+// import 'react-notifications-component/dist/theme.css';
+//  import { initializeFirebase } from './push-notification.js';
 
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
 
   useEffect (()=>{
      initializeFirebase();
-     waitForMassege();
+    //  waitForMassege();
 
   },[])
 
@@ -58,7 +58,7 @@ function App() {
     <div className="App">
       <ReactNotification />
 
-      <ProjectProvider value={user}>
+      {/* <ProjectProvider value={user}> */}
         <Switch>
           <Route exact path="/" component={teacherORstudent} />
           <Route path="/TeacherLogin" component={TeacherLogin} />
