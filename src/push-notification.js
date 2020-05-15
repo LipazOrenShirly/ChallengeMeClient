@@ -36,18 +36,18 @@ export const waitForMassege = () => {
   messaging.onMessage(payload => {
     console.log("Message received. ", payload);
     const { title, body } = payload.notification;
-    store.addNotification({
-      title: title,
-      message: body,
-      type: "success",
-      insert: "top",
-      container: "top-center",
-      animationIn: ["animated", "fadeIn"],
-      animationOut: ["animated", "fadeOut"],
-      dismiss: {
-        duration: 3000,
-      }
-    });
+    // store.addNotification({
+    //   title: title,
+    //   message: body,
+    //   type: "success",
+    //   insert: "top",
+    //   container: "top-center",
+    //   animationIn: ["animated", "fadeIn"],
+    //   animationOut: ["animated", "fadeOut"],
+    //   dismiss: {
+    //     duration: 3000,
+    //   }
+    // });
 
   });
 }

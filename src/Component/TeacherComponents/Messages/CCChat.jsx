@@ -155,7 +155,7 @@ export default class CCChat extends Component {
     }
 
     sendNotificationToStudent = async () => {
-        const user = this.context;
+        
         var StudentToken = await '';
         await fetch(this.apiUrlStudent + '/getStudentToken?studentID=' + this.props.location.state.student.studentID
             , {
