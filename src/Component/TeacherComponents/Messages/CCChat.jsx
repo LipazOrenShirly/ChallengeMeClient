@@ -25,8 +25,10 @@ export default class CCChat extends Component {
         }
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 
@@ -155,7 +157,7 @@ export default class CCChat extends Component {
     sendNotificationToStudent = async () => {
         const user = this.context;
         var StudentToken = await '';
-        await fetch(this.apiUrlTeacher + '/getStudentToken?studentID=' + this.props.location.state.student.studentID
+        await fetch(this.apiUrlStudent + '/getStudentToken?studentID=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
