@@ -155,7 +155,7 @@ export default class CCChat extends Component {
     sendNotificationToStudent = async () => {
         const user = this.context;
         var StudentToken = await '';
-        await fetch(this.apiUrlTeacher + '/getStudentToken?studentID=' + user.studentID
+        await fetch(this.apiUrlTeacher + '/getStudentToken?studentID=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -193,6 +193,8 @@ export default class CCChat extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
+
+                
         var alertTitle = "המורה שלח לך הודעה";
         var alertText = this.state.messageText;
 
