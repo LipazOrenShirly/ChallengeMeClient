@@ -142,13 +142,93 @@ export default class CCChat extends Component {
                     })
                 });
     }
-    clickSend = () => {
+    clickSend = async () => {
 
-        const reg = /^[\s]+$/
-        if (!(reg.test(this.state.messageText) || this.state.messageText == ""))
-            this.sendMessage();
-        this.setState({ messageText: "" });
+        const reg = await /^[\s]+$/
+        if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
+            await this.sendMessage();
+            await this.sendNotificationToStudent();
+            await this.setState({ messageText: "" });
+        }
     }
+
+    sendNotificationToStudent = async () => {
+        const user = this.context;
+        var StudentToken = await '';
+        await fetch(this.apiUrlTeacher + '/getStudentToken?studentID=' + user.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("student= ", result);
+                    if (result == null)
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        });
+                    else {
+                        StudentToken = result;
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+        var alertTitle = "המורה שלח לך הודעה";
+        var alertText = this.state.messageText;
+
+        // לעשות פוסט לפיירבייס
+        var notification = await {
+            "notification": {
+                "title": alertTitle,
+                "body": alertText,
+                "click_action": "https://challengeme.netlify.app/",
+                "icon": "http://url-to-an-icon/icon.png"
+            },
+            "to": StudentToken
+        }
+        await fetch("https://fcm.googleapis.com/fcm/send", {
+            method: 'POST',
+            body: JSON.stringify(notification),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'key=AAAAB9pd-t0:APA91bFqlbdOGpqVbNifFlo-_2p9uPFoFqqi0iY5O-_bFjMuzYgVlxC7uC9xRQEprfEqdiDjsNEremg7RWBHlyMQhlhC1Hxo_ZPUsjCYTPUS3nu4cMQJ3tXhUImmftNhg3TPjlN1Wq1G'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }
+
     goToHomePageStudent = () => {
         var s = this.props.location.state.student;
         this.props.history.push({
