@@ -144,8 +144,8 @@ export default class CCChat extends Component {
                     })
                 });
     }
-    clickSend = async () => {
 
+    clickSend = async () => {
         const reg = await /^[\s]+$/
         if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
             await this.sendMessage();
@@ -155,7 +155,6 @@ export default class CCChat extends Component {
     }
 
     sendNotificationToStudent = async () => {
-        
         var StudentToken = await '';
         await fetch(this.apiUrlStudent + '/getStudentToken?studentID=' + this.props.location.state.student.studentID
             , {
@@ -196,7 +195,7 @@ export default class CCChat extends Component {
                     })
                 });
 
-                
+
         var alertTitle = "המורה שלח לך הודעה";
         var alertText = this.state.messageText;
 
@@ -233,7 +232,7 @@ export default class CCChat extends Component {
                 });
     }
 
-    goToHomePageStudent = () => {
+    goToStudentPage = () => {
         var s = this.props.location.state.student;
         this.props.history.push({
             pathname: '/StudentPage',
@@ -244,13 +243,13 @@ export default class CCChat extends Component {
         const messageText = this.state.messageText;
         return (
             <div className="container-fluid">
-                <NavBar></NavBar>
+                <NavBar />
 
                 <div className="row upChatT mp0 align-items-center"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
-                    <div className="nameGoToHomeS" onClick={this.goToHomePageStudent}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
-
+                    <div className="nameGoToHomeS" onClick={this.goToStudentPage}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
                 </div>
+
                 <div className='messagesDivT'>
                     {this.state.messagesArr.map((item, index, array) => {
                         var prevDate = index != array.length - 1 ? array[index + 1].messageDate : '';
@@ -260,23 +259,6 @@ export default class CCChat extends Component {
                     }
                     )}
                 </div>
-                {/* <div className="form-group col-12">
-                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                        attributesInput={{
-                            id: 'messageText',
-                            type: 'text',
-                            placeholder: 'כתוב הודעה',
-                            className: "form-control inputNewTeacher"
-                        }}
-                        value={messageText}
-                        onChange={(messageText, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ messageText });
-                            this.setState({ sendDisabled: e.target.value });
-                        }}
-                    />
-                </div> */}
-
-                {/* <button id='send' disabled={!this.state.sendDisabled} onClick={() => {this.sendMessage(); this.setState({messageText:""});}}>שלח</button> */}
 
                 <div className="input-group mb-3 mp0 sendMesInputDivT">
                     <div className="input-group-prepend mp0">
@@ -287,10 +269,8 @@ export default class CCChat extends Component {
                             this.setState({ messageText: e.target.value });
                         }}
                     />
-
                 </div>
-                <Footer></Footer>
-
+                <Footer />
             </div>
         );
     };

@@ -154,6 +154,7 @@ export default class CCStudentChat extends Component {
             await this.setState({ messageText: "" });
         }
     }
+    
     sendNotificationToTeacher = async () => {
         const user = this.context;
         var teacherToken = await '';

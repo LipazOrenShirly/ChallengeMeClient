@@ -27,9 +27,11 @@ export default class CCChallengePage extends Component {
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
+        this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
             this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
+            this.apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
         }
     }
 
@@ -70,10 +72,7 @@ export default class CCChallengePage extends Component {
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
-                })
-            .then(() => {
-
-            });
+                });
     }
 
     btnColor = () => {
@@ -124,6 +123,138 @@ export default class CCChallengePage extends Component {
                 (result) => {
                     console.log("PUT= ", result);
                     this.btnColor();
+                    this.createAlert(e.currentTarget.id);
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+    }
+
+    createAlert = (statusInt) => {
+        const user = this.context;
+        var statusString = (statusInt === 1 ? 'הצליח את אתגר' : (statusInt === 2 ? 'לא הצליח את אתגר' : 'צריך עזרה באתגר'))
+        const challenge = this.props.location.state.challenge;
+
+        // ליצור התראה ולעשות לה פוסט לטבלת התראות
+        var alertTitle = ' ' + student.FirstName + ' ' + student.LastName + ' עדכן סטטוס אתגר ';
+        var alertText = ' ' + student.FirstName + ' ' + student.LastName + ' עדכן שהוא '+statusString + challenge.challengeName ;
+    
+        const date = new Date();
+    
+        var alert = {
+          teacherID: user.teacherID,
+          studentID: user.studentID,
+          alertTitle: alertTitle,
+          alertText: alertText,
+          alertDate: date.toISOString().split('T')[0],
+          alertTime: date.getHours() + ":" + date.getMinutes(),
+        }
+    
+        await fetch(this.apiUrlAlert, {
+          method: 'POST',
+          body: JSON.stringify(alert),
+          headers: new Headers({
+            'Content-type': 'application/json; charset=UTF-8'
+          })
+        })
+          .then(res => {
+            console.log('res=', res);
+            if (!res.ok)
+              throw new Error('Network response was not ok.');
+            return res.json();
+          })
+          .then(
+            (result) => {
+              console.log("fetch POST= ", result);
+              this.postAlertToFirebase(alertTitle, alertText);
+              Swal.fire({
+                title: 'נשלחה בקשה',
+                text: 'נשלחה בקשה למורה שלך, תמתין לתגובה ממנו',
+                icon: 'success',
+                confirmButtonColor: 'rgb(135, 181, 189)',
+              });
+            },
+            (error) => {
+              console.log("err post=", error);
+              Swal.fire({
+                title: 'אוי',
+                text: 'הפעולה נכשלה, נסה שנית',
+                icon: 'warning',
+                confirmButtonColor: '#e0819a',
+              })
+            });            
+    }
+
+    postAlertToFirebase = (alertTitle, alertText) => {
+        var teacherToken = this.getTeacherToken();
+        var notification = {
+            "notification": {
+                "title": alertTitle,
+                "body": alertText,
+                "click_action": "https://challengeme.netlify.app/",
+                "icon": "http://url-to-an-icon/icon.png"
+            },
+            "to": teacherToken
+        }
+        fetch("https://fcm.googleapis.com/fcm/send", {
+            method: 'POST',
+            body: JSON.stringify(notification),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'key=AAAAB9pd-t0:APA91bFqlbdOGpqVbNifFlo-_2p9uPFoFqqi0iY5O-_bFjMuzYgVlxC7uC9xRQEprfEqdiDjsNEremg7RWBHlyMQhlhC1Hxo_ZPUsjCYTPUS3nu4cMQJ3tXhUImmftNhg3TPjlN1Wq1G'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }
+
+    getTeacherToken = () => {
+        const user = this.context;
+        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("student= ", result);
+                    if (result == null)
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        });
+                    else {
+                        return result;
+                    }
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -143,6 +274,7 @@ export default class CCChallengePage extends Component {
             state: { challenge: this.props.location.state.challenge }
         })
     }
+
     clickSend = () => {
         const reg = /^[\s]+$/
         if (!(reg.test(this.state.messageText) || this.state.messageText == "")) {
@@ -150,6 +282,7 @@ export default class CCChallengePage extends Component {
             this.setState({ messageText: "" });
         }
     }
+
     sendMessage = () => {
         const user = this.context;
         const date = new Date();
