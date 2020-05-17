@@ -142,8 +142,8 @@ export default class CCChallengePage extends Component {
         const challenge = this.props.location.state.challenge;
 
         // ליצור התראה ולעשות לה פוסט לטבלת התראות
-        var alertTitle = ' ' + student.FirstName + ' ' + student.LastName + ' עדכן סטטוס אתגר ';
-        var alertText = ' ' + student.FirstName + ' ' + student.LastName + ' עדכן שהוא '+statusString + challenge.challengeName ;
+        var alertTitle = 'תלמיד  ' + /*student.FirstName + ' ' + student.LastName +*/ ' עדכן סטטוס אתגר ';
+        var alertText = 'תלמיד  ' + /*student.FirstName + ' ' + student.LastName +*/ ' עדכן שהוא '+statusString + challenge.challengeName ;
     
         const date = new Date();
     
@@ -156,7 +156,7 @@ export default class CCChallengePage extends Component {
           alertTime: date.getHours() + ":" + date.getMinutes(),
         }
     
-        await fetch(this.apiUrlAlert, {
+        fetch(this.apiUrlAlert, {
           method: 'POST',
           body: JSON.stringify(alert),
           headers: new Headers({
@@ -172,7 +172,7 @@ export default class CCChallengePage extends Component {
           .then(
             (result) => {
               console.log("fetch POST= ", result);
-              this.postAlertToFirebase(alertTitle, alertText);
+              statusInt === 3 && this.postAlertToFirebase(alertTitle, alertText); //שלח נוטיפיקציה רק אם לחץ צריך עזרה
               Swal.fire({
                 title: 'נשלחה בקשה',
                 text: 'נשלחה בקשה למורה שלך, תמתין לתגובה ממנו',
@@ -227,7 +227,7 @@ export default class CCChallengePage extends Component {
 
     getTeacherToken = () => {
         const user = this.context;
-        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
+        fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({
