@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import { store } from 'react-notifications-component';
-
+import React, { Component } from 'react';
+import { Notification } from './Component/LittleComponents/Notification';
 
 export const initializeFirebase = () => {
   firebase.initializeApp({
@@ -31,11 +32,14 @@ export const askForPermissioToReceiveNotifications = async () => {
 }
 
 // גם אם הבנאדם מחובר לאפליקציה יקבל אלרט
-export const waitForMassege = () => {
-  const messaging = firebase.messaging();
-  messaging.onMessage(payload => {
+export const waitForMassege = async () => {
+  var title, body = await "";
+  const messaging = await firebase.messaging();
+  await messaging.onMessage(payload => {
     console.log("Message received. ", payload);
-    const { title, body } = payload.notification;
+    title = payload.notification.title;
+    body = payload.notification.body;
+    
     // store.addNotification({
     //   title: title,
     //   message: body,
@@ -48,6 +52,7 @@ export const waitForMassege = () => {
     //     duration: 3000,
     //   }
     // });
-
+    
+    Notification(title, body);
   });
 }
