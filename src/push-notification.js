@@ -32,27 +32,20 @@ export const askForPermissioToReceiveNotifications = async () => {
 }
 
 // גם אם הבנאדם מחובר לאפליקציה יקבל אלרט
-export const waitForMassege = async () => {
-  var title, body = await "";
+export const waitForMassege = async (setShowNotification, setTitle, setBody) => {
+  var title = "";
+  var body = "";
   const messaging = await firebase.messaging();
   await messaging.onMessage(payload => {
+    setShowNotification(true);
     console.log("Message received. ", payload);
     title = payload.notification.title;
     body = payload.notification.body;
-    
-    // store.addNotification({
-    //   title: title,
-    //   message: body,
-    //   type: "success",
-    //   insert: "top",
-    //   container: "top-center",
-    //   animationIn: ["animated", "fadeIn"],
-    //   animationOut: ["animated", "fadeOut"],
-    //   dismiss: {
-    //     duration: 3000,
-    //   }
-    // });
-    
-    Notification(title, body);
+    setTitle(title)
+    setBody(body)
+    setTimeout(() => {
+      setShowNotification(false)
+    }, 3000);
+
   });
 }

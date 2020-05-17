@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomePageTeacher from './Component/TeacherComponents/HomePageTeacher/CCHomePageTeacher';
@@ -29,34 +29,44 @@ import StudentChat from './Component/StudentComponents/Messages/CCStudentChat';
 import StudentLogin from './Component/StudentComponents/StudentLogin/CCStudentLogin';
 import Camera from './Component/StudentComponents/StudentHomePage/CCcamera';
 import ChooseAvatar from './Component/StudentComponents/chooseAvatar/CCChooseAvatar';
-import { waitForMassege} from './push-notification';
-import { ProjectProvider } from './Context/ProjectContext';
+import { waitForMassege } from './push-notification';
+import { ProjectProvider , user } from './Context/ProjectContext';
 // import ReactNotification from 'react-notifications-component';
 // import 'react-notifications-component/dist/theme.css';
- import { initializeFirebase } from './push-notification.js';
+import { initializeFirebase } from './push-notification.js';
+
+import { Notification } from './Component/LittleComponents/Notification';
 
 
 function App() {
-  const user = {
-    teacherID: "",
-    setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
-    studentID: "",
-    setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
-    studentToken: "",
-    setStudentToken: (studentToken) => user.studentToken = studentToken,
-  };
 
-  useEffect (()=>{
-     initializeFirebase();
-     waitForMassege();
+  const [showNotification, setShowNotification] = useState(false);
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
 
-  },[])
+  // const user = {
+  //   teacherID: "",
+  //   setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
+  //   studentID: "",
+  //   setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
+  //   studentToken: "",
+  //   setStudentToken: (studentToken) => user.studentToken = studentToken,
+  // };
 
+  useEffect(() => {
+    initializeFirebase();
+    //waitForMassege(setShowNotification, setTitle, setBody);
 
+  }, [])
+
+  useEffect(() => {
+    waitForMassege(setShowNotification, setTitle, setBody);
+  },[showNotification, title, body])
 
   return (
     <div className="App">
-      {/* <ReactNotification /> */}
+
+      {showNotification && <Notification title={title} body={body} setShowNotification={setShowNotification} />}
 
       <ProjectProvider value={user}>
         <Switch>
@@ -65,7 +75,8 @@ function App() {
           <Route path="/StudentLogin" component={StudentLogin} />
           <Route path="/NewTeacher" component={NewTeacher} />
           <Route path="/TeacherForgetPassword" component={TeacherForgetPassword} />
-          <Route path="/HomePageTeacher" component={HomePageTeacher} />         
+
+          <Route path="/HomePageTeacher" component={HomePageTeacher} />
           <Route path="/TeacherInfoScreen" component={TeacherInfoScreen} />
           <Route path="/Alerts" component={Alerts} />
           <Route path="/AlertsSetting" component={AlertsSetting} />
@@ -92,7 +103,7 @@ function App() {
         </Switch>
       </ProjectProvider>
 
-      </div>
+    </div>
   );
 }
 

@@ -9,7 +9,6 @@ import Resizer from 'react-image-file-resizer';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 import Swal from 'sweetalert2';
-import NotificationButton from '../../../NotificationButton';
 
 export default class CCStudentHomePage extends Component {
 
@@ -166,6 +165,8 @@ export default class CCStudentHomePage extends Component {
 
     getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
         const user = this.context;
+        console.log("dddddddddddddddddddddd" + user.studentID)
+
         fetch(this.apiUrlMessage + '?studentID_UnRead=' + user.studentID
             , {
                 method: 'GET',
@@ -276,9 +277,7 @@ export default class CCStudentHomePage extends Component {
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
                 <br />
-                <div>
-                    <NotificationButton token = {token}/>
-                </div>
+             
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat',{FirstAndLastName:this.state.FirstAndLastName})} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>

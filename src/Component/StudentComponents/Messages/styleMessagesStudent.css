@@ -23,6 +23,7 @@ margin-bottom: 3px;
     overflow: scroll; 
     display: flex; 
     flex-direction: column-reverse;
+    word-break: break-all;
 
 }
 .MdSend{

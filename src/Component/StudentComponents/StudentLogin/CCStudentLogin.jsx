@@ -8,6 +8,7 @@ import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
 import { TiArrowBack } from 'react-icons/ti';
 import { askForPermissioToReceiveNotifications } from '../../../push-notification';
+import {Notification} from '../../LittleComponents/Notification';
 
 export default class CCStudentLogin extends Component {
   constructor(props) {

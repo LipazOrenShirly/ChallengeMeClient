@@ -1,27 +1,16 @@
 import React from 'react';
 
 
-// const notificationClass = () => {
-//     this.setState({
-//         class: "notificationStyle"
-//     }, () => {
-//         setTimeout(() => {
-//             this.setState({
-//                 class: "notificationStyle2"
-//             });
-//         }, 3000);
-//     });
-// }
-const bla= "<div className='notificationStyle'>ddddd</div>";
-
-export const Notification = (title, body) => {
-    return bla;
-    // alert(title);
-    // return (
-    //     <div className="notificationStyle">
-    //         {title} {body}
-    //     </div>
-    // );
+export const Notification = ({ title, body, setShowNotification }) => {
+var bodyShort =  body.length > 19 ? body.slice(0, 20) + "..." : body;
+    return (
+        <div className="row justify-content-center align-items-center" dir="rtl">
+            <div onClick={e => setShowNotification(false)} className="notificationStyle col-10">
+               <div className="titleNotification"> {title} </div> 
+               <div> {bodyShort} </div>
+            </div>
+        </div>
+    );
 }
 
 

@@ -63,14 +63,17 @@ a{
 /********Notification************/
 
 .notificationStyle{
-    background-color: #444;
+    background-color: rgba(245, 181, 219, 0.897);
+    border-radius: 6px;
+    padding: 5px !important;
     color: white;
-    padding: 16px;
     position: absolute;
     top: 16px;
-    right: 16px;
     z-index: 999;
-    /* transition: top 0.5s ease; */
+}
+.titleNotification{
+   
+    font-weight: 500;
 }
 
 

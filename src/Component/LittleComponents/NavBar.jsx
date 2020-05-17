@@ -10,6 +10,13 @@ import FormControl from 'react-bootstrap/FormControl';
 import ProjectContext from '../../Context/ProjectContext';
 import { NavLink, Link } from 'react-router-dom';
 
+const logout = () => {
+  sessionStorage.clear(); 
+  localStorage.clear();
+  //put-- delete token
+  
+ }
+
 const NavBar = () => {
   const user = useContext(ProjectContext);
 
@@ -22,7 +29,7 @@ const NavBar = () => {
           <NavLink to="/TeacherInfoScreen">הפרטים שלי</NavLink>
           <NavLink to="/Alerts">התרעות מערכת</NavLink>
           <NavLink to="/Messages">הודעות</NavLink>
-          <NavLink to="/TeacherLogin" onClick={ () => {sessionStorage.clear(); localStorage.clear();} }>התנתק</NavLink>
+          <NavLink to="/TeacherLogin" onClick={ logout }>התנתק</NavLink>
 
           {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
