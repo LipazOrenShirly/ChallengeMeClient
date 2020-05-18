@@ -231,7 +231,8 @@ export default class CCChallengePage extends Component {
     postAlertToFirebase = async (alertTitle, alertText) => {
         const user = await this.context;
 
-        var teacherToken = await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
+        var teacherToken = await "";
+        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
         , {
             method: 'GET',
             headers: new Headers({
@@ -257,7 +258,7 @@ export default class CCChallengePage extends Component {
                         confirmButtonColor: '#e0819a',
                     });
                 else {
-                    return result;
+                    teacherToken = result;
                 }
             },
             (error) => {
