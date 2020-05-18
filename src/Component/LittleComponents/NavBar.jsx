@@ -14,18 +14,17 @@ import Swal from 'sweetalert2';
 const logout = async (teacherID) => {
 
   let local = false;
-  var apiUrlTeacer = 'http://localhost:' + { localHost }.localHost + '/api/Teacer';
+  var apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
   if (!local) {
-      apiUrlTeacer = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacer';
+    apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
   }
 
   var data = await {
     teacherID: teacherID,
     teacherToken: ""
   }
-  alert('logout = '+teacherID);
 
-  await fetch(apiUrlTeacer + '/teacherToken', {
+  await fetch(apiUrlTeacher + '/teacherToken', {
     method: 'PUT',
     body: JSON.stringify(data),
     headers: new Headers({
