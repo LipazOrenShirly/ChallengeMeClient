@@ -34,7 +34,6 @@ export default class CCStudentHomePage extends Component {
             this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
         this.getFiles = this.getFiles.bind(this);
-
     }
 
     static contextType = ProjectContext;
@@ -165,7 +164,6 @@ export default class CCStudentHomePage extends Component {
 
     getDataOfMessagesNum = () => {// runs every 30 seconds  משיכה של מספר ההודעה שלא נקראו
         const user = this.context;
-        console.log("dddddddddddddddddddddd" + user.studentID)
 
         fetch(this.apiUrlMessage + '?studentID_UnRead=' + user.studentID
             , {

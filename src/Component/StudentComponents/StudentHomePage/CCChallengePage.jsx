@@ -23,15 +23,21 @@ export default class CCChallengePage extends Component {
             statusSentence: "",
             dataImg: EmptyImgChallengeBase64,
             messageShow: false,
+            firstName: null,
+            lastName: null,
         };
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
+        this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';        
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
             this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
             this.apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
+            this.apiUrlAlert = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
 
@@ -40,6 +46,7 @@ export default class CCChallengePage extends Component {
     componentDidMount() {
         this.btnColor();
         this.getImage();
+        this.getStudentName();
     }
 
     getImage = () => {
@@ -123,7 +130,7 @@ export default class CCChallengePage extends Component {
                 (result) => {
                     console.log("PUT= ", result);
                     this.btnColor();
-                    this.createAlert(e.currentTarget.id);
+                    this.createAlert(id);
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -136,17 +143,19 @@ export default class CCChallengePage extends Component {
                 });
     }
 
-    createAlert = (statusInt) => {
+    createAlert = (statusEng) => {
         const user = this.context;
-        var statusString = (statusInt === 1 ? 'הצליח את אתגר' : (statusInt === 2 ? 'לא הצליח את אתגר' : 'צריך עזרה באתגר'))
+        var alertTypeID = (statusEng == 'success' ? 1 : (statusEng == 'fail' ? 2 : 3));
+        var statusHeb = (alertTypeID === 1 ? 'הצליח את אתגר ' : (alertTypeID === 2 ? 'לא הצליח את אתגר ' : 'צריך עזרה באתגר '))
         const challenge = this.props.location.state.challenge;
 
         // ליצור התראה ולעשות לה פוסט לטבלת התראות
-        var alertTitle = 'תלמיד  ' + /*student.FirstName + ' ' + student.LastName +*/ ' עדכן סטטוס אתגר ';
-        var alertText = 'תלמיד  ' + /*student.FirstName + ' ' + student.LastName +*/ ' עדכן שהוא '+statusString + challenge.challengeName ;
+        const { firstName, lastName } = this.state;
+        var alertTitle = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן סטטוס אתגר ';
+        var alertText = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן שהוא '+statusHeb + challenge.challengeName;
     
         const date = new Date();
-    
+
         var alert = {
           teacherID: user.teacherID,
           studentID: user.studentID,
@@ -154,8 +163,9 @@ export default class CCChallengePage extends Component {
           alertText: alertText,
           alertDate: date.toISOString().split('T')[0],
           alertTime: date.getHours() + ":" + date.getMinutes(),
+          alertTypeID: alertTypeID
         }
-    
+        
         fetch(this.apiUrlAlert, {
           method: 'POST',
           body: JSON.stringify(alert),
@@ -172,13 +182,7 @@ export default class CCChallengePage extends Component {
           .then(
             (result) => {
               console.log("fetch POST= ", result);
-              statusInt === 3 && this.postAlertToFirebase(alertTitle, alertText); //שלח נוטיפיקציה רק אם לחץ צריך עזרה
-              Swal.fire({
-                title: 'נשלחה בקשה',
-                text: 'נשלחה בקשה למורה שלך, תמתין לתגובה ממנו',
-                icon: 'success',
-                confirmButtonColor: 'rgb(135, 181, 189)',
-              });
+              alertTypeID === 3 && this.postAlertToFirebase(alertTitle, alertText); //שלח נוטיפיקציה רק אם לחץ צריך עזרה
             },
             (error) => {
               console.log("err post=", error);
@@ -189,6 +193,39 @@ export default class CCChallengePage extends Component {
                 confirmButtonColor: '#e0819a',
               })
             });            
+    }
+
+    getStudentName = () => {
+        const user = this.context;
+        fetch(this.apiUrlStudent + '?studentIDGivesName=' + user.studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("NameAndAvatarID= ", result[0]);
+                    this.setState({ firstName: result[0].firstName, lastName: result[0].lastName });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     postAlertToFirebase = (alertTitle, alertText) => {
