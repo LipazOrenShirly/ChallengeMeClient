@@ -31,7 +31,7 @@ export default class CCChallengePage extends Component {
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
-        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';        
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/StudentChallenge';
             this.apiUrlMessage = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';
@@ -152,47 +152,47 @@ export default class CCChallengePage extends Component {
         // ליצור התראה ולעשות לה פוסט לטבלת התראות
         const { firstName, lastName } = this.state;
         var alertTitle = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן סטטוס אתגר ';
-        var alertText = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן שהוא '+statusHeb + challenge.challengeName;
-    
+        var alertText = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן שהוא ' + statusHeb + challenge.challengeName;
+
         const date = new Date();
 
         var alert = {
-          teacherID: user.teacherID,
-          studentID: user.studentID,
-          alertTitle: alertTitle,
-          alertText: alertText,
-          alertDate: date.toISOString().split('T')[0],
-          alertTime: date.getHours() + ":" + date.getMinutes(),
-          alertTypeID: alertTypeID
+            teacherID: user.teacherID,
+            studentID: user.studentID,
+            alertTitle: alertTitle,
+            alertText: alertText,
+            alertDate: date.toISOString().split('T')[0],
+            alertTime: date.getHours() + ":" + date.getMinutes(),
+            alertTypeID: alertTypeID
         }
-        
+
         fetch(this.apiUrlAlert, {
-          method: 'POST',
-          body: JSON.stringify(alert),
-          headers: new Headers({
-            'Content-type': 'application/json; charset=UTF-8'
-          })
+            method: 'POST',
+            body: JSON.stringify(alert),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
         })
-          .then(res => {
-            console.log('res=', res);
-            if (!res.ok)
-              throw new Error('Network response was not ok.');
-            return res.json();
-          })
-          .then(
-            (result) => {
-              console.log("fetch POST= ", result);
-              alertTypeID === 3 && this.postAlertToFirebase(alertTitle, alertText); //שלח נוטיפיקציה רק אם לחץ צריך עזרה
-            },
-            (error) => {
-              console.log("err post=", error);
-              Swal.fire({
-                title: 'אוי',
-                text: 'הפעולה נכשלה, נסה שנית',
-                icon: 'warning',
-                confirmButtonColor: '#e0819a',
-              })
-            });            
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                    alertTypeID === 3 && this.postAlertToFirebase(alertTitle, alertText); //שלח נוטיפיקציה רק אם לחץ צריך עזרה
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     getStudentName = () => {
@@ -228,9 +228,9 @@ export default class CCChallengePage extends Component {
                 });
     }
 
-    postAlertToFirebase = (alertTitle, alertText) => {
-        var teacherToken = this.getTeacherToken();
-        var notification = {
+    postAlertToFirebase = async (alertTitle, alertText) => {
+        var teacherToken = await this.getTeacherToken();
+        var notification = await {
             "notification": {
                 "title": alertTitle,
                 "body": alertText,
@@ -238,9 +238,9 @@ export default class CCChallengePage extends Component {
                 "icon": "http://url-to-an-icon/icon.png"
             },
             "to": teacherToken
-            }
-            console.log(notification);
-        fetch("https://fcm.googleapis.com/fcm/send", {
+        }
+        console.log(notification);
+        await fetch("https://fcm.googleapis.com/fcm/send", {
             method: 'POST',
             body: JSON.stringify(notification),
             headers: new Headers({
