@@ -229,7 +229,47 @@ export default class CCChallengePage extends Component {
     }
 
     postAlertToFirebase = async (alertTitle, alertText) => {
-        var teacherToken = await this.getTeacherToken();
+        const user = await this.context;
+
+        var teacherToken = await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            if (!res.ok)
+                throw new Error('Network response was not ok.');
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log("TeacherToken= ", result);
+                if (result == null)
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    });
+                else {
+                    return result;
+                }
+            },
+            (error) => {
+                console.log("err get=", error);
+                Swal.fire({
+                    title: 'אוי',
+                    text: 'הפעולה נכשלה, נסה שנית',
+                    icon: 'warning',
+                    confirmButtonColor: '#e0819a',
+                })
+            });
+
         var notification = await {
             "notification": {
                 "title": alertTitle,
@@ -239,7 +279,7 @@ export default class CCChallengePage extends Component {
             },
             "to": teacherToken
         }
-        console.log(notification);
+        await console.log(notification);
         await fetch("https://fcm.googleapis.com/fcm/send", {
             method: 'POST',
             body: JSON.stringify(notification),
@@ -260,48 +300,6 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-                });
-    }
-
-    getTeacherToken = () => {
-        const user = this.context;
-        fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
-            , {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                })
-            })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                if (!res.ok)
-                    throw new Error('Network response was not ok.');
-                return res.json();
-            })
-            .then(
-                (result) => {
-                    console.log("student= ", result);
-                    if (result == null)
-                        Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
-                            icon: 'warning',
-                            confirmButtonColor: '#e0819a',
-                        });
-                    else {
-                        return result;
-                    }
-                },
-                (error) => {
-                    console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
                 });
     }
 
