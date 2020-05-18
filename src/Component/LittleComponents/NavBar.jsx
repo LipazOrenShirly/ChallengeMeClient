@@ -6,21 +6,21 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import localHost from '../../LittleComponents/LocalHost';
+import localHost from './LocalHost';
 import ProjectContext from '../../Context/ProjectContext';
 import { NavLink, Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-const logout = async () => {
-  const user = await useContext(ProjectContext);
+const logout = async (teacherID) => {
 
   let local = false;
-  apiUrlTeacer = 'http://localhost:' + { localHost }.localHost + '/api/Teacer';
+  var apiUrlTeacer = 'http://localhost:' + { localHost }.localHost + '/api/Teacer';
   if (!local) {
       apiUrlTeacer = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacer';
   }
 
   var data = await {
-    teacherID: user.teacherID,
+    teacherID: teacherID,
     teacherToken: ""
   }
 
@@ -55,6 +55,8 @@ const logout = async () => {
 }
 
 const NavBar = () => {
+  const user = useContext(ProjectContext);
+
   return (
     <Navbar className="colorNav" expand="lg">
       <Navbar.Brand><Link to="/HomePageTeacher"><img src={require('../../img/logoSmall.svg')}></img></Link></Navbar.Brand>
@@ -64,7 +66,7 @@ const NavBar = () => {
           <NavLink to="/TeacherInfoScreen">הפרטים שלי</NavLink>
           <NavLink to="/Alerts">התרעות מערכת</NavLink>
           <NavLink to="/Messages">הודעות</NavLink>
-          <NavLink to="/TeacherLogin" onClick={logout}>התנתק</NavLink>
+          <NavLink to="/TeacherLogin" onClick={ () => logout(user.teacherID) }>התנתק</NavLink>
 
           {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
