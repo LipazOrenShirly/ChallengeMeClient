@@ -238,7 +238,8 @@ export default class CCChallengePage extends Component {
                 "icon": "http://url-to-an-icon/icon.png"
             },
             "to": teacherToken
-        }
+            }
+            console.log(notification);
         fetch("https://fcm.googleapis.com/fcm/send", {
             method: 'POST',
             body: JSON.stringify(notification),
