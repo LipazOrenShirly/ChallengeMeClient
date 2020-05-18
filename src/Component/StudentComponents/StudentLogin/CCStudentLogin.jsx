@@ -341,7 +341,7 @@ saveStudentToken = async () => {
 
   //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
   await fetch(this.apiUrl + '/studentToken', {
-    method: 'POST',
+    method: 'PUT',
     body: JSON.stringify(data),
     headers: new Headers({
       'Content-type': 'application/json; charset=UTF-8'

@@ -96,7 +96,7 @@ export default class CCteacherORstudent extends Component {
 
     //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
     await fetch(this.apiUrlTeacher + '/teacherToken', {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8'
@@ -175,7 +175,7 @@ export default class CCteacherORstudent extends Component {
 
     //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
     await fetch(this.apiUrlStudent + '/studentToken', {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8'

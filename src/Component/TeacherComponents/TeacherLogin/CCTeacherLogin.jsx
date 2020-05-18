@@ -188,7 +188,7 @@ export default class CCTeacherLogin extends Component {
     
     //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
     await fetch(this.apiUrl + '/teacherToken', {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8'

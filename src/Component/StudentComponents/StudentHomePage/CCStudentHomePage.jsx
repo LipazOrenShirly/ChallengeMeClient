@@ -254,7 +254,47 @@ export default class CCStudentHomePage extends Component {
                     })
                 });
     }
-   
+
+    logout = async () => {
+        const user = await this.context;
+
+        var data = await {
+          studentID: user.studentID,
+          studentToken: ""
+        }
+
+        await fetch(this.apiUrlStudent + '/studentToken', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+
+        await sessionStorage.clear();
+        await localStorage.clear();
+        await this.props.history.push('/');
+    }
+
 
     render() {
         const user = this.context;
@@ -263,7 +303,7 @@ export default class CCStudentHomePage extends Component {
         return (
             <div className="studentPage">
                 <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}
-                    onClick={() => { sessionStorage.clear(); localStorage.clear(); this.props.history.push('/'); }}>
+                    onClick={this.logout}>
                     <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
                 </div>
                 {/* פרטי התלמיד */}
@@ -275,9 +315,9 @@ export default class CCStudentHomePage extends Component {
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
                 <br />
-             
+
                 {/* הודעות של התלמיד */}
-                <div onClick={() => this.props.history.push('/StudentChat',{FirstAndLastName:this.state.FirstAndLastName})} className="messagesS col-12 d-flex align-items-center justify-content-center" >
+                <div onClick={() => this.props.history.push('/StudentChat', { FirstAndLastName: this.state.FirstAndLastName })} className="messagesS col-12 d-flex align-items-center justify-content-center" >
                     <div>
                         <div className="btnMassagesReadText"> יש לך {this.state.countMessages} הודעות חדשות</div>
                         <div ><button className="btn btn-info btnYellow roundedBtn btnMassagesRead">לקריאה לחץ כאן</button></div>
