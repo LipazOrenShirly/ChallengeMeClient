@@ -23,6 +23,7 @@ const logout = async (teacherID) => {
     teacherID: teacherID,
     teacherToken: ""
   }
+  alert('logout = '+teacherID);
 
   await fetch(apiUrlTeacer + '/teacherToken', {
     method: 'PUT',
