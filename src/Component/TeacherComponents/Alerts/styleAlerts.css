@@ -2,13 +2,18 @@
     margin: 3% auto;
     
 }
+.allAlerts{
+    height: 66vh;
+    overflow-y: scroll;
+    margin-top: 20px;
+}
 
 
 /*******One Alert *******/
 .container-OneAlert{
+
     margin: 2px;
     padding: 0px;
-    border: 2px solid black;
     text-align: right;
     display: flex;
     width: 98%;
@@ -29,3 +34,4 @@
     height: 20px;
     margin-left: 3%;
 }
+

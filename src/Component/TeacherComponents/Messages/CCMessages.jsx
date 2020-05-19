@@ -16,7 +16,7 @@ export default class CCMessages extends Component {
         super(props);
         this.state = {
         }
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Message';

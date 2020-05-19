@@ -26,7 +26,7 @@ export default class CCChallengePage extends Component {
             firstName: null,
             lastName: null,
         };
-        let local = true;
+        let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';

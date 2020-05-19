@@ -15,7 +15,7 @@ export default class CCAlerts extends Component {
         this.state = {
             alertArr: []
         }
-        let local = true;
+        let local = false;
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {
             this.apiUrlAlert = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
@@ -155,11 +155,13 @@ export default class CCAlerts extends Component {
                         <h5 >עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
                     </div>
                 </div>
+                
                 <div className="allAlerts">
                     {this.state.alertArr.map( (item) => 
                         <CCOneAlert alert={item} getAlertIDForDelete={this.getAlertIDForDelete} 
                             getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
                             goToStudentPage={this.goToStudentPage}/>
+                            
                     )}
                 </div>
                 <Footer />

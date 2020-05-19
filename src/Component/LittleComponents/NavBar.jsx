@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 const logout = async (teacherID) => {
 
-  let local = true;
+  let local = false;
   var apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
   if (!local) {
     apiUrlTeacher = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
