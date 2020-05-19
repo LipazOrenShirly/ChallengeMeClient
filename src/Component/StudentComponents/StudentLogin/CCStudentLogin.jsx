@@ -22,7 +22,7 @@ export default class CCStudentLogin extends Component {
       HasPasswordError: true,
       student: {}
     };
-    let local = false;
+    let local = true;
     this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
     this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
     this.apiUrlTeacher = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';

@@ -20,7 +20,7 @@ class CCStudentFeatures extends Component {
             QueAndAnsArr: [],
             newFeature: false,
         }
-        let local = false;
+        let local = true;
         this.apiUrlFeaturesQuestion = 'http://localhost:' + { localHost }.localHost + '/api/FeaturesQuestion';
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         if (!local) {

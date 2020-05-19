@@ -15,7 +15,7 @@ export default class CCAlerts extends Component {
         this.state = {
             alertArr: []
         }
-        let local = false;
+        let local = true;
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
         if (!local) {
             this.apiUrlAlert = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';

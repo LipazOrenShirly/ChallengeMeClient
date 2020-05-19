@@ -24,7 +24,7 @@ class CCStudentPage extends Component {
             UnReadMesgCount: null,
             dataImg: EmptyImgStudentBase64,
         }
-        let local = false;
+        let local = true;
         this.apiUrlStudentFeatures = 'http://localhost:' + { localHost }.localHost + '/api/StudentFeatures';
         this.apiUrlMessage = 'http://localhost:' + { localHost }.localHost + '/api/Message';
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
