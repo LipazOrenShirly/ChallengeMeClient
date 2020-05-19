@@ -35,3 +35,30 @@
     margin-left: 3%;
 }
 
+.alertType{
+    border-radius: 24px;
+    
+}
+.alertTypeID1{
+background-color: rgba(255, 235, 205, 0.637);
+}
+.alertTypeID2{
+    background-color: rgba(95, 158, 160, 0.692);
+
+}
+.alertTypeID3{
+    background-color: rgba(250, 128, 114, 0.712);
+
+}
+.alertTypeID4{
+    background-color: rgba(255, 255, 0, 0.678);
+
+}
+.alertTypeID5{
+    background-color: rgba(0, 255, 255, 0.678);
+
+}
+.alertTypeID6{
+    background-color: rgba(216, 112, 147, 0.726);
+
+}

@@ -128,10 +128,16 @@ export default class CCAlerts extends Component {
                 });
     }
 
-    goToStudentPage = (studentID) => {
-        alert('פה צריך לשלוח אובייקט סטודנט לעמוד סטודנט ואין לנו פה אובייקט שלם אז צריך להחליט איך לעשות את זה')
+    goToStudentPage = (data) => {
         this.props.history.push({
             pathname: '/StudentPage',
+            state: { student: data }
+        })
+    }
+    goToStudentChat= (data) => {
+        this.props.history.push({
+            pathname: '/Chat',
+            state: { student: data }
         })
     }
 
@@ -160,8 +166,8 @@ export default class CCAlerts extends Component {
                     {this.state.alertArr.map( (item) => 
                         <CCOneAlert alert={item} getAlertIDForDelete={this.getAlertIDForDelete} 
                             getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
-                            goToStudentPage={this.goToStudentPage}/>
-                            
+                            goToStudentPage={this.goToStudentPage}
+                            goToStudentChat={this.goToStudentChat}/>
                     )}
                 </div>
                 <Footer />
