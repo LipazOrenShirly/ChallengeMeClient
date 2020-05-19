@@ -30,7 +30,7 @@ class CCOneChallenge extends Component {
         const classDiv="oneChallengeDiv status"+this.props.challenge.status;
         const deadline = new Date(challenge.deadline);
         const today = new Date();
-        const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
+        const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10) +1;
         var statusSentence = challenge.status != 0 ? "" : 
         dateDiff > 30 ? <div className="deadlineDiv">תאריך סיום: {challenge.deadline}</div> :
         <div className="remainDaysDiv">נותרו {dateDiff} ימים לסיום האתגר</div> 
