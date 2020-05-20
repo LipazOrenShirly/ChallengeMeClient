@@ -14,9 +14,7 @@ class CCOneChallenge extends Component {
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Challenge';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod'+ '/api/Challenge';
-        }
-     
-        
+        }       
     }
 
     componentDidMount() {
