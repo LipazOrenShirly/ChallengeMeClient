@@ -31,8 +31,8 @@
     color: rgb(127, 116, 145);
 }
 .h6Teacher{
-    position: fixed;
-    bottom: 10px;
+    /* position: fixed;
+    bottom: 10px; */
     color:#7E758E;
     width: 100%;
     text-shadow: 1px 1px rgb(146, 137, 160);

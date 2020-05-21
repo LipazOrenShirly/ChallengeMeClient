@@ -105,14 +105,15 @@ export default class CCChat extends Component {
     sendMessage = () => {
         const user = this.context;
         const date = new Date();
-
+        var minute = "";
+        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
         const message = {
             teacherID: user.teacherID,
             studentID: this.props.location.state.student.studentID,
             messageTitle: "",
             messageText: this.state.messageText,
             messageDate: date.toISOString().split('T')[0],
-            messageTime: date.getHours() + ":" + date.getMinutes(),
+            messageTime: date.getHours() + ":" + minute,
             messageByTeacher: true,
         }
 

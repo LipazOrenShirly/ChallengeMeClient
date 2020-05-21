@@ -389,7 +389,7 @@ export default class CCTeacherLogin extends Component {
             <h5 className="h5Teacher" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
           </form>
           <div onClick={this.NewTeacher}>
-            <footer className="h6Teacher"><h6 > משתמש חדש? הרשם כאן</h6></footer>
+            <h6 className="h6Teacher"> משתמש חדש? הרשם כאן</h6>
           </div>
         </div>
       </div>
