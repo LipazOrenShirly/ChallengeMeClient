@@ -104,7 +104,7 @@ export default class CCOneAlert extends Component {
         // alertID, teacherID, studentID, alertTitle, alertText, alertDate, alertTime, alertRead, alertTypeID
         return (
             <div className={"justify-content-left alertTypeID" + alert.alertTypeID}>
-                <div className="container-OneAlert col-12" onClick={this.clickAlert}>
+                <div className="container-OneAlert col-12" >
 
                     <div className="row col-2 iconsAlertDiv">
                         <div className="iconDiv"><FaTrashAlt onClick={() => this.props.getAlertIDForDelete(alert.alertID)} /></div>
@@ -112,7 +112,7 @@ export default class CCOneAlert extends Component {
                             <div className="iconDiv"><MdMail id="icon" size={25} onClick={this.clickOnImgOrAlert} /></div>
                         }
                     </div>
-                    <div className="row col-7 detailsOneAlert justify-content-end" style={{ fontWeight: alert.alertRead ? 200 : 600 }}>
+                    <div className="row col-7 detailsOneAlert justify-content-end" onClick={this.clickAlert} style={{ fontWeight: alert.alertRead ? 200 : 600 }}>
                         <div><span className="alertType">{alert.alertTitle}</span></div>
                         {
                             this.state.alertOpen == false && <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>

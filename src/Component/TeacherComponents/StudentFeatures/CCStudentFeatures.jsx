@@ -179,7 +179,7 @@ class CCStudentFeatures extends Component {
                                 <div className="textHeadlineNum" id={`que${item.questionID}`} >שאלה מספר {key + 1} - שאלה בתחום ה{item.categoryName}</div>
                                 <div><strong>{item.question}</strong></div>
                                 <div>
-                                    <RadioGroup row aria-label="position" name="position" id={`ans${item.questionID}`} onChange={this.chooseAns} defaultValue="">
+                                    <RadioGroup row aria-label="position"  className="justify-content-between" name="position" id={`ans${item.questionID}`} onChange={this.chooseAns} defaultValue="">
                                         <FormControlLabel
                                             value={`radio,1,ans,${item.questionID}`}
                                             control={<Radio color="secondary" />}

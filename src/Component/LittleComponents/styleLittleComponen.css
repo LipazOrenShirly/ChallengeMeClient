@@ -8,13 +8,14 @@ footer{
 .footerDown{
     bottom: 0px;
     padding-bottom: 0px;
+ 
  }
 
 
 /*********navBar******************/
 
 .colorNav{
-background-color: rgba(30, 28, 28, 0.5);
+background-color: rgba(30, 28, 28, 0.616);
 
 }
 .navbar-light .navbar-nav .nav-link{

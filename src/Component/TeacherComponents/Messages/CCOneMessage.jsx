@@ -42,7 +42,7 @@ export default class CCOneMessage extends Component {
                 {/* הודעות נכנסות */}
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-start' >
-                        <div className="incomingMessageDivT"><p className="pMesLeft">{message.messageTime}</p>
+                        <div className="incomingMessageDivT" dir="rtl"><p className="pMesLeft">{message.messageTime}</p>
                             {message.messageText}
                         </div>
                     </div>
@@ -51,7 +51,7 @@ export default class CCOneMessage extends Component {
                 {/* הודעות יוצאות */}
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-end'>
-                        <div className="outgoingMessageDivT">
+                        <div className="outgoingMessageDivT"  dir="rtl">
                             {message.messageText} <p className="pMesRight">{message.messageTime}</p>
                         </div>
                     </div>

@@ -107,6 +107,7 @@ export default class CCChat extends Component {
         const date = new Date();
         var minute = "";
         minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+        
         const message = {
             teacherID: user.teacherID,
             studentID: this.props.location.state.student.studentID,
@@ -246,7 +247,7 @@ export default class CCChat extends Component {
             <div className="container-fluid">
                 <NavBar />
 
-                <div className="row upChatT mp0 align-items-center"> {/* חזור למסך הקודם */}
+                <div className="row upChatT mp0 align-items-center justify-content-between"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                     <div className="nameGoToHomeS" onClick={this.goToStudentPage}>{this.props.location.state.student.firstName} {this.props.location.state.student.lastName}</div>
                 </div>
@@ -265,7 +266,7 @@ export default class CCChat extends Component {
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGroundTeacher" id='send' onClick={this.clickSend}><MdSend className="MdSendT" color='#E8D5D5' /></button>
                     </div>
-                    <input type="text" className="form-control inputNewTeacher" id='messageText' placeholder='כתוב הודעה'
+                    <input type="text" className="form-control inputTeacherChat" id='messageText' dir="rtl" placeholder='כתוב הודעה'
                         value={messageText} onChange={(e) => {
                             this.setState({ messageText: e.target.value });
                         }}

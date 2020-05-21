@@ -40,14 +40,14 @@ export default class OneMessage extends Component {
                 {/* להודעות נכנסות יהיה עיצוב שונה מאשר להודעות נשלחות */}
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
-                        <div className="incomingMessageDiv">
+                        <div className="incomingMessageDiv" dir="rtl">
                             {message.messageText} <p className="pMesLeft">{message.messageTime}</p>
                         </div></div>
                 }
 
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-end'>
-                        <div className="outgoingMessageDiv">
+                        <div className="outgoingMessageDiv" dir="rtl">
                             {message.messageText} <p className="pMesRight">{message.messageTime}</p>
                         </div>
                     </div>

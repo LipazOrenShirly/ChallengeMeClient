@@ -105,14 +105,16 @@ export default class CCStudentChat extends Component {
     sendMessage = () => {
         const user = this.context;
         const date = new Date();
-
+        var minute = "";
+        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+       
         const message = {
             teacherID: user.teacherID,
             studentID: user.studentID,
             messageTitle: "",
             messageText: this.state.messageText,
             messageDate: date.toISOString().split('T')[0],
-            messageTime: date.getHours() + ":" + date.getMinutes(),
+            messageTime: date.getHours() + ":" + minute,
             messageByTeacher: false,
         }
 
@@ -233,6 +235,7 @@ export default class CCStudentChat extends Component {
     }
     render() {
         const messageText = this.state.messageText;
+        
         return (
             <div className="studentPage">
 
@@ -254,7 +257,7 @@ export default class CCStudentChat extends Component {
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGround" id='send' onClick={this.clickSend}><MdSend className="MdSend" color='rgb(163,233,255)' /></button>
                     </div>
-                    <input type="text" className="form-control inputNewTeacher" id='messageText' placeholder='כתוב הודעה'
+                    <input type="text" className="form-control inputStudentChat" dir="rtl" id='messageText' placeholder='כתוב הודעה'
                         value={messageText} onChange={(e) => {
                             this.setState({ messageText: e.target.value });
                         }}

@@ -20,3 +20,7 @@ font-weight: 500;
 .textHeadlineNum{
     text-decoration-line: underline;
 }
+.MuiFormControlLabel-labelPlacementTop{
+    margin-left: 8px !important;
+    /* margin-right: 8px; */
+}
