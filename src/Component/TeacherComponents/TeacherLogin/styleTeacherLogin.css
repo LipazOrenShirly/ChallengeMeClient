@@ -37,6 +37,7 @@
     width: 100%;
     text-shadow: 1px 1px rgb(146, 137, 160);
     background-color: inherit;
+    z-index: -1;
 }
 .react-inputs-validation__error___2aXSp , .errorFromServer{
     color:red;
