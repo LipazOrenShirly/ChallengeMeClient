@@ -92,9 +92,9 @@ export default class CCTeacherLogin extends Component {
         console.log('res.status', res.status);
         console.log('res.ok', res.ok);
         if (!res.ok)
-            throw new Error('Network response was not ok.');
-          return res.json();      
-        })
+          throw new Error('Network response was not ok.');
+        return res.json();
+      })
       .then(
         (result) => {
           console.log("Submit= ", result);
@@ -111,12 +111,12 @@ export default class CCTeacherLogin extends Component {
         },
         (error) => {
           console.log("err get=", error);
-            Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
-              icon: 'warning',
-              confirmButtonColor: '#e0819a',
-            })
+          Swal.fire({
+            title: 'אוי',
+            text: 'הפעולה נכשלה, נסה שנית',
+            icon: 'warning',
+            confirmButtonColor: '#e0819a',
+          })
         });
     event.preventDefault();
   }
@@ -141,7 +141,7 @@ export default class CCTeacherLogin extends Component {
           console.log('res.ok', res.ok);
           if (!res.ok)
             throw new Error('Network response was not ok.');
-          return res.json();        
+          return res.json();
         })
         .then(
           (result) => {
@@ -170,7 +170,7 @@ export default class CCTeacherLogin extends Component {
               icon: 'warning',
               confirmButtonColor: '#e0819a',
             })
-          
+
           });
     }
     event.preventDefault();
@@ -178,14 +178,14 @@ export default class CCTeacherLogin extends Component {
 
   saveTeacherToken = async () => {
     const user = await this.context;
-    
+
     var token = await askForPermissioToReceiveNotifications(); //יצירת תוקן למשתמש
     var tokenString = await Promise.resolve(token).then((val) => val);
     var data = await {
       teacherID: user.teacherID,
       teacherToken: tokenString
-    }  
-    
+    }
+
     //פקודת פוסט ששומרת את התוקן של המשתמש בטבלת תלמידים
     await fetch(this.apiUrl + '/teacherToken', {
       method: 'PUT',

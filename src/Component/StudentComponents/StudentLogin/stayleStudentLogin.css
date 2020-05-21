@@ -29,13 +29,13 @@
     margin: 5px 0;
 }
 
-h5{
+.h5Student{
     padding-top: 2%;
     font-size: 20px;
     text-shadow: 1px 1px rgb(78, 92, 95);
     color: rgb(98, 130, 134);
 }
-h6{
+.h6Student{
     position: fixed;
     bottom: 10px;
     

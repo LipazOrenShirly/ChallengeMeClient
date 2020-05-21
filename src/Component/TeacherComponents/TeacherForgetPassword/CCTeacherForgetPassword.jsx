@@ -30,6 +30,7 @@ export default class CCTeacherForgetPassword extends Component {
     }
 
     Submit = (event) => {
+        if(!this.state.HasUserNameValError && !this.state.HasmailValError ){
         fetch(this.apiUrl + '?mail=' + this.state.mail + '&username=' + this.state.username,
             {
                 method: 'GET',
@@ -67,6 +68,7 @@ export default class CCTeacherForgetPassword extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
+            }
         event.preventDefault();
     }
 
@@ -97,7 +99,7 @@ export default class CCTeacherForgetPassword extends Component {
 
                                 value={mail}
                                 validationCallback={res =>
-                                    this.setState({ HasmailValError: res, validate: false })
+                                    this.setState({ HasmailValError: res})
                                 }
                                 onChange={(mail, e) => { //כל שינוי הוא שומר בסטייט
                                     this.setState({ mail });
@@ -131,7 +133,7 @@ export default class CCTeacherForgetPassword extends Component {
 
                                 value={username}
                                 validationCallback={res =>
-                                    this.setState({ HasUserNameValError: res, validate: false })
+                                    this.setState({ HasUserNameValError: res })
                                 }
                                 onChange={(username, e) => { //כל שינוי הוא שומר בסטייט
                                     this.setState({ username });
@@ -146,7 +148,7 @@ export default class CCTeacherForgetPassword extends Component {
                             />
                         </div>
 
-                        <div className="text-center"><button disabled={this.state.HasUserNameValError || this.state.HasmailValError} type="submit" className="btn btn-light btnPink roundedBtn">שלח</button></div>
+                        <div className="text-center"><button  type="submit" className="btn btn-light btnPink roundedBtn">שלח</button></div>
 
                         <SweetAlert
                             show={this.state.showGood}

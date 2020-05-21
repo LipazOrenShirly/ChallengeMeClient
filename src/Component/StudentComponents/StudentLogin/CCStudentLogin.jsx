@@ -466,10 +466,10 @@ render() {
             <button type="submit" id="submit" className="btn btn-info btnYellow roundedBtn">כניסה</button>
             <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
           </div>
-          <h5 onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
+          <h5 className="h5Student" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
         </form>
         <div onClick={this.NewStudentAlert}>
-          <h6> ?אין לך עדיין משתמש</h6>
+          <h6 className="h6Student" > ?אין לך עדיין משתמש</h6>
         </div>
       </div>
     </div>
