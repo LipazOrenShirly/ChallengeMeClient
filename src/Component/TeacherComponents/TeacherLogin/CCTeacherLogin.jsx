@@ -386,10 +386,10 @@ export default class CCTeacherLogin extends Component {
               <button type="submit" id="submit" className="btn btn-info btnPink roundedBtn">כניסה</button>
               <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
             </div>
-            <h5 onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
+            <h5 className="h5Teacher" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
           </form>
           <div onClick={this.NewTeacher}>
-            <footer><h6> משתמש חדש? הרשם כאן</h6></footer>
+            <footer className="h6Teacher"><h6 > משתמש חדש? הרשם כאן</h6></footer>
           </div>
         </div>
       </div>
