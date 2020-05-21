@@ -21,16 +21,18 @@ export default class CCStudents extends Component {
             Class: this.props.class,
             StudentArr: []
         };
+
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Student';
+        this.apiUrlClass = 'http://localhost:' + { localHost }.localHost + '/api/Class';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
+            this.apiUrlClass = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Class';
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         $('#BTNsaveClassName').hide();
-        $('#className').val(this.state.Class.className);
         this.getStudentArr();
 
     }
@@ -76,14 +78,17 @@ export default class CCStudents extends Component {
     }
 
     UpdateClassName = () => {
+        var classTemp=this.state.Class;
+        classTemp.className=$('#className').val();
+        this.setState({Class:classTemp});
+        console.log(this.state.Class);
         var updatedClass = {
-            className: $('#className').val(),
+            className: this.state.Class.className,
             classID: this.state.Class.classID,
             teacherID: this.state.Class.teacherID
         }
 
-        var apiUrlClass = 'http://localhost:' + { localHost }.localHost + '/api/Class'
-        fetch(apiUrlClass, {
+        fetch(this.apiUrlClass, {
             method: 'PUT',
             body: JSON.stringify(updatedClass),
             headers: new Headers({
@@ -145,23 +150,26 @@ export default class CCStudents extends Component {
     }
 
     render() {
+        var className = this.state.Class.className
         return (
             <div className="container-fluid">
-                <div className="row EditNameClassDiv">
-                    <input type="text" className="classInput" id="className" disabled ></input>
+                <div className="row mp0 EditNameClassDiv justify-content-center">
+                    <input type="text" className="classInput" id="className" defaultValue={className} size={className.length} disabled ></input>
                     <div className="iconEditNameClassDiv" id="BTNeditClassName" onClick={this.EditClassName}><MdCreate /></div>
                     <div className="iconEditNameClassDiv" id="BTNsaveClassName" visibility='hidden' onClick={this.UpdateClassName}><IoMdCheckmark /></div>
                 </div>
-                <br />
-                <div className="row col-12 flex-container">
-                    {
-                        this.state.StudentArr.map((item) =>
-                            <CCOneStudent key={item.studentID} student={item} goToStudentPage={this.props.goToStudentPage} SendDeleteStudents={this.deleteStudent} />
-                        )
-                    }
+                
+                <div className="col-12">
+                    <div className="row mp0 flex-container containerStudents">
+                        {
+                            this.state.StudentArr.map((item) =>
+                                <CCOneStudent key={item.studentID} student={item} goToStudentPage={this.props.goToStudentPage} SendDeleteStudents={this.deleteStudent} />
+                            )
+                        }
+                    </div>
                 </div>
-
                 <div className="AddnewStudent" id="AddnewStudent" onClick={this.AddStudent}>הוספת תלמיד +</div>
+                <br />
             </div>
         );
     };

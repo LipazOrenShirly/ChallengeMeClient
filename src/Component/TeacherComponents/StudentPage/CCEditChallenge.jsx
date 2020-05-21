@@ -27,7 +27,7 @@ class CCEditChallenge extends Component {
 
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const challenge = this.state.challenge;
         $('#DeadlineInput').val(challenge.deadline);
         var statusWord;

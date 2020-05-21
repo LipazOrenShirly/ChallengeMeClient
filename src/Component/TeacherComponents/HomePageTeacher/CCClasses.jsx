@@ -157,10 +157,12 @@ export default class CCClasses extends Component {
         return (
             <div className="classes">
                 <div className="myClasses">הכיתות שלי</div>
-                <div className="row col-12 flex-container">
-                    {this.state.classesArr.map((item) =>
-                        <CCOneClass key={item.classID} class={item} SendClassNameToClasses={this.getClassNameFromOneClass} SendDataToClasses={this.getDataFromOneClass} />
-                    )}
+                <div className="col-12 justify-content-center">
+                    <div className="row mp0 flex-container containerClasses">
+                        {this.state.classesArr.map((item) =>
+                            <CCOneClass key={item.classID} class={item} SendClassNameToClasses={this.getClassNameFromOneClass} SendDataToClasses={this.getDataFromOneClass} />
+                        )}
+                    </div>
                 </div>
                 <div className="AddnewClass" id="AddnewClass" onClick={this.AddClass}>הוספת כיתה +</div>
 
@@ -170,8 +172,9 @@ export default class CCClasses extends Component {
                             <input type="text" id="newClass" className="form-control inputRounded" placeholder="כתוב שם כיתה" required />
                         </div>
                         <div className="col-12">
-                            <button type="submit" id="submit" className="btn btn-info btnPink">הוסף כיתה</button>
+                            <button type="submit" id="submit" className="btn btn-info btnPink roundedBtn">הוסף כיתה</button>
                         </div>
+                        <br/>
                     </form>
                 }
 

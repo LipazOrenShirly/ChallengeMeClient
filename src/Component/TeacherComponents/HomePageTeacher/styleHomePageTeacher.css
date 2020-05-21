@@ -7,7 +7,7 @@
 }
 
 .AddnewClass, .AddnewStudent{
-    margin-top: 30px;
+    /* margin-top: 30px; */
 }
 
 
@@ -43,6 +43,7 @@ EditNameClassDiv{
     display: flex;
     align-content: center;
     align-self: center;
+    /* display:inline-block; */
 }
 
 /* .addStudent{
@@ -78,22 +79,32 @@ padding-right: 5px;
 padding-left: 5px;
 padding-top: 7px;
 }
-
-.classNameHome{
-    border: 1px solid rgb(115, 146, 142);
-    height: 98px;
-    /* width: 100px; */
+.classStudentHome{
+    box-shadow: 1.5px 1.5px rgb(144, 166, 173);
     text-align: center;
     align-items: center;
     float: left;
-    margin:10px;
     padding:0px;
-    background-color: rgb(156, 199, 194);
+    background-color: rgb(165, 224, 217);
     font-weight: 700;
     color: white;
-    margin-top:2px;
     border-radius: 5px;
-    
+}
+.classNameHome{
+    /* height: 98px;
+    width: 30%;
+    margin-top: 15px; */
+    flex: 0 1 25%;
+    height: 98px;
+    margin: 10px;
+}
+.studentHome{
+    /* width: 23%;
+    height: 98px;
+    margin-top: 15px; */
+    flex: 0 1 24%;
+  height: 98px;
+  margin: 10px;
 }
 .flex-container{
     display: flex;
@@ -106,4 +117,9 @@ padding-top: 7px;
     display: flex;
     right: 0px;
     z-index: 1;
+}
+
+.containerStudents , .containerClasses{
+    flex-wrap: wrap;
+    margin: -25px;
 }

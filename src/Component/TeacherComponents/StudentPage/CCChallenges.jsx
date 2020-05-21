@@ -21,7 +21,7 @@ class CCChallenges extends Component {
 
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         fetch(this.apiUrl + '?studentID=' + this.props.studentID
             , {
                 method: 'GET',

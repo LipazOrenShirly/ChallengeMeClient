@@ -1,16 +1,11 @@
 .inputUpdateTeacher{
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.07);
     text-align: right;
     border:none;
 }
-.inputUpdateTeacher:disabled{
-    background-color: rgba(0, 0, 0, 0.07);
-}
-.inputUpdateTeacher:enabled{
-    background-color: rgba(255, 255, 255, 0.5);
-}
+
 .inputUpdateTeacher:focus{
-background-color: rgba(0, 0, 0, 0.07);
+background-color: rgba(0, 0, 0, 0.15);
 box-shadow: none !important
 }
 .loginDiv{
@@ -25,6 +20,7 @@ box-shadow: none !important
 }
 .cencelBtn{
 background-color: rgba(161, 123, 133, 0.801);
+margin-right: 2%;
 
 }
 .hideFirst{

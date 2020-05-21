@@ -37,7 +37,7 @@ export default class CCHomePageTeacher extends Component {
     }
     static contextType = ProjectContext;
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.getDataOfMessagesNum();
         setInterval(this.getDataOfMessagesNum, 5000); // runs every 5 seconds.
     }
@@ -129,11 +129,12 @@ export default class CCHomePageTeacher extends Component {
     }
 
     sendInputToHomePage = (e) => {
-        this.setState({ input: e.target.value });
+        var str = e.target.value.replace("'", '');
+        this.setState({ input: str });
 
         //מחזיר תלמידים שמתאימים לאינפוט
         const user = this.context;
-        fetch(this.apiUrl + '?teacherID=' + user.teacherID + '&name=' + e.target.value
+        fetch(this.apiUrl + '?teacherID=' + user.teacherID + '&name=' + str
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -180,7 +181,7 @@ export default class CCHomePageTeacher extends Component {
                         )}
                     </div>
                 }
-
+ {this.state.input == "" && <div>
                 {this.state.studentPage == false &&
                     <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
                 }
@@ -193,7 +194,8 @@ export default class CCHomePageTeacher extends Component {
                         <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
                     </div>
                 }
-
+</div>
+}
                 <Footer />
             </div>
         )

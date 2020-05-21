@@ -18,7 +18,7 @@ class CCStudentDetails extends Component {
 
     }
 
-    componentDidMount = () => { //כרגע לא משתמשים בזה, האוביקט בא שלם ממסך הבית
+    componentDidMount() { //כרגע לא משתמשים בזה, האוביקט בא שלם ממסך הבית
         fetch(this.apiUrl + '?studentID=' + this.props.student.studentID
             , {
                 method: 'GET',

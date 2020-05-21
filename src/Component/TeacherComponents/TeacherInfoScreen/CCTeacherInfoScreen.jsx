@@ -500,9 +500,9 @@ export default class CCTeacherInfoScreen extends Component {
                             />
                         </div>
 
-                        <div className="col-12" >
+                        <div className="col-12 mp0 justify-content-around" >
                             <button type="submit" id="save" className="btn btn-info col-8 btnPink"  >עדכן פרטים</button>
-                            <button type="button" id="cancel" className="btn btn-info col-4 btnPink cencelBtn" onClick={this.btnClick} >בטל</button>
+                            <button type="button" id="cancel" className="btn btn-info col-3 btnPink cencelBtn" onClick={this.btnClick} >בטל</button>
                         </div>
                     </form>
                 </div>

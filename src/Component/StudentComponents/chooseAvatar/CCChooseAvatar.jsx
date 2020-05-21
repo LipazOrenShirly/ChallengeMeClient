@@ -25,7 +25,7 @@ export default class CCChooseAvatar extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount = () => {
+    componentDidMount (){
 
     }
 

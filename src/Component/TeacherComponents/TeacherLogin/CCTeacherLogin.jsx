@@ -266,7 +266,7 @@ export default class CCTeacherLogin extends Component {
                 }}
               />
             </div>
-            <div className="form-group col-12">
+            <div className="form-group col-12 marginb">
               <Textbox
                 attributesInput={{
                   id: 'apasswordId',
@@ -375,7 +375,7 @@ export default class CCTeacherLogin extends Component {
                 </div>
               </div>
             }
-
+            <h5 className="h5Teacher" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
             <div className="rememberMeDiv">
               <label className="rememberTeacher">
                 זכור אותי&nbsp;&nbsp;
@@ -386,8 +386,9 @@ export default class CCTeacherLogin extends Component {
               <button type="submit" id="submit" className="btn btn-info btnPink roundedBtn">כניסה</button>
               <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
             </div>
-            <h5 className="h5Teacher" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
+
           </form>
+
           <div onClick={this.NewTeacher}>
             <h6 className="h6Teacher"> משתמש חדש? הרשם כאן</h6>
           </div>

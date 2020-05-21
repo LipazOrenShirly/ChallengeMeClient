@@ -10,10 +10,10 @@ body{
     background: linear-gradient(60deg, rgba(223,208,218,1) 8%, rgba(235,225,229,1) 24%, rgba(241,224,224,1) 39%, rgba(232,213,213,1) 56%, rgba(237,228,228,1) 72%, rgba(230,204,219,1) 89%);
   
 }
+
 .container-fluid{
     padding:0px;
     margin:0px;
-    height:100vh;
     text-align: center;
 }
 .floatLeft{
@@ -91,7 +91,7 @@ body{
     background-size: cover;
     padding:0px;
     margin:0px;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
   
 }

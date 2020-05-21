@@ -1,6 +1,7 @@
 
 
 .background{
+    height:100vh;
     background-image: url('../../../img/backgroundTorS.png') !important; 
     background-size: cover;
 }

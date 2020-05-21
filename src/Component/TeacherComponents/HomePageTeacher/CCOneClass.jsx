@@ -50,7 +50,7 @@ export default class CCOneClass extends Component {
     }
     render() {
         return (
-            <div className="classNameHome col-3" dir="rtl" >
+            <div className="classNameHome classStudentHome" dir="rtl" >
                 <MdClose className="closeIcon" onClick={this.deleteClass}/>
                 <span className="verticalMiddle" onClick={this.studentsPage}> {this.props.class.className}</span>
             </div>
