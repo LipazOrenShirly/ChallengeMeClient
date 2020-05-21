@@ -112,7 +112,7 @@ export default class CCOneAlert extends Component {
                             <div className="iconDiv"><MdMail id="icon" size={25} onClick={this.clickOnImgOrAlert} /></div>
                         }
                     </div>
-                    <div className="row col-7 detailsOneAlert justify-content-end" style={{ fontWeight: alert.alertRead ? 200 : 500 }}>
+                    <div className="row col-7 detailsOneAlert justify-content-end" style={{ fontWeight: alert.alertRead ? 200 : 600 }}>
                         <div><span className="alertType">{alert.alertTitle}</span></div>
                         {
                             this.state.alertOpen == false && <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>

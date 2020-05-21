@@ -55,7 +55,7 @@
  
 }
 .messagesDivT{
-    height: 70%;
+    height: 72vh;
     overflow: scroll; 
     display: flex; 
     flex-direction: column-reverse;
