@@ -103,29 +103,33 @@ export default class CCOneAlert extends Component {
         var alert = this.props.alert;
         // alertID, teacherID, studentID, alertTitle, alertText, alertDate, alertTime, alertRead, alertTypeID
         return (
-            <div className="justify-content-left">
+            <div className={"justify-content-left alertTypeID" + alert.alertTypeID}>
                 <div className="container-OneAlert col-12" onClick={this.clickAlert}>
 
                     <div className="row col-2 iconsAlertDiv">
                         <div className="iconDiv"><FaTrashAlt onClick={() => this.props.getAlertIDForDelete(alert.alertID)} /></div>
                         {this.state.alertOpen &&
-                            <div className="iconDiv"><MdMail id="icon" onClick={this.clickOnImgOrAlert} /></div>
+                            <div className="iconDiv"><MdMail id="icon" size={25} onClick={this.clickOnImgOrAlert} /></div>
                         }
                     </div>
-                    <div className="row col-7 detailsOneAlert" style={{ fontWeight: alert.alertRead ? 200 : 500 }}>
-                        <div className={"col-12 alertType alertTypeID"+alert.alertTypeID}>{alert.alertTitle}</div>
-                        <div className="col-12">{alert.alertDate} {alert.alertTime}</div>
-
-                        {this.state.alertOpen &&
-                            <div className="col-12" >{alert.alertText}</div>
+                    <div className="row col-7 detailsOneAlert justify-content-end" style={{ fontWeight: alert.alertRead ? 200 : 500 }}>
+                        <div><span className="alertType">{alert.alertTitle}</span></div>
+                        {
+                            this.state.alertOpen == false && <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>
                         }
-
                     </div>
+
                     <div className="col-3">
                         <img className="emptyUserImgMes" id="img" src={`data:image/jpeg;base64,${this.state.dataImg}`} onClick={this.clickOnImgOrAlert} />
                     </div>
                 </div>
-                <hr />
+                {this.state.alertOpen &&
+                    <div style={{textAlign:'right'}}>
+                        <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>
+                        <div className="col-12 alertText" >{alert.alertText}</div>
+                    </div>
+                }
+
             </div>
 
 

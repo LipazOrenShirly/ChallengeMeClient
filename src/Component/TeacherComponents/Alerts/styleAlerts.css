@@ -5,18 +5,19 @@
 .allAlerts{
     height: 66vh;
     overflow-y: scroll;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 
 /*******One Alert *******/
 .container-OneAlert{
-
-    margin: 2px;
+    margin: 1px;
     padding: 0px;
     text-align: right;
     display: flex;
     width: 98%;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .iconsAlertDiv{
@@ -29,36 +30,57 @@
 .detailsOneAlert{
     margin: 0px;
     padding: 0px;
+    text-align: right !important;
+
 }
 .iconDiv{
     height: 20px;
     margin-left: 3%;
 }
-
+.alertDate{
+    font-size: 16px;
+}
+.alertText{
+    font-size: 20px;
+    text-align: right;
+    font-weight: 300;
+    padding-bottom: 15px;
+}
 .alertType{
-    border-radius: 24px;
+    /* border-radius: 24px; */
+    text-decoration: underline;
     
 }
-.alertTypeID1{
-background-color: rgba(255, 235, 205, 0.637);
+
+/* positive */
+.alertTypeID1{ 
+background-color: rgba(199, 255, 238, 0.637);
 }
+
+/* Negative */
 .alertTypeID2{
-    background-color: rgba(95, 158, 160, 0.692);
-
+    background-color: rgba(255, 196, 189, 0.685);
 }
+
+/* help */
 .alertTypeID3{
-    background-color: rgba(250, 128, 114, 0.712);
-
+    background-color: rgba(255, 231, 180, 0.712);
 }
+
+/* late */
 .alertTypeID4{
-    background-color: rgba(255, 255, 0, 0.678);
+    background-color: rgba(178, 192, 238, 0.678);
 
 }
+
+/* predate */
 .alertTypeID5{
-    background-color: rgba(0, 255, 255, 0.678);
+    background-color: rgba(201, 238, 238, 0.678);
 
 }
+
+/* idle */
 .alertTypeID6{
-    background-color: rgba(216, 112, 147, 0.726);
+    background-color: rgba(204, 204, 204, 0.726);
 
 }

@@ -153,12 +153,12 @@ export default class CCAlerts extends Component {
                 <NavBar />
                 <div className="row col-12 searchDiv">
                     <div className="col-12 turkiz">התרעות</div>
-                    <div className="col-8 searchItselfDiv">
+                    <div className="col-11 searchItselfDiv">
                         <input type="text" className="form-control inputRounded" id="search" placeholder="חיפוש"></input>
                     </div>
 
                     <div className="col-12 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
-                        <h5 >עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
+                        <h5 className="h5Teacher">עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
                     </div>
                 </div>
                 

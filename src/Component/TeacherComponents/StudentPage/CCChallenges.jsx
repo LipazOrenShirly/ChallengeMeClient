@@ -60,6 +60,9 @@ class CCChallenges extends Component {
     render() {
         return (
             <div>
+                 <div className="col-12">
+                    <button className="btn btn-info btnPink eddChallengeBTN" type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
+                </div>
                 <div className="textTilteChallStusent" dir="rtl">{this.state.StudentChallenges.length} האתגרים של התלמיד: </div>
                 <div className="row iconsCircle">
                     <div className="col-4 oneIconCircle">  צריך עזרה
@@ -75,12 +78,13 @@ class CCChallenges extends Component {
 
 
                 </div>
-                {this.state.StudentChallenges.map((item, key) =>
-                    <CCOneChallenge key={key} index={key + 1} challenge={item} goToEditChallenge={this.props.goToEditChallenge} />
-                )}
-                <div className="col-12">
-                    <button className="btn btn-info btnPink eddChallengeBTN" type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
-                </div></div>
+                <div className="studentChallengesDiv">
+                    {this.state.StudentChallenges.map((item, key) =>
+                        <CCOneChallenge key={key} index={key + 1} challenge={item} goToEditChallenge={this.props.goToEditChallenge} />
+                    )}
+                </div>
+               
+            </div>
         );
     }
 }

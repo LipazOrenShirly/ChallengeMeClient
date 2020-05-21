@@ -133,7 +133,7 @@ export default class CCStudentLogin extends Component {
       else {   //אם בחר בטל
         Swal.fire({
           title: 'בסדר',
-          text: 'הסיסמה לה השתנתה',
+          text: 'הסיסמה לא השתנתה',
           icon: 'success',
           confirmButtonColor: 'rgb(135, 181, 189)',
         })
@@ -422,7 +422,7 @@ render() {
             />
 
           </div>
-          <div className="form-group col-12">
+          <div className="form-group col-12 marginb">
             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
               attributesInput={{
                 id: 'apasswordId',
@@ -455,6 +455,7 @@ render() {
               }}
             />
           </div>
+          <h5 className="h5Student" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
 
           <div className="rememberMeDivStudent">
             <label className="rememberStudent">
@@ -466,7 +467,6 @@ render() {
             <button type="submit" id="submit" className="btn btn-info btnYellow roundedBtn">כניסה</button>
             <div id="errorFromServer" className="react-inputs-validation__error___2aXSp"></div>
           </div>
-          <h5 className="h5Student" onClick={this.ForgetPassword}> שכחתי סיסמה</h5>
         </form>
         <div onClick={this.NewStudentAlert}>
           <h6 className="h6Student" > ?אין לך עדיין משתמש</h6>

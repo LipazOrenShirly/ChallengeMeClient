@@ -178,9 +178,9 @@ class CCStudentPage extends Component {
         console.log(student);
         return (
             <div>
-                <NavBar /><br />
+                <NavBar />
                 {/* <CCStudentDetails student = {student} /> */}
-
+                <br />
 
                 <div className="row mp0" >
                     <div className="linkColor col-3 d-flex align-items-center justify-content-center">
@@ -188,7 +188,7 @@ class CCStudentPage extends Component {
                             <MdMail size={40} />
                         </Badge>
                     </div>
-                    <div className="headLineHomePage col-8">
+                    <div className="headLineStudentPage col-9">
                         <div className="row mp0" dir="rtl">
                             <img className="emptyUserImg" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
                             <div className="textStudentDetails col-8" style={{ width: '100%', paddingTop: '5%' }} ><strong>{student.firstName} {student.lastName}</strong></div>
@@ -196,15 +196,17 @@ class CCStudentPage extends Component {
                     </div>
 
                 </div>
+                <br />
+                <div className="row mp0">
+                    <div className="col-6" style={{paddingRight:'2px'}}><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentFeatures', { student: student })} >אפיון התלמיד</button></div>
+                    <div className="col-6" style={{paddingLeft:'2px'}}><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentInfoScreen', { student: student })} >פרטי התלמיד</button></div>
+                </div>
                 {this.state.hasFeature &&
                     <CCChallenges studentID={student.studentID} goToEditChallenge={this.goToEditChallenge} SendDataToStudentPage={this.getDataFromChallenges} />
                 }
                 {this.state.hasFeature == false &&
                     <div className="errorfeature">על מנת להוסיף אתגרים לתלמיד עליך להשלים את אפיון התלמיד</div>
                 }
-                <div className="col-12"><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentFeatures', { student: student })} >אפיון התלמיד</button></div>
-
-                <div className="col-12"><button className="btn btn-info btnPink eddChallengeBTN" onClick={() => this.props.history.push('/StudentInfoScreen', { student: student })} >פרטי התלמיד</button></div>
 
                 <br /><br />
                 <Footer />

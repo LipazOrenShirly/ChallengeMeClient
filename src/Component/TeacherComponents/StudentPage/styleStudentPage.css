@@ -11,8 +11,14 @@
 color: rgba(224, 129, 154, 0.801);
 font-size: 110%;
 font-weight: 500;
+margin: 3% 0;
 }
 /* ****** */
+
+/* .studentChallengesDiv{
+    height: 60vh;
+    overflow-y: scroll;
+} */
 .oneChallengeDiv{
     border: 1px solid rgb(127, 116, 145);
     margin:2%;
@@ -29,7 +35,7 @@ font-weight: 500;
     color:rgb(148, 3, 116);
 }
 .eddChallengeBTN{
-    margin-bottom: 2%;
+    margin-bottom: 4px;
 }
 .status1{
     border: 1px solid #3fb181b2;
@@ -125,4 +131,10 @@ box-shadow: none !important
     color:red;
     font-weight: 600;
     padding-bottom: 3%;
+}
+
+.headLineStudentPage{
+    height: 10%;   
+ text-align: right;
+ margin: 0px ;
 }

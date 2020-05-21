@@ -236,8 +236,8 @@ export default class CCStudentChat extends Component {
         return (
             <div className="studentPage">
 
-                <div className="row upChat"> {/* חזור למסך הקודם */}
-                    <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
+                <div className="row upChat" onClick={() => window.history.back()}> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" size={40} />
                     <p className="returnHomePageP"> חזור למסך הבית </p>
                 </div>
                 <div className='messagesDiv'>

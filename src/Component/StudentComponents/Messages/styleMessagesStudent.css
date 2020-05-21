@@ -18,8 +18,9 @@ margin-bottom: 3px;
     background-color: rgba(255, 255, 255, 0.432);
     border-bottom: solid teal;
 }
+
 .messagesDiv{
-    height: 80%;
+    height: 83vh;
     overflow: scroll; 
     display: flex; 
     flex-direction: column-reverse;

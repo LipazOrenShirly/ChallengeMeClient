@@ -314,7 +314,7 @@ export default class CCStudentHomePage extends Component {
                     </label>
                     <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
-                <br />
+                {/* <br /> */}
 
                 {/* הודעות של התלמיד */}
                 <div onClick={() => this.props.history.push('/StudentChat', { FirstAndLastName: this.state.FirstAndLastName })} className="messagesS col-12 d-flex align-items-center justify-content-center" >

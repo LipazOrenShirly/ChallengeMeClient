@@ -15,7 +15,7 @@
 .rememberMeDivStudent{
     /* background-color: rgba(255,105,180,0.8); */
     background-color: rgba(124, 187, 245, 0.912);
-    margin-top: 7%;
+    margin-top: 5%;
 }
 
 /* for large device */
@@ -32,15 +32,13 @@
 .h5Student{
     padding-top: 2%;
     font-size: 20px;
-    text-shadow: 1px 1px rgb(78, 92, 95);
+    text-shadow: 0.5px 0.5px rgb(115, 146, 150);
     color: rgb(98, 130, 134);
 }
 .h6Student{
-    position: fixed;
-    bottom: 10px;
-    
+    margin-top: 2%;
     width: 100%;
-    text-shadow: 1px 1px rgb(78, 92, 95);
+    text-shadow: 0.5px 0.5px rgb(115, 146, 150);
     color: rgb(98, 130, 134);
 }
 .react-inputs-validation__error___2aXSp , .errorFromServer{
