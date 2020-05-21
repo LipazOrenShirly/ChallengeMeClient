@@ -5,8 +5,10 @@
 }
 
 body{
-    background-color: #E8D5D5;
-
+    /* background-color: #E8D5D5; */
+    background: rgb(223,208,218);
+    background: linear-gradient(60deg, rgba(223,208,218,1) 8%, rgba(235,225,229,1) 24%, rgba(241,224,224,1) 39%, rgba(232,213,213,1) 56%, rgba(237,228,228,1) 72%, rgba(230,204,219,1) 89%);
+  
 }
 .container-fluid{
     padding:0px;
@@ -31,7 +33,7 @@ body{
     width: 100%;
 }
 .btnPink{
-    background-color: #F5B5DB;
+    background-color: rgb(248, 172, 218);
     color: whitesmoke;
 }
 .btnPink:hover{
@@ -49,7 +51,10 @@ body{
 .inputRounded{
     border-radius: 24px; 
     text-align: center;
+   background-color: rgba(255, 255, 255, 0.74) !important;
+    border:none !important;
 }
+
 
 /************searchDiv********************/
 

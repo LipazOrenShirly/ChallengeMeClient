@@ -213,16 +213,22 @@ export default class CCteacherORstudent extends Component {
     })
   }
 
- 
+
 
   render() {
     return (
-      <div className="container-fluid col-xs-12 screentos" >
-        {this.state.showRender && <div className="containerTeacherOrStudent">
-          <h1>האם אתה</h1>
-          <div className="col-12"><button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkTotS col-5">מורה</button>
-            <button type="button" className="btn btn-info btnpinkTotS btnPinkTOS col-5" onClick={this.heIsStudent}>תלמיד</button></div>
-        </div>
+      <div className="container-fluid background d-flex align-items-center justify-content-center" >
+        {this.state.showRender &&
+          <div className="containerTeacherOrStudent col-12">
+            <h1 className="doYou">האם אתה</h1>
+            <div className="col-12">
+              <button type="button" onClick={this.heIsTeacher} className="btn btn-light btnpinkToT col-12">מורה</button>
+            </div>
+            <div className="col-12">
+              <button type="button" className="btn btn-info btnToS col-12" onClick={this.heIsStudent}>תלמיד</button>
+            </div>
+
+          </div>
         }
       </div>
     );

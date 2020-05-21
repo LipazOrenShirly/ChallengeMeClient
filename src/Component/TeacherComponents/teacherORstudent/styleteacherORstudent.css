@@ -1,19 +1,25 @@
-.btnPinkTOS{
-    margin-top: 12%;
-}
 
-.containerTeacherOrStudent{
-    padding-top: 10%;
-}
 
-.btnpinkTotS{
-    background-color: #F5B5DB;
-    border: none;
-    margin: 0 1%;
+.background{
+    background-image: url('../../../img/backgroundTorS.png') !important; 
+    background-size: cover;
+}
+.btnpinkToT , .btnToS{
+    /* border: none; */
     color: whitesmoke;
     height: 70px;
+    font-size: 120%;
 }
-btnpinkTotS:hover{
-    background-color: rgb(245, 155, 209);
-
+.btnpinkToT{
+    background-color: rgb(255, 158, 216);
+    border: 3px solid rgb(241, 116, 191);
+   }
+.btnToS{
+    margin-top: 7%;
+    background-color: rgb(121, 221, 228);
+    border: 3px solid rgb(67, 182, 190);
+}
+.doYou{
+    color: white;
+    text-shadow: 1.5px 1.5px rgb(134, 134, 134);
 }
