@@ -101,7 +101,15 @@ export default class CCOneAlert extends Component {
 
     render() {
         var alert = this.props.alert;
+        var today = new Date();
+        var yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        var yesterdayString = yesterday.toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1");
+        var todayString = today.toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של היום
+        var alertDate = new Date(alert.alertDate).toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1"); //התאריך של היום
+        var alertDateString = (alertDate == todayString ? "היום" : ( alertDate == yesterdayString ? "אתמול" : alertDate));
         // alertID, teacherID, studentID, alertTitle, alertText, alertDate, alertTime, alertRead, alertTypeID
+        
         return (
             <div className={"justify-content-left alertTypeID" + alert.alertTypeID}>
                 <div className="container-OneAlert col-12" >
@@ -115,7 +123,7 @@ export default class CCOneAlert extends Component {
                     <div className="row col-7 detailsOneAlert justify-content-end" onClick={this.clickAlert} style={{ fontWeight: alert.alertRead ? 200 : 600 }}>
                         <div><span className="alertType">{alert.alertTitle}</span></div>
                         {
-                            this.state.alertOpen == false && <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>
+                            this.state.alertOpen == false && <div className="col-12 alertDate">{alertDateString} {alert.alertTime}</div>
                         }
                     </div>
 
@@ -125,7 +133,7 @@ export default class CCOneAlert extends Component {
                 </div>
                 {this.state.alertOpen &&
                     <div style={{textAlign:'right'}}>
-                        <div className="col-12 alertDate">{alert.alertDate} {alert.alertTime}</div>
+                        <div className="col-12 alertDate">{alertDateString} {alert.alertTime}</div>
                         <div className="col-12 alertText" >{alert.alertText}</div>
                     </div>
                 }

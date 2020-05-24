@@ -164,7 +164,8 @@ export default class CCAlerts extends Component {
                 
                 <div className="allAlerts">
                     {this.state.alertArr.map( (item) => 
-                        <CCOneAlert alert={item} getAlertIDForDelete={this.getAlertIDForDelete} 
+                        <CCOneAlert key={item.alertID} alert={item} 
+                            getAlertIDForDelete={this.getAlertIDForDelete} 
                             getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
                             goToStudentPage={this.goToStudentPage}
                             goToStudentChat={this.goToStudentChat}/>
