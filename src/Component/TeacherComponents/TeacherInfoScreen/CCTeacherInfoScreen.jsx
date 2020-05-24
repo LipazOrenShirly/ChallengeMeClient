@@ -95,50 +95,58 @@ export default class CCTeacherInfoScreen extends Component {
     }
 
     UpdateDetails = (event) => {
-        var updatedDetails = {
-            firstName: $('#UpdateTFirstName').val(),
-            lastName: $('#UpdateTLastName').val(),
-            userName: $('#UpdateTUserName').val(),
-            mail: $('#UpdateTMail').val(),
-            phone: $('#UpdateTPhone').val(),
-            password: $('#UpdateTPassword').val(),
-            school: $('#UpdateTSchool').val(),
-            teacherID: 8
-        }
-        fetch(this.apiUrl, {
-            method: 'PUT',
-            body: JSON.stringify(updatedDetails),
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8'
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                if (!res.ok)
-                    throw new Error('Network response was not ok.');
-                return res.json();
-            })
-            .then(
-                (result) => {
-                    console.log("fetch PUT= ", result);
-                    Swal.fire({
-                        title: 'מעולה!',
-                        text: 'הפרטים שונו בהצלחה!',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    })
-                },
-                (error) => {
-                    console.log("err PUT=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
-                });
+        const user = this.context;
         event.preventDefault();
-        // window.location.reload();
+
+        const { HasphoneValError, HasfirstNameValError, HaslastNameValError, HasmailValError, HaspasswordValError,
+            Haspassword2ValError, HasschoolValError } = this.state
+
+        if (!HasphoneValError && !HasfirstNameValError && !HaslastNameValError && !HasmailValError && !HaspasswordValError
+            && !Haspassword2ValError && !HasschoolValError) {
+
+            var updatedDetails = {
+                firstName: $('#UpdateTFirstName').val(),
+                lastName: $('#UpdateTLastName').val(),
+                userName: $('#UpdateTUserName').val(),
+                mail: $('#UpdateTMail').val(),
+                phone: $('#UpdateTPhone').val(),
+                password: $('#UpdateTPassword').val(),
+                school: $('#UpdateTSchool').val(),
+                teacherID: user.teacherID
+            }
+            fetch(this.apiUrl, {
+                method: 'PUT',
+                body: JSON.stringify(updatedDetails),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8'
+                })
+            })
+                .then(res => {
+                    console.log('res=', res);
+                    if (!res.ok)
+                        throw new Error('Network response was not ok.');
+                    return res.json();
+                })
+                .then(
+                    (result) => {
+                        console.log("fetch PUT= ", result);
+                        Swal.fire({
+                            title: 'מעולה!',
+                            text: 'הפרטים שונו בהצלחה!',
+                            icon: 'success',
+                            confirmButtonColor: '#e0819a',
+                        })
+                    },
+                    (error) => {
+                        console.log("err PUT=", error);
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        })
+                    });
+        }
     }
 
     btnClick = () => {
@@ -149,7 +157,7 @@ export default class CCTeacherInfoScreen extends Component {
             icon: 'warning',
             confirmButtonColor: '#e0819a',
         }).then(
-            this.getInPlace(user)
+             this.getInPlace(user)
         )
     }
     checkIfUserNameExist = (e) => {
@@ -194,7 +202,47 @@ export default class CCTeacherInfoScreen extends Component {
                     })
                 });
     }
+    checkIfPhoneExist = (e) => {
+        var phone = parseInt(e.target.value);
+        // this.setState({ phone: "" })
+        $('#PhoneValuesError').empty();
 
+        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        fetch(this.apiUrl + '?phone=0' + phone
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("Submit= ", result);
+                    console.log("Submit= ", JSON.stringify(result));
+                    if (result != 0) { // כבר קיים מספר הטלפון הזה
+                        this.setState({ HasphoneValError: true });
+                        $('#PhoneValuesError').empty();
+                        $('#PhoneValuesError').append("מספר הטלפון הזה כבר קיים במערכת");
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+    }
     render() {
         const {
             firstName,
@@ -366,13 +414,16 @@ export default class CCTeacherInfoScreen extends Component {
 
                                 value={phone}
                                 validationCallback={res =>
-                                    this.setState({ HasphoneValError: res, validate: false })
+                                    this.setState({ HasphoneValError: res })
                                 }
                                 onChange={(phone, e) => { //כל שינוי הוא שומר בסטייט
                                     this.setState({ phone });
                                     console.log(e);
                                 }}
-                                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                                onBlur={(e) => {
+                                    console.log(e);
+                                    this.checkIfPhoneExist(e);
+                                }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
@@ -388,6 +439,7 @@ export default class CCTeacherInfoScreen extends Component {
                                 }}
                             />
                         </div>
+                        <div className='errorInputuserName' id="PhoneValuesError"></div>
 
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס

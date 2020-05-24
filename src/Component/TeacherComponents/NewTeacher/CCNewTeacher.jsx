@@ -146,13 +146,13 @@ export default class CCnewTeacher extends Component {
                 });
     }
 
-    checkIfPhoneExist(e) {
-        var phoneInput = e.target.value;
-        this.setState({ phone: "" })
-        //$('#PhoneValuesError').empty();
+    checkIfPhoneExist = (e) => {
+        var phone = parseInt(e.target.value);
+        // this.setState({ phone: "" })
+        $('#PhoneValuesError').empty();
 
         // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
-        fetch(this.apiUrl + '?phone=' + phoneInput
+        fetch(this.apiUrl + '?phone=0' + phone
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -171,7 +171,7 @@ export default class CCnewTeacher extends Component {
                 (result) => {
                     console.log("Submit= ", result);
                     console.log("Submit= ", JSON.stringify(result));
-                    if (result == 1) { // כבר קיים מספר הטלפון הזה
+                    if (result != 0) { // כבר קיים מספר הטלפון הזה
                         this.setState({ HasphoneValError: true });
                         $('#PhoneValuesError').empty();
                         $('#PhoneValuesError').append("מספר הטלפון הזה כבר קיים במערכת");
@@ -368,9 +368,9 @@ export default class CCnewTeacher extends Component {
                                     this.setState({ phone });
                                     console.log(e);
                                 }}
-                                onBlur={(e) => { 
+                                onBlur={(e) => {
                                     console.log(phone);
-                                    this.checkIfPhoneExist(e); 
+                                    this.checkIfPhoneExist(e);
                                 }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.

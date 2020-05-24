@@ -160,6 +160,7 @@ export default class CCAddNewChallenge extends Component {
         }
     }
 
+
     render() {
         const { SfirstName, SlastName, Sphone, Spassword, Spassword2, Sage, SBirthDate } = this.state;
         return (
@@ -357,20 +358,21 @@ export default class CCAddNewChallenge extends Component {
                     <Textbox
                         attributesInput={{
                             id: 'NewStudentBirthDate',
-                            type: 'date',
+                            type: 'text',
                             placeholder: 'תאריך לידה תלמיד',
                             className: "form-control inputNewTeacher"
                         }}
 
                         value={SBirthDate}
-
+                        onClick={(e) => { e.target.type = "date"; console.log(e.target.type); }}
                         onChange={(SBirthDate, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ SBirthDate });
                             console.log(e);
                         }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
 
                     />
+ 
                 </div>
                 <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToStudentFeatures}>יצירת התלמיד והעברה לאפיון תלמיד</button>

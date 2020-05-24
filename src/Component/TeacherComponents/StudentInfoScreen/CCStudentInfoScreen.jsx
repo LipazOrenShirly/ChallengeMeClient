@@ -389,12 +389,12 @@ export default class CCStudentInfoScreen extends Component {
                         }}
 
                         value={birthDate}
-
+                        onClick={(e) => { e.target.type = "date"; console.log(e.target.type); }}
                         onChange={(birthDate, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ birthDate });
                             console.log(e);
                         }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
 
                     />
                 </div>

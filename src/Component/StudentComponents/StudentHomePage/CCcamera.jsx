@@ -43,7 +43,7 @@ export default class CCcamera extends Component {
             Resizer.imageFileResizer(
                 e.target.files[0], //is the file of the new image that can now be uploaded...
                 500, // is the maxWidth of the  new image
-                300, // is the maxHeight of the  new image
+                500, // is the maxHeight of the  new image
                 'PNG', // is the compressFormat of the  new image
                 50, // is the quality of the  new image
                 0, // is the rotatoion of the  new image
@@ -116,8 +116,8 @@ export default class CCcamera extends Component {
                 { // אחרי שמצלמים
                     this.state.imageDetails &&
                     <div className="imageTaken">
-                        <div>
-                            <img src={this.state.dataUriImage} />
+                        <div className="col-12" style={{backgroundColor:'black'}}>
+                            <img style={{height:'350px',width:'350px'}} src={this.state.dataUriImage} />
                         </div>
                         <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
                         <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
