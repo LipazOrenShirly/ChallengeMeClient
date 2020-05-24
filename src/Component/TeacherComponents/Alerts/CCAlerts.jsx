@@ -13,7 +13,10 @@ export default class CCAlerts extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            alertArr: []
+            allAlertArr: [],
+            alertArr: [],
+            input: "",
+            alertArrSearch: [],
         }
         let local = false;
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
@@ -48,7 +51,7 @@ export default class CCAlerts extends Component {
         .then(
             (result) => {
                 console.log(result);
-                this.setState({ alertArr: result })
+                this.setState({ allAlertArr: result, alertArr: result})
             },
             (error) => {
                 console.log("err get=", error);
@@ -58,7 +61,7 @@ export default class CCAlerts extends Component {
                     icon: 'warning',
                     confirmButtonColor: '#e0819a',
                 })
-            })
+            });
     }
 
     getAlertIDForDelete = (alertID) => {
@@ -147,14 +150,58 @@ export default class CCAlerts extends Component {
         })
     }
 
+    inputChange = async (e) => {
+        await this.setState({ input: e.target.value });
+        await console.log(this.state.input);
+        await this.state.input == "" && this.setState({ alertArr: this.state.allAlertArr});
+        await this.state.input != "" && this.getStudentAlerts();
+    }
+
+    getStudentAlerts = () => {
+        const user = this.context;
+        fetch(this.apiUrlAlert + '/getTeacherAlertsSearch?teacherID=' + user.teacherID+'&studentName='+this.state.input
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            if (!res.ok)
+                throw new Error('Network response was not ok.');
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log(result);
+                this.setState({ alertArrSearch: result ,alertArr: result})
+            },
+            (error) => {
+                console.log("err get=", error);
+                Swal.fire({
+                    title: 'אוי',
+                    text: 'הפעולה נכשלה, נסה שנית',
+                    icon: 'warning',
+                    confirmButtonColor: '#e0819a',
+                })
+            });
+    }
+
     render() {
+        var input = this.state.input;
         return (
             <div className="container-fluid">
                 <NavBar />
                 <div className="row col-12 searchDiv">
                     <div className="col-12 turkiz">התרעות</div>
+                    
                     <div className="col-11 searchItselfDiv">
-                        <input type="text" className="form-control inputRounded" id="search" placeholder="חיפוש"></input>
+                        <input type="text" id="search" className="form-control inputRounded" placeholder="חיפוש" 
+                            value={input} onChange={ (e) => this.inputChange(e) }
+                        />
                     </div>
 
                     <div className="col-12 addingAlertsDiv" onClick={this.linkToAlertsSetting}>

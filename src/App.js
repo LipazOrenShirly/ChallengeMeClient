@@ -43,19 +43,8 @@ function App() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  // const user = {
-  //   teacherID: "",
-  //   setTeacher: (teacherIDfromLOGIN) => user.teacherID = teacherIDfromLOGIN,
-  //   studentID: "",
-  //   setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
-  //   studentToken: "",
-  //   setStudentToken: (studentToken) => user.studentToken = studentToken,
-  // };
-
   useEffect(() => {
     initializeFirebase();
-    //waitForMassege(setShowNotification, setTitle, setBody);
-
   }, [])
 
   useEffect(() => {
