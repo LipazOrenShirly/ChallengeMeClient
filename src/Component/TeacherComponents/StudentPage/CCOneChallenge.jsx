@@ -27,12 +27,12 @@ class CCOneChallenge extends Component {
         const challenge = this.props.challenge;
         const classDiv="oneChallengeDiv status"+this.props.challenge.status;
         const deadline = new Date(challenge.deadline);
-        
+        const deadlineString = deadline.toISOString().split('T')[0].replace(/(....).(..).(..)/, "$3/$2/$1");
         const today = new Date();
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10) +1;
         var statusSentence = challenge.status != 0 ? "" : 
-        dateDiff > 30 ? <div className="deadlineDiv">תאריך סיום: {challenge.deadline}</div> :
-        (dateDiff < 0 ?  <div className="remainDaysDiv">תאריך הדדלין עבר ב {Math.abs(parseInt(dateDiff))}  ימים </div> :
+        dateDiff > 30 ? <div className="deadlineDiv">תאריך סיום: {deadlineString}</div> :
+        (dateDiff < 0 ?  <div className="remainDaysDiv">תאריך הדדלין עבר לפני {Math.abs(parseInt(dateDiff))}  ימים </div> :
         <div className="remainDaysDiv">נותרו {dateDiff} ימים לסיום האתגר</div> )           
          
 
