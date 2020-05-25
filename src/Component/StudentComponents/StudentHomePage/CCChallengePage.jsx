@@ -392,7 +392,7 @@ export default class CCChallengePage extends Component {
                     
                 </div>
                 <div className="row mp0">
-                <FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto} color="white" />
+                <FaPencilAlt className="FaPencilAlt" size={35} onClick={this.AddPhoto} color="white" />
                 </div>
                 {/* מספר האתגר */}
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
