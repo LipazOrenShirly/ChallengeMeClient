@@ -12,6 +12,24 @@
 .MuiFormControl-fullWidth {
     bottom: 10px;
 }
+.MuiInputLabel-formControl {
+    right: 0;
+}
+
+.MuiFormLabel-root.Mui-focused, .MuiFormLabel-root{
+    color: #a36ae4;
+} 
+
+.MuiInputLabel-shrink {
+    transform: translate(35px, 1.5px) scale(0.75);
+    transform-origin: top left;
+    /* transform-origin: top right; */
+}
+
+.MuiAutocomplete-inputRoot[class*="MuiFilledInput-root"] {
+    padding-top: 10px;
+}
+
 
 /*******One Alert *******/
 .container-OneAlert{

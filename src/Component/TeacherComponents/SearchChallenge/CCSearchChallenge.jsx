@@ -178,7 +178,7 @@ class CCSearchChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo options={this.state.challengesArr} onInputChange={this.onInputChange}/>
+                        <FreeSolo challenges={this.state.challengesArr} onInputChange={this.onInputChange}/>
                     </div>
                     <div>
                         <div className="form-group input-group col-12 bc" dir="rtl">
