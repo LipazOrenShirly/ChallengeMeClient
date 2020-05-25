@@ -26,7 +26,6 @@ export default class CCAlerts extends Component {
     }
     
     static contextType = ProjectContext;
-//123
     componentDidMount() {
        this.getAlerts(); 
     }
