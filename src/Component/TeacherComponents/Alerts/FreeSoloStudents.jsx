@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function FreeSolo(props) {
   return (
-    <div style={{ width: 300 }}>
+    <div className="DivAutoComplete">
 
       <Autocomplete
         freeSolo

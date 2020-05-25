@@ -241,8 +241,8 @@ export default class CCAlerts extends Component {
                         <FreeSoloStudents onInputChange={this.onInputChange} students={this.state.students} />
                     </div>
 
-                    <div className="col-12 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
-                        <h5 className="h5Teacher">עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
+                    <div className="col-12 addingAlertsDiv">
+                        <h5 className="h5Teacher"  onClick={this.linkToAlertsSetting}>עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
                     </div>
                 </div>
                 

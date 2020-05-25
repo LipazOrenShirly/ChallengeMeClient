@@ -126,7 +126,7 @@ export default class CCStudentsWithMessage extends Component {
             <div className="container-fluid">
 
                 {/* שדה חיפוש תלמיד לפי שם */}
-                <div className="form-group col-12">
+                <div className="form-group col-12" dir="rtl">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
                             id: 'searchInput',

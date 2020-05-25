@@ -59,7 +59,7 @@ const NavBar = () => {
 
   return (
     <Navbar className="colorNav" expand="lg">
-      <Navbar.Brand><Link to="/HomePageTeacher"><img src={require('../../img/logoSmall.svg')}></img></Link></Navbar.Brand>
+      <Navbar.Brand><Link to="/HomePageTeacher"><img className="logoSmall" src={require('../../img/logoSmall.svg')}></img></Link></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
