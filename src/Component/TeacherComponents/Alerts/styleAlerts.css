@@ -8,7 +8,11 @@
     /* margin-top: 20px; */
 }
 
-/********** FreeSoloStudents *************/
+/********** FreeSolo *************/
+.bc {
+    background-color: transparent;
+} 
+
 .MuiFormControl-fullWidth {
     bottom: 10px;
 }
