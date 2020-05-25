@@ -34,35 +34,43 @@ class CCSearchChallenge extends Component {
     }
 
     componentDidMount() {
-        fetch(this.apiUrl+"?studentID="+this.props.location.state.studentID 
-            , {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                })
-            })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                if (!res.ok)
-            throw new Error('Network response was not ok.');
-          return res.json();            })
-            .then(
-                (result) => {
-                    console.log("challengesArr= ", result);
-                    this.setState({ challengesArr: result });
-                },
-                (error) => {
-                    console.log("err get=", error);
-            Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
-              icon: 'warning',
-              confirmButtonColor: '#e0819a',
-            })
-                });
+        this.getChallenges();
+        this.getTags();
 
+    }
+
+    getChallenges = () => {
+        fetch(this.apiUrl+"?studentID="+this.props.location.state.studentID 
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            if (!res.ok)
+        throw new Error('Network response was not ok.');
+      return res.json();            })
+        .then(
+            (result) => {
+                console.log("challengesArr= ", result);
+                this.setState({ challengesArr: result });
+            },
+            (error) => {
+                console.log("err get=", error);
+        Swal.fire({
+          title: 'אוי',
+          text: 'הפעולה נכשלה, נסה שנית',
+          icon: 'warning',
+          confirmButtonColor: '#e0819a',
+        })
+            });
+    }
+
+    getTags = () => {
         fetch(this.apiUrlTags
             , {
                 method: 'GET',
