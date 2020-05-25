@@ -98,8 +98,8 @@ export default class CCChallengePage extends Component {
             $('#success').css('background-color', 'rgb(167, 167, 167)');
             $('#fail').css('background-color', 'rgb(167, 167, 167)');
             $('#help').css('background-color', '#FFBE3D');
-
-            this.setState({ statusSentence: "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה" });
+        
+            this.setState({ statusSentence:  "הודעה נשלחה למורה והוא יענה ברגע שיוכל"});
         }
     }
 
@@ -375,7 +375,7 @@ export default class CCChallengePage extends Component {
         const deadline = new Date(challenge.deadline);
         const today = new Date();
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
-
+        const messageHelp = "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה" ;
         return (
             <div className="studentPage">
                 <div className="col-12"> {/* חזור למסך הקודם */}
@@ -393,7 +393,7 @@ export default class CCChallengePage extends Component {
                 <div className="col-12 challengeReadText challengeName">{challenge.challengeName} </div>
                 {/* ימים לסיום אתגר/תאריך סיום */}
                 {
-                    challenge.status != 0 ? <div className="statusSentence">{this.state.statusSentence}</div> :
+                    challenge.status != 0 ? <div className="statusSentence">{this.state.messageShow == true ? messageHelp : this.state.statusSentence}</div> :
                         dateDiff > 30 ?
                             <div> <div className="col-12 dedlineTextChallengePage">מועד סיום האתגר</div>
                                 <div className="col-12 dedlineDateTextChallengePage">{challenge.deadline}</div></div>

@@ -113,19 +113,25 @@ box-shadow: none !important
 .spanCCEdit{
     background-color: rgba(163, 158, 172, 0.7);
     border: none;
+    color: whitesmoke;
+
 }
+
 .btnDeleteChallenge{
-    background-color:rgba(172, 172, 158, 0.842) ;
+    background-color:rgba(204, 166, 202, 0.897) ;
     border:none;
-    color: rgb(223, 223, 223);
+    color: whitesmoke;
     font-weight: 600;
     border-radius: 60px; 
     width: 100%;
-  
+  margin-top: 10px;
 }
 .btnDeleteChallenge:active{
     background-color:rgba(104, 104, 95, 0.842) ;
  
+}
+.textEditChallenge{
+    color: rgb(228, 147, 208);
 }
 .errorfeature{
     color:red;

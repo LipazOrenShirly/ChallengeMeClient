@@ -55,32 +55,42 @@
 /* positive */
 .alertTypeID1{ 
 background-color: rgba(199, 255, 238, 0.637);
+/* border: 4px solid rgba(156, 243, 217, 0.637); */
 }
 
 /* Negative */
 .alertTypeID2{
     background-color: rgba(255, 196, 189, 0.685);
+    /* border: 4px solid rgba(250, 169, 160, 0.685); */
+
 }
 
 /* help */
 .alertTypeID3{
     background-color: rgba(255, 231, 180, 0.712);
+    /* border: 4px solid rgba(250, 220, 156, 0.712); */
 }
 
 /* late */
 .alertTypeID4{
     background-color: rgba(178, 192, 238, 0.678);
+    /* border: 4px solid rgba(145, 164, 228, 0.678); */
 
 }
 
 /* predate */
 .alertTypeID5{
     background-color: rgba(201, 238, 238, 0.678);
+    /* border: 4px solid rgba(171, 240, 240, 0.678); */
 
 }
 
 /* idle */
 .alertTypeID6{
     background-color: rgba(204, 204, 204, 0.726);
+    /* border: 4px solid rgba(161, 161, 161, 0.726); */
 
+}
+.oneAlertDiv{
+    background-color: transparent;
 }

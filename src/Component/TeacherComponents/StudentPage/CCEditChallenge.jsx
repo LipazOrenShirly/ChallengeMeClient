@@ -17,7 +17,7 @@ class CCEditChallenge extends Component {
         this.state = {
             challenge: this.props.location.state.challenge,
             iconIsLevelInput: <MdCreate onClick={this.EditDifLevelInput} />,
-            iconIsDeadline: <MdCreate onClick={this.EditDeadlineInput} />,
+            iconIsDeadline: <MdCreate onClick={this.EditDeadlineInput} color="whitesmoke" />,
         }
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/StudentChallenge';
@@ -219,7 +219,7 @@ class CCEditChallenge extends Component {
                 <div className="titleChalengeinCCEDIT">{challenge.challengeName}</div>
                 <br />
 
-                <div><strong>:תאריך סיום האתגר</strong></div>
+                <div className="textEditChallenge"><strong>:תאריך סיום האתגר</strong></div>
                 <div className="col-12 input-group mb-3">
                     <div className="input-group-prepend">
                         <span className="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsDeadline}</span>
@@ -228,7 +228,7 @@ class CCEditChallenge extends Component {
                 </div>
 
 
-                <div><strong>:סטטוס האתגר </strong></div>
+                <div className="textEditChallenge"><strong>:סטטוס האתגר </strong></div>
                 <div className="col-12 input-group mb-3">
                     <div className="input-group-prepend">
                         <span className="input-group-text spanCCEdit" id="basic-addon1" onClick={this.EditStatusInput}>איפוס הסטטוס</span>
