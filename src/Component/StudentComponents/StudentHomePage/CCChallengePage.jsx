@@ -155,14 +155,16 @@ export default class CCChallengePage extends Component {
         var alertText = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן שהוא ' + statusHeb + challenge.challengeName;
 
         const date = new Date();
-
+        var minute = "";
+        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+       
         var alert = {
             teacherID: user.teacherID,
             studentID: user.studentID,
             alertTitle: alertTitle,
             alertText: alertText,
             alertDate: date.toISOString().split('T')[0],
-            alertTime: date.getHours() + ":" + date.getMinutes(),
+            alertTime: date.getHours() + ":" + minute,
             alertTypeID: alertTypeID
         }
 
@@ -323,14 +325,16 @@ export default class CCChallengePage extends Component {
     sendMessage = () => {
         const user = this.context;
         const date = new Date();
-
+        var minute = "";
+        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+       
         const message = {
             teacherID: user.teacherID,
             studentID: user.studentID,
             messageTitle: "",
             messageText: this.state.messageText,
             messageDate: date.toISOString().split('T')[0],
-            messageTime: date.getHours() + ":" + date.getMinutes(),
+            messageTime: date.getHours() + ":" + minute,
             messageByTeacher: false,
         }
 
