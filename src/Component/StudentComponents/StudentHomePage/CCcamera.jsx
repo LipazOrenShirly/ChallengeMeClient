@@ -43,9 +43,9 @@ export default class CCcamera extends Component {
             Resizer.imageFileResizer(
                 e.target.files[0], //is the file of the new image that can now be uploaded...
                 500, // is the maxWidth of the  new image
-                500, // is the maxHeight of the  new image
+                300, // is the maxHeight of the  new image
                 'PNG', // is the compressFormat of the  new image
-                50, // is the quality of the  new image
+                60, // is the quality of the  new image
                 0, // is the rotatoion of the  new image
                 uri => { this.setState({ dataUriImage: uri }) },  // is the callBack function of the new image URI
                 'base64'  // is the output type of the new image
