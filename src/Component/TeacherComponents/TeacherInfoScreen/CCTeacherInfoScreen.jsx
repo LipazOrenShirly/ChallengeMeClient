@@ -156,9 +156,10 @@ export default class CCTeacherInfoScreen extends Component {
             text: 'אתה בטוח שאתה רוצה לבטל את השינויים?',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
-        }).then(
-             this.getInPlace(user)
-        )
+        }).then(()=>{
+             this.getInPlace(user);
+             $(".react-inputs-validation__msg_identifier").empty();
+    })
     }
     checkIfUserNameExist = (e) => {
         var usernameNewTeacher = e.target.value;
