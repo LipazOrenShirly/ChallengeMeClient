@@ -8,6 +8,10 @@
     /* margin-top: 20px; */
 }
 
+/********** FreeSoloStudents *************/
+.MuiFormControl-fullWidth {
+    bottom: 10px;
+}
 
 /*******One Alert *******/
 .container-OneAlert{

@@ -94,7 +94,7 @@ class CCSearchChallenge extends Component {
     }
 
     onInputChange = (event, value) => {
-        if(value == ""){         //אם אין תגיות או שמחקו את כולן אז ירוקן את הסטייט
+        if(value == ""){         //אם אין אינפוט אז ירוקן את הסטייט
             this.setState({ filteredChallengesByName: [] });
             return;
         }
@@ -170,7 +170,7 @@ class CCSearchChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo challenges={this.state.challengesArr} onInputChange={this.onInputChange}/>
+                        <FreeSolo options={this.state.challengesArr} onInputChange={this.onInputChange}/>
                     </div>
                     <div>
                         <div className="form-group input-group col-12 bc" dir="rtl">

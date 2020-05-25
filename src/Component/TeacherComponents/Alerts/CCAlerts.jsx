@@ -8,26 +8,31 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCOneAlert from './CCOneAlert';
 import { FiSettings } from 'react-icons/fi';
 import ProjectContext from '../../../Context/ProjectContext';
+import FreeSoloStudents from '../Alerts/FreeSoloStudents';
 
 export default class CCAlerts extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allAlertArr: [],
             alertArr: [],
-            input: "",
             alertArrSearch: [],
+            students: [],
+            search: false
         }
         let local = false;
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
+        this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
         if (!local) {
             this.apiUrlAlert = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Alert';
+            this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
     
     static contextType = ProjectContext;
+    
     componentDidMount() {
        this.getAlerts(); 
+       this.getStudents(); //for the autocomplete of the search field
     }
 
     getAlerts = () => {
@@ -50,7 +55,7 @@ export default class CCAlerts extends Component {
         .then(
             (result) => {
                 console.log(result);
-                this.setState({ allAlertArr: result, alertArr: result})
+                this.setState({ alertArr: result})
             },
             (error) => {
                 console.log("err get=", error);
@@ -130,6 +135,39 @@ export default class CCAlerts extends Component {
                 });
     }
 
+    getStudents = () => {
+        const user = this.context;
+        fetch(this.apiUrlStudent + '?teacherID=' + user.teacherID
+        , {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+        .then(res => {
+            console.log('res=', res);
+            console.log('res.status', res.status);
+            console.log('res.ok', res.ok);
+            if (!res.ok)
+                throw new Error('Network response was not ok.');
+            return res.json();
+        })
+        .then(
+            (result) => {
+                console.log(result);
+                this.setState({ students: result})
+            },
+            (error) => {
+                console.log("err get=", error);
+                Swal.fire({
+                    title: 'אוי',
+                    text: 'הפעולה נכשלה, נסה שנית',
+                    icon: 'warning',
+                    confirmButtonColor: '#e0819a',
+                })
+            });
+    }
+
     goToStudentPage = (data) => {
         this.props.history.push({
             pathname: '/StudentPage',
@@ -149,16 +187,18 @@ export default class CCAlerts extends Component {
         })
     }
 
-    inputChange = async (e) => {
-        await this.setState({ input: e.target.value });
-        await console.log(this.state.input);
-        await this.state.input == "" && this.setState({ alertArr: this.state.allAlertArr});
-        await this.state.input != "" && this.getStudentAlerts();
+    onInputChange = (event, value) => {
+        if(value == ""){         //אם אינפוט ריק אז ירוקן את הסטייט
+            this.setState({ alertArrSearch: [], search: false });
+            return;
+        }
+        this.getStudentAlerts(value);
+        this.setState({ search: true });
     }
 
-    getStudentAlerts = () => {
+    getStudentAlerts = (value) => {
         const user = this.context;
-        fetch(this.apiUrlAlert + '/getTeacherAlertsSearch?teacherID=' + user.teacherID+'&studentName='+this.state.input
+        fetch(this.apiUrlAlert + '/getTeacherAlertsSearch?teacherID=' + user.teacherID+'&studentName='+value
         , {
             method: 'GET',
             headers: new Headers({
@@ -176,7 +216,7 @@ export default class CCAlerts extends Component {
         .then(
             (result) => {
                 console.log(result);
-                this.setState({ alertArrSearch: result ,alertArr: result})
+                this.setState({ alertArrSearch: result })
             },
             (error) => {
                 console.log("err get=", error);
@@ -198,9 +238,7 @@ export default class CCAlerts extends Component {
                     <div className="col-12 turkiz">התרעות</div>
                     
                     <div className="col-11 searchItselfDiv">
-                        <input type="text" id="search" className="form-control inputRounded" placeholder="חיפוש" 
-                            value={input} onChange={ (e) => this.inputChange(e) }
-                        />
+                        <FreeSoloStudents onInputChange={this.onInputChange} students={this.state.students} />
                     </div>
 
                     <div className="col-12 addingAlertsDiv" onClick={this.linkToAlertsSetting}>
@@ -208,7 +246,7 @@ export default class CCAlerts extends Component {
                     </div>
                 </div>
                 
-                <div className="allAlerts">
+                {this.state.search == false && <div className="allAlerts">
                     {this.state.alertArr.map( (item) => 
                         <CCOneAlert key={item.alertID} alert={item} 
                             getAlertIDForDelete={this.getAlertIDForDelete} 
@@ -216,7 +254,18 @@ export default class CCAlerts extends Component {
                             goToStudentPage={this.goToStudentPage}
                             goToStudentChat={this.goToStudentChat}/>
                     )}
-                </div>
+                </div>}
+
+                {this.state.search && <div className="allAlerts">
+                    {this.state.alertArrSearch.map( (item) => 
+                        <CCOneAlert key={item.alertID} alert={item} 
+                            getAlertIDForDelete={this.getAlertIDForDelete} 
+                            getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
+                            goToStudentPage={this.goToStudentPage}
+                            goToStudentChat={this.goToStudentChat}/>
+                    )}
+                </div>}
+
                 <Footer />
             </div>
         );
