@@ -387,9 +387,12 @@ export default class CCChallengePage extends Component {
                 </div>
                 <br />
                 {/* תמונת האתגר */}
-                <div className="row mp0">
+                <div className="row mp0 justify-content-center" style={{backgroundColor:'black'}}>
                     <img className="imageOneChallenge" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
-                    <FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto} />
+                    
+                </div>
+                <div className="row mp0">
+                <FaPencilAlt className="FaPencilAlt" onClick={this.AddPhoto} color="white" />
                 </div>
                 {/* מספר האתגר */}
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
