@@ -173,6 +173,7 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentFirstName',
                             type: 'text',
                             placeholder: 'שם פרטי של התלמיד',
@@ -207,6 +208,7 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentLastName',
                             type: 'text',
                             placeholder: 'שם המשפחה של התלמיד',
@@ -243,6 +245,7 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentPhone',
                             type: 'text',
                             placeholder: 'מספר הפלאפון של התלמיד',
@@ -283,6 +286,7 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentPassword',
                             type: 'password',
                             placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
@@ -317,6 +321,7 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentPassword2',
                             type: 'password',
                             placeholder: 'הזן ססמה בשנית',
@@ -357,6 +362,7 @@ export default class CCAddNewChallenge extends Component {
                     {/* ללא ולידציות, אולי לא יודע תאריך לידה */}
                     <Textbox
                         attributesInput={{
+                            autoComplete: "off",
                             id: 'NewStudentBirthDate',
                             type: 'text',
                             placeholder: 'תאריך לידה תלמיד',
@@ -382,7 +388,7 @@ export default class CCAddNewChallenge extends Component {
                 </div>
 
 
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     };

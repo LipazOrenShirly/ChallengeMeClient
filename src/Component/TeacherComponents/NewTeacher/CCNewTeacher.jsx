@@ -212,6 +212,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTFirstName',
                                     type: 'text',
                                     placeholder: 'שם פרטי',
@@ -246,6 +247,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTLastName',
                                     type: 'text',
                                     placeholder: 'שם משפחה',
@@ -282,6 +284,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTUserName',
                                     type: 'text',
                                     placeholder: 'שם משתמש',
@@ -319,6 +322,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTMail',
                                     type: 'mail',
                                     placeholder: 'כתובת מייל',
@@ -354,6 +358,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTPhone',
                                     type: 'text',
                                     placeholder: 'פלאפון',
@@ -392,6 +397,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTPassword',
                                     type: 'password',
                                     placeholder: 'הזן ססמה',
@@ -426,6 +432,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'password2',
                                     type: 'password',
                                     placeholder: 'הזן ססמה בשנית',
@@ -465,6 +472,7 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
+                                    autoComplete: "off",
                                     id: 'NewTSchool',
                                     type: 'text',
                                     placeholder: 'מוסד לימודים שהינך מלמד בו',
@@ -503,12 +511,8 @@ export default class CCnewTeacher extends Component {
                         </div>
                     </form>
                 </div>
-                <Footer></Footer>
-
-
-
+                <Footer />
             </div>
-
         );
     };
 }

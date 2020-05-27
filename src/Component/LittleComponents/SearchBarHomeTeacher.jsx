@@ -32,7 +32,7 @@ export default class SearchBarHomeTeacher extends Component {
         </div>
 
         <div className="form-group col-6 searchTeacherHomePage">
-          <input type="text" className="form-control inputRounded" id="search" placeholder='חפש תלמיד'
+          <input type="text" autoComplete="off" className="form-control inputRounded" id="search" placeholder='חפש תלמיד'
             value={input} onChange={(e) => {this.setState({input: e.target.value}); this.props.sendInputToHomePage(e);}}
           />
         </div>

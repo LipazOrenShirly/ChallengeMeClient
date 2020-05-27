@@ -170,8 +170,11 @@ export default class CCHomePageTeacher extends Component {
         var { input } = this.state
         return (
             <div className="container-fluid">
-                <NavBar /><br /><br />
-
+                <NavBar />
+                {this.state.studentPage ? <div className="col-12"> {/* חזור למסך הקודם */}
+                    <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
+                </div> : <br />}
+                
                 <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={this.state.countAlerts} sendInputToHomePage={this.sendInputToHomePage} />
 
                 {this.state.input != "" &&
@@ -181,21 +184,19 @@ export default class CCHomePageTeacher extends Component {
                         )}
                     </div>
                 }
- {this.state.input == "" && <div>
-                {this.state.studentPage == false &&
-                    <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
-                }
+                {this.state.input == "" && <div>
+                    {this.state.studentPage == false &&
+                        <CCClasses teacherID={user.teacherID} SendDataToHomeTeacher={this.getDataFromClasses} />
+                    }
 
-                {this.state.studentPage == true &&
-                    <div>
-                        <div className="col-12"> {/* חזור למסך הקודם */}
-                            <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
+                    {this.state.studentPage == true &&
+                        <div>
+
+                            <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
                         </div>
-                        <CCStudents class={this.state.class} goToAddNewStudent={this.goToAddNewStudent} goToStudentPage={this.goToStudentPage} />
-                    </div>
+                    }
+                </div>
                 }
-</div>
-}
                 <Footer />
             </div>
         )
