@@ -207,7 +207,8 @@ export default class CCChat extends Component {
                 "title": alertTitle,
                 "body": alertText,
                 "click_action": "https://challengeme.netlify.app/",
-                "icon": "http://url-to-an-icon/icon.png"
+                // "icon": "http://url-to-an-icon/icon.png",
+                "icon": require('../../../img/avatars/turtle/turtle2.png')
             },
             "to": StudentToken
         }

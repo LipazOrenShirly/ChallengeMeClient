@@ -131,6 +131,18 @@ export default class CCChallengePage extends Component {
                     console.log("PUT= ", result);
                     this.btnColor();
                     this.createAlert(id);
+                    if (id == 'success') {
+                        Swal.fire({
+                            title: '!כל הכבוד',
+                            text: '!אתה מצוין! תמשיך ככה',
+                            // icon: 'success',
+                            confirmButtonColor: '#e0819a',
+                            imageUrl: require('../../../img/avatars/turtle/turtle2.png'),
+                            imageHeight: 150,
+                            imageAlt: 'A tall image'
+                        });
+                        this.props.history.push( '/StudentHomePage' );
+                    }
                 },
                 (error) => {
                     console.log("err get=", error);
