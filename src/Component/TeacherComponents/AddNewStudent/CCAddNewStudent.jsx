@@ -26,6 +26,7 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
+            HasSBirthDateValError: "",
             isPhoneExist: false,
             student: {}
         }
@@ -380,6 +381,9 @@ export default class CCAddNewChallenge extends Component {
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
                         }}
+                        validationCallback={res =>
+                            this.setState({ HasSBirthDateValError: res, validate: false })
+                        }
                     />
                 </div>
                 <div className="form-group col-12">
