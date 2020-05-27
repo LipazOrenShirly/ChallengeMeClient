@@ -111,6 +111,7 @@ export default class CCAlertsSettings extends Component {
             icon: 'success',
             confirmButtonColor: '#e0819a',
           });
+          this.props.history.push( '/HomePageTeacher' );
         },
         (error) => {
           console.log("err put=", error);

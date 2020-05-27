@@ -13,6 +13,12 @@ export const user = {
     setStudent: (studentIDfromLOGIN) => user.studentID = studentIDfromLOGIN,
     studentToken: "",
     setStudentToken: (studentToken) => user.studentToken = studentToken,
+    successCount: "",
+    setSuccessCount: (successCount) => user.successCount = successCount,
+    challengesCount: "",
+    setChallengesCount: (challengesCount) => user.challengesCount = challengesCount,
+    avatarLevel: "",
+    setAvatarLevel: (avatarLevel) => user.avatarLevel = avatarLevel,
   };
 
 

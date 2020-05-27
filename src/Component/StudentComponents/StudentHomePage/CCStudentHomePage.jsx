@@ -145,11 +145,35 @@ export default class CCStudentHomePage extends Component {
             .then(
                 (result) => {
                     console.log("count= ", result);
+                    var avatarLevel = (result[0] == 0 || result[1] == 0) ? 1 : Math.max(Math.ceil(result[0] / result[1] * 100 / 20), 1) //מינימום 1
                     this.setState({
                         // SuccessCount: result[0], 
                         // ChallengesCount: result[1],
-                        avatarLevel: (result[0] == 0 || result[0] == 0) ? 1 : Math.max(Math.ceil(result[0] / result[1] * 100 / 20), 1) //מינימום 1
+                        avatarLevel: avatarLevel
                     });
+                    if (user.successCount != "" && user.successCount != result[0]) { //אם כמות האתגרים שהתלמיד הצליח השתנתה
+                        if (user.successCount + 1 == result[0]) { // האם היא השתנה לאחד מעל מה שהיה קודם
+                            if (user.avatarLevel == avatarLevel) { // האם הרמה של התלמיד עדיין נשארה אותו דבר
+                                Swal.fire({
+                                    title: '!כל הכבוד',
+                                    text: '!אתה מצוין! תמשיך ככה',
+                                    // icon: 'success',
+                                    confirmButtonColor: '#e0819a',
+                                    imageUrl: require('../../../img/avatars/turtle/turtle2.png'),
+                                    imageHeight: 150,
+                                    imageAlt: 'A tall image'
+                                });
+                            }
+                            else {  // האם רמת התלמיד השתנתה בעקבות השינוי בכמות האתגרים שהצליח
+                                alert(`כמות האתגרים שהתלמיד הצליח השתנתה, קודם היא הייתה ${user.successCount}
+                                ועכשיו היא ${result[0]} וגם רמת התלמיד השתנתה, קודם היא הייתה ${user.avatarLevel}
+                                ועכשיו היא ${avatarLevel}`);
+                            }
+                        }
+                    };
+                    user.setSuccessCount(result[0]);
+                    user.setChallengesCount(result[1]);
+                    user.setAvatarLevel(avatarLevel);
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -259,8 +283,8 @@ export default class CCStudentHomePage extends Component {
         const user = await this.context;
 
         var data = await {
-          studentID: user.studentID,
-          studentToken: ""
+            studentID: user.studentID,
+            studentToken: ""
         }
 
         await fetch(this.apiUrlStudent + '/studentToken', {
