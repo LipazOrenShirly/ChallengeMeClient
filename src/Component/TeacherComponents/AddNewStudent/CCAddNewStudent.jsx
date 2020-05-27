@@ -26,7 +26,7 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
-            HasSBirthDateValError: "",
+            HasSBirthDateValError: true,
             isPhoneExist: false,
             student: {}
         }
