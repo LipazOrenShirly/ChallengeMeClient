@@ -26,7 +26,6 @@ export default class CCAddNewChallenge extends Component {
             Spassword2: "",
             HasSpassword2ValError: true,
             SBirthDate: "",
-            HasSBirthDateValError: true,
             isPhoneExist: false,
             student: {}
         }
@@ -46,8 +45,7 @@ export default class CCAddNewChallenge extends Component {
             !this.state.HasSlastNameValError &&
             !this.state.HasSphoneValError &&
             !this.state.HasSpasswordValError &&
-            !this.state.HasSpassword2ValError &&
-            !this.state.HasSBirthDateValError
+            !this.state.HasSpassword2ValError
         ) {
             var student1 = {
                 firstName: this.state.SfirstName,
@@ -99,6 +97,7 @@ export default class CCAddNewChallenge extends Component {
         }
         else return 0;
     }
+
     checkIfPhoneExist(e) {
         $('#phoneValuesError').empty();
 
@@ -142,6 +141,7 @@ export default class CCAddNewChallenge extends Component {
                 });
 
     }
+
     CreateAndGoToStudentFeatures = async () => {
         var res = await this.createNewStudent();
         if (res != 0) {
@@ -149,7 +149,6 @@ export default class CCAddNewChallenge extends Component {
                 pathname: '/StudentFeatures',
                 state: { student: res[0] }
             })
-
         }
     }
 
@@ -162,14 +161,12 @@ export default class CCAddNewChallenge extends Component {
         }
     }
 
-
     render() {
         const { SfirstName, SlastName, Sphone, Spassword, Spassword2, Sage, SBirthDate } = this.state;
         return (
             <div className="container-fluid">
-                <NavBar></NavBar>
+                <NavBar />
                 <div className="col-12 turkiz">הוספת תלמיד חדש</div>
-                {/* <div className="col-12">לפני הוספת התלמיד נצטרך שתמלא כמה פרטים שיעזרו לנו בהמשך לאפיין את הילד כמו שצריך ויוכל להקל עלייך רבות בבחירת האתגרים</div> */}
                 <br />
 
                 <div className="form-group col-12">
@@ -378,13 +375,6 @@ export default class CCAddNewChallenge extends Component {
                             console.log(e);
                         }}
                         onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                        validationOption={{
-                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
-                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                        }}
-                        validationCallback={res =>
-                            this.setState({ HasSBirthDateValError: res, validate: false })
-                        }
                     />
                 </div>
                 <div className="form-group col-12">
