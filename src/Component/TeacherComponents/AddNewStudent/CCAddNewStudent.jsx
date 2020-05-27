@@ -280,7 +280,8 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
-                            autoComplete: "off",
+                            // autoComplete: "off",
+                            autocomplete: "new-password",
                             id: 'NewStudentPassword',
                             type: 'password',
                             placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
