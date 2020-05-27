@@ -46,7 +46,8 @@ export default class CCAddNewChallenge extends Component {
             !this.state.HasSlastNameValError &&
             !this.state.HasSphoneValError &&
             !this.state.HasSpasswordValError &&
-            !this.state.HasSpassword2ValError
+            !this.state.HasSpassword2ValError &&
+            !this.state.HasSBirthDateValError
         ) {
             var student1 = {
                 firstName: this.state.SfirstName,
