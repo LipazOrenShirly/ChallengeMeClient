@@ -376,9 +376,11 @@ export default class CCAddNewChallenge extends Component {
                             console.log(e);
                         }}
                         onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-
+                        validationOption={{
+                            check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                        }}
                     />
- 
                 </div>
                 <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToStudentFeatures}>יצירת התלמיד והעברה לאפיון תלמיד</button>
@@ -386,8 +388,6 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToHomePage}>יצירת תלמיד והמשכת האפיון במועד מאוחר יותר</button>
                 </div>
-
-
                 <Footer />
             </div>
         );
