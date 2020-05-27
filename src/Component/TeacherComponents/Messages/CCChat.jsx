@@ -266,7 +266,7 @@ export default class CCChat extends Component {
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGroundTeacher" id='send' onClick={this.clickSend}><MdSend className="MdSendT" color='#E8D5D5' /></button>
                     </div>
-                    <input type="text" className="form-control inputTeacherChat" id='messageText' dir="rtl" placeholder='כתוב הודעה'
+                    <input type="text" autoComplete="off" className="form-control inputTeacherChat" id='messageText' dir="rtl" placeholder='כתוב הודעה'
                         value={messageText} onChange={(e) => {
                             this.setState({ messageText: e.target.value });
                         }}
