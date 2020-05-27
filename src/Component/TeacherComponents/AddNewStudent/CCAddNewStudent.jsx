@@ -72,7 +72,6 @@ export default class CCAddNewChallenge extends Component {
                 .then(
                     (result) => {
                         console.log("fetch POST= ", result);
-
                     },
                     (error) => {
                         console.log("err post=", error);
@@ -92,8 +91,6 @@ export default class CCAddNewChallenge extends Component {
                 confirmButtonColor: '#e0819a',
             })
             return jsonRes;
-
-
         }
         else return 0;
     }
@@ -128,7 +125,6 @@ export default class CCAddNewChallenge extends Component {
                         $('#phoneValuesError').empty();
                         $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
                     }
-
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -139,7 +135,6 @@ export default class CCAddNewChallenge extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
-
     }
 
     CreateAndGoToStudentFeatures = async () => {

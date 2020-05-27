@@ -179,7 +179,6 @@ class CCStudentPage extends Component {
         return (
             <div>
                 <NavBar />
-                {/* <CCStudentDetails student = {student} /> */}
                 <br />
 
                 <div className="row mp0" >
