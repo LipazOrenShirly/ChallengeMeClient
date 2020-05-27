@@ -44,10 +44,10 @@ export default class CCTeacherInfoScreen extends Component {
 
     componentDidMount() {
         const user = this.context;
-        this.setState({ user: this.context })
-        console.log('teacherID = ' + JSON.stringify(user.teacherID));
+        // this.setState({ user: this.context })
         this.getInPlace(user);
     }
+
     getInPlace = (user) => {
         fetch(this.apiUrl + '?teacherID=' + user.teacherID
             , {
@@ -68,7 +68,6 @@ export default class CCTeacherInfoScreen extends Component {
                 (result) => {
                     console.log("teacher= ", result);
                     this.setState({ teacher: result[0] });
-                    console.log(this.state.teacher);
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -80,7 +79,6 @@ export default class CCTeacherInfoScreen extends Component {
                     })
                 })
             .then(() => {
-
                 this.setState({
                     firstName: this.state.teacher.firstName,
                     lastName: this.state.teacher.lastName,
@@ -105,13 +103,13 @@ export default class CCTeacherInfoScreen extends Component {
             && !Haspassword2ValError && !HasschoolValError) {
 
             var updatedDetails = {
-                firstName: $('#UpdateTFirstName').val(),
-                lastName: $('#UpdateTLastName').val(),
-                userName: $('#UpdateTUserName').val(),
-                mail: $('#UpdateTMail').val(),
-                phone: $('#UpdateTPhone').val(),
-                password: $('#UpdateTPassword').val(),
-                school: $('#UpdateTSchool').val(),
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                userName: this.state.userName,
+                mail: this.state.mail,
+                phone: this.state.phone,
+                password: this.state.password,
+                school: this.state.school,
                 teacherID: user.teacherID
             }
             fetch(this.apiUrl, {
@@ -156,11 +154,12 @@ export default class CCTeacherInfoScreen extends Component {
             text: 'אתה בטוח שאתה רוצה לבטל את השינויים?',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
-        }).then(()=>{
-             this.getInPlace(user);
-             $(".react-inputs-validation__msg_identifier").empty();
-    })
+        }).then(() => {
+            this.getInPlace(user);
+            $(".react-inputs-validation__msg_identifier").empty();
+        })
     }
+
     checkIfUserNameExist = (e) => {
         var usernameNewTeacher = e.target.value;
         $('#userNameValuesError').empty();
@@ -183,8 +182,6 @@ export default class CCTeacherInfoScreen extends Component {
             })
             .then(
                 (result) => {
-                    console.log("Submit= ", result);
-                    console.log("Submit= ", JSON.stringify(result));
                     if (result == 1) { // כבר קיים השם משתמש הזה
                         if (usernameNewTeacher == this.state.teacher.userName)
                             return;
@@ -203,12 +200,12 @@ export default class CCTeacherInfoScreen extends Component {
                     })
                 });
     }
+
     checkIfPhoneExist = (e) => {
         var phone = parseInt(e.target.value);
-        // this.setState({ phone: "" })
         $('#PhoneValuesError').empty();
 
-        // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
+        // פונקציה בשרת שבודקת ומחזירה 0 או 1
         fetch(this.apiUrl + '?phone=0' + phone
             , {
                 method: 'GET',
@@ -226,8 +223,6 @@ export default class CCTeacherInfoScreen extends Component {
             })
             .then(
                 (result) => {
-                    console.log("Submit= ", result);
-                    console.log("Submit= ", JSON.stringify(result));
                     if (result != 0) { // כבר קיים מספר הטלפון הזה
                         this.setState({ HasphoneValError: true });
                         $('#PhoneValuesError').empty();
@@ -244,6 +239,7 @@ export default class CCTeacherInfoScreen extends Component {
                     })
                 });
     }
+
     render() {
         const {
             firstName,
@@ -258,7 +254,7 @@ export default class CCTeacherInfoScreen extends Component {
         return (
             <div className="container-fluid">
                 <div className="loginDiv">
-                    <NavBar></NavBar><br />
+                    <NavBar /><br />
                     <form onSubmit={this.UpdateDetails} dir="rtl">
                         <div className="myInformation">הפרטים שלי</div>
 
@@ -485,8 +481,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'הזן ססמה בשנית',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-
-
                                 value={password2}
                                 validationCallback={res =>
                                     this.setState({ Haspassword2ValError: res, validate: false })
@@ -559,7 +553,7 @@ export default class CCTeacherInfoScreen extends Component {
                         </div>
                     </form>
                 </div>
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     };

@@ -159,6 +159,8 @@ export default class CCStudentLogin extends Component {
       alertText: alertText,
       alertDate: date.toISOString().split('T')[0],
       alertTime: date.getHours() + ":" + minute,
+      alertRead: false,
+      alertTypeID: 10
     }
 
     await fetch(this.apiUrlAlert, {
