@@ -397,7 +397,8 @@ export default class CCnewTeacher extends Component {
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
-                                    autoComplete: "off",
+                                    // autoComplete: "off",
+                                    autocomplete: "new-password",
                                     id: 'NewTPassword',
                                     type: 'password',
                                     placeholder: 'הזן ססמה',
