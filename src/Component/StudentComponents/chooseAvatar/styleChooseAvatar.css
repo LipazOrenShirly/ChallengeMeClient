@@ -15,3 +15,13 @@
     background-color: pink; /* For browsers that do not support gradients */
     background-image: linear-gradient(-90deg,rgb(255, 202, 242), rgb(255, 143, 195));
 }
+.avatarDIv{
+    height:  100vh;
+}
+.logOutDiv{
+z-index: 1;
+padding: 2%;
+color:rgb(46, 46, 124);
+position: fixed;
+top:0px;
+}

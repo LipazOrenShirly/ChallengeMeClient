@@ -47,7 +47,7 @@
     padding: 3% 0 ;
 }
 .challengeShowStudents{
-    height: 300px;
+    height: 38vh;
      overflow: scroll; 
    
 }
@@ -98,7 +98,7 @@
   /* *******one challengePage****** */
 
 .imageOneChallenge{
-    height: 300px;
+    height: 35vh;
     /* width: 100%; */
     padding:0px;
 }

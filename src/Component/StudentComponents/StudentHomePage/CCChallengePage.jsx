@@ -108,7 +108,7 @@ export default class CCChallengePage extends Component {
         const studentChallenge = this.props.location.state.challenge;
         if (id == 'help') {
             this.setState({ messageShow: true });
-        }
+        } else this.setState({ messageShow: false });
         studentChallenge.status = (id == 'success' ? '1' : (id == 'fail' ? '2' : '3'));
 
         fetch(this.apiUrl + '?challengeID=' + studentChallenge.challengeID + '&studentID=' + studentChallenge.studentID + '&status=' + studentChallenge.status,

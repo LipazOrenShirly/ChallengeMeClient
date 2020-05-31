@@ -25,7 +25,7 @@ export default class CCChooseAvatar extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount (){
+    componentDidMount() {
 
     }
 
@@ -72,15 +72,54 @@ export default class CCChooseAvatar extends Component {
     goToChoose = () => {
         this.setState({ pageText: 1 })
     }
+    
+    logout = async () => {
+        const user = await this.context;
 
+        var data = await {
+            studentID: user.studentID,
+            studentToken: ""
+        }
+
+        await fetch(this.apiUrlStudent + '/studentToken', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+
+        await sessionStorage.clear();
+        await localStorage.clear();
+        await this.props.history.push('/');
+    }
     render() {
 
         return (
             <div className="studentPage">
-                <div className="d-flex justify-content-start" style={{ padding: '2%', color: 'rgb(46, 46, 124)' }}>
-                    <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
+                <div className="row col-4 logOutDiv" onClick={this.logout} >
+                    <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }}  /> התנתק
                 </div>
-                <div className="d-flex align-items-center justify-content-center" style={{ height: '66%' }}>
+                <div className="d-flex align-items-center justify-content-center avatarDIv">
                     {this.state.pageText == 0 &&
                         <div id="pageTextID">
                             <div className="welcomeDivText col-12">!!ברוכים הבאים</div>
@@ -92,7 +131,7 @@ export default class CCChooseAvatar extends Component {
                     }
                     {
                         this.state.pageText == 1 &&
-                        <div className="animated slideInRight">
+                        <div className="d-flex align-items-center justify-content-center avatarDIv">                        <div className="animated slideInRight">
                             <div className="welcomeDivText col-12">בחר את האווטר שילווה אותך</div>
                             <div className="row">
                                 <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/pinguin4.png')} onClick={() => this.chooseAvatar('pinguin')} /></div>
@@ -101,6 +140,7 @@ export default class CCChooseAvatar extends Component {
 
                             </div>
 
+                        </div>
                         </div>
                     }
                     {

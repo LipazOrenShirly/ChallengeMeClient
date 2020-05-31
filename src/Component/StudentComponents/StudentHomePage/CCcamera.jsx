@@ -117,10 +117,10 @@ export default class CCcamera extends Component {
                     this.state.imageDetails &&
                     <div className="imageTaken">
                         <div className="col-12" style={{backgroundColor:'black'}}>
-                            <img style={{height:'350px',width:'350px'}} src={this.state.dataUriImage} />
+                            <img className="imageOneChallenge" src={this.state.dataUriImage} />
                         </div>
-                        <button className="btn btn-info btnPink col-6" onClick={this.saveImage}>שמור תמונה</button>
-                        <button className="btn btn-info btnPink col-6" onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
+                        <button className="btn btn-info btnPink col-6" style={{height:'70px'}} onClick={this.saveImage}>שמור תמונה</button>
+                        <button className="btn btn-info btnPink col-6" style={{height:'70px'}} onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
                     </div>
                             
                         }

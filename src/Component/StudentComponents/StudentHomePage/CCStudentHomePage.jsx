@@ -336,7 +336,7 @@ export default class CCStudentHomePage extends Component {
                     <label for="fileImgStudent" className="lableImg">
                         <img className="emptyUserImg" style={{ margin: '5px' }} src={`data:image/jpeg;base64,${this.state.dataImg}`} />
                     </label>
-                    <div className="helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
+                    <div className="row helloName"> היי {this.state.FirstAndLastName.firstName} {this.state.FirstAndLastName.lastName},</div>
                 </div>
                 {/* <br /> */}
 
@@ -354,9 +354,11 @@ export default class CCStudentHomePage extends Component {
                 {/* אווטאר */}
                 {
                     this.state.Avatar != null &&
-                    <div className="row" style={{ margin: '0px', marginTop: '2%', padding: '0px' }}>
-                        <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png')} /></div>
-                        <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
+                    
+                        <div className="row" style={{ margin: '0px', marginTop: '2%', padding: '0px' }}>
+                            <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png')} /></div>
+                            <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
+                        
                     </div>
                 }
 
