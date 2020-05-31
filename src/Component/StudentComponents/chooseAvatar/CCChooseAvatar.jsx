@@ -72,7 +72,7 @@ export default class CCChooseAvatar extends Component {
     goToChoose = () => {
         this.setState({ pageText: 1 })
     }
-    
+
     logout = async () => {
         const user = await this.context;
 
@@ -117,7 +117,7 @@ export default class CCChooseAvatar extends Component {
         return (
             <div className="studentPage">
                 <div className="row col-4 logOutDiv" onClick={this.logout} >
-                    <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }}  /> התנתק
+                    <RiLogoutBoxLine color='rgb(46, 46, 124)' size={25} style={{ marginRight: '2%' }} /> התנתק
                 </div>
                 <div className="d-flex align-items-center justify-content-center avatarDIv">
                     {this.state.pageText == 0 &&
@@ -131,16 +131,17 @@ export default class CCChooseAvatar extends Component {
                     }
                     {
                         this.state.pageText == 1 &&
-                        <div className="d-flex align-items-center justify-content-center avatarDIv">                        <div className="animated slideInRight">
-                            <div className="welcomeDivText col-12">בחר את האווטר שילווה אותך</div>
-                            <div className="row">
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/pinguin4.png')} onClick={() => this.chooseAvatar('pinguin')} /></div>
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/chicken/chicken4.png')} onClick={() => this.chooseAvatar('chicken')} /></div>
-                                <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/turtle/turtle4.png')} onClick={() => this.chooseAvatar('turtle')} /></div>
+                        <div className="animated slideInRight">
+                            <div className="animated slideInRight">
+                                <div className="welcomeDivText col-12">בחר את האווטר שילווה אותך</div>
+                                <div className="row">
+                                    <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/pinguin/pinguin4.png')} onClick={() => this.chooseAvatar('pinguin')} /></div>
+                                    <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/chicken/chicken4.png')} onClick={() => this.chooseAvatar('chicken')} /></div>
+                                    <div className="animated swing slow infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/turtle/turtle4.png')} onClick={() => this.chooseAvatar('turtle')} /></div>
+
+                                </div>
 
                             </div>
-
-                        </div>
                         </div>
                     }
                     {
