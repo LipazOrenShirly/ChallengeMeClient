@@ -281,7 +281,7 @@ export default class CCAddNewChallenge extends Component {
                     <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                         attributesInput={{
                             // autoComplete: "off",
-                            autocomplete: "new-password",
+                            autoComplete: "new-password",
                             id: 'NewStudentPassword',
                             type: 'password',
                             placeholder: 'הזן ססמה שהתלמיד יוכל לזכור',
