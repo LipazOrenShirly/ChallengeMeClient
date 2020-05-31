@@ -359,18 +359,18 @@ export default class CCAddNewChallenge extends Component {
                         attributesInput={{
                             autoComplete: "off",
                             id: 'NewStudentBirthDate',
-                            type: 'text',
+                            type: 'date',
                             placeholder: 'תאריך לידה תלמיד',
                             className: "form-control inputNewTeacher"
                         }}
 
                         value={SBirthDate}
-                        onClick={(e) => { e.target.type = "date"; console.log(e.target.type); }}
+                        onClick={(e) => {  console.log(e.target.type); }}
                         onChange={(SBirthDate, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ SBirthDate });
                             console.log(e);
                         }}
-                        onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => {  console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                     />
                 </div>
                 <div className="form-group col-12">
