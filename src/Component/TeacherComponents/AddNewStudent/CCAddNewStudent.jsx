@@ -71,7 +71,8 @@ export default class CCAddNewChallenge extends Component {
             })
                 .then(
                     (result) => {
-                        console.log("fetch POST= ", result);
+                        console.log("fetch POST= ", result[0]);
+                        return result[0];
                     },
                     (error) => {
                         console.log("err post=", error);
@@ -82,7 +83,8 @@ export default class CCAddNewChallenge extends Component {
                             confirmButtonColor: '#e0819a',
                         })
                     });
-            var jsonRes = await result.json();
+            var jsonRes = await result;
+            console.log(jsonRes)
             this.setState({ student: jsonRes });
             Swal.fire({
                 title: 'מעולה!',
@@ -91,10 +93,32 @@ export default class CCAddNewChallenge extends Component {
                 confirmButtonColor: '#e0819a',
             })
             return jsonRes;
+
         }
         else return 0;
     }
 
+
+
+    CreateAndGoToStudentFeatures = async () => {
+        var res = await this.createNewStudent();
+        console.log(res)
+        if (res != 0) {
+            this.props.history.push({
+                pathname: '/StudentFeatures',
+                state: { student: res }
+            })
+        }
+    }
+
+    CreateAndGoToHomePage = async () => {
+        var res = await this.createNewStudent();
+        if (res != 0) {
+            await this.props.history.push({
+                pathname: '/HomePageTeacher',
+            })
+        }
+    }
     checkIfPhoneExist(e) {
         $('#phoneValuesError').empty();
 
@@ -136,28 +160,8 @@ export default class CCAddNewChallenge extends Component {
                     })
                 });
     }
-
-    CreateAndGoToStudentFeatures = async () => {
-        var res = await this.createNewStudent();
-        if (res != 0) {
-            this.props.history.push({
-                pathname: '/StudentFeatures',
-                state: { student: res[0] }
-            })
-        }
-    }
-
-    CreateAndGoToHomePage = () => {
-        var res = this.createNewStudent();
-        if (res != 0) {
-            this.props.history.push({
-                pathname: '/HomePageTeacher',
-            })
-        }
-    }
-
     render() {
-        const { SfirstName, SlastName, Sphone, Spassword, Spassword2, Sage, SBirthDate } = this.state;
+        const { SfirstName, SlastName, Sphone, Spassword, Spassword2, SBirthDate } = this.state;
         return (
             <div className="container-fluid">
                 <NavBar />
@@ -360,17 +364,17 @@ export default class CCAddNewChallenge extends Component {
                             autoComplete: "off",
                             id: 'NewStudentBirthDate',
                             type: 'date',
-                            placeholder: 'תאריך לידה תלמיד',
+                            placeholder: 'תאריך לידה',
                             className: "form-control inputNewTeacher"
                         }}
 
                         value={SBirthDate}
-                        onClick={(e) => {  console.log(e.target.type); }}
+                        onClick={(e) => { console.log(e.target.type); }}
                         onChange={(SBirthDate, e) => { //כל שינוי הוא שומר בסטייט
                             this.setState({ SBirthDate });
                             console.log(e);
                         }}
-                        onBlur={(e) => {  console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                        onBlur={(e) => { console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
                     />
                 </div>
                 <div className="form-group col-12">
