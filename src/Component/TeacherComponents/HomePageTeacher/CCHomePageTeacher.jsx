@@ -171,12 +171,14 @@ export default class CCHomePageTeacher extends Component {
         return (
             <div className="container-fluid">
                 <NavBar />
+                <br />
+
+                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={this.state.countAlerts} sendInputToHomePage={this.sendInputToHomePage} />
+                
                 {this.state.studentPage ? <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => this.setState({ studentPage: false })} size={40} />
                 </div> : <br />}
                 
-                <SearchBarHomeTeacher countMessages={this.state.countMessages} countAlerts={this.state.countAlerts} sendInputToHomePage={this.sendInputToHomePage} />
-
                 {this.state.input != "" &&
                     <div className="row col-12">
                         {this.state.studentsArr.map((item) =>

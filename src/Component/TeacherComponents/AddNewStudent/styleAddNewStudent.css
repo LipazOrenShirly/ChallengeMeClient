@@ -7,3 +7,11 @@
  
 
 }
+input[type="date"]:before {
+    color: #495057;
+    content: attr(placeholder) !important;
+    margin-left: 0.5em;
+  }
+  input[type="date"]:focus:before {
+    content: '' !important;
+  }
