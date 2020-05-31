@@ -238,7 +238,6 @@ class CCEditChallenge extends Component {
                 <div className="col-12">
                     <button id="deleteChallenge" className="btn btn-info btnDeleteChallenge" onClick={this.DeleteChallenge}>מחק את האתגר</button>
                 </div>
-                <Footer />
             </div>
         );
     }

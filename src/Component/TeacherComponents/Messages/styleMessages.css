@@ -77,7 +77,7 @@
 }
 .sendMesInputDivT{
    position: fixed;
-    bottom: 0px;
+    bottom: 2px;
 }
 
 /* .outgoingMessage , .incomingMessage{

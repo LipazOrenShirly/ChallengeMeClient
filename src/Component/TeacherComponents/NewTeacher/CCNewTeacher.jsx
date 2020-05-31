@@ -512,7 +512,6 @@ export default class CCnewTeacher extends Component {
                         </div>
                     </form>
                 </div>
-                <Footer />
             </div>
         );
     };

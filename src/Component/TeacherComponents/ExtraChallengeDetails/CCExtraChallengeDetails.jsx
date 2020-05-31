@@ -143,7 +143,6 @@ class CCExtraChallengeDetails extends Component {
                         </div>
                     </form>
                 </div>
-                <Footer></Footer>
             </div>
         );
     }

@@ -48,7 +48,6 @@ export default class CCMessages extends Component {
 
                 <CCStudentsWithMessage goToChat={this.goToChat} />
 
-                <Footer />
             </div>
         );
     };

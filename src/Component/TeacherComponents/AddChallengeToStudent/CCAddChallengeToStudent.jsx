@@ -109,7 +109,7 @@ export default class CCAddChallengeToStudent extends Component {
                 </div>
 
 
-                <Footer></Footer>
+              
             </div>
         );
     };

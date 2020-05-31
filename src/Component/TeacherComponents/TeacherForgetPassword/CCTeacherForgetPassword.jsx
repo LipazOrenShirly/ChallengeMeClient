@@ -168,7 +168,6 @@ export default class CCTeacherForgetPassword extends Component {
                 </div>
                 <div className="divForgetPasswordIMG"><img className="ForgetPasswordIMG" src={require('../../../img/forgetPasswordImg.png')} />
                 </div>
-                <Footer />
             </div>
         );
     };

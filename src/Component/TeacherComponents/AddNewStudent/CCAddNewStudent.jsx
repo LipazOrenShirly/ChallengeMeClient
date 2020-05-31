@@ -379,7 +379,6 @@ export default class CCAddNewChallenge extends Component {
                 <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToHomePage}>יצירת תלמיד והמשכת האפיון במועד מאוחר יותר</button>
                 </div>
-                <Footer />
             </div>
         );
     };

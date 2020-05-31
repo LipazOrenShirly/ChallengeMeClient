@@ -197,7 +197,6 @@ export default class CCHomePageTeacher extends Component {
                     }
                 </div>
                 }
-                <Footer />
             </div>
         )
     };

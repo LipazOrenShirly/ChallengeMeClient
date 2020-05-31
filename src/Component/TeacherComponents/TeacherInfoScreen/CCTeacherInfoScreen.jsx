@@ -253,8 +253,8 @@ export default class CCTeacherInfoScreen extends Component {
         } = this.state;
         return (
             <div className="container-fluid">
-                <div className="loginDiv">
-                    <NavBar /><br />
+                <div className="loginDiv1">
+                    <NavBar />
                     <form onSubmit={this.UpdateDetails} dir="rtl">
                         <div className="myInformation">הפרטים שלי</div>
 
@@ -553,7 +553,6 @@ export default class CCTeacherInfoScreen extends Component {
                         </div>
                     </form>
                 </div>
-                <Footer />
             </div>
         );
     };

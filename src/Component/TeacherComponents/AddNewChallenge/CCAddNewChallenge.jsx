@@ -415,7 +415,6 @@ export default class CCAddNewChallenge extends Component {
                         </div>
                     }
                 </form>
-                <Footer></Footer>
             </div>
         );
     };

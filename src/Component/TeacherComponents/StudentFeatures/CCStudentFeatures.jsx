@@ -231,10 +231,9 @@ class CCStudentFeatures extends Component {
                             </div>
                         )}
 
-                    <button type="submit" style={{ marginBottom: '25px' }} className="btn btn-info col-12 btnPink"> {this.state.newFeature ? "שמור אפיון" : "שמור עדכונים"} </button>
+                    <button type="submit" style={{ marginBottom: '8px' }} className="btn btn-info col-12 btnPink"> {this.state.newFeature ? "שמור אפיון" : "שמור עדכונים"} </button>
 
                 </form>
-                <Footer />
 
             </div>
         );

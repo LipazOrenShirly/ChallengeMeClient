@@ -262,7 +262,7 @@ export default class CCChat extends Component {
                     )}
                 </div>
 
-                <div className="input-group mb-3 mp0 sendMesInputDivT">
+                <div className="input-group mp0 sendMesInputDivT">
                     <div className="input-group-prepend mp0">
                         <button className="input-group-text sendBackGroundTeacher" id='send' onClick={this.clickSend}><MdSend className="MdSendT" color='#E8D5D5' /></button>
                     </div>
@@ -272,7 +272,6 @@ export default class CCChat extends Component {
                         }}
                     />
                 </div>
-                <Footer />
             </div>
         );
     };

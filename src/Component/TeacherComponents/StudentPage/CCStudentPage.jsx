@@ -207,8 +207,7 @@ class CCStudentPage extends Component {
                     <div className="errorfeature">על מנת להוסיף אתגרים לתלמיד עליך להשלים את אפיון התלמיד</div>
                 }
 
-                <br /><br />
-                <Footer />
+                <br />
             </div>
         );
     }

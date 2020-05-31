@@ -8,15 +8,16 @@
 background-color: rgba(0, 0, 0, 0.15);
 box-shadow: none !important
 }
-.loginDiv{
-   padding-bottom: 30px;
+.loginDiv1{
+   padding-bottom: 15px;
 
 }
 .myInformation{
     font-weight: 700;
     color: #8AC9C1;
     text-align: center ;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 .cencelBtn{
 background-color: rgba(161, 123, 133, 0.801);

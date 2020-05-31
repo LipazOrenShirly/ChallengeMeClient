@@ -406,7 +406,6 @@ export default class CCStudentInfoScreen extends Component {
                 </div> */}
 
 
-                <Footer></Footer>
             </div>
         );
     };

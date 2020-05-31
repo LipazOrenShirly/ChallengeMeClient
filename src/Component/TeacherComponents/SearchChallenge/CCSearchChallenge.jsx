@@ -212,7 +212,6 @@ class CCSearchChallenge extends Component {
                         )}
 
                 </div>
-                <Footer />
             </div>
         );
     }

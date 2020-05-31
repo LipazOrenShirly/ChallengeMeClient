@@ -266,7 +266,6 @@ export default class CCAlerts extends Component {
                     )}
                 </div>}
 
-                <Footer />
             </div>
         );
     };
