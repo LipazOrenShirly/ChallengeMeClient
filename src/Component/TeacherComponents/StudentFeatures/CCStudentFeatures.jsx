@@ -19,6 +19,7 @@ class CCStudentFeatures extends Component {
         this.state = {
             QueAndAnsArr: [],
             newFeature: false,
+            didChange: false,
         }
         let local = false;
         this.apiUrlFeaturesQuestion = 'http://localhost:' + { localHost }.localHost + '/api/FeaturesQuestion';
@@ -30,12 +31,7 @@ class CCStudentFeatures extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.location.state.student.studentID);
         // גט לשאלות והתשובות
-
-
-        console.log(this.props.location.state.student);
-
         fetch(this.apiUrlStudentFeatures + '?studentID2=' + this.props.location.state.student.studentID
             , {
                 method: 'GET',
@@ -137,30 +133,34 @@ class CCStudentFeatures extends Component {
     }
 
     chooseAns = (e) => {
-        // console.log(e.target.value);
         var NewAns = e.target.value.split(",");
-        // console.log(x);
-        this.setState({});
+        this.setState({ didChange: true });
         this.state.QueAndAnsArr.map((item) => item.answer = (item.questionID == NewAns[3] ? parseInt(NewAns[1]) : item.answer))
         console.log(this.state.QueAndAnsArr);
     }
 
     goBack = () => {
-        Swal.fire({
-            title: 'שים לב',
-            text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e0819a',
-            cancelButtonColor: '#867D95',
-            cancelButtonText: 'בטל',
-            confirmButtonText: 'כן, חזור'
-        }).then((result) => {
-            if (result.value) {  //אם בחר אישור
-                window.history.back();
-            }
-        })
+        if (this.state.didChange == false) {  //אם נכנס למסך אפיון תלמיד לחץ על החץ חזור אחורה אבל לא עשה שינויים
+            window.history.back();
+        }
+        else {  // אם כן עשה שינויים
+            Swal.fire({
+                title: 'שים לב',
+                text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e0819a',
+                cancelButtonColor: '#867D95',
+                cancelButtonText: 'בטל',
+                confirmButtonText: 'כן, חזור'
+            }).then((result) => {
+                if (result.value) {  //אם בחר אישור
+                    window.history.back();
+                }
+            });
+        }
     }
+
     render() {
         const { QueAndAnsArr } = this.state;
         return (
@@ -179,7 +179,7 @@ class CCStudentFeatures extends Component {
                                 <div className="textHeadlineNum" id={`que${item.questionID}`} >שאלה מספר {key + 1} - שאלה בתחום ה{item.categoryName}</div>
                                 <div><strong>{item.question}</strong></div>
                                 <div>
-                                    <RadioGroup row aria-label="position"  className="justify-content-between" name="position" id={`ans${item.questionID}`} onChange={this.chooseAns} defaultValue="">
+                                    <RadioGroup row aria-label="position" className="justify-content-between" name="position" id={`ans${item.questionID}`} onChange={this.chooseAns} defaultValue="">
                                         <FormControlLabel
                                             value={`radio,1,ans,${item.questionID}`}
                                             control={<Radio color="secondary" />}
