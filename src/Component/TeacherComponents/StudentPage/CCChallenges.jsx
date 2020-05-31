@@ -58,32 +58,38 @@ class CCChallenges extends Component {
     }
 
     render() {
+        var NumOfChallenge = this.state.StudentChallenges.length;
         return (
             <div>
-                 <div className="col-12">
+                <div className="col-12">
                     <button className="btn btn-info btnPink eddChallengeBTN" type="text" onClick={this.AddChallenge}>הוספת אתגר</button>
                 </div>
-                <div className="textTilteChallStusent" dir="rtl">{this.state.StudentChallenges.length} האתגרים של התלמיד: </div>
-                <div className="row iconsCircle">
-                    <div className="col-4 oneIconCircle">  צריך עזרה
+                {
+                    NumOfChallenge == 0 ? <div className="textTilteChallStusentZeroChallenges" dir="rtl">עדיין לא שויכו לתלמיד זה אתגרים<div className="sadSmileyDiv col-12"><img className="sadSmileyImg" src={require('../../../img/sadSmiley.png')}/></div> כדי להתחיל בתהליך עלייך להוסיף לילד אתגרים </div> : <div className="textTilteChallStusent" dir="rtl">{this.state.StudentChallenges.length} האתגרים של התלמיד: </div>
+                }
+                {
+                    NumOfChallenge != 0 &&
+
+                    <div className="row iconsCircle">
+                        <div className="col-4 oneIconCircle">  צריך עזרה
                <FaCircle className="iconStatus3"></FaCircle>
-                    </div>
-                    <div className="col-4 oneIconCircle">  לא הצליח
+                        </div>
+                        <div className="col-4 oneIconCircle">  לא הצליח
                <FaCircle className="iconStatus2"></FaCircle>
-                    </div>
-                    <div className="col-4 oneIconCircle">  הצליח
+                        </div>
+                        <div className="col-4 oneIconCircle">  הצליח
                <FaCircle className="iconStatus1"></FaCircle>
+                        </div>
                     </div>
+                }
 
 
-
-                </div>
                 <div className="studentChallengesDiv">
                     {this.state.StudentChallenges.map((item, key) =>
                         <CCOneChallenge key={key} index={key + 1} challenge={item} goToEditChallenge={this.props.goToEditChallenge} />
                     )}
                 </div>
-               
+
             </div>
         );
     }

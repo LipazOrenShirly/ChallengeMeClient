@@ -13,6 +13,17 @@ font-size: 110%;
 font-weight: 500;
 margin: 3% 0;
 }
+.textTilteChallStusentZeroChallenges{
+    color: red;
+    margin: 3% 0;
+    font-size: 110%;
+}
+
+.sadSmileyImg{
+    height: 100px;
+    filter: invert(80%)  brightness(40%) sepia(90%) hue-rotate(-50deg) saturate(400%) contrast(2);
+    
+}
 /* ****** */
 
 /* .studentChallengesDiv{

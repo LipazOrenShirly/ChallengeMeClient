@@ -16,7 +16,8 @@ class CCEditChallenge extends Component {
         super(props);
         this.state = {
             challenge: this.props.location.state.challenge,
-            iconIsLevelInput: <MdCreate onClick={this.EditDifLevelInput} />,
+            status:this.props.location.state.challenge.status,
+            // iconIsLevelInput: <MdCreate onClick={this.EditDifLevelInput} />,
             iconIsDeadline: <MdCreate onClick={this.EditDeadlineInput} color="whitesmoke" />,
         }
         let local = false;
@@ -45,26 +46,26 @@ class CCEditChallenge extends Component {
                 statusWord = "לא סימן כלום"
         }
         $('#StatusInput').val(statusWord);
-        $('#DifLevelInput').val(challenge.difficulty);
+        // $('#DifLevelInput').val(challenge.difficulty);
 
     }
 
-    UpdateChallenge = () => {
-        var statuss;
-        if ($('#StatusInput').val() == 'לא סימן כלום')
-            statuss = 0;
-        else statuss = this.state.challenge.status;
-        const challenge =
-        {
-            challengeID: this.state.challenge.challengeID,
-            studentID: this.state.challenge.studentID,
-            difficulty: $('#DifLevelInput').val(),
-            deadline: $('#DeadlineInput').val(),
-            status: statuss
-        }
-        console.log(challenge);
-
-        fetch(this.apiUrl,
+    UpdateChallenge = async () => {
+        // var statuss;
+        // if ($('#StatusInput').val() == 'לא סימן כלום')
+        //     statuss = 0;
+        // else statuss = this.state.challenge.status;
+        const challenge = await
+            {
+                challengeID: this.state.challenge.challengeID,
+                studentID: this.state.challenge.studentID,
+                difficulty: this.state.challenge.difficulty,
+                deadline: $('#DeadlineInput').val(),
+                status: this.state.status
+            }
+        await console.log(challenge);
+        var returnVal = await false;
+        await fetch(this.apiUrl,
             {
                 method: 'PUT',
                 body: JSON.stringify(challenge),
@@ -78,18 +79,14 @@ class CCEditChallenge extends Component {
                 console.log('res.ok', res.ok);
                 if (!res.ok)
                     throw new Error('Network response was not ok.');
+                else returnVal = true;
                 return res.json();
             })
             .then(
                 (result) => {
                     console.log("Student Challenges= ", result);
                     this.setState({ StudentChallenges: result });
-                    Swal.fire({
-                        title: 'יופי!',
-                        text: 'הפריטים עודכנו בהצלחה',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    })
+
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -100,6 +97,7 @@ class CCEditChallenge extends Component {
                         confirmButtonColor: '#e0819a',
                     })
                 });
+        return await returnVal;
     }
 
     DeleteChallenge = () => {
@@ -156,23 +154,37 @@ class CCEditChallenge extends Component {
         })
     }
 
+    UpdateDeadline = async () => {
+        var bool = await false;
+        bool = await this.UpdateChallenge();
+        await console.log("ffffff" + bool)
+        if (bool) {
+            await Swal.fire({
+                title: 'יופי!',
+                text: 'תאריך הדד-לין עודכן בהצלחה',
+                icon: 'success',
+                confirmButtonColor: '#e0819a',
+            })
+        }
+    }
+
     EditDeadlineInput = () => {
-        let iconIsTemp = <IoMdCheckmark onClick={this.UpdateChallenge} />
+        let iconIsTemp = <IoMdCheckmark onClick={this.UpdateDeadline} />
         this.setState({ iconIsDeadline: iconIsTemp });
         $('#DeadlineInput').prop("disabled", false);
 
     }
 
-    EditStatusInput = () => {
-        if (this.state.challenge.status == 0) {
-            Swal.fire({
+    EditStatusInput = async () => {
+        if (this.state.status == 0) {
+            await Swal.fire({
                 title: '!שים לב',
                 text: 'סטטוס האתגר מאופס כבר',
                 confirmButtonColor: '#e0819a',
             })
         }
         else {
-            Swal.fire({
+            await Swal.fire({
                 title: 'האם אתה בטוח?',
                 text: "בלחיצה על איפוס יתאפס לתלמיד סטטוס האתגר",
                 icon: 'warning',
@@ -181,28 +193,31 @@ class CCEditChallenge extends Component {
                 cancelButtonColor: '#867D95',
                 cancelButtonText: 'בטל',
                 confirmButtonText: 'כן, אפס'
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.value) {
-                    Swal.fire({
-                        title: 'יופי!',
-                        text: 'סטטוס האתגר אופס בהצלחה',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    })
-                    $('#StatusInput').val('לא סימן כלום');
-                    this.UpdateChallenge();
+                    await this.setState({ status: 0 });
+                    var bool = await this.UpdateChallenge();
+                    if (bool == true) {
+                        await $('#StatusInput').val('לא סימן כלום');
+                        await Swal.fire({
+                            title: 'יופי!',
+                            text: 'סטטוס האתגר אופס בהצלחה',
+                            icon: 'success',
+                            confirmButtonColor: '#e0819a',
+                        })
+                    }
                 }
             })
         }
 
     }
 
-    EditDifLevelInput = () => {
-        let iconIsTemp = <IoMdCheckmark onClick={this.UpdateChallenge} />
-        this.setState({ iconIsLevelInput: iconIsTemp });
-        $('#DifLevelInput').prop("disabled", false);
+    // EditDifLevelInput = () => {
+    //     let iconIsTemp = <IoMdCheckmark onClick={this.UpdateChallenge} />
+    //     this.setState({ iconIsLevelInput: iconIsTemp });
+    //     $('#DifLevelInput').prop("disabled", false);
 
-    }
+    // }
 
     render() {
         console.log(this.props.location.state.challenge);
@@ -224,7 +239,7 @@ class CCEditChallenge extends Component {
                     <div className="input-group-prepend">
                         <span className="input-group-text spanCCEdit" id="basic-addon1">{this.state.iconIsDeadline}</span>
                     </div>
-                    <input type="date" className="form-control inputCCEdit" id="DeadlineInput" disabled />
+                    <input type="date" className="form-control inputCCEdit" id="DeadlineInput" min={new Date().toISOString().split("T")[0]} disabled />
                 </div>
 
 

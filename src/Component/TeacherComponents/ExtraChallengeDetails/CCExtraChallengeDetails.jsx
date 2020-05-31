@@ -74,8 +74,9 @@ class CCExtraChallengeDetails extends Component {
         const studentChallenge = {
             challengeID: this.props.location.state.challenge.challengeID,
             studentID: this.props.location.state.studentID,
-            deadline: $('#DeadlineChallengeId').val().replace(/(..).(..).(....)/, "$3-$1-$2"),
+            deadline: $('#DeadlineChallengeId').val(),
         }
+        console.log($('#DeadlineChallengeId').val());
         console.log(studentChallenge);
         fetch(this.apiUrl, {
             method: 'POST',
@@ -128,6 +129,11 @@ class CCExtraChallengeDetails extends Component {
                         <br />
                         <div className="purpule"><strong>:תאריך סיום ביצוע האתגר</strong></div>
                         <div className="col-12 input-group mb-3 dp">
+                        <input type="date" 
+                        className="form-control col-12 inputCCEdit" id="DeadlineInput" 
+                        onChange={(e) => this.setState({ deadline: e.target.value })} 
+                        id="DeadlineChallengeId" min={new Date().toISOString().split("T")[0]} required/>
+{/* 
                             <DatePicker
                                 selected={this.state.deadline}
                                 onChange={date => this.setState({ deadline: date })}
@@ -136,7 +142,7 @@ class CCExtraChallengeDetails extends Component {
                                 id="DeadlineChallengeId"
                                 required
                             // placeholderText="Select a date between today and 5 days in the future"
-                            />
+                            /> */}
                         </div>
                         <div className="form-group col-12">
                             <button className="btn btn-info createNewChallenge">שמור</button>

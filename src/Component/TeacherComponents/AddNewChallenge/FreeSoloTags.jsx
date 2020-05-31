@@ -20,8 +20,9 @@ export default function FreeSoloTags(props) {
     <div className={classes.root}>
     
       <Autocomplete
+     
         multiple
-        className="form-control inputRounded" 
+        className="form-control inputRounded inputHeight" 
         id="tags-filled"
         options={props.tags.map((option) => option.tagName)}
         onChange={props.onTagsChange}
@@ -33,7 +34,7 @@ export default function FreeSoloTags(props) {
           
         }
         renderInput={(params) => (
-          <TextField {...params} variant="filled" label="בחר תגיות מתאימות" />
+          <TextField {...params}  variant="filled" label="בחר תגיות מתאימות" />
         )}
       />
     </div>

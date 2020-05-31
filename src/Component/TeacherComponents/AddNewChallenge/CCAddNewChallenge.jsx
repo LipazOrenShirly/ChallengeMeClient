@@ -207,20 +207,26 @@ export default class CCAddNewChallenge extends Component {
             $('#TagsValuesError').empty();
         }
         if ($('#DifLevelInput').val() == "") {
+            $('#DifLevelError').empty();
+            $('#DifLevelError').append("חייב למלא את רמת הקושי של האתגר");
+            return;
+        } else {
+            $('#DifLevelError').empty();
+        }
+        if(this.state.valueEmotional == 0 && this.state.valueSchool ==0 && this.state.valueSocial==0){
             $('#DifValuesError').empty();
-            $('#DifValuesError').append("חייב למלא את רמת הקושי של האתגר");
+            $('#DifValuesError').append("חייב להביא אחוזים ללפחות ערך אחד מהשלושה");
             return;
         } else {
             $('#DifValuesError').empty();
         }
-
         console.log(this.state.chosenTagsID);
         const challenge = {
             challengeName: $('#NewChallengeName').val(),
             isPrivate: this.state.isPrivate,
-            social: $('#social').val(),
-            school: $('#school').val(),
-            emotional: $('#emotional').val(),
+            social: this.state.valueSocial,
+            school: this.state.valueSchool,
+            emotional: this.state.valueEmotional,
             difficulty: $('#DifLevelInput').val(),
             studentID: this.props.location.state.studentID
         }
@@ -360,8 +366,9 @@ export default class CCAddNewChallenge extends Component {
                                     <option value="5" >5</option>
                                 </select>
                             </div>
-                            <div className='errorInput' id="DifValuesError"></div>
-
+                            <div className='errorInput' id="DifLevelError"></div>
+                            
+                            
 
                             <div style={{ textAlign: 'right', paddingRight: '15px' }}>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
@@ -397,7 +404,8 @@ export default class CCAddNewChallenge extends Component {
                                 />
 
                             </div>
-
+                            <div className='errorInput' id="DifValuesError"></div>
+                            
                             <div dir="rtl" >
                                 <Checkbox
                                     checked={this.state.checked}

@@ -26,17 +26,18 @@
 .MuiInputLabel-shrink{
     color: #a36ae4 !important;
     left: 170px !important;
+    width: 100%;
+    text-align: right;
+    transform: translate(35px, 1.5px) scale(0.75) !important;
+    transform-origin: top left !important;
+    /* transform-origin: top right; */
   
 }
 .MuiInputLabel-formControl{
     left:0px;
 }
 
-.MuiInputLabel-shrink {
-    transform: translate(35px, 1.5px) scale(0.75) !important;
-    transform-origin: top left !important;
-    /* transform-origin: top right; */
-}
+
 
 .MuiAutocomplete-inputRoot[class*="MuiFilledInput-root"] {
     padding-top: 10px !important;
@@ -140,4 +141,22 @@ background-color: rgba(199, 255, 238, 0.637);
 }
 .oneAlertDiv{
     background-color: transparent;
+}
+
+
+.deleteMes{
+    background-color: rgba(152, 175, 197, 0.925);
+    border-radius: 6px;
+    padding: 5px !important;
+    color: white;
+    position: fixed;
+    bottom: 16px;
+    z-index: 999;
+    text-align: right;
+    margin: auto;
+}
+.CancelDeleteBtn{
+    text-align: left;
+    color: rgb(255, 96, 109);
+    font-weight: 600;
 }

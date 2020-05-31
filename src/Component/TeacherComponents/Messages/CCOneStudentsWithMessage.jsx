@@ -53,6 +53,7 @@ export default class CCOneStudentsWithMessage extends Component {
                     console.log("student= ", result[0]);
                     this.setState({ student: result[0] });
                     this.getUnReadAmount();
+                    setInterval(this.getUnReadAmount, 5000);
                 },
                 (error) => {
                     console.log("err get=", error);

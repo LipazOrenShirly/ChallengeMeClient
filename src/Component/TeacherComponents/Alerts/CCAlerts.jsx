@@ -15,9 +15,12 @@ export default class CCAlerts extends Component {
         super(props);
         this.state = {
             alertArr: [],
+            alertArrOriginal: [],
             alertArrSearch: [],
             students: [],
-            search: false
+            search: false,
+            deleteOn: false,
+            pressCancelBtn: false
         }
         let local = false;
         this.apiUrlAlert = 'http://localhost:' + { localHost }.localHost + '/api/Alert';
@@ -27,71 +30,38 @@ export default class CCAlerts extends Component {
             this.apiUrlStudent = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Student';
         }
     }
-    
+
     static contextType = ProjectContext;
-    
+
     componentDidMount() {
-       this.getAlerts(); 
-       this.getStudents(); //for the autocomplete of the search field
+        this.getAlerts();
+        this.getStudents(); //for the autocomplete of the search field
     }
 
     getAlerts = () => {
         const user = this.context;
         fetch(this.apiUrlAlert + '/getTeacherAlerts?teacherID=' + user.teacherID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-            })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            if (!res.ok)
-                throw new Error('Network response was not ok.');
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log(result);
-                this.setState({ alertArr: result})
-            },
-            (error) => {
-                console.log("err get=", error);
-                Swal.fire({
-                    title: 'אוי',
-                    text: 'הפעולה נכשלה, נסה שנית',
-                    icon: 'warning',
-                    confirmButtonColor: '#e0819a',
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
                 })
-            });
-    }
-
-    getAlertIDForDelete = (alertID) => {
-        this.deleteAlert(alertID);
-    }
-
-    deleteAlert = (alertID) => {
-        fetch(this.apiUrlAlert + '?alertID=' + alertID, {
-            method: 'DELETE',
-            headers: new Headers({
-                'accept': 'application/json; charset=UTF-8'
             })
-        })
             .then(res => {
                 console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
                 if (!res.ok)
                     throw new Error('Network response was not ok.');
                 return res.json();
             })
             .then(
                 (result) => {
-                    console.log("fetch DELETE= ", result);
-                    this.getAlerts();
+                    console.log(result);
+                    this.setState({ alertArr: result, alertArrOriginal: result })
                 },
                 (error) => {
-                    console.log("err post=", error);
+                    console.log("err get=", error);
                     Swal.fire({
                         title: 'אוי',
                         text: 'הפעולה נכשלה, נסה שנית',
@@ -100,7 +70,50 @@ export default class CCAlerts extends Component {
                     })
                 });
     }
-    
+
+    getAlertIDForDelete = (alertID) => {
+        this.deleteAlert(alertID);
+    }
+
+    deleteAlert = async (alertID) => {
+        await this.setState({ deleteOn: true });
+        var tempAlertsArr = await this.state.alertArr.filter((item) => item.alertID != alertID);
+        await this.setState({ alertArr: tempAlertsArr });
+        setTimeout(async function () {
+            await this.setState({ deleteOn: false });
+            if (this.state.pressCancelBtn == false) {
+                await fetch(this.apiUrlAlert + '?alertID=' + alertID, {
+                    method: 'DELETE',
+                    headers: new Headers({
+                        'accept': 'application/json; charset=UTF-8'
+                    })
+                })
+                    .then(res => {
+                        console.log('res=', res);
+                        if (!res.ok)
+                            throw new Error('Network response was not ok.');
+                        return res.json();
+                    })
+                    .then(
+                        (result) => {
+                            console.log("fetch DELETE= ", result);
+                            this.getAlerts();
+                        },
+                        (error) => {
+                            console.log("err post=", error);
+                            Swal.fire({
+                                title: 'אוי',
+                                text: 'הפעולה נכשלה, נסה שנית',
+                                icon: 'warning',
+                                confirmButtonColor: '#e0819a',
+                            })
+                        });
+            }
+        }.bind(this), 5000);
+
+
+    }
+
     getAlertIDForUpdateRead = (alertID) => {
         this.changeAlertToRead(alertID);
     }
@@ -138,34 +151,34 @@ export default class CCAlerts extends Component {
     getStudents = () => {
         const user = this.context;
         fetch(this.apiUrlStudent + '?teacherID=' + user.teacherID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-            })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            if (!res.ok)
-                throw new Error('Network response was not ok.');
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log(result);
-                this.setState({ students: result})
-            },
-            (error) => {
-                console.log("err get=", error);
-                Swal.fire({
-                    title: 'אוי',
-                    text: 'הפעולה נכשלה, נסה שנית',
-                    icon: 'warning',
-                    confirmButtonColor: '#e0819a',
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
                 })
-            });
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({ students: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     goToStudentPage = (data) => {
@@ -174,7 +187,7 @@ export default class CCAlerts extends Component {
             state: { student: data }
         })
     }
-    goToStudentChat= (data) => {
+    goToStudentChat = (data) => {
         this.props.history.push({
             pathname: '/Chat',
             state: { student: data }
@@ -188,7 +201,7 @@ export default class CCAlerts extends Component {
     }
 
     onInputChange = (event, value) => {
-        if(value == ""){         //אם אינפוט ריק אז ירוקן את הסטייט
+        if (value == "") {         //אם אינפוט ריק אז ירוקן את הסטייט
             this.setState({ alertArrSearch: [], search: false });
             return;
         }
@@ -198,35 +211,35 @@ export default class CCAlerts extends Component {
 
     getStudentAlerts = (value) => {
         const user = this.context;
-        fetch(this.apiUrlAlert + '/getTeacherAlertsSearch?teacherID=' + user.teacherID+'&studentName='+value
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-            })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            if (!res.ok)
-                throw new Error('Network response was not ok.');
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log(result);
-                this.setState({ alertArrSearch: result })
-            },
-            (error) => {
-                console.log("err get=", error);
-                Swal.fire({
-                    title: 'אוי',
-                    text: 'הפעולה נכשלה, נסה שנית',
-                    icon: 'warning',
-                    confirmButtonColor: '#e0819a',
+        fetch(this.apiUrlAlert + '/getTeacherAlertsSearch?teacherID=' + user.teacherID + '&studentName=' + value
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
                 })
-            });
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({ alertArrSearch: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'הפעולה נכשלה, נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
     }
 
     render() {
@@ -236,35 +249,44 @@ export default class CCAlerts extends Component {
                 <NavBar />
                 <div className="row col-12 searchDiv">
                     <div className="col-12 turkiz">התרעות</div>
-                    
+
                     <div className="col-11 searchItselfDiv">
                         <FreeSoloStudents onInputChange={this.onInputChange} students={this.state.students} />
                     </div>
 
                     <div className="col-12 addingAlertsDiv">
-                        <h5 className="h5Teacher"  onClick={this.linkToAlertsSetting}>עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
+                        <h5 className="h5Teacher" onClick={this.linkToAlertsSetting}>עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
                     </div>
                 </div>
-                
+
                 {this.state.search == false && <div className="allAlerts">
-                    {this.state.alertArr.map( (item) => 
-                        <CCOneAlert key={item.alertID} alert={item} 
-                            getAlertIDForDelete={this.getAlertIDForDelete} 
+                    {this.state.alertArr.map((item) =>
+                        <CCOneAlert key={item.alertID} alert={item}
+                            getAlertIDForDelete={this.getAlertIDForDelete}
                             getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
                             goToStudentPage={this.goToStudentPage}
-                            goToStudentChat={this.goToStudentChat}/>
+                            goToStudentChat={this.goToStudentChat} />
                     )}
                 </div>}
 
                 {this.state.search && <div className="allAlerts">
-                    {this.state.alertArrSearch.map( (item) => 
-                        <CCOneAlert key={item.alertID} alert={item} 
-                            getAlertIDForDelete={this.getAlertIDForDelete} 
+                    {this.state.alertArrSearch.map((item) =>
+                        <CCOneAlert key={item.alertID} alert={item}
+                            getAlertIDForDelete={this.getAlertIDForDelete}
                             getAlertIDForUpdateRead={this.getAlertIDForUpdateRead}
                             goToStudentPage={this.goToStudentPage}
-                            goToStudentChat={this.goToStudentChat}/>
+                            goToStudentChat={this.goToStudentChat} />
                     )}
                 </div>}
+                {
+                    this.state.deleteOn&&
+                    <div className="row justify-content-center">
+                        <div className="row deleteMes col-11">
+                            <div className="col-3 CancelDeleteBtn" onClick={() => { this.setState({ pressCancelBtn: true, deleteOn: false, alertArr: this.state.alertArrOriginal }); }} >בטל</div>
+                            <div className="col-9" >ההתרעה נמחקה</div>
+                        </div>
+                    </div>
+                }
 
             </div>
         );

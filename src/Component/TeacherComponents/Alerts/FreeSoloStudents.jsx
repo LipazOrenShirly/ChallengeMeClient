@@ -22,6 +22,7 @@ export default function FreeSolo(props) {
             margin="none"
             variant="standard"
             InputProps={{ ...params.InputProps, type: 'search' }}
+            dir="rtl"
           />
         )}
       />
