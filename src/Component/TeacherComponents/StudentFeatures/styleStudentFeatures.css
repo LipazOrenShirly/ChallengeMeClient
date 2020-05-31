@@ -26,7 +26,7 @@ font-weight: 500;
 }
 
 /********tabs*********/
-.makeStyles-root-16, .jss16, .jss179 {
+.makeStyles-root-16, div[class^="jss"] {
 width: 100% !important;    
 }
 .MuiBox-root {
