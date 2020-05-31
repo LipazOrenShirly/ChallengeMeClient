@@ -34,8 +34,8 @@ export default class CCStudents extends Component {
     componentDidMount() {
         $('#BTNsaveClassName').hide();
         this.getStudentArr();
-
     }
+
     getStudentArr = () => {
         fetch(this.apiUrl + '?classID=' + this.state.Class.classID
             , {
@@ -67,6 +67,7 @@ export default class CCStudents extends Component {
                     })
                 });
     }
+
     EditClassName = () => {
         $('#className').prop("disabled", false);
         $('#BTNeditClassName').hide();
@@ -135,6 +136,12 @@ export default class CCStudents extends Component {
             .then(
                 (result) => {
                     console.log("fetch DELETE= ", result);
+                    Swal.fire({
+                        title: 'נמחק!',
+                        text: 'התלמיד נמחק בהצלחה',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    })
                     this.getStudentArr();
                 },
                 (error) => {

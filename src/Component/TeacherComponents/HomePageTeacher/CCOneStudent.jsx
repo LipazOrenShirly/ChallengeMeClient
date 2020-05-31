@@ -28,14 +28,6 @@ export default class CCOneStudent extends Component {
             confirmButtonText: 'כן, מחק'
         }).then((result) => {
             if (result.value) {
-                Swal.fire({
-                    title: 'נמחק!',
-                    text: 'התלמיד נמחק בהצלחה',
-                    icon: 'success',
-                    confirmButtonColor: '#e0819a',
-
-                })
-
                 this.props.SendDeleteStudents(this.props.student.studentID);
             }
         })
