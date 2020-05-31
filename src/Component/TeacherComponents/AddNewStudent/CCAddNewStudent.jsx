@@ -365,7 +365,7 @@ export default class CCAddNewChallenge extends Component {
                             id: 'NewStudentBirthDate',
                             type: 'date',
                             placeholder: 'תאריך לידה',
-                            className: "form-control inputNewTeacher"
+                            className: "form-control inputNewTeacher birthDate"
                         }}
 
                         value={SBirthDate}
