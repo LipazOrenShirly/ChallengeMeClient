@@ -158,7 +158,7 @@ export default class CCChallengePage extends Component {
         var alertText = 'תלמיד  ' + firstName + ' ' + lastName + ' עדכן שהוא ' + statusHeb + challenge.challengeName;
 
         const date = new Date();
-        var minute = "";
+        var minute;
         minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
        
         var alert = {
@@ -330,12 +330,13 @@ export default class CCChallengePage extends Component {
         const date = new Date();
         var minute = "";
         minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-       
-        const message = {
+       var messageS =this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר "+ this.props.location.state.challenge.challengeName +": " +this.state.messageText;
+       console.log(messageS); 
+       const message = {
             teacherID: user.teacherID,
             studentID: user.studentID,
             messageTitle: "",
-            messageText: this.state.messageText,
+            messageText: messageS,
             messageDate: date.toISOString().split('T')[0],
             messageTime: date.getHours() + ":" + minute,
             messageByTeacher: false,

@@ -163,3 +163,40 @@ text-align: center;
     width: 100%;
    padding: 0px;
 }
+.headLineNeedHelpMes{
+    font-weight: 600;
+    color:rgb(255, 199, 199);
+}
+
+/* animation Avatar */
+
+#animateAvatar {
+	/* -webkit-animation: animateAvatar 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both; */
+    animation: myfirst 1.5s linear 1s;
+    z-index: 999;
+    position: absolute;
+}
+@keyframes myfirst {
+    from {left:0px; bottom:0px;}
+    /* 25%  {  left:30%; bottom:35%;}
+    50%  { }
+    75%  {transform: translateZ(0);}  */
+    to { left:30%; bottom:35%; transform: scale(2);} 
+  }
+
+  #animateAvatar2{
+    animation: mysec 1.5s linear 2s;
+    z-index: 999;
+    position: absolute;
+    left:30%;
+    bottom: 35%;
+    transform: scale(2);
+  }
+  @keyframes mysec {
+    from {left:30%; bottom:35%;transform: scale(2);}
+    /* 25%  { transform: scale(2);}
+    50%  { transform: scale(0);} */
+    to  {left:0px; bottom:0px;transform: scale(1);} 
+    
+  }
+ 

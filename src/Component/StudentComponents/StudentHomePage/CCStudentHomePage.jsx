@@ -9,7 +9,8 @@ import Resizer from 'react-image-file-resizer';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import EmptyImgStudentBase64 from '../../LittleComponents/emptyImgStudent';
 import Swal from 'sweetalert2';
-
+import $ from 'jquery';
+import Confetti from 'react-confetti';
 export default class CCStudentHomePage extends Component {
 
     constructor(props) {
@@ -23,7 +24,8 @@ export default class CCStudentHomePage extends Component {
             // ChallengesCount: 0,
             avatarLevel: 1,
             dataUriImageStudent: "",
-            dataImg: EmptyImgStudentBase64
+            dataImg: EmptyImgStudentBase64,
+            animationAvatar: 0
 
         };
         let local = false;
@@ -147,32 +149,74 @@ export default class CCStudentHomePage extends Component {
                     console.log("count= ", result);
                     var avatarLevel = (result[0] == 0 || result[1] == 0) ? 1 : Math.max(Math.ceil(result[0] / result[1] * 100 / 20), 1) //מינימום 1
                     this.setState({
-                        // SuccessCount: result[0], 
-                        // ChallengesCount: result[1],
+                        // SuccessCount: result[0],  //כמה אתגרים התלמיד הצליח
+                        // ChallengesCount: result[1], //כמה אתגרים שוייכו לתלמיד
                         avatarLevel: avatarLevel
                     });
                     if (user.successCount != "" && user.successCount != result[0]) { //אם כמות האתגרים שהתלמיד הצליח השתנתה
                         if (user.successCount + 1 == result[0]) { // האם היא השתנה לאחד מעל מה שהיה קודם
                             if (user.avatarLevel == avatarLevel) { // האם הרמה של התלמיד עדיין נשארה אותו דבר
-                                Swal.fire({
+                                if (result[0] == result[1]){
+                                    Swal.fire({
+                                        title: '!כל הכבוד',
+                                        text: ' !!!!סיימת את כללל האתגרים שלך בהצלחה',
+                                        // icon: 'success',
+                                        confirmButtonColor: '#e0819a',
+                                        imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
+                                        imageHeight: 150,
+                                        imageAlt: 'A tall image'
+                                    });
+                                    this.setState({confetti:true});
+                                    setTimeout(async function () {
+                                        this.setState({ confetti: false });
+                                    }.bind(this), 4000);
+                                }
+                                else Swal.fire({
                                     title: '!כל הכבוד',
                                     text: '!אתה מצוין! תמשיך ככה',
                                     // icon: 'success',
                                     confirmButtonColor: '#e0819a',
-                                    imageUrl: require('../../../img/avatars/turtle/turtle2.png'),
+                                    imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
                                     imageHeight: 150,
                                     imageAlt: 'A tall image'
                                 });
                             }
                             else {  // האם רמת התלמיד השתנתה בעקבות השינוי בכמות האתגרים שהצליח
-                                alert(`כמות האתגרים שהתלמיד הצליח השתנתה, קודם היא הייתה ${user.successCount}
-                                ועכשיו היא ${result[0]} וגם רמת התלמיד השתנתה, קודם היא הייתה ${user.avatarLevel}
-                                ועכשיו היא ${avatarLevel}`);
+                                // alert(`כמות האתגרים שהתלמיד הצליח השתנתה, קודם היא הייתה ${user.successCount}
+                                // ועכשיו היא ${result[0]} וגם רמת התלמיד השתנתה, קודם היא הייתה ${user.avatarLevel}
+                                // ועכשיו היא ${avatarLevel}`);
+                                //כאן יתחיל האנימציה
+                                this.setState({ animationAvatar: 1 });
+                                setTimeout(async function () {
+                                    this.setState({ animationAvatar: 2 , confetti:true});
+                                }.bind(this), 2500);
+                                setTimeout(async function () {
+                                    this.setState({ animationAvatar: 0 ,confetti:false});
+
+                                }.bind(this), 6000);
+                                if (result[0] == result[1]){
+                                    setTimeout(async function () {                                   
+                                    Swal.fire({
+                                        title: '!כל הכבוד',
+                                        text: ' !!!!סיימת את כללל האתגרים שלך בהצלחה',
+                                        // icon: 'success',
+                                        confirmButtonColor: '#e0819a',
+                                        imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
+                                        imageHeight: 150,
+                                        imageAlt: 'A tall image'
+                                    });
+                                    this.setState({confetti:true});
+                                    setTimeout(async function () {
+                                        this.setState({ confetti: false });
+                                    }.bind(this), 2000);
+                                }.bind(this), 6500);
+                                }
                             }
                         }
                     };
-                    user.setSuccessCount(result[0]);
-                    user.setChallengesCount(result[1]);
+
+                    user.setSuccessCount(result[0]); //כמה אתגרים התלמיד הצליח
+                    user.setChallengesCount(result[1]); //כמה אתגרים שוייכו לתלמיד
                     user.setAvatarLevel(avatarLevel);
                 },
                 (error) => {
@@ -324,6 +368,8 @@ export default class CCStudentHomePage extends Component {
         const user = this.context;
         var token = user.studentToken;
         var RandomNumber = Math.floor(Math.random() * this.state.avatarSentances.length) + 0;
+        var levelAvatarBefore = this.state.avatarLevel - 1;
+        // const [width, height] = useWindowSize()
         return (
             <div className="studentPage">
                 <div className="d-flex justify-content-start" style={{ padding: '2% 0 0 2%', color: 'rgb(46, 46, 124)' }}
@@ -353,14 +399,43 @@ export default class CCStudentHomePage extends Component {
 
                 {/* אווטאר */}
                 {
-                    this.state.Avatar != null &&
-                    
-                        <div className="row" style={{ margin: '0px', marginTop: '2%', padding: '0px' }}>
-                            <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png')} /></div>
-                            <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
-                        
+                    this.state.Avatar != null && this.state.animationAvatar == 0 &&
+
+                    <div className="row" style={{ margin: '0px', marginTop: '2%', padding: '0px' }}>
+                        <div className="animated bounce infinite col-4 avatarClassDiv" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png')} /></div>
+                        <div className="animated fadeIn delay-1s col-6" id="talkbubble">{this.state.avatarSentances[RandomNumber]}</div>
+
                     </div>
                 }
+                {
+                    this.state.Avatar != null && this.state.animationAvatar == 1 &&
+                    <div id="animateAvatar" className="avatarClassDiv col-2">
+                        <div className="avatarClassDiv animated bounceOut delay-3s" ><img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + levelAvatarBefore + '.png')} /></div>
+                    </div>
+                }
+                {
+                    this.state.Avatar != null && this.state.confetti==true &&
+                    <div className="row">
+                        <Confetti
+                            width={window.innerWidth}
+                            height={window.innerHeight}
+                        />
+
+                    </div>
+                }
+                {
+                    this.state.Avatar != null && this.state.animationAvatar == 2 &&
+                    <div id="animateAvatar2" className="col-2">
+                        <div className="avatarClassDiv animated bounceIn animated tada delay-1s" > <img src={require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png')} /></div>
+                        <audio
+                            ref="audio_tag"
+                            autoPlay={true}
+                            controls={false} >
+                            <source type="audio/mp3" src="/successfulAudio.mp3" />
+                        </audio>
+                    </div>
+                }
+
 
             </div>
         )
