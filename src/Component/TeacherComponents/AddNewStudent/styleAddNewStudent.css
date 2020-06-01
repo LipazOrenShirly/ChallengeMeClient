@@ -18,3 +18,13 @@ input[type="date"]:before {
   .birthDate{
     height: 100%;
   }
+
+  .notMust{
+    text-align: right;
+    color:red;
+    font-size: 85%;
+    margin: 0;
+    padding: 0;
+    margin-top: -15px;
+    padding-right: 5px;
+  }
