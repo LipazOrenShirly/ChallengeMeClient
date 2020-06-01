@@ -98,8 +98,8 @@ export default class CCChallengePage extends Component {
             $('#success').css('background-color', 'rgb(167, 167, 167)');
             $('#fail').css('background-color', 'rgb(167, 167, 167)');
             $('#help').css('background-color', '#FFBE3D');
-        
-            this.setState({ statusSentence:  "הודעה נשלחה למורה והוא יענה ברגע שיוכל"});
+
+            this.setState({ statusSentence: "הודעה נשלחה למורה והוא יענה ברגע שיוכל" });
         }
     }
 
@@ -132,7 +132,7 @@ export default class CCChallengePage extends Component {
                     this.btnColor();
                     this.createAlert(id);
                     if (id == 'success') {
-                        this.props.history.push( '/StudentHomePage' );
+                        this.props.history.push('/StudentHomePage');
                     }
                 },
                 (error) => {
@@ -159,8 +159,8 @@ export default class CCChallengePage extends Component {
 
         const date = new Date();
         var minute;
-        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-       
+        minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+
         var alert = {
             teacherID: user.teacherID,
             studentID: user.studentID,
@@ -238,43 +238,43 @@ export default class CCChallengePage extends Component {
 
         var teacherToken = await "";
         await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + user.teacherID
-        , {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
             })
-        })
-        .then(res => {
-            console.log('res=', res);
-            console.log('res.status', res.status);
-            console.log('res.ok', res.ok);
-            if (!res.ok)
-                throw new Error('Network response was not ok.');
-            return res.json();
-        })
-        .then(
-            (result) => {
-                console.log("TeacherToken= ", result);
-                if (result == null)
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("TeacherToken= ", result);
+                    if (result == null)
+                        Swal.fire({
+                            title: 'אוי',
+                            text: 'הפעולה נכשלה, נסה שנית',
+                            icon: 'warning',
+                            confirmButtonColor: '#e0819a',
+                        });
+                    else {
+                        teacherToken = result;
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
                     Swal.fire({
                         title: 'אוי',
                         text: 'הפעולה נכשלה, נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
-                    });
-                else {
-                    teacherToken = result;
-                }
-            },
-            (error) => {
-                console.log("err get=", error);
-                Swal.fire({
-                    title: 'אוי',
-                    text: 'הפעולה נכשלה, נסה שנית',
-                    icon: 'warning',
-                    confirmButtonColor: '#e0819a',
-                })
-            });
+                    })
+                });
 
         var notification = await {
             "notification": {
@@ -329,10 +329,10 @@ export default class CCChallengePage extends Component {
         const user = this.context;
         const date = new Date();
         var minute = "";
-        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-       var messageS =this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר "+ this.props.location.state.challenge.challengeName +": " +this.state.messageText;
-       console.log(messageS); 
-       const message = {
+        minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+        var messageS = this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר " + this.props.location.state.challenge.challengeName + ": " + this.state.messageText;
+        console.log(messageS);
+        const message = {
             teacherID: user.teacherID,
             studentID: user.studentID,
             messageTitle: "",
@@ -383,7 +383,11 @@ export default class CCChallengePage extends Component {
         const deadline = new Date(challenge.deadline);
         const today = new Date();
         const dateDiff = parseInt((deadline - today) / (1000 * 60 * 60 * 24), 10);
-        const messageHelp = "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה" ;
+        const messageHelp = "סימנת שאתה זקוק לעזרה, הודעה נשלחת אוטומטית למחנך, יש לך אופציה לרשום לו הודעה עם הסבר על הבעיה";
+        const dateLeft = dateDiff > 30 ?
+            <div> <div className="col-12 dedlineTextChallengePage">מועד סיום האתגר</div>
+                <div className="col-12 dedlineDateTextChallengePage">{challenge.deadline}</div></div>
+            : <div className="col-12 dedlineDateTextChallengePage">נותרו {dateDiff} ימים <br />לסיום האתגר</div>
         return (
             <div className="studentPage">
                 <div className="col-12"> {/* חזור למסך הקודם */}
@@ -391,12 +395,12 @@ export default class CCChallengePage extends Component {
                 </div>
                 <br />
                 {/* תמונת האתגר */}
-                <div className="row mp0 justify-content-center" style={{backgroundColor:'black'}}>
+                <div className="row mp0 justify-content-center" style={{ backgroundColor: 'black' }}>
                     <img className="imageOneChallenge" src={`data:image/jpeg;base64,${this.state.dataImg}`} />
-                    
+
                 </div>
                 <div className="row mp0">
-                <FaPencilAlt className="FaPencilAlt" size={35} onClick={this.AddPhoto} color="white" />
+                    <FaPencilAlt className="FaPencilAlt" size={35} onClick={this.AddPhoto} color="white" />
                 </div>
                 {/* מספר האתגר */}
                 <div className="challengeReadText" style={{ marginTop: '2%' }}>אתגר מספר {this.props.location.state.index + 1}</div>
@@ -404,11 +408,9 @@ export default class CCChallengePage extends Component {
                 <div className="col-12 challengeReadText challengeName">{challenge.challengeName} </div>
                 {/* ימים לסיום אתגר/תאריך סיום */}
                 {
-                    challenge.status != 0 ? <div className="statusSentence">{this.state.messageShow == true ? messageHelp : this.state.statusSentence}</div> :
-                        dateDiff > 30 ?
-                            <div> <div className="col-12 dedlineTextChallengePage">מועד סיום האתגר</div>
-                                <div className="col-12 dedlineDateTextChallengePage">{challenge.deadline}</div></div>
-                            : <div className="col-12 dedlineDateTextChallengePage">נותרו {dateDiff} ימים <br />לסיום האתגר</div>
+                    challenge.status == 1 || challenge.status == 3 ? (<div className="statusSentence">{this.state.messageShow == true ? messageHelp : this.state.statusSentence}</div>) :
+                        challenge.status == 2 ? <div><div className="statusSentence">{this.state.statusSentence}</div> {dateLeft} </div>: {dateLeft}
+
                 }
                 <br />
                 {
