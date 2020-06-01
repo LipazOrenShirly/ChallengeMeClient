@@ -359,13 +359,14 @@ export default class CCAddNewChallenge extends Component {
 
                 <div className="form-group col-12">
                     {/* ללא ולידציות, אולי לא יודע תאריך לידה */}
+                   <div className="notMust">-שדה רשות</div>
                     <Textbox
                         attributesInput={{
                             autoComplete: "off",
                             id: 'NewStudentBirthDate',
                             type: 'date',
                             placeholder: 'תאריך לידה',
-                            className: "form-control inputNewTeacher"
+                            className: "form-control inputNewTeacher birthDate"
                         }}
 
                         value={SBirthDate}
