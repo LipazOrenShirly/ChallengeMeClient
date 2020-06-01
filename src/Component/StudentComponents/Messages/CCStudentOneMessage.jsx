@@ -7,7 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
-
+import { Markup } from 'interweave';
 
 export default class OneMessage extends Component {
     constructor(props) {
@@ -41,14 +41,16 @@ export default class OneMessage extends Component {
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-start' >
                         <div className="incomingMessageDiv" dir="rtl">
-                            {message.messageText} <p className="pMesLeft">{message.messageTime}</p>
+                            <Markup content={message.messageText} /> 
+                            <p className="pMesLeft">{message.messageTime}</p>
                         </div></div>
                 }
 
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-end'>
                         <div className="outgoingMessageDiv" dir="rtl">
-                            {message.messageText} <p className="pMesRight">{message.messageTime}</p>
+                            <Markup content={message.messageText} /> 
+                            <p className="pMesRight">{message.messageTime}</p>
                         </div>
                     </div>
                 }

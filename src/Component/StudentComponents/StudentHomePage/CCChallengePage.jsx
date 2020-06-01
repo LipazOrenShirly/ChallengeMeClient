@@ -330,7 +330,7 @@ export default class CCChallengePage extends Component {
         const date = new Date();
         var minute = "";
         minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-        var messageS = this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר " + this.props.location.state.challenge.challengeName + ": " + this.state.messageText;
+        var messageS = "<strong> "+this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר " + this.props.location.state.challenge.challengeName + ": </strong><br/>" + this.state.messageText;
         console.log(messageS);
         const message = {
             teacherID: user.teacherID,
