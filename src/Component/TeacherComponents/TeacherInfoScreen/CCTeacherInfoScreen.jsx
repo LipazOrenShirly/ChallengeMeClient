@@ -23,13 +23,14 @@ export default class CCTeacherInfoScreen extends Component {
             password: "",
             password2: "",
             school: "",
-            HasfirstNameValError: true,
-            HaslastNameValError: true,
-            HasmailValError: true,
-            HasphoneValError: true,
-            HaspasswordValError: true,
-            Haspassword2ValError: true,
-            HasschoolValError: true,
+            HasfirstNameValError: false,
+            HaslastNameValError: false,
+            HasuserNameValError: false,
+            HasmailValError: false,
+            HasphoneValError: false,
+            HaspasswordValError: false,
+            Haspassword2ValError: false,
+            HasschoolValError: false,
             showPassword2: false
         }
 
@@ -93,6 +94,7 @@ export default class CCTeacherInfoScreen extends Component {
     }
 
     UpdateDetails = (event) => {
+        console.log(this.state);
         const user = this.context;
         event.preventDefault();
 
@@ -133,7 +135,8 @@ export default class CCTeacherInfoScreen extends Component {
                             text: 'הפרטים שונו בהצלחה!',
                             icon: 'success',
                             confirmButtonColor: '#e0819a',
-                        })
+                        });
+                        this.props.history.push('/HomePageTeacher');
                     },
                     (error) => {
                         console.log("err PUT=", error);
@@ -202,10 +205,11 @@ export default class CCTeacherInfoScreen extends Component {
     }
 
     checkIfPhoneExist = (e) => {
+        const user = this.context;
         var phone = parseInt(e.target.value);
         $('#PhoneValuesError').empty();
 
-        // פונקציה בשרת שבודקת ומחזירה 0 או 1
+        // פונקציה בשרת שבודקת אם יש מורה ששמור לו הטלפון הזה, אם כן מחזירה את המספר המזהה שלו, אם לא מחזירה 0
         fetch(this.apiUrl + '?phone=0' + phone
             , {
                 method: 'GET',
@@ -223,7 +227,7 @@ export default class CCTeacherInfoScreen extends Component {
             })
             .then(
                 (result) => {
-                    if (result != 0) { // כבר קיים מספר הטלפון הזה
+                    if (result != 0 && result != user.teacherID) { // כבר קיים מספר הטלפון הזה
                         this.setState({ HasphoneValError: true });
                         $('#PhoneValuesError').empty();
                         $('#PhoneValuesError').append("מספר הטלפון הזה כבר קיים במערכת");
@@ -279,13 +283,14 @@ export default class CCTeacherInfoScreen extends Component {
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
                                     customFunc: async v => {
                                         if (v === "") {
-                                            // this.setState({ HasfirstNameValError: true });
+                                            this.setState({ HasfirstNameValError: true });                            
                                             return "Name is required.";
                                         }
                                         if (v.length < 2) {
-                                            // this.setState({ HasfirstNameValError: true });
+                                            this.setState({ HasfirstNameValError: true });
                                             return "Name needs at least 2 length.";
                                         }
+                                        this.setState({ HasfirstNameValError: false });                            
                                         return true;
                                     }
                                 }}
@@ -300,7 +305,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'שם משפחה',
                                     className: "form-control inputUpdateTeacher",
                                 }}
-
                                 value={lastName}
                                 validationCallback={res =>
                                     this.setState({ HaslastNameValError: res, validate: false })
@@ -322,6 +326,7 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HaslastNameValError: true });
                                             return "Last Name needs at least 2 length.";
                                         }
+                                        this.setState({ HaslastNameValError: false });
                                         return true;
                                     }
                                 }}
@@ -336,7 +341,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'שם משתמש',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-
                                 value={userName}
                                 validationCallback={res =>
                                     this.setState({ HasuserNameValError: res, validate: false })
@@ -357,7 +361,7 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HasuserNameValError: true });
                                             return "Name is required.";
                                         }
-
+                                        this.setState({ HasuserNameValError: false });
                                         return true;
                                     }
                                 }}
@@ -373,7 +377,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'כתובת מייל',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-
                                 value={mail}
                                 validationCallback={res =>
                                     this.setState({ HasmailValError: res, validate: false })
@@ -389,6 +392,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     customFunc: mail => {
                                         const reg1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                                         if (reg1.test(String(mail).toLowerCase())) {
+                                            this.setState({ HasmailValError: false });
                                             return true;
                                         } else {
                                             this.setState({ HasmailValError: true });
@@ -408,7 +412,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'פלאפון',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-
                                 value={phone}
                                 validationCallback={res =>
                                     this.setState({ HasphoneValError: res })
@@ -427,6 +430,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     customFunc: phoneNum => {
                                         const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
                                         if (reg.test(phoneNum)) {
+                                            this.setState({ HasphoneValError: false });
                                             return true;
                                         } else {
                                             this.setState({ HasphoneValError: true });
@@ -446,7 +450,6 @@ export default class CCTeacherInfoScreen extends Component {
                                     placeholder: 'הזן ססמה',
                                     className: "form-control inputUpdateTeacher"
                                 }}
-
                                 value={password}
                                 validationCallback={res =>
                                     this.setState({ HaspasswordValError: res, validate: false })
@@ -462,8 +465,10 @@ export default class CCTeacherInfoScreen extends Component {
                                     customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
                                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                                         if (reg.test(pas)) {
+                                            this.setState({ HaspasswordValError: false });
                                             return true;
-                                        } else {
+                                        } 
+                                        else {
                                             this.setState({ HaspasswordValError: true });
                                             return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
                                         }
@@ -496,13 +501,16 @@ export default class CCTeacherInfoScreen extends Component {
                                     customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
                                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                                         if (reg.test(pas)) {
-                                            if (password2 == password)
+                                            if (password2 == password){
+                                                this.setState({ Haspassword2ValError: false });
                                                 return true;
+                                            }
                                             else {
                                                 this.setState({ Haspassword2ValError: true });
                                                 return "not like first password";
                                             }
-                                        } else {
+                                        } 
+                                        else {
                                             this.setState({ Haspassword2ValError: true });
                                             return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
                                         }
@@ -541,6 +549,7 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HasschoolValError: true });
                                             return "School Name needs at least 2 length.";
                                         }
+                                        this.setState({ HasschoolValError: false });
                                         return true;
                                     }
                                 }}

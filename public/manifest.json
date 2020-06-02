@@ -3,17 +3,17 @@
   "name": "Challenge Me",
   "icons": [
     {
-      "src": "./img/logoSmall.svg",
+      "src": "./img/logoNew.svg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/svg"
     },
     {
-      "src": "./img/logoSmall.svg",
+      "src": "./img/logoNew.svg",
       "type": "image/svg",
       "sizes": "192x192"
     },
     {
-      "src": "./img/logoSmall.svg",
+      "src": "./img/logoNew.svg",
       "type": "image/svg",
       "sizes": "512x512"
     }
