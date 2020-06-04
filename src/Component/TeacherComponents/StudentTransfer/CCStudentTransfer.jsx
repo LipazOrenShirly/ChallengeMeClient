@@ -21,7 +21,6 @@ class CCStudentTransfer extends Component {
             transfersArr: [],
             studentIDToTransfer: "",
             teacherIDToTransfer: "",
-            teacherToken: ""
         }
         let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -161,13 +160,13 @@ class CCStudentTransfer extends Component {
     }
 
     onInputChangeStudent = (event, value) => {
-        var studentID = value != null ? value.studentID : "";
-        this.setState({ studentIDToTransfer: studentID });
+        var studentID = value != null ? value.studentID : null;
+        this.setState({studentIDToTransfer: studentID});
     }
 
     onInputChangeTeacher = (event, value) => {
-        var teacherID = value != null ? value.teacherID : "";
-        this.setState({ teacherIDToTransfer: teacherID });
+        var teacherID = value != null ? value.teacherID : null;
+        this.setState({ teacherIDToTransfer: teacherID});
     }
 
     //------שליחת בקשה-------
@@ -269,7 +268,7 @@ class CCStudentTransfer extends Component {
 
     postAlertTFirebase = async (alertTitle, alertText) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
 
-        this.getTeacherToken();
+        var teacherToken = this.getTeacherToken();
         //יצירת אובייקט נוטיפיקיישן ופוסט לפיירבייס
         var notification = await {
             "notification": {
@@ -303,9 +302,8 @@ class CCStudentTransfer extends Component {
                 });
     }
 
-    getTeacherToken = () => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
+    getTeacherToken = async () => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
         const user = await this.context;
-        var teacherToken = await "";
         await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + this.state.teacherIDToTransfer
             , {
                 method: 'GET',
@@ -325,7 +323,7 @@ class CCStudentTransfer extends Component {
                 (result) => {
                     console.log("TeacherToken= ", result);
                     if (result != null)
-                        setState({ teacherToken: result });
+                        return result;
                 },
                 (error) => {
                     console.log("err get=", error);
