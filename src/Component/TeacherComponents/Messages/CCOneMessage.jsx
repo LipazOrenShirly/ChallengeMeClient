@@ -7,6 +7,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import $ from 'jquery';
 import ProjectContext from '../../../Context/ProjectContext';
 import Swal from 'sweetalert2';
+import { Markup } from 'interweave';
 
 
 export default class CCOneMessage extends Component {
@@ -42,8 +43,9 @@ export default class CCOneMessage extends Component {
                 {/* הודעות נכנסות */}
                 {message.messageByTeacher == false &&
                     <div className='d-flex justify-content-start' >
-                        <div className="incomingMessageDivT" dir="rtl"><p className="pMesLeft">{message.messageTime}</p>
-                            {message.messageText}
+                        <div className="incomingMessageDivT" dir="rtl">
+                            <p className="pMesLeft">{message.messageTime}</p>
+                            <Markup content={message.messageText} /> 
                         </div>
                     </div>
                 }
@@ -52,7 +54,8 @@ export default class CCOneMessage extends Component {
                 {message.messageByTeacher &&
                     <div className='d-flex justify-content-end'>
                         <div className="outgoingMessageDivT"  dir="rtl">
-                            {message.messageText} <p className="pMesRight">{message.messageTime}</p>
+                            <Markup content={message.messageText} /> 
+                            <p className="pMesRight">{message.messageTime}</p>
                         </div>
                     </div>
                 }

@@ -398,7 +398,7 @@ export default class CCnewTeacher extends Component {
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     // autoComplete: "off",
-                                    autocomplete: "new-password",
+                                    autoComplete: "new-password",
                                     id: 'NewTPassword',
                                     type: 'password',
                                     placeholder: 'הזן ססמה',
