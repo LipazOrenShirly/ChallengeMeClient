@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../css/Style.css';
-import './styleStudentTransfer.css';
+import './styleStudenTtransfer.css';
 import NavBar from '../../LittleComponents/NavBar';
 import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
