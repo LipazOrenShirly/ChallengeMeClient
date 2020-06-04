@@ -3,9 +3,9 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function FreeSoloTransfer(props) {
+export default function FreeSoloTeacher(props) {
   return (
-    <div className="DivAutoComplete">
+    
 
       <Autocomplete
         freeSolo
@@ -13,17 +13,16 @@ export default function FreeSoloTransfer(props) {
         id="NewChallengeName"
         disableClearable
         onInputChange={props.onInputChange}
-        options={props.challenges.map((option) => option.challengeName)}
+        options={props.teachersArr.map((option) => option.firstName + " "+ option.lastName)}
         renderInput={(params) => (
           <TextField
             {...params}
-            label="שם האתגר"
-            margin="none"
-            variant="standard"
+            label={props.lableFreeSolo}
+            
             InputProps={{ ...params.InputProps, type: 'search' }}
           />
         )}
       />
-    </div>
+    
   );
 }
