@@ -18,8 +18,10 @@ class CCStudentTransfer extends Component {
         this.state = {
             studentsArr: [],
             teachersArr: [],
+            transfersArr: [],
             studentIDToTransfer: "",
             teacherIDToTransfer: "",
+            teacherToken: ""
         }
         let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -36,7 +38,26 @@ class CCStudentTransfer extends Component {
     componentDidMount() {
         this.getStudents();
         this.getTeachers();
+        this.getTransfersRequests();
     }
+
+    // התהליך:
+    // במסך אפשר ליצור בקשות להעברות וניתן לראות בקשות שממתינות לאישור שלך
+
+    // יצירת בקשה:
+    // במסך אפשר ליצור בקשה להעברה על ידי בחירת תלמיד להעברה ומורה אליו יועבר התלמיד
+    // בלחיצה על העבר תלמיד:
+    // 1. נוצרת שורה בטבלת העברות
+    // 3. נשלחת התראה לפיירבייס
+
+    // צפיה בבקשות שממתינות לאישור שלך:
+    // יש גט שמביא את כל הבקשות שממתינות לאישור שלך
+    // ברגע שמאשרים:
+    // 1. מתעדכנת ההעברה בטבלת העברות לקונפירם טרו
+    // 2. נשלחת התראה לפיירבייס
+    // 3. פקודת פוט לטבלת תלמידים לעדכון המורה של התלמיד
+
+
 
     getStudents = () => {
         const user = this.context;
@@ -105,21 +126,69 @@ class CCStudentTransfer extends Component {
                 })
     }
 
+    getTransfersRequests = () => {
+        const user = this.context;
+        fetch(this.apiUrlTransfer + '/getTransfersToTeacher?teacherID=' + user.teacherID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({ transfersArr: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    //תוקן
+                    Swal.fire({
+                        title: 'משהו השתבש',
+                        text: 'טעינת רשימת הבקשות לשינוי שיוך התלמידים לא הצליחה, אנא נסה להכנס לעמוד מחדש',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                })
+    }
+
     onInputChangeStudent = (event, value) => {
-        alert(value != null ? value.studentID : "no selection");
         var studentID = value != null ? value.studentID : "";
         this.setState({ studentIDToTransfer: studentID });
     }
-    
+
     onInputChangeTeacher = (event, value) => {
-        alert(value != null ? value.teacherID : "no selection");
         var teacherID = value != null ? value.teacherID : "";
         this.setState({ teacherIDToTransfer: teacherID });
     }
 
-    Submit = (event) => {
+    //------שליחת בקשה-------
+    SubmitTransfer = (event) => {
         event.preventDefault();
-        this.postTransfer();
+        //פוסט לבקשה להעברה
+        this.postTransfer(); 
+        //פוסט התראה לפיירבייס --לבקשה-- להעברה
+        var alertTitle = '';
+        var alertText = '';
+        this.postAlertTFirebase(alertTitle, alertText);    
+    }
+
+    //----אישור העברה------
+    confirmTransfer = () => {
+        //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
+        this.putTransferConfirm(transferID);
+        //פוסט התראה לפיירבייס --לאישור-- להעברה
+        var alertTitle = '';
+        var alertText = '';
+        this.postAlertTFirebase(alertTitle, alertText);
     }
 
     postTransfer = () => {
@@ -152,7 +221,8 @@ class CCStudentTransfer extends Component {
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     });
-                    this.props.history.push( '/HomePageTeacher' );
+                    this.postAlert();
+                    this.props.history.push('/HomePageTeacher');
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -165,6 +235,103 @@ class CCStudentTransfer extends Component {
                 });
     }
 
+    putTransferConfirm = (transferID) => {    //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
+        fetch(this.apiUrlTransfer + '?transferID=' + transferID
+            , {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    //תוקן
+                    Swal.fire({
+                        title: 'משהו השתבש',
+                        text: 'אישור ההעברה לא התבצעת אנא נסה שוב',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                });
+    }
+
+    postAlertTFirebase = async (alertTitle, alertText) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
+
+        this.getTeacherToken();
+        //יצירת אובייקט נוטיפיקיישן ופוסט לפיירבייס
+        var notification = await {
+            "notification": {
+                "title": alertTitle,
+                "body": alertText,
+                "click_action": "https://challengeme.netlify.app/",
+                "icon": "http://url-to-an-icon/icon.png"
+            },
+            "to": teacherToken
+        }
+        await fetch("https://fcm.googleapis.com/fcm/send", {
+            method: 'POST',
+            body: JSON.stringify(notification),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'key=AAAAB9pd-t0:APA91bFqlbdOGpqVbNifFlo-_2p9uPFoFqqi0iY5O-_bFjMuzYgVlxC7uC9xRQEprfEqdiDjsNEremg7RWBHlyMQhlhC1Hxo_ZPUsjCYTPUS3nu4cMQJ3tXhUImmftNhg3TPjlN1Wq1G'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }
+
+    getTeacherToken = () => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
+        const user = await this.context;
+        var teacherToken = await "";
+        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + this.state.teacherIDToTransfer
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("TeacherToken= ", result);
+                    if (result != null)
+                        setState({ teacherToken: result });
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+    }
+
     render() {
         return (
             <div className="container-fluid">
@@ -174,7 +341,7 @@ class CCStudentTransfer extends Component {
                 </div>
                 <div className="col-12 turkiz">שיוך תלמיד למורה אחר מאותו מוסד לימודי</div>
                 <br />
-                <form onSubmit={this.Submit}>
+                <form onSubmit={this.SubmitTransfer}>
                     <div className="form-group input-group col-12 bc" dir="rtl">
                         <FreeSoloGrouped
                             options={this.state.studentsArr}
