@@ -61,7 +61,7 @@ export default class CCChooseAvatar extends Component {
                     //תוקן
                     Swal.fire({
                         title: 'משהו השתבש',
-                        text: 'בחירת הדמות שלא לא הצליחה, נסה להכנס מחדש לאפליקציה ולבחור שוב',
+                        text: 'בחירת הדמות לא הצליחה, נסה להכנס מחדש לאפליקציה ולבחור שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -102,7 +102,7 @@ export default class CCChooseAvatar extends Component {
                 (error) => {
                     console.log("err post=", error);
                     // Swal.fire({
-                    //     title: 'אוי',
+                    //     title: 'משהו השתבש',
                     //     text: 'הפעולה נכשלה, נסה שנית',
                     //     icon: 'warning',
                     //     confirmButtonColor: '#e0819a',

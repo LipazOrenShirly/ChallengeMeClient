@@ -59,9 +59,10 @@ export default class CCStudents extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא מצליח למצוא את התלמידים, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -108,9 +109,10 @@ export default class CCStudents extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'שם הכיתה לא השתנה, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -136,6 +138,7 @@ export default class CCStudents extends Component {
             .then(
                 (result) => {
                     console.log("fetch DELETE= ", result);
+                    //תוקן
                     Swal.fire({
                         title: 'נמחק!',
                         text: 'התלמיד נמחק בהצלחה',
@@ -146,9 +149,10 @@ export default class CCStudents extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'התלמיד לא נמחק, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

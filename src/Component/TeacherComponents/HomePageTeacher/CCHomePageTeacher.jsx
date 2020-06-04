@@ -69,12 +69,13 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
         // משיכה של מספר ההתראות שלא נקראו
@@ -100,12 +101,13 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -156,9 +158,10 @@ export default class CCHomePageTeacher extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'אנא נסה לחפש שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

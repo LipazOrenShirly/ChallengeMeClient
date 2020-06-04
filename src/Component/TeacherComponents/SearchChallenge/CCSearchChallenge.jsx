@@ -61,9 +61,10 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא מוצא אתגרים אנא נסה לטעון את הדף מחדש',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -93,9 +94,10 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא מוצא תגיות, אנא נסה לטעון מחדש את הדף',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -143,12 +145,13 @@ class CCSearchChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 

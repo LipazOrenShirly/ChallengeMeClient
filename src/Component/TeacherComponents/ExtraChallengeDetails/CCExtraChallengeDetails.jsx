@@ -51,17 +51,19 @@ class CCExtraChallengeDetails extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
     Submit = (event) => {
         if (this.state.deadline == null) {
+            //תוקן
             Swal.fire({
                 title: 'שים לב',
                 text: 'יש לבחור תאריך סיום לביצוע האתגר',
@@ -94,6 +96,7 @@ class CCExtraChallengeDetails extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
+                    //תוקן
                     Swal.fire({
                         title: 'מעולה!',
                         text: 'הוספת את האתגר בהצלחה!',
@@ -107,9 +110,10 @@ class CCExtraChallengeDetails extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'האתגר לא התווסף, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

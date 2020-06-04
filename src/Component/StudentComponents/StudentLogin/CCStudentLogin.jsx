@@ -47,6 +47,7 @@ export default class CCStudentLogin extends Component {
   }
 
   NewStudentAlert = () => {
+    //תוקן
     Swal.fire({
       title: 'המתן',
       text: 'המחנך שלך צריך ליצור בשבילך משתמש',
@@ -58,9 +59,10 @@ export default class CCStudentLogin extends Component {
   ForgetPassword = () => {
     // אם לא כתב מספר טלפון תקין עושה הודעה ויוצא מהפונקציה
     if (this.state.Phone == null || this.state.HasPhoneValError) {
+      //תוקן
       Swal.fire({
         title: 'שים לב',
-        text: 'עליך למלא את מספר הטלפון שלך',
+        text: 'עליך למלא את מספר הטלפון שלך לפני לחיצה על שכחתי ססמה',
         icon: 'warning',
         confirmButtonColor: 'rgb(135, 181, 189)',
       });
@@ -89,8 +91,9 @@ export default class CCStudentLogin extends Component {
           if (result.StudentID != 0)
             this.setState({ student: result }, this.x);
           else {
+            //תוקן
             Swal.fire({
-              title: 'אוי',
+              title: 'שים לב',
               text: 'מספר הטלפון לא קיים במערכת',
               icon: 'warning',
               confirmButtonColor: '#e0819a',
@@ -99,16 +102,18 @@ export default class CCStudentLogin extends Component {
         },
         (error) => {
           console.log("err get=", error);
-          Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
-            icon: 'warning',
-            confirmButtonColor: '#e0819a',
-          })
+          //תוקן
+          // Swal.fire({
+          //   title: 'משהו השתבש',
+          //   text: 'הפעולה נכשלה, נסה שנית',
+          //   icon: 'warning',
+          //   confirmButtonColor: '#e0819a',
+          // })
         });
   }
 
   x = () => {
+    //תוקן
     Swal.fire({
       title: 'שים לב',
       text: "?האם אתה רוצה לבקש מהמורה לאפס לך את הסיסמה",
@@ -121,6 +126,7 @@ export default class CCStudentLogin extends Component {
     }).then((result) => {
       if (result.value) {  //אם בחר אישור
         if (this.state.Phone == null) {
+          //תוקן
           Swal.fire({
             title: 'שים לב',
             text: 'עליך למלא את מספר הטלפון שלך',
@@ -131,6 +137,7 @@ export default class CCStudentLogin extends Component {
         else this.sendPasswordRestartRequestToTeacher();
       }
       else {   //אם בחר בטל
+        //תוקן
         Swal.fire({
           title: 'בסדר',
           text: 'הסיסמה לא השתנתה',
@@ -179,6 +186,7 @@ export default class CCStudentLogin extends Component {
       .then(
         (result) => {
           console.log("fetch POST= ", result);
+          //תוקן
           Swal.fire({
             title: 'נשלחה בקשה',
             text: 'נשלחה בקשה למורה שלך, תמתין לתגובה ממנו',
@@ -188,9 +196,10 @@ export default class CCStudentLogin extends Component {
         },
         (error) => {
           console.log("err post=", error);
+          //תוקן
           Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
+            title: 'משהו השתבש',
+            text: 'הבקשה לא נשלחה, אנא נסה שנית',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
           })
@@ -216,25 +225,29 @@ export default class CCStudentLogin extends Component {
       .then(
         (result) => {
           console.log("student= ", result);
-          if (result == null)
-            Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
-              icon: 'warning',
-              confirmButtonColor: '#e0819a',
-            });
-          else {
+          if (result != null)
             teacherToken = result;
-          }
+          // if (result == null)
+          //תוקן
+          //   Swal.fire({
+          //     title: 'משהו השתבש',
+          //     text: 'הפעולה נכשלה, נסה שנית',
+          //     icon: 'warning',
+          //     confirmButtonColor: '#e0819a',
+          //   });
+          // else {
+          //   teacherToken = result;
+          // }
         },
         (error) => {
           console.log("err get=", error);
-          Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
-            icon: 'warning',
-            confirmButtonColor: '#e0819a',
-          })
+          //תוקן
+          // Swal.fire({
+          //   title: 'משהו השתבש',
+          //   text: 'הפעולה נכשלה, נסה שנית',
+          //   icon: 'warning',
+          //   confirmButtonColor: '#e0819a',
+          // })
         });
 
     // לעשות פוסט לפיירבייס
@@ -321,9 +334,10 @@ export default class CCStudentLogin extends Component {
           },
           (error) => {
             console.log("err get=", error);
+            //תוקן
             Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
+              title: 'משהו השתבש',
+              text: 'הכניסה נכשלה, אנא נסה שנית',
               icon: 'warning',
               confirmButtonColor: '#e0819a',
             })
@@ -363,12 +377,13 @@ export default class CCStudentLogin extends Component {
         },
         (error) => {
           console.log("err post=", error);
-          Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
-            icon: 'warning',
-            confirmButtonColor: '#e0819a',
-          })
+          //תוקן
+          // Swal.fire({
+          //   title: 'משהו השתבש',
+          //   text: 'הפעולה נכשלה, נסה שנית',
+          //   icon: 'warning',
+          //   confirmButtonColor: '#e0819a',
+          // })
         });
   }
 

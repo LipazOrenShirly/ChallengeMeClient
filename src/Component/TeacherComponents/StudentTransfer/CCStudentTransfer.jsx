@@ -62,9 +62,10 @@ class CCStudentTransfer extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'טעינת רשימת המורים לא הצליחה אנא נסה להכנס שוב לעמוד מחדש',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -94,9 +95,10 @@ class CCStudentTransfer extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'טעינת רשימת התלמידים לא הצליחה, אנא נסה להכנס לעמוד מחדש',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

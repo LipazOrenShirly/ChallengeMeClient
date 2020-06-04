@@ -100,6 +100,7 @@ export default class CCTeacherLogin extends Component {
           console.log("Submit= ", result);
           console.log("Submit= ", JSON.stringify(result));
           this.saveCredentials(Username, newPassword1); //תשמור פרטי חיבור בלוקאל סטורג' ובסשן סטורג'
+          //תוקן
           Swal.fire({
             title: 'מעולה!',
             text: 'הסיסמה שונתה בהצלחה',
@@ -111,9 +112,10 @@ export default class CCTeacherLogin extends Component {
         },
         (error) => {
           console.log("err get=", error);
+          //תוקן
           Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
+            title: 'משהו השתבש',
+            text: 'הססמה לא שונתה, אנא נסה שנית',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
           })
@@ -164,12 +166,13 @@ export default class CCTeacherLogin extends Component {
           },
           (error) => {
             console.log("err get=", error);
-            Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
-              icon: 'warning',
-              confirmButtonColor: '#e0819a',
-            })
+            //תוקן
+            // Swal.fire({
+            //   title: 'משהו השתבש',
+            //   text: 'הפעולה נכשלה, נסה שנית',
+            //   icon: 'warning',
+            //   confirmButtonColor: '#e0819a',
+            // })
 
           });
     }
@@ -206,12 +209,13 @@ export default class CCTeacherLogin extends Component {
         },
         (error) => {
           console.log("err post=", error);
-          Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
-            icon: 'warning',
-            confirmButtonColor: '#e0819a',
-          })
+          //תוקן
+          // Swal.fire({
+          //   title: 'משהו השתבש',
+          //   text: 'הפעולה נכשלה, נסה שנית',
+          //   icon: 'warning',
+          //   confirmButtonColor: '#e0819a',
+          // })
         });
   }
 

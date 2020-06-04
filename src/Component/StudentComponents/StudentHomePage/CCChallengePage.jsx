@@ -73,12 +73,13 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -137,9 +138,10 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'סטטוס האתגר לא התעדכן במערכת, חזור למסך הקודם ונסה לעדכן שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -193,7 +195,7 @@ export default class CCChallengePage extends Component {
                     console.log("err post=", error);
                     //תוקן
                     // Swal.fire({
-                    //     title: 'אוי',
+                    //     title: 'משהו השתבש',
                     //     text: 'הפעולה נכשלה, נסה שנית',
                     //     icon: 'warning',
                     //     confirmButtonColor: '#e0819a',
@@ -225,12 +227,13 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -256,25 +259,29 @@ export default class CCChallengePage extends Component {
             .then(
                 (result) => {
                     console.log("TeacherToken= ", result);
-                    if (result == null)
-                        Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
-                            icon: 'warning',
-                            confirmButtonColor: '#e0819a',
-                        });
-                    else {
+                    if (result != null)
                         teacherToken = result;
-                    }
+                    // if (result == null)
+                    // //תוקן
+                    //     Swal.fire({
+                    //         title: 'משהו השתבש',
+                    //         text: 'ההתרעה לא נשלחה למורה',
+                    //         icon: 'warning',
+                    //         confirmButtonColor: '#e0819a',
+                    //     });
+                    // else {
+                    //     teacherToken = result;
+                    // }
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
         var notification = await {
@@ -331,7 +338,7 @@ export default class CCChallengePage extends Component {
         const date = new Date();
         var minute = "";
         minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-        var messageS = "<strong> "+this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר " + this.props.location.state.challenge.challengeName + ": </strong><br/>" + this.state.messageText;
+        var messageS = "<strong> " + this.state.firstName + " " + this.state.lastName + " צריך עזרה באתגר " + this.props.location.state.challenge.challengeName + ": </strong><br/>" + this.state.messageText;
         console.log(messageS);
         const message = {
             teacherID: user.teacherID,
@@ -360,6 +367,7 @@ export default class CCChallengePage extends Component {
                 (result) => {
                     console.log("fetch POST= ", result);
                     this.setState({ messageShow: false })
+                    //תוקן
                     Swal.fire({
                         title: 'מעולה!',
                         text: 'ההודעה נשלחה בהצלחה',
@@ -369,9 +377,10 @@ export default class CCChallengePage extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'ההודעה לא נשלחה, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -410,7 +419,7 @@ export default class CCChallengePage extends Component {
                 {/* ימים לסיום אתגר/תאריך סיום */}
                 {
                     challenge.status == 1 || challenge.status == 3 ? (<div className="statusSentence">{this.state.messageShow == true ? messageHelp : this.state.statusSentence}</div>) :
-                        challenge.status == 2 ? <div><div className="statusSentence">{this.state.statusSentence}</div> {dateLeft} </div>: {dateLeft}
+                        challenge.status == 2 ? <div><div className="statusSentence">{this.state.statusSentence}</div> {dateLeft} </div> : { dateLeft }
 
                 }
                 <br />

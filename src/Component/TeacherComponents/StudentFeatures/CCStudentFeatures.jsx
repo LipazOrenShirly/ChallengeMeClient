@@ -65,9 +65,10 @@ class CCStudentFeatures extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'טעינת הדף לא עבדה כראוי, אנא טען מחדש את העמוד',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     });
@@ -82,8 +83,9 @@ class CCStudentFeatures extends Component {
         console.log(allArr);
         allArr.map((item) => {
             if (!(item.answer >= 1 && item.answer <= 5)) {
+                //תוקן
                 Swal.fire({
-                    title: 'אוי!',
+                    title: 'שים לב!',
                     text: 'צריך שכל השדות יהיו ממולאים',
                     icon: 'warning',
                     confirmButtonColor: '#e0819a',
@@ -120,6 +122,7 @@ class CCStudentFeatures extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST/PUT= ", result);
+                    //תוקן
                     Swal.fire({
                         title: 'מעולה!',
                         text: this.state.newFeature ? 'אפיינת את התלמיד בהצלחה!' : 'עדכון האפיון בוצע בהצלחה',
@@ -133,9 +136,10 @@ class CCStudentFeatures extends Component {
                 },
                 (error) => {
                     console.log("err post/put=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'האפיון לא עודכן, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -157,6 +161,7 @@ class CCStudentFeatures extends Component {
             window.history.back();
         }
         else {  // אם כן עשה שינויים
+            //תוקן
             Swal.fire({
                 title: 'שים לב',
                 text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",
@@ -314,8 +319,9 @@ export default CCStudentFeatures;
 //                 },
 //                 (error) => {
 //                     console.log("err get=", error);
+//תוקן
 //                     Swal.fire({
-//                         title: 'אוי',
+//                         title: 'משהו השתבש',
 //                         text: 'הפעולה נכשלה, נסה שנית',
 //                         icon: 'warning',
 //                         confirmButtonColor: '#e0819a',
@@ -329,8 +335,9 @@ export default CCStudentFeatures;
 //         var allFilled = true;
 //         this.state.QueAndAnsArr.map((item) => {
 //             if (!(item.answer >= 1 && item.answer <= 5)) {
+//תוקן
 //                 Swal.fire({
-//                     title: 'אוי!',
+//                     title: 'משהו השתבש!',
 //                     text: 'צריך שכל השדות יהיו ממולאים',
 //                     icon: 'warning',
 //                     confirmButtonColor: '#e0819a',
@@ -367,6 +374,7 @@ export default CCStudentFeatures;
 //             .then(
 //                 (result) => {
 //                     console.log("fetch POST/PUT= ", result);
+//תוקן
 //                     Swal.fire({
 //                         title: 'מעולה!',
 //                         text: this.state.newFeature ? 'אפיינת את התלמיד בהצלחה!' : 'עדכון האפיון בוצע בהצלחה',
@@ -380,8 +388,9 @@ export default CCStudentFeatures;
 //                 },
 //                 (error) => {
 //                     console.log("err post/put=", error);
+//תוקן
 //                     Swal.fire({
-//                         title: 'אוי',
+//                         title: 'משהו השתבש',
 //                         text: 'הפעולה נכשלה, נסה שנית',
 //                         icon: 'warning',
 //                         confirmButtonColor: '#e0819a',
@@ -401,6 +410,7 @@ export default CCStudentFeatures;
 //             window.history.back();
 //         }
 //         else {  // אם כן עשה שינויים
+//תוקן
 //             Swal.fire({
 //                 title: 'שים לב',
 //                 text: "בלחיצה על כפתור זה תחזור אחורה וכל השינויים שעשית לא יישמרו",

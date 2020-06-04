@@ -76,9 +76,10 @@ export default class CCAddNewChallenge extends Component {
                     },
                     (error) => {
                         console.log("err post=", error);
+                        //תוקן
                         Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
+                            title: 'משהו השתבש',
+                            text: 'לא הצלחנו ליצור את התלמיד, אנא נסה שנית',
                             icon: 'warning',
                             confirmButtonColor: '#e0819a',
                         })
@@ -86,6 +87,7 @@ export default class CCAddNewChallenge extends Component {
             var jsonRes = await result;
             console.log(jsonRes)
             this.setState({ student: jsonRes });
+            //תוקן
             Swal.fire({
                 title: 'מעולה!',
                 text: 'הוספת את התלמיד בהצלחה!',
@@ -152,12 +154,13 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
     render() {

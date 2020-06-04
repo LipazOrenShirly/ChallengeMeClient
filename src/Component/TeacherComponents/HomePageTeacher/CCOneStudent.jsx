@@ -17,6 +17,7 @@ export default class CCOneStudent extends Component {
     }
 
     DeleteStudent = () => {
+        //תוקן
         Swal.fire({
             title: 'האם אתה בטוח?',
             text: "בלחיצה על כן, התלמיד וכל פרטיו יימחקו",

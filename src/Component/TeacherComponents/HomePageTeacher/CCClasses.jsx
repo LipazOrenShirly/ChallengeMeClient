@@ -58,9 +58,10 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא ניתן לראות את רשימת הכיתות, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -93,9 +94,10 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'הכיתה לא נמחקה, אנה נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -138,9 +140,10 @@ export default class CCClasses extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'הכיתה לא התווספה, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

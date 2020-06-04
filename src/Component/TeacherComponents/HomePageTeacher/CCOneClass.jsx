@@ -19,6 +19,7 @@ export default class CCOneClass extends Component {
     }
 
     deleteClass=()=>{
+        //תוקן
         Swal.fire({
             title: 'האם אתה בטוח?',
             text: "בלחיצה על הכפתור, הכיתה וכל תלמידייה ימחקו לצמיתות",
@@ -30,7 +31,8 @@ export default class CCOneClass extends Component {
             confirmButtonText: 'כן, מחק'
           }).then((result) => {
             if (result.value) {
-              Swal.fire({
+              //תוקן
+                Swal.fire({
                 title:'נמחק!',
                 text:'הכיתה נמחקה בהצלחה',
                 icon:'success',

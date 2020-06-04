@@ -61,9 +61,10 @@ export default class CCTeacherForgetPassword extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'המייל לא נשלח, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -159,7 +160,7 @@ export default class CCTeacherForgetPassword extends Component {
                         />
                         <SweetAlert
                             show={this.state.showBad}
-                            title="אוי"
+                            title="משהו השתבש"
                             text="המייל לא נשלח, אנא נסה שנית"
                             icon="error"
                             onConfirm={() => this.setState({ showBad: false })}

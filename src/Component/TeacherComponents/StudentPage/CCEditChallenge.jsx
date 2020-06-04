@@ -90,9 +90,10 @@ class CCEditChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'עדכון האתגר לא בוצע, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -101,6 +102,7 @@ class CCEditChallenge extends Component {
     }
 
     DeleteChallenge = () => {
+        //תוקן
         Swal.fire({
             title: 'האם אתה בטוח?',
             text: "בלחיצה על מחק יימחק האתגר לצמיתות",
@@ -128,6 +130,7 @@ class CCEditChallenge extends Component {
                     .then(
                         (result) => {
                             console.log("fetch DELETE= ", result);
+                            //תוקן
                             Swal.fire({
                                 title: 'נמחק!',
                                 text: 'האתגר נמחק בהצלחה',
@@ -141,9 +144,10 @@ class CCEditChallenge extends Component {
                         },
                         (error) => {
                             console.log("err post=", error);
+                            //תוקן
                             Swal.fire({
-                                title: 'אוי',
-                                text: 'הפעולה נכשלה, נסה שנית',
+                                title: 'משהו השתבש',
+                                text: 'האתגר לא נמחק, אנא נסה שנית',
                                 icon: 'warning',
                                 confirmButtonColor: '#e0819a',
                             })
@@ -159,6 +163,7 @@ class CCEditChallenge extends Component {
         bool = await this.UpdateChallenge();
         await console.log("ffffff" + bool)
         if (bool) {
+            //תוקן
             await Swal.fire({
                 title: 'יופי!',
                 text: 'תאריך הדד-לין עודכן בהצלחה',
@@ -177,6 +182,7 @@ class CCEditChallenge extends Component {
 
     EditStatusInput = async () => {
         if (this.state.status == 0) {
+           //תוקן
             await Swal.fire({
                 title: '!שים לב',
                 text: 'סטטוס האתגר מאופס כבר',
@@ -184,6 +190,7 @@ class CCEditChallenge extends Component {
             })
         }
         else {
+            //תוקן
             await Swal.fire({
                 title: 'האם אתה בטוח?',
                 text: "בלחיצה על איפוס יתאפס לתלמיד סטטוס האתגר",
@@ -199,6 +206,7 @@ class CCEditChallenge extends Component {
                     var bool = await this.UpdateChallenge();
                     if (bool == true) {
                         await $('#StatusInput').val('לא סימן כלום');
+                        //תוקן
                         await Swal.fire({
                             title: 'יופי!',
                             text: 'סטטוס האתגר אופס בהצלחה',
