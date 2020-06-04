@@ -22,6 +22,8 @@ import AddNewStudent from './Component/TeacherComponents/AddNewStudent/CCAddNewS
 import StudentFeatures from './Component/TeacherComponents/StudentFeatures/CCStudentFeatures';
 import ExtraChallengeDetails from './Component/TeacherComponents/ExtraChallengeDetails/CCExtraChallengeDetails';
 import SearchChallenge from './Component/TeacherComponents/SearchChallenge/CCSearchChallenge';
+import StudentTransfer from './Component/TeacherComponents/StudentTransfer/CCStudentTransfer';
+
 import ChallengePage from './Component/StudentComponents/StudentHomePage/CCChallengePage';
 import StudentsSearchResult from './Component/TeacherComponents/HomePageTeacher/CCStudentsSearchResult';
 import StudentHomePage from './Component/StudentComponents/StudentHomePage/CCStudentHomePage';
@@ -74,6 +76,7 @@ function App() {
           <Route path="/StudentPage" component={StudentPage} />
           <Route path="/StudentDetails" component={StudentDetails} />
           <Route path="/StudentInfoScreen" component={StudentInfoScreen} />
+          <Route path="/StudentTransfer" component={StudentTransfer} />
           <Route path="/EditChallenge" component={EditChallenge} />
           <Route path="/AddChallengeToStudent" component={AddChallengeToStudent} />
           <Route path="/AddNewStudent" component={AddNewStudent} />
