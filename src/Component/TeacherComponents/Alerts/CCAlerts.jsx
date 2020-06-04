@@ -8,7 +8,7 @@ import NavBar from '../../LittleComponents/NavBar';
 import CCOneAlert from './CCOneAlert';
 import { FiSettings } from 'react-icons/fi';
 import ProjectContext from '../../../Context/ProjectContext';
-import FreeSoloStudents from '../Alerts/FreeSoloStudents';
+import FreeSolo from '../../LittleComponents/FreeSolo';
 
 export default class CCAlerts extends Component {
     constructor(props) {
@@ -251,13 +251,20 @@ export default class CCAlerts extends Component {
                     <div className="col-12 turkiz">התרעות</div>
 
                     <div className="col-11 searchItselfDiv">
-                        <FreeSoloStudents onInputChange={this.onInputChange} students={this.state.students} />
+                        <FreeSolo
+                            onInputChange={this.onInputChange} 
+                            options={this.state.students.map((student) => student.firstName+' '+ student.lastName)} 
+                            label='חפש לפי תלמיד' 
+                            id='searchStudentAlert'/>
                     </div>
 
                     <div className="col-12 addingAlertsDiv">
                         <h5 className="h5Teacher" onClick={this.linkToAlertsSetting}>עריכת הגדרות להתראות<FiSettings style={{ marginLeft: "3%" }} size={25} /></h5>
                     </div>
                 </div>
+
+                {this.state.search && this.state.alertArrSearch.length == 0 && 
+                    <div> אין התראות לתלמיד </div>}
 
                 {this.state.search == false && <div className="allAlerts">
                     {this.state.alertArr.map((item) =>

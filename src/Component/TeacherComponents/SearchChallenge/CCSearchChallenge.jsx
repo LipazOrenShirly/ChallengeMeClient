@@ -6,8 +6,8 @@ import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-vali
 import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
 import { TiArrowBack } from 'react-icons/ti';
-import FreeSoloTags from '../AddNewChallenge/FreeSoloTags';
-import FreeSolo from '../AddNewChallenge/FreeSolo';
+import FreeSoloTags from '../../LittleComponents/FreeSoloTags';
+import FreeSolo from '../../LittleComponents/FreeSolo';
 import $ from 'jquery';
 import { IoIosReturnLeft } from 'react-icons/io';
 import CCOneSearchChallenge from './CCOneSearchChallenge';
@@ -119,7 +119,7 @@ class CCSearchChallenge extends Component {
             return;
         }
         //יצירת מערך רק של המספרים המזהים של התגיות
-        var tagsID = values.map( value => value.tagID );
+        var tagsID = values.map(value => value.tagID);
         // פקודת גט שמקבלת את מערך המספרים המזהים של התגיות ומחזירה את כל האתגרים שקשורים אליהן
         fetch(this.apiUrlChallengeTags + "?SrtTagsID=" + tagsID
             , {
@@ -173,7 +173,11 @@ class CCSearchChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo challenges={this.state.challengesArr} onInputChange={this.onInputChange} />
+                        <FreeSolo
+                            options={this.state.challengesArr.map((option) => option.challengeName)}
+                            onInputChange={this.onInputChange}
+                            label='שם האתגר'
+                            id='NewChallengeName' />
                     </div>
                     <div>
                         <div className="form-group input-group col-12 bc" dir="rtl">

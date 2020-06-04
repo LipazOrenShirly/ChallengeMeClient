@@ -10,15 +10,14 @@ export default function FreeSolo(props) {
       <Autocomplete
         freeSolo
         className="form-control inputRounded" 
-        id="NewChallengeName"
+        id={props.id}
         disableClearable
         onInputChange={props.onInputChange}
-        options={props.students.map((option) => option.firstName+' '+ option.lastName)}
+        options={props.options}
         renderInput={(params) => (
           <TextField
             {...params}
-            // className="form-control inputRounded" 
-            label="חפש לפי תלמיד"
+            label={props.label}
             margin="none"
             variant="standard"
             InputProps={{ ...params.InputProps, type: 'search' }}

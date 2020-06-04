@@ -6,8 +6,8 @@ import NavBar from '../../LittleComponents/NavBar';
 import { TiArrowBack } from 'react-icons/ti';
 import ChipsArray from './ChipsArray';
 import { IoMdCheckmark } from "react-icons/io";
-import FreeSoloTags from './FreeSoloTags';
-import FreeSolo from './FreeSolo';
+import FreeSoloTags from '../../LittleComponents/FreeSoloTags';
+import FreeSolo from '../../LittleComponents/FreeSolo';
 import Swal from 'sweetalert2';
 import Checkbox from '@material-ui/core/Checkbox';
 import localHost from '../../LittleComponents/LocalHost';
@@ -21,6 +21,7 @@ export default class CCAddNewChallenge extends Component {
         this.state = {
             challengesArr: [],
             tagsArr: [],
+            NewChallengeName: "",
             chosenTagsID: [],
             newChallenge: {},
             showTags: false,
@@ -211,7 +212,7 @@ export default class CCAddNewChallenge extends Component {
             $('#DifLevelError').empty();
             $('#DifLevelError').append("חייב למלא את רמת הקושי של האתגר");
             return;
-        } 
+        }
         else {
             $('#DifLevelError').empty();
         }
@@ -219,7 +220,7 @@ export default class CCAddNewChallenge extends Component {
             $('#DifValuesError').empty();
             $('#DifValuesError').append("חייב להביא אחוזים ללפחות ערך אחד מהשלושה");
             return;
-        } 
+        }
         else {
             $('#DifValuesError').empty();
         }
@@ -333,7 +334,9 @@ export default class CCAddNewChallenge extends Component {
     //     // $('#NewRelatedTags').val("");
     // }
 
-
+    onInputChange = (event, value) => {
+        this.setState({ NewChallengeName: value })
+    }
 
     render() {
         const { valueEmotional, valueSocial, valueSchool } = this.state;
@@ -347,7 +350,11 @@ export default class CCAddNewChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo challenges={this.state.challengesArr} />
+                        <FreeSolo
+                            options={this.state.challengesArr.map((option) => option.challengeName)}
+                            onInputChange={this.onInputChange}
+                            label='שם האתגר'
+                            id='NewChallengeName' />
                     </div>
                     {
                         this.state.showTags == false &&
@@ -377,9 +384,6 @@ export default class CCAddNewChallenge extends Component {
                                 </select>
                             </div>
                             <div className='errorInput' id="DifLevelError"></div>
-
-
-
                             <div style={{ textAlign: 'right', paddingRight: '15px' }}>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
                                 <div className="titleTypeAddChallenge">רגשי</div>
