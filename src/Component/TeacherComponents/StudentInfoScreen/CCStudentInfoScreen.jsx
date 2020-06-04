@@ -72,9 +72,10 @@ export default class CCStudentInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'הפרטים לא נטענו כראוי, אנא נסה לטעון מחדש את הדף',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -117,6 +118,7 @@ export default class CCStudentInfoScreen extends Component {
                 .then(
                     (result) => {
                         console.log("fetch PUT= ", result);
+                        //תוקן
                         Swal.fire({
                             title: 'השתנה!',
                             text: 'פרטי התלמיד השתנו בהצלחה!',
@@ -130,9 +132,10 @@ export default class CCStudentInfoScreen extends Component {
                     },
                     (error) => {
                         console.log("err post=", error);
+                        //תוקן
                         Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
+                            title: 'משהו השתבש',
+                            text: 'פרטי התלמיד לא השתנו, אנא נסה שנית',
                             icon: 'warning',
                             confirmButtonColor: '#e0819a',
                         })
@@ -175,12 +178,13 @@ export default class CCStudentInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
     }

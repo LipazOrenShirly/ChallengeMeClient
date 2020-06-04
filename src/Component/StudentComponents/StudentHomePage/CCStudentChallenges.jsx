@@ -46,9 +46,10 @@ export default class CCStudentChallenges extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא הצלחנו לטעון את האתגרים, אנא נסו להכנס שוב לאפליקציה',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

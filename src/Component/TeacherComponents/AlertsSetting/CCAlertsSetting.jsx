@@ -67,9 +67,10 @@ export default class CCAlertsSettings extends Component {
         },
         (error) => {
           console.log("err get=", error);
+          //תוקן
           Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
+            title: 'משהו השתבש',
+            text: 'לא ניתן לטעון את ההגדרות שלך, אנא כנס שנית למסך זה',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
           })
@@ -105,6 +106,7 @@ export default class CCAlertsSettings extends Component {
       .then(
         (result) => {
           console.log("fetch PUT= ", result);
+          //תוקן
           Swal.fire({
             title: 'מעולה!',
             text: 'הגדרות להתראות עודכנו בהצלחה!',
@@ -115,9 +117,10 @@ export default class CCAlertsSettings extends Component {
         },
         (error) => {
           console.log("err put=", error);
+          //תוקן
           Swal.fire({
-            title: 'אוי',
-            text: 'הפעולה נכשלה, נסה שנית',
+            title: 'משהו השתבש',
+            text: 'ההגדרות להתראות לא התעדכנו , אנא נסה שנית',
             icon: 'warning',
             confirmButtonColor: '#e0819a',
           })

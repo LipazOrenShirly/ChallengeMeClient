@@ -72,9 +72,10 @@ export default class CCTeacherInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'פרטייך לא נטענו כראוי, אנא נסה להכנס לדף זה שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -130,6 +131,7 @@ export default class CCTeacherInfoScreen extends Component {
                 .then(
                     (result) => {
                         console.log("fetch PUT= ", result);
+                        //תוקן
                         Swal.fire({
                             title: 'מעולה!',
                             text: 'הפרטים שונו בהצלחה!',
@@ -140,9 +142,10 @@ export default class CCTeacherInfoScreen extends Component {
                     },
                     (error) => {
                         console.log("err PUT=", error);
+                        //תוקן
                         Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
+                            title: 'משהו השתבש',
+                            text: 'הפרטים לא שונו, אנא נסה שנית',
                             icon: 'warning',
                             confirmButtonColor: '#e0819a',
                         })
@@ -152,6 +155,7 @@ export default class CCTeacherInfoScreen extends Component {
 
     btnClick = () => {
         const user = this.context;
+        //תוקן
         Swal.fire({
             title: 'אתה בטוח!',
             text: 'אתה בטוח שאתה רוצה לבטל את השינויים?',
@@ -195,12 +199,13 @@ export default class CCTeacherInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -235,12 +240,13 @@ export default class CCTeacherInfoScreen extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 

@@ -85,7 +85,7 @@ export default class CCcamera extends Component {
                     console.log("err post=", error);
                     //תוקן
                     Swal.fire({
-                        title: 'אוי',
+                        title: 'משהו השתבש',
                         text: 'התמונה לא נשמרה, נסה שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',

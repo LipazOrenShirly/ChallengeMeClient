@@ -55,9 +55,10 @@ export default class CCStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'אנא טען את העמוד מחדש',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -91,8 +92,9 @@ export default class CCStudentsWithMessage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
+                        title: 'משהו השתבש',
                         text: 'הפעולה נכשלה, נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',

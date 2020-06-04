@@ -45,7 +45,7 @@ const logout = async (teacherID) => {
         console.log("err post=", error);
         //תוקן
         // Swal.fire({
-        //   title: 'אוי',
+        //   title: 'משהו השתבש',
         //   text: 'הפעולה נכשלה, נסה שנית',
         //   icon: 'warning',
         //   confirmButtonColor: '#e0819a',

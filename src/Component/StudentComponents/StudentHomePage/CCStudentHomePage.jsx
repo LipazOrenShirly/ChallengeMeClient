@@ -79,16 +79,15 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 })
-            .then(() => {
 
-            });
     }
 
     getNameAndAvatarNum = () => {
@@ -118,9 +117,10 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'אנא נסו להכנס שוב לאפליקציה',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -156,7 +156,8 @@ export default class CCStudentHomePage extends Component {
                     if (user.successCount != "" && user.successCount != result[0]) { //אם כמות האתגרים שהתלמיד הצליח השתנתה
                         if (user.successCount + 1 == result[0]) { // האם היא השתנה לאחד מעל מה שהיה קודם
                             if (user.avatarLevel == avatarLevel) { // האם הרמה של התלמיד עדיין נשארה אותו דבר
-                                if (result[0] == result[1]){
+                                if (result[0] == result[1]) {
+                                    //תוקן
                                     Swal.fire({
                                         title: '!כל הכבוד',
                                         text: ' !!!!סיימת את כללל האתגרים שלך בהצלחה',
@@ -166,20 +167,22 @@ export default class CCStudentHomePage extends Component {
                                         imageHeight: 150,
                                         imageAlt: 'A tall image'
                                     });
-                                    this.setState({confetti:true});
+                                    this.setState({ confetti: true });
                                     setTimeout(async function () {
                                         this.setState({ confetti: false });
                                     }.bind(this), 4000);
                                 }
-                                else Swal.fire({
-                                    title: '!כל הכבוד',
-                                    text: '!אתה מצוין! תמשיך ככה',
-                                    // icon: 'success',
-                                    confirmButtonColor: '#e0819a',
-                                    imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
-                                    imageHeight: 150,
-                                    imageAlt: 'A tall image'
-                                });
+                                else
+                                    //תוקן
+                                    Swal.fire({
+                                        title: '!כל הכבוד',
+                                        text: '!אתה מצוין! תמשיך ככה',
+                                        // icon: 'success',
+                                        confirmButtonColor: '#e0819a',
+                                        imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
+                                        imageHeight: 150,
+                                        imageAlt: 'A tall image'
+                                    });
                             }
                             else {  // האם רמת התלמיד השתנתה בעקבות השינוי בכמות האתגרים שהצליח
                                 // alert(`כמות האתגרים שהתלמיד הצליח השתנתה, קודם היא הייתה ${user.successCount}
@@ -188,28 +191,29 @@ export default class CCStudentHomePage extends Component {
                                 //כאן יתחיל האנימציה
                                 this.setState({ animationAvatar: 1 });
                                 setTimeout(async function () {
-                                    this.setState({ animationAvatar: 2 , confetti:true});
+                                    this.setState({ animationAvatar: 2, confetti: true });
                                 }.bind(this), 2500);
                                 setTimeout(async function () {
-                                    this.setState({ animationAvatar: 0 ,confetti:false});
+                                    this.setState({ animationAvatar: 0, confetti: false });
 
                                 }.bind(this), 6000);
-                                if (result[0] == result[1]){
-                                    setTimeout(async function () {                                   
-                                    Swal.fire({
-                                        title: '!כל הכבוד',
-                                        text: ' !!!!סיימת את כללל האתגרים שלך בהצלחה',
-                                        // icon: 'success',
-                                        confirmButtonColor: '#e0819a',
-                                        imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
-                                        imageHeight: 150,
-                                        imageAlt: 'A tall image'
-                                    });
-                                    this.setState({confetti:true});
+                                if (result[0] == result[1]) {
                                     setTimeout(async function () {
-                                        this.setState({ confetti: false });
-                                    }.bind(this), 2000);
-                                }.bind(this), 6500);
+                                        //תוקן
+                                        Swal.fire({
+                                            title: '!כל הכבוד',
+                                            text: ' !!!!סיימת את כללל האתגרים שלך בהצלחה',
+                                            // icon: 'success',
+                                            confirmButtonColor: '#e0819a',
+                                            imageUrl: require('../../../img/avatars/' + this.state.Avatar + '/' + this.state.Avatar + this.state.avatarLevel + '.png'),
+                                            imageHeight: 150,
+                                            imageAlt: 'A tall image'
+                                        });
+                                        this.setState({ confetti: true });
+                                        setTimeout(async function () {
+                                            this.setState({ confetti: false });
+                                        }.bind(this), 2000);
+                                    }.bind(this), 6500);
                                 }
                             }
                         }
@@ -221,12 +225,13 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -256,12 +261,13 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -314,9 +320,10 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'התמונה לא נשמרה, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -350,12 +357,13 @@ export default class CCStudentHomePage extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
         await sessionStorage.clear();
@@ -414,7 +422,7 @@ export default class CCStudentHomePage extends Component {
                     </div>
                 }
                 {
-                    this.state.Avatar != null && this.state.confetti==true &&
+                    this.state.Avatar != null && this.state.confetti == true &&
                     <div className="row">
                         <Confetti
                             width={window.innerWidth}

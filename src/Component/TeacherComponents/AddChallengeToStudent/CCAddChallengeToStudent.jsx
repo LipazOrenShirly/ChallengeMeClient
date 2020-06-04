@@ -51,9 +51,10 @@ export default class CCAddChallengeToStudent extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'לא מצליח למצוא אתגרים מומלצים, אנא כנס לדף שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })

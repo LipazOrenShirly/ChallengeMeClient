@@ -64,9 +64,10 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'ההודעות לא נטענו כראוי, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -93,12 +94,13 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -106,8 +108,8 @@ export default class CCChat extends Component {
         const user = this.context;
         const date = new Date();
         var minute = "";
-        minute = date.getMinutes()<10  ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
-        
+        minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); //שלא יהיו שעות בלי אפס בהתחלה
+
         const message = {
             teacherID: user.teacherID,
             studentID: this.props.location.state.student.studentID,
@@ -138,9 +140,10 @@ export default class CCChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'ההודעה לא נשלחה, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -176,25 +179,29 @@ export default class CCChat extends Component {
             .then(
                 (result) => {
                     console.log("student= ", result);
-                    if (result == null)
-                        Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
-                            icon: 'warning',
-                            confirmButtonColor: '#e0819a',
-                        });
-                    else {
+                    if (result != null)
                         StudentToken = result;
-                    }
+                    // if (result == null)
+                    //תוקן
+                    //     Swal.fire({
+                    //         title: 'משהו השתבש',
+                    //         text: 'הפעולה נכשלה, נסה שנית',
+                    //         icon: 'warning',
+                    //         confirmButtonColor: '#e0819a',
+                    //     });
+                    // else {
+                    //     StudentToken = result;
+                    // }
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
 

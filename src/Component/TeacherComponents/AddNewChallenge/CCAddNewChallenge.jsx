@@ -63,12 +63,13 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
         fetch(this.apiUrlTags
@@ -93,18 +94,20 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
     continueToTags = (e) => {
         e.preventDefault();
         if ($('#NewChallengeName').val() == "") {
+            //תוקן
             Swal.fire({
                 title: 'שים לב',
                 text: 'על האתגר אסור להשאר ריק',
@@ -140,15 +143,17 @@ export default class CCAddNewChallenge extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 })
             .then(() => {
                 if (returnChallenge != null) {
+                    //תוקן
                     Swal.fire({
                         title: 'שים לב',
                         text: "כבר קיים אתגר כזה במאגר, בלחיצה על אישור תבחר באתגר זה להיות האתגר של הילד",
@@ -275,6 +280,7 @@ export default class CCAddNewChallenge extends Component {
                         .then(
                             (result) => {
                                 console.log("fetch PUT= ", result);
+                                //תוקן
                                 Swal.fire({
                                     title: 'מעולה!',
                                     text: 'הוספת את האתגר בהצלחה!',
@@ -291,19 +297,21 @@ export default class CCAddNewChallenge extends Component {
                             },
                             (error) => {
                                 console.log("err post=", error);
-                                Swal.fire({
-                                    title: 'אוי',
-                                    text: 'הפעולה נכשלה, נסה שנית',
-                                    icon: 'warning',
-                                    confirmButtonColor: '#e0819a',
-                                })
+                                //תוקן
+                                // Swal.fire({
+                                //     title: 'משהו השתבש',
+                                //     text: 'התגיות לא התווספו לאתגר , אנא נסה שנית',
+                                //     icon: 'warning',
+                                //     confirmButtonColor: '#e0819a',
+                                // })
                             });
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'המערכת לא הצליחה להוסיף את האתגר, אנא נסה שנית',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
