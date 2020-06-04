@@ -189,6 +189,7 @@ export default class CCStudentChat extends Component {
                         //     icon: 'warning',
                         //     confirmButtonColor: '#e0819a',
                         // });
+                        console.log(result);
                     else {
                         teacherToken = result;
                     }
