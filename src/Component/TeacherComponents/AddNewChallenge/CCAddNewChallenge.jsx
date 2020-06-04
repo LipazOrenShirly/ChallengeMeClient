@@ -6,8 +6,8 @@ import NavBar from '../../LittleComponents/NavBar';
 import { TiArrowBack } from 'react-icons/ti';
 import ChipsArray from './ChipsArray';
 import { IoMdCheckmark } from "react-icons/io";
-import FreeSoloTags from './FreeSoloTags';
-import FreeSolo from './FreeSolo';
+import FreeSoloTags from '../../LittleComponents/FreeSoloTags';
+import FreeSolo from '../../LittleComponents/FreeSolo';
 import Swal from 'sweetalert2';
 import Checkbox from '@material-ui/core/Checkbox';
 import localHost from '../../LittleComponents/LocalHost';
@@ -21,6 +21,7 @@ export default class CCAddNewChallenge extends Component {
         this.state = {
             challengesArr: [],
             tagsArr: [],
+            NewChallengeName: "",
             chosenTagsID: [],
             newChallenge: {},
             showTags: false,
@@ -40,7 +41,13 @@ export default class CCAddNewChallenge extends Component {
         }
 
     }
+
     componentDidMount() {
+        this.getChallenges();
+        this.getTags();
+    }
+
+    getChallenges = () => {
         fetch(this.apiUrl + "?studentID=" + this.props.location.state.studentID
             , {
                 method: 'GET',
@@ -71,7 +78,9 @@ export default class CCAddNewChallenge extends Component {
                     //     confirmButtonColor: '#e0819a',
                     // })
                 });
+    }
 
+    getTags = () => {
         fetch(this.apiUrlTags
             , {
                 method: 'GET',
@@ -118,7 +127,6 @@ export default class CCAddNewChallenge extends Component {
         }
 
         var inputNameChallenge = $('#NewChallengeName').val();
-        console.log(inputNameChallenge);
         var returnChallenge = null;
         //פקודת גט שבודקת אם האינפוט שהוא בחר נמצא בשרת או לא 
         fetch(this.apiUrl + '?challengeName=' + inputNameChallenge
@@ -181,7 +189,6 @@ export default class CCAddNewChallenge extends Component {
                     $('.bc').css('background-color', 'rgba(202, 199, 199, 0.07)');
                 }
             });
-
     }
 
     handleChange = (event) => {
@@ -189,20 +196,15 @@ export default class CCAddNewChallenge extends Component {
     };
 
     onTagsChange = (event, values) => {
-        var tags = [];
-        values.map((value) => {
-            tags.push(this.state.tagsArr.filter(tag => tag.tagName == value)[0])
-        });
-        console.log(tags);
-        var tagsID = tags.map((tag) => tag.tagID);
+        var tagsID = values.map(value => value.tagID);
         console.log(tagsID);
         this.setState({ chosenTagsID: tagsID });
     }
 
     Submit = (event) => {
         event.preventDefault();
-        // בניית אובייקט אתגר שישלח בפקודת פוסט
 
+        //ולידציות
         if (this.state.chosenTagsID.length == 0) {
             $('#TagsValuesError').empty();
             $('#TagsValuesError').append("חייב להוסיף לפחות תגית אחת");
@@ -215,17 +217,23 @@ export default class CCAddNewChallenge extends Component {
             $('#DifLevelError').empty();
             $('#DifLevelError').append("חייב למלא את רמת הקושי של האתגר");
             return;
-        } else {
+        }
+        else {
             $('#DifLevelError').empty();
         }
-        if(this.state.valueEmotional == 0 && this.state.valueSchool ==0 && this.state.valueSocial==0){
+        if (this.state.valueEmotional == 0 && this.state.valueSchool == 0 && this.state.valueSocial == 0) {
             $('#DifValuesError').empty();
             $('#DifValuesError').append("חייב להביא אחוזים ללפחות ערך אחד מהשלושה");
             return;
-        } else {
+        }
+        else {
             $('#DifValuesError').empty();
         }
-        console.log(this.state.chosenTagsID);
+        this.postChallenge();
+    }
+
+    postChallenge = () => {
+        // בניית אובייקט אתגר שישלח בפקודת פוסט
         const challenge = {
             challengeName: $('#NewChallengeName').val(),
             isPrivate: this.state.isPrivate,
@@ -256,55 +264,58 @@ export default class CCAddNewChallenge extends Component {
                 (result) => {
                     console.log("fetch POST= ", result[0]);
                     this.setState({ newChallenge: result[0] }); // שמירת האתגר שנוצר בדאטה בייס בסטייט
-
-                    const ChallengeTag = [];
-                    this.state.chosenTagsID.map((tag) =>    //בניית מערך של תגיות של אתגרים שיתאים למחלקה כדי לשלוח בפקודת פוסט
-                        ChallengeTag.push({
-                            challengeID: this.state.newChallenge.challengeID,
-                            tagID: tag
-                        })
-                    );
-                    console.log(ChallengeTag);
-
-                    fetch(this.apiUrlChallengeTag, {    //פקודת פוסט לטבלת תגיות של אתגרים לפי התגיות שנבחרו 
-                        method: 'POST',
-                        body: JSON.stringify(ChallengeTag),
-                        headers: new Headers({
-                            'Content-type': 'application/json; charset=UTF-8'
-                        })
+                    this.postChallengeTags();
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    //תוקן
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'האתגר לא נשמר, אנא נסה שנית',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
                     })
-                        .then(res => {
-                            console.log('res=', res);
-                            return res.json()
-                        })
-                        .then(
-                            (result) => {
-                                console.log("fetch PUT= ", result);
-                                //תוקן
-                                Swal.fire({
-                                    title: 'מעולה!',
-                                    text: 'הוספת את האתגר בהצלחה!',
-                                    icon: 'success',
-                                    confirmButtonColor: '#e0819a',
-                                });
-                                this.props.history.push({
-                                    pathname: '/ExtraChallengeDetails',
-                                    state: {
-                                        challenge: this.state.newChallenge,
-                                        studentID: this.props.location.state.studentID
-                                    }
-                                });
-                            },
-                            (error) => {
-                                console.log("err post=", error);
-                                //תוקן
-                                // Swal.fire({
-                                //     title: 'משהו השתבש',
-                                //     text: 'התגיות לא התווספו לאתגר , אנא נסה שנית',
-                                //     icon: 'warning',
-                                //     confirmButtonColor: '#e0819a',
-                                // })
-                            });
+                });
+    }
+
+    postChallengeTags = () => {
+        const ChallengeTag = [];
+        this.state.chosenTagsID.map((tag) =>    //בניית מערך של תגיות של אתגרים שיתאים למחלקה כדי לשלוח בפקודת פוסט
+            ChallengeTag.push({
+                challengeID: this.state.newChallenge.challengeID,
+                tagID: tag
+            })
+        );
+        console.log(ChallengeTag);
+
+        fetch(this.apiUrlChallengeTag, {    //פקודת פוסט לטבלת תגיות של אתגרים לפי התגיות שנבחרו 
+            method: 'POST',
+            body: JSON.stringify(ChallengeTag),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8'
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch PUT= ", result);
+                    //תוקן
+                    Swal.fire({
+                        title: 'מעולה!',
+                        text: 'הוספת את האתגר בהצלחה!',
+                        icon: 'success',
+                        confirmButtonColor: '#e0819a',
+                    });
+                    this.props.history.push({
+                        pathname: '/ExtraChallengeDetails',
+                        state: {
+                            challenge: this.state.newChallenge,
+                            studentID: this.props.location.state.studentID
+                        }
+                    });
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -331,13 +342,15 @@ export default class CCAddNewChallenge extends Component {
     //     // $('#NewRelatedTags').val("");
     // }
 
-
+    onInputChange = (event, value) => {
+        this.setState({ NewChallengeName: value })
+    }
 
     render() {
         const { valueEmotional, valueSocial, valueSchool } = this.state;
         return (
             <div className="container-fluid">
-                <NavBar></NavBar>
+                <NavBar />
                 <div className="col-12"> {/* חזור למסך הקודם */}
                     <TiArrowBack className="iconArrowBack" onClick={() => window.history.back()} size={40} />
                 </div>
@@ -345,7 +358,11 @@ export default class CCAddNewChallenge extends Component {
                 <br />
                 <form onSubmit={this.Submit}>
                     <div className="form-group col-12 bc" dir="rtl">
-                        <FreeSolo challenges={this.state.challengesArr} />
+                        <FreeSolo
+                            options={this.state.challengesArr.map((option) => option.challengeName)}
+                            onInputChange={this.onInputChange}
+                            label='שם האתגר'
+                            id='NewChallengeName' />
                     </div>
                     {
                         this.state.showTags == false &&
@@ -375,9 +392,6 @@ export default class CCAddNewChallenge extends Component {
                                 </select>
                             </div>
                             <div className='errorInput' id="DifLevelError"></div>
-                            
-                            
-
                             <div style={{ textAlign: 'right', paddingRight: '15px' }}>בחר כמה אחוזים מכל נושא אתה חושב שהאתגר מתאים</div>
                             <div className="col-12" >
                                 <div className="titleTypeAddChallenge">רגשי</div>
@@ -413,7 +427,7 @@ export default class CCAddNewChallenge extends Component {
 
                             </div>
                             <div className='errorInput' id="DifValuesError"></div>
-                            
+
                             <div dir="rtl" >
                                 <Checkbox
                                     checked={this.state.checked}
