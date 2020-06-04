@@ -24,11 +24,14 @@ export default function FreeSoloTags(props) {
         multiple
         className="form-control inputRounded inputHeight" 
         id="tags-filled"
-        options={props.tags.map((option) => option.tagName)}
         onChange={props.onTagsChange}
+
+        options={props.tags}
+        getOptionLabel={option => option.tagName}
+
         renderTags={(value, getTagProps) =>
           value.map((option, index) => 
-          <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+          <Chip variant="outlined" label={option.tagName} {...getTagProps({ index })} />
           )
             //  {props.Send(index);}
           

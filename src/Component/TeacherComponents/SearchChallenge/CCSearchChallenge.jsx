@@ -18,7 +18,6 @@ class CCSearchChallenge extends Component {
         this.state = {
             challengesArr: [],
             tagsArr: [],
-            chosenTagsID: [],
             filteredChallenges: [],
             filteredChallengesByName: []
         }
@@ -119,15 +118,8 @@ class CCSearchChallenge extends Component {
             this.setState({ filteredChallenges: [] });
             return;
         }
-        //מעבר על כל שמות התגיות שנבחרו ומציאת האיברים שלהם במערך של כל התגיות
-        var tags = [];
-        values.map((value) => tags.push(this.state.tagsArr.filter(tag => tag.tagName == value)[0]));
-        console.log(tags);
-        // מציאת המספר המזהה של כל התגיות שנבחרו
-        var tagsID = tags.map((tag) => tag.tagID);
-        console.log(tagsID);
-        // שמירת מערך המספרים המזהים של התגיות שנבחרו בסטייט
-        this.setState({ chosenTagsID: tagsID });
+        //יצירת מערך רק של המספרים המזהים של התגיות
+        var tagsID = values.map( value => value.tagID );
         // פקודת גט שמקבלת את מערך המספרים המזהים של התגיות ומחזירה את כל האתגרים שקשורים אליהן
         fetch(this.apiUrlChallengeTags + "?SrtTagsID=" + tagsID
             , {
