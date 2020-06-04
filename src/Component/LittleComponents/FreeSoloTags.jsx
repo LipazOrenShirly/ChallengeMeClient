@@ -18,26 +18,23 @@ export default function FreeSoloTags(props) {
 
   return (
     <div className={classes.root}>
-    
       <Autocomplete
-     
         multiple
         className="form-control inputRounded inputHeight" 
         id="tags-filled"
         onChange={props.onTagsChange}
-
         options={props.tags}
         getOptionLabel={option => option.tagName}
-
         renderTags={(value, getTagProps) =>
           value.map((option, index) => 
-          <Chip variant="outlined" label={option.tagName} {...getTagProps({ index })} />
+            <Chip variant="outlined" label={option.tagName} {...getTagProps({ index })} />
           )
-            //  {props.Send(index);}
-          
         }
         renderInput={(params) => (
-          <TextField {...params}  variant="filled" label="בחר תגיות מתאימות" />
+          <TextField 
+            {...params}  
+            variant="filled" 
+            label="בחר תגיות מתאימות" />
         )}
       />
     </div>

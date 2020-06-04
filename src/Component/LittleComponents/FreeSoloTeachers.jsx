@@ -3,24 +3,25 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function FreeSolo(props) {
+export default function FreeSoloTeachers(props) {
   return (
     <div className="DivAutoComplete">
 
       <Autocomplete
-        freeSolo
+        // freeSolo
         className="form-control inputRounded"
         id={props.id}
-        disableClearable
-        onInputChange={props.onInputChange}
+        // disableClearable
+        onChange={props.onChange}
         options={props.options}
+        getOptionLabel={option => option.firstName + " " + option.lastName}
         renderInput={(params) => (
           <TextField
             {...params}
             label={props.label}
-            margin="none"
-            variant="standard"
-            InputProps={{ ...params.InputProps, type: 'search' }}
+            // margin="none"
+            // variant="standard"
+            // InputProps={{ ...params.InputProps, type: 'search' }}
             dir="rtl"
           />
         )}
