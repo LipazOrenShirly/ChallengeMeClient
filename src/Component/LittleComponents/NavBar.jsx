@@ -43,12 +43,13 @@ const logout = async (teacherID) => {
       },
       (error) => {
         console.log("err post=", error);
-        Swal.fire({
-          title: 'אוי',
-          text: 'הפעולה נכשלה, נסה שנית',
-          icon: 'warning',
-          confirmButtonColor: '#e0819a',
-        })
+        //תוקן
+        // Swal.fire({
+        //   title: 'אוי',
+        //   text: 'הפעולה נכשלה, נסה שנית',
+        //   icon: 'warning',
+        //   confirmButtonColor: '#e0819a',
+        // })
       });
   sessionStorage.clear();
   localStorage.clear();

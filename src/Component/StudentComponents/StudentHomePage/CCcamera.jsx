@@ -25,7 +25,7 @@ export default class CCcamera extends Component {
         this.getFiles = this.getFiles.bind(this);
 
     }
-    
+
     handleTakePhoto = (dataUri) => {
         // dataUri --> base64
         this.setState({ dataUriImage: dataUri })
@@ -83,12 +83,13 @@ export default class CCcamera extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-            Swal.fire({
-              title: 'אוי',
-              text: 'הפעולה נכשלה, נסה שנית',
-              icon: 'warning',
-              confirmButtonColor: '#e0819a',
-            })
+                    //תוקן
+                    Swal.fire({
+                        title: 'אוי',
+                        text: 'התמונה לא נשמרה, נסה שוב',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
                 });
     }
 
@@ -116,15 +117,15 @@ export default class CCcamera extends Component {
                 { // אחרי שמצלמים
                     this.state.imageDetails &&
                     <div className="imageTaken">
-                        <div className="col-12" style={{backgroundColor:'black'}}>
+                        <div className="col-12" style={{ backgroundColor: 'black' }}>
                             <img className="imageOneChallenge" src={this.state.dataUriImage} />
                         </div>
-                        <button className="btn btn-info btnPink col-6" style={{height:'70px'}} onClick={this.saveImage}>שמור תמונה</button>
-                        <button className="btn btn-info btnPink col-6" style={{height:'70px'}} onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
+                        <button className="btn btn-info btnPink col-6" style={{ height: '70px' }} onClick={this.saveImage}>שמור תמונה</button>
+                        <button className="btn btn-info btnPink col-6" style={{ height: '70px' }} onClick={() => this.setState({ imageDetails: false })}>צלם תמונה אחרת</button>
                     </div>
-                            
-                        }
-                    </div>
+
+                }
+            </div>
         )
     };
 }

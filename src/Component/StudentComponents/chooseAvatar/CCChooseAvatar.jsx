@@ -58,9 +58,10 @@ export default class CCChooseAvatar extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'בחירת הדמות שלא לא הצליחה, נסה להכנס מחדש לאפליקציה ולבחור שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -100,12 +101,12 @@ export default class CCChooseAvatar extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    // Swal.fire({
+                    //     title: 'אוי',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
 
         await sessionStorage.clear();
