@@ -64,9 +64,10 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err get=", error);
+                    //תוקן
                     Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        title: 'משהו השתבש',
+                        text: 'נסה לחזור למסך הקודם ולהכנס שוב לשיחה עם התלמיד',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -93,12 +94,13 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'אוי',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -138,9 +140,10 @@ export default class CCStudentChat extends Component {
                 },
                 (error) => {
                     console.log("err post=", error);
+                    //תוקן
                     Swal.fire({
                         title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
+                        text: 'ההודעה לא נשלחה, נסה שוב',
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     })
@@ -179,24 +182,26 @@ export default class CCStudentChat extends Component {
                 (result) => {
                     console.log("student= ", result);
                     if (result == null)
-                        Swal.fire({
-                            title: 'אוי',
-                            text: 'הפעולה נכשלה, נסה שנית',
-                            icon: 'warning',
-                            confirmButtonColor: '#e0819a',
-                        });
+                        //תוקן
+                        // Swal.fire({
+                        //     title: 'אוי',
+                        //     text: 'הפעולה נכשלה, נסה שנית',
+                        //     icon: 'warning',
+                        //     confirmButtonColor: '#e0819a',
+                        // });
                     else {
                         teacherToken = result;
                     }
                 },
                 (error) => {
                     console.log("err get=", error);
-                    Swal.fire({
-                        title: 'אוי',
-                        text: 'הפעולה נכשלה, נסה שנית',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    //תוקן
+                    // Swal.fire({
+                    //     title: 'אוי',
+                    //     text: 'הפעולה נכשלה, נסה שנית',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
         var alertTitle = "יש לך הודעה חדשה מ" + this.props.location.state.FirstAndLastName.firstName + ' ' + this.props.location.state.FirstAndLastName.lastName;
        var alertText = this.state.messageText;
