@@ -176,32 +176,37 @@ class CCStudentTransfer extends Component {
         //פוסט התראה לפיירבייס --לבקשה-- להעברה
         var alertTitle = 'ישנה העברה חדשה לאישור';
         var alertText = 'נשלחה לך בקשה להעברת תלמיד חדש';
-        var teacherToken = this.getTeacherToken(this.state.teacherIDToTransfer);
-        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
+        this.getTeacherToken(this.state.teacherIDToTransfer, alertTitle, alertText);
+        // this.postAlertTFirebase(alertTitle, alertText, teacherToken);
     }
 
     //----אישור העברה------
-    confirmTransfer = (transferID, classID, studentID, teacherFrom) => {
+    confirmTransfer = async (transferID, classID, studentID, teacherFrom) => {
         //פוט לתלמיד 
-        this.changeTeacherIDandClass(studentID, classID, transferID);
+        await this.changeTeacherIDandClass(studentID, classID, transferID);
 
         //פוסט התראה לפיירבייס --לאישור-- להעברה
-        var alertTitle = 'בקשה להעברת תלמיד אושרה';
-        var alertText = 'הבקשה לתלמיד ____ אושרה';
-        var teacherToken = this.getTeacherToken(teacherFrom);
-        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
+        var alertTitle = await 'בקשה להעברת תלמיד אושרה';
+        var alertText = await '';
+        await this.getTeacherToken(teacherFrom, alertTitle, alertText);
+        var alertTitleS = await 'הועברת למורה אחר';
+        var alertTextS = await '';
+        await this.getStudentToken(studentID, alertTitleS, alertTextS);
+        // await this.postAlertTFirebase(alertTitle, alertText, teacherToken);
         //התראה לתלמיד
+
+
     }
 
     //-----דחיית בקשה--------
-    declineTransfer = (transferID, teacherFrom) => {
+    declineTransfer = async (transferID, teacherFrom) => {
         //פוט לטבלת העברות לעדכון סטטוס  
-        this.putTransferStatus(transferID, 3);
+        await this.putTransferStatus(transferID, 3);
         //פוסט התראה לפיירבייס --לאישור-- להעברה
-        var alertTitle = 'בקשה להעברת תלמיד נדחתה';
-        var alertText = 'הבקשה לתלמיד ____ נדחתה על ידי המורה';
-        var teacherToken = this.getTeacherToken(teacherFrom);
-        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
+        var alertTitle = await 'בקשה להעברת תלמיד נדחתה';
+        var alertText = await '';
+        await this.getTeacherToken(teacherFrom, alertTitle, alertText);
+        // await this.postAlertTFirebase(alertTitle, alertText, teacherToken);
     }
 
     //-----ביטול בקשה--------
@@ -342,9 +347,9 @@ class CCStudentTransfer extends Component {
                 });
     }
 
-    postAlertTFirebase = async (alertTitle, alertText, teacherToken) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
+    postAlertTFirebase = (alertTitle, alertText, teacherToken) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
         //יצירת אובייקט נוטיפיקיישן ופוסט לפיירבייס
-        var notification = await {
+        var notification = {
             "notification": {
                 "title": alertTitle,
                 "body": alertText,
@@ -353,7 +358,8 @@ class CCStudentTransfer extends Component {
             },
             "to": teacherToken
         }
-        await fetch("https://fcm.googleapis.com/fcm/send", {
+        console.log(notification);
+        fetch("https://fcm.googleapis.com/fcm/send", {
             method: 'POST',
             body: JSON.stringify(notification),
             headers: new Headers({
@@ -375,8 +381,37 @@ class CCStudentTransfer extends Component {
                     console.log("err post=", error);
                 });
     }
+    getStudentToken = async (studentID, alertTitle, alertText) => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
+        const user = await this.context;
+        await fetch(this.apiUrlStudent + '/getStudentToken?studentID=' + studentID
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log("TeacherToken= ", result);
+                    if (result != null) {
 
-    getTeacherToken = async (teacherID) => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
+                        this.postAlertTFirebase(alertTitle, alertText, result);
+                    }
+                },
+                (error) => {
+                    console.log("err get=", error);
+                });
+    }
+
+    getTeacherToken = async (teacherID, alertTitle, alertText) => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
         const user = await this.context;
         await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + teacherID
             , {
@@ -396,8 +431,10 @@ class CCStudentTransfer extends Component {
             .then(
                 (result) => {
                     console.log("TeacherToken= ", result);
-                    if (result != null)
-                        return result;
+                    if (result != null) {
+
+                        this.postAlertTFirebase(alertTitle, alertText, result);
+                    }
                 },
                 (error) => {
                     console.log("err get=", error);

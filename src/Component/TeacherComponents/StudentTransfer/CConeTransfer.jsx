@@ -71,15 +71,20 @@ export default class oneTransfer extends Component {
         this.setState({ newClassToTransfer: className });
     }
 
-    confirm = async () => {
+    confirm = () => {
+
         if (this.state.newClassToTransfer == null) return;
-        var classID = await this.state.classIDToTransfer;
-        alert("classID"+classID);
+        var classID = this.state.classIDToTransfer;
         if (this.state.classIDToTransfer == null) {
-            classID = await this.postClass(this.state.newClassToTransfer);
-            alert("new classID is null "+classID);
+            classID = this.postClass(this.state.newClassToTransfer);     
         }
-        await this.props.confirmTransfer(this.props.transferItem.transferID, classID, this.props.transferItem.studentID,this.props.transferItem.teacherFrom);
+        else{
+        this.props.confirmTransfer(this.props.transferItem.transferID, classID, this.props.transferItem.studentID, this.props.transferItem.teacherFrom);
+        }
+        this.setState({ clickConfirm: false });
+
+        
+
     }
 
     postClass = (className) => {
@@ -88,7 +93,7 @@ export default class oneTransfer extends Component {
             className: className,
             teacherID: user.teacherID
         }
-        fetch(this.apiUrl + "/postClassReturnID", {
+        fetch (this.apiUrl + "/postClassReturnID", {
             method: 'POST',
             body: JSON.stringify(classObj),
             headers: new Headers({
@@ -104,7 +109,8 @@ export default class oneTransfer extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
-                    return result;
+                    
+                    this.props.confirmTransfer(this.props.transferItem.transferID, result, this.props.transferItem.studentID, this.props.transferItem.teacherFrom);
                 },
                 (error) => {
                     console.log("err post=", error);
