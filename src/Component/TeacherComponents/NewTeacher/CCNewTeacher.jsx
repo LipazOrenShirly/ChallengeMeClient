@@ -100,7 +100,7 @@ export default class CCnewTeacher extends Component {
                 mail: this.state.mail,
                 phone: this.state.phone,
                 password: this.state.password,
-                school: this.state.school
+                institutionID: this.state.school
             }
             console.log('data=' + data);
             fetch(this.apiUrl, {
@@ -119,7 +119,16 @@ export default class CCnewTeacher extends Component {
                 .then(
                     (result) => {
                         console.log("fetch POST= ", result);
-
+                        //תוקן
+                        Swal.fire({
+                            title: 'מעולה!',
+                            text: 'הוספת בהצלחה!',
+                            icon: 'success',
+                            confirmButtonColor: '#e0819a',
+                        });
+                        this.props.history.push({
+                            pathname: '/TeacherLogin',
+                        });
                     },
                     (error) => {
                         console.log("err post=", error);
@@ -130,19 +139,7 @@ export default class CCnewTeacher extends Component {
                             icon: 'warning',
                             confirmButtonColor: '#e0819a',
                         })
-                    })
-                .then(
-                    //תוקן
-                    Swal.fire({
-                        title: 'מעולה!',
-                        text: 'הוספת בהצלחה!',
-                        icon: 'success',
-                        confirmButtonColor: '#e0819a',
-                    }).then(
-                        this.props.history.push({
-                            pathname: '/TeacherLogin',
-                        }))
-                );
+                    });
         }
         event.preventDefault();
     }

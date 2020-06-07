@@ -22,7 +22,7 @@ export default class CCTeacherInfoScreen extends Component {
             phone: "",
             password: "",
             password2: "",
-            school: "",
+            institutionID: "",
             HasfirstNameValError: false,
             HaslastNameValError: false,
             HasuserNameValError: false,
@@ -126,7 +126,7 @@ export default class CCTeacherInfoScreen extends Component {
                     phone: this.state.teacher.phone,
                     password: this.state.teacher.password,
                     password2: this.state.teacher.password,
-                    school: this.state.teacher.school
+                    institutionID: this.state.teacher.institutionID
                 })
             });
     }
@@ -149,7 +149,7 @@ export default class CCTeacherInfoScreen extends Component {
                 mail: this.state.mail,
                 phone: this.state.phone,
                 password: this.state.password,
-                school: this.state.school,
+                institutionID: this.state.institutionID,
                 teacherID: user.teacherID
             }
             fetch(this.apiUrl, {
@@ -287,6 +287,17 @@ export default class CCTeacherInfoScreen extends Component {
                 });
     }
 
+    onChangeInst = (event, value) => {
+        this.setState({
+            institutionID: value != null ? value.institutionID : null,
+            HasschoolValError: value != null ? false : true,
+        });
+        if (value == null) {
+            $('#schoolValuesError').empty();
+            $('#schoolValuesError').append("יש לבחור מוסד לימוד מהרשימה");
+        }
+    }
+
     render() {
         const {
             firstName,
@@ -296,7 +307,7 @@ export default class CCTeacherInfoScreen extends Component {
             phone,
             password,
             password2,
-            school,
+            institutionID,
         } = this.state;
         return (
             <div className="container-fluid">
@@ -613,6 +624,8 @@ export default class CCTeacherInfoScreen extends Component {
                             <button type="submit" id="save" className="btn btn-info col-8 btnPink"  >עדכן פרטים</button>
                             <button type="button" id="cancel" className="btn btn-info col-3 btnPink cencelBtn" onClick={this.btnClick} >בטל</button>
                         </div>
+                        <div className='errorInputuserName' id="schoolValuesError"></div>
+
                     </form>
                 </div>
             </div>

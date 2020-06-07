@@ -78,7 +78,7 @@ class CCStudentTransfer extends Component {
 
     getTeachers = () => {
         const user = this.context;
-        fetch(this.apiUrlTeacher+'?teacherID='+user.teacherID
+        fetch(this.apiUrlTeacher+'/GetTeachersByInstitution?teacherID='+user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({
