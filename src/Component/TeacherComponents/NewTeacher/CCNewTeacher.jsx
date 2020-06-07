@@ -8,6 +8,7 @@ import localHost from '../../LittleComponents/LocalHost';
 import Swal from 'sweetalert2';
 import $ from 'jquery';
 import { TiArrowBack } from 'react-icons/ti';
+import FreeSoloGroupedInst from '../../LittleComponents/FreeSoloGroupedInst';
 
 export default class CCnewTeacher extends Component {
     constructor(props) {
@@ -29,18 +30,57 @@ export default class CCnewTeacher extends Component {
             HaspasswordValError: true,
             Haspassword2ValError: true,
             HasschoolValError: true,
-            isUserNameExist: false
-
+            isUserNameExist: false,
+            institutionsArr: [],
         }
         let local = false;
         this.apiUrl = 'http://localhost:' + { localHost }.localHost + '/api/Teacher';
+        this.apiUrlInstitution = 'http://localhost:' + { localHost }.localHost + '/api/Institution';
         if (!local) {
             this.apiUrl = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Teacher';
+            this.apiUrlInstitution = 'https://proj.ruppin.ac.il/igroup2/prod' + '/api/Institution';
         }
     }
 
-    Submit = (event) => {
+    componentDidMount() {
+        this.getInstitutions()
+    }
 
+    getInstitutions = () => {
+        fetch(this.apiUrlInstitution
+            , {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({ institutionsArr: result })
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    //תוקן
+                    Swal.fire({
+                        title: 'משהו השתבש',
+                        text: 'טעינת רשימת מוסדות הלימוד, אנא נסה להכנס לעמוד מחדש',
+                        icon: 'warning',
+                        confirmButtonColor: '#e0819a',
+                    })
+                })
+    }
+
+    Submit = (event) => {
+        console.log(this.state);
 
         if (!this.state.HasfirstNameValError &&
             !this.state.HaslastNameValError &&
@@ -190,6 +230,17 @@ export default class CCnewTeacher extends Component {
                     //     confirmButtonColor: '#e0819a',
                     // })
                 });
+    }
+
+    onChangeInst = (event, value) => {
+        this.setState({
+            school: value != null ? value.institutionID : null,
+            HasschoolValError: value != null ? false : true,
+        });
+        if (value == null) {
+            $('#schoolValuesError').empty();
+            $('#schoolValuesError').append("יש לבחור מוסד לימוד מהרשימה");
+        }
     }
 
     render() {
@@ -474,7 +525,7 @@ export default class CCnewTeacher extends Component {
                             />
                         </div>
 
-                        <div className="form-group col-12">
+                        {/* <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
                                     autoComplete: "off",
@@ -509,7 +560,20 @@ export default class CCnewTeacher extends Component {
                                     }
                                 }}
                             />
+                        </div> */}
+                        <div className="form-group col-12" dir="rtl">
+                            <FreeSoloGroupedInst
+                                options={this.state.institutionsArr.sort(function (a, b) {
+                                    if (a.institutionName < b.institutionName) return -1;
+                                    if (b.institutionName > a.institutionName) return 1;
+                                    return 0;
+                                })}
+                                onChange={this.onChangeInst}
+                                label='מוסד לימודים שהינך מלמד בו'
+                                id='institutions' />
                         </div>
+                        <div className='errorInputuserName' id="schoolValuesError"></div>
+
 
                         <div className="col-12">
                             <button type="submit" id="submit" className="btn btn-info btnPink">כניסה</button>
