@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function FreeSoloTeachers(props) {
   return (
-    <div className="DivAutoComplete">
 
       <Autocomplete
         // freeSolo
@@ -26,6 +25,5 @@ export default function FreeSoloTeachers(props) {
           />
         )}
       />
-    </div>
   );
 }

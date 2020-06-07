@@ -1,5 +1,44 @@
+
+.btnTransferStudent{
+    margin-top: 20px;
+}
+.btnHide{
+    background-color: rgb(223, 184, 210);
+}
+ /****  one transfer ***/
+
 .transferStudendDivOne{
     background-color: rgba(255, 255, 255, 0.842);
     margin-bottom: 2%;
     padding:5%;
+    border-radius: 7px;
+    border:none;
+    box-shadow: 2px 2px #949494;
+}
+/* .oneTransferDiv > *{
+text-align: right !important;
+} */
+.headlineTransfer{
+    font-size: 20px;
+}
+.statusTransfer{
+    font-size: 18px;
+}
+.commentTransfer{
+    font-size: 18px;
+}
+.dateTransfer{
+    font-size: 18px;
+}
+.declineBtn{
+    background-color: rgb(250, 204, 226);
+}
+.btnCancel{
+    background-color: transparent;
+    color: rgb(76, 171, 226);
+}
+.btnCancel:focus , .btnCancel:active, .btnCancel:hover {
+    background-color: transparent;
+    color: rgb(76, 171, 226);
+    border: none !important;
 }

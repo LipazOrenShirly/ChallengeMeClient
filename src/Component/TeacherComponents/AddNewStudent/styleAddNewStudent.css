@@ -4,8 +4,6 @@
 .errorInputPhone{
     color:red;
     font-size: 14px;
- 
-
 }
 input[type="date"]:before {
     color: #495057;
@@ -21,7 +19,7 @@ input[type="date"]:before {
 
   .notMust{
     text-align: right;
-    color:red;
+    color:rgb(255, 138, 138);
     font-size: 85%;
     margin: 0;
     padding: 0;

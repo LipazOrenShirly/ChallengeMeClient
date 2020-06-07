@@ -22,6 +22,7 @@ class CCStudentTransfer extends Component {
             studentIDToTransfer: null,
             teacherIDToTransfer: null,
             comment: "",
+            transferNewStudent: false,
         }
         let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -180,11 +181,11 @@ class CCStudentTransfer extends Component {
     }
 
     //----אישור העברה------
-    confirmTransfer = () => {
+    confirmTransfer = (transferID) => {
         //בחירת כיתה/יצירת כיתה חדשה
         //יצירת כיתה חדשה
         //פוט לטבלת העברות לעדכון סטטוס  
-        // this.putTransferStatus(transferID, 2);
+         this.putTransferStatus(transferID, 2);
         //פוסט התראה לפיירבייס --לאישור-- להעברה
         var alertTitle = 'בקשה להעברת תלמיד אושרה';
         var alertText = 'הבקשה לתלמיד ____ אושרה';
@@ -192,11 +193,11 @@ class CCStudentTransfer extends Component {
         this.postAlertTFirebase(alertTitle, alertText, teacherToken);
         //התראה לתלמיד
     }
-
+    
     //-----דחיית בקשה--------
-    declineTransfer = () => {
+    declineTransfer = (transferID) => {
         //פוט לטבלת העברות לעדכון סטטוס  
-        // this.putTransferStatus(transferID, 3);
+         this.putTransferStatus(transferID, 3);
         //פוסט התראה לפיירבייס --לאישור-- להעברה
         var alertTitle = 'בקשה להעברת תלמיד נדחתה';
         var alertText = 'הבקשה לתלמיד ____ נדחתה על ידי המורה';
@@ -205,9 +206,10 @@ class CCStudentTransfer extends Component {
     }
 
     //-----ביטול בקשה--------
-    cancelTransfer = () => {
+    cancelTransfer = (transferID) => {
         //פוט לטבלת העברות לעדכון סטטוס  
-        // this.putTransferStatus(transferID, 4);
+         this.putTransferStatus(transferID, 4);
+
     }
 
     checkIfExists = () => {
@@ -253,6 +255,7 @@ class CCStudentTransfer extends Component {
                     });
                     this.setState({ comment: "" });
                     // this.props.history.push('/HomePageTeacher');
+                    this.getTransfersRequests();
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -265,8 +268,8 @@ class CCStudentTransfer extends Component {
                 });
     }
 
-    putTransferConfirm = (transferID) => {    //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
-        fetch(this.apiUrlTransfer + '?transferID=' + transferID
+    putTransferStatus = (transferID, status) => {    //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
+        fetch(this.apiUrlTransfer + '/confirmTransfer?transferID=' + transferID + '&status='+status
             , {
                 method: 'PUT',
                 headers: new Headers({
@@ -284,16 +287,17 @@ class CCStudentTransfer extends Component {
             .then(
                 (result) => {
                     console.log(result);
+                    this.getTransfersRequests();
                 },
                 (error) => {
                     console.log("err get=", error);
-                    //תוקן
-                    Swal.fire({
-                        title: 'משהו השתבש',
-                        text: 'אישור ההעברה לא התבצעת אנא נסה שוב',
-                        icon: 'warning',
-                        confirmButtonColor: '#e0819a',
-                    })
+                    // //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'אישור ההעברה לא התבצעת אנא נסה שוב',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
                 });
     }
 
@@ -360,7 +364,8 @@ class CCStudentTransfer extends Component {
     }
 
     render() {
-        var comment = this.state.comment;
+
+        const { transferNewStudent, comment, transfersArr } = this.state;
         return (
             <div className="container-fluid">
                 <NavBar />
@@ -369,49 +374,65 @@ class CCStudentTransfer extends Component {
                 </div>
                 <div className="col-12 turkiz">שיוך תלמיד למורה אחר מאותו מוסד לימודי</div>
                 <br />
-                <form onSubmit={this.SubmitTransfer}>
-                    <div className="form-group input-group col-12 bc" dir="rtl">
-                        <FreeSoloGrouped
-                            options={this.state.studentsArr}
-                            onInputChange={this.onInputChangeStudent}
-                            label="שם התלמיד להעברה"
-                            id='studentToTransfer' />
-                    </div>
-                    <div className="form-group input-group col-12 bc" dir="rtl">
-                        <FreeSoloTeachers
-                            options={this.state.teachersArr}
-                            onChange={this.onInputChangeTeacher}
-                            label='שם המורה אליו יועבר התלמיד'
-                            id='teacherToTransfer' />
-                    </div>
-
-                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
-                        attributesInput={{
-                            autoComplete: "off",
-                            id: 'comment',
-                            type: 'text',
-                            placeholder: 'כתוב הערה',
-                            className: "form-control inputRounded"
-                        }}
-                        value={comment}
-                        onChange={(comment, e) => { //כל שינוי הוא שומר בסטייט
-                            this.setState({ comment });
-                        }}
-                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                    />
-
-
-                    <div className='errorInputuserName' id="StudentTeacherError"></div>
+                {
+                    transferNewStudent == false &&
                     <div className="col-12">
-                        <button className="btn btn-info btnPink col-6" >העבר את התלמיד</button>
+                        <button className="btn btn-info btnPink col-6" onClick={() => { this.setState({ transferNewStudent: true }) }} >העבר תלמיד חדש</button>
                     </div>
-                </form>
-                <br />
-                <div className="col-12 turkiz">שיוכים שעלייך לאשר</div>
-                <CConeTransfer />
-                <CConeTransfer />
-                <CConeTransfer />
+                }
+                {
+                    transferNewStudent == true &&
 
+                    <form onSubmit={this.SubmitTransfer}>
+                        <div className="form-group input-group col-12 bc" dir="rtl">
+                            <FreeSoloGrouped
+                                options={this.state.studentsArr}
+                                onInputChange={this.onInputChangeStudent}
+                                label="שם התלמיד להעברה"
+                                id='studentToTransfer' />
+                        </div>
+                        <div className="form-group input-group col-12 bc" dir="rtl">
+                            <FreeSoloTeachers
+                                options={this.state.teachersArr}
+                                onChange={this.onInputChangeTeacher}
+                                label='שם המורה אליו יועבר התלמיד'
+                                id='teacherToTransfer' />
+                        </div>
+                        <div className="col-12" dir="rtl">
+                            <div className="notMust">-שדה רשות</div>
+                            <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                                attributesInput={{
+                                    autoComplete: "off",
+                                    id: 'comment',
+                                    type: 'text',
+                                    placeholder: 'כתוב הערה',
+                                    className: "form-control inputRounded"
+                                }}
+                                value={comment}
+                                onChange={(comment, e) => { //כל שינוי הוא שומר בסטייט
+                                    this.setState({ comment });
+                                }}
+                                onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                            />
+                        </div>
+
+                        <div className='errorInputuserName' id="StudentTeacherError"></div>
+                        <div className="row btnTransferStudent justify-content-around">
+                            <button className="btn btn-info btnPink btnHide col-4" onClick={() => { this.setState({ transferNewStudent: false }) }} >הסתר</button>
+                            <button type="submit" className="btn btn-info btnPink col-6" >העבר את התלמיד</button>
+
+                        </div>
+                    </form>
+                }
+                <br />
+                {
+                    transfersArr.length > 0 &&
+                    <div className="col-12 turkiz" style={{marginBottom:'2%'}}>שיוכים שנעשו</div>
+
+                }
+                {transfersArr.map((item) =>
+                    <CConeTransfer transferItem={item} cancelTransfer={this.cancelTransfer} declineTransfer={this.declineTransfer} confirmTransfer={this.confirmTransfer}/>
+                )}
             </div>
         );
     }
