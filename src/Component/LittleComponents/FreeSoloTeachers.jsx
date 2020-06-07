@@ -8,6 +8,7 @@ export default function FreeSoloTeachers(props) {
 
       <Autocomplete
         // freeSolo
+        key={props.key}
         className="form-control inputRounded"
         id={props.id}
         // disableClearable

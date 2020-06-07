@@ -23,6 +23,7 @@ class CCStudentTransfer extends Component {
             teacherIDToTransfer: null,
             comment: "",
             transferNewStudent: false,
+            clearSelection: null
         }
         let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -300,7 +301,7 @@ class CCStudentTransfer extends Component {
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     });
-                    this.setState({ comment: "" });
+                    this.setState({ clearSelection:true, comment: "" });
                     // this.props.history.push('/HomePageTeacher');
                     this.getTransfersRequests();
                 },
@@ -465,6 +466,7 @@ class CCStudentTransfer extends Component {
                     <form onSubmit={this.SubmitTransfer}>
                         <div className="form-group input-group col-12 bc" dir="rtl">
                             <FreeSoloGrouped
+                                key={this.state.clearSelection}
                                 options={this.state.studentsArr}
                                 onInputChange={this.onInputChangeStudent}
                                 label="שם התלמיד להעברה"
@@ -472,6 +474,7 @@ class CCStudentTransfer extends Component {
                         </div>
                         <div className="form-group input-group col-12 bc" dir="rtl">
                             <FreeSoloTeachers
+                                key={this.state.clearSelection}
                                 options={this.state.teachersArr}
                                 onChange={this.onInputChangeTeacher}
                                 label='שם המורה אליו יועבר התלמיד'

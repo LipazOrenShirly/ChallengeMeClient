@@ -6,18 +6,19 @@ export default function FreeSoloGrouped(props) {
 
     return (
         <Autocomplete
+            key={props.key}
             className="form-control inputRounded"
-            id={props.id}                    
+            id={props.id}
             onChange={props.onInputChange}
             options={props.options}
             getOptionLabel={option => option.firstName + " " + option.lastName}
             groupBy={(option) => option.className}
-            renderInput = {(params) => (
-                <TextField 
-                    {...params} 
-                    label={props.label} 
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={props.label}
                     dir="rtl"
-                    />
+                />
             )}
         />
     );
