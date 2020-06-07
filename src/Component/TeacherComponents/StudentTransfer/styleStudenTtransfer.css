@@ -18,11 +18,19 @@
 /* .oneTransferDiv > *{
 text-align: right !important;
 } */
-.headlineTransfer{
+.headlineTransferMe{
     font-size: 20px;
+    color: rgb(76, 171, 226);
+    font-weight: 700;
+}
+.headlineTransferOther{
+    font-size: 20px;
+    color: rgb(226, 62, 171);
+    font-weight: 700;
 }
 .statusTransfer{
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
 }
 .commentTransfer{
     font-size: 18px;
@@ -41,4 +49,7 @@ text-align: right !important;
     background-color: transparent;
     color: rgb(76, 171, 226);
     border: none !important;
+}
+.MeStatus4{
+    background-color:rgba(240, 240, 240, 0.897) ;
 }

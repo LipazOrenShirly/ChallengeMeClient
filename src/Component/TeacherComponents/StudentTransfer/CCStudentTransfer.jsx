@@ -181,35 +181,74 @@ class CCStudentTransfer extends Component {
     }
 
     //----אישור העברה------
-    confirmTransfer = (transferID) => {
-        //בחירת כיתה/יצירת כיתה חדשה
-        //יצירת כיתה חדשה
-        //פוט לטבלת העברות לעדכון סטטוס  
-         this.putTransferStatus(transferID, 2);
+    confirmTransfer = (transferID, classID, studentID, teacherFrom) => {
+        //פוט לתלמיד לכיתה
+        this.changeTeacherIDandClass(studentID, classID, transferID);
+
         //פוסט התראה לפיירבייס --לאישור-- להעברה
         var alertTitle = 'בקשה להעברת תלמיד אושרה';
         var alertText = 'הבקשה לתלמיד ____ אושרה';
-        var teacherToken = this.getTeacherToken();
+        var teacherToken = this.getTeacherToken(teacherFrom);
         this.postAlertTFirebase(alertTitle, alertText, teacherToken);
         //התראה לתלמיד
     }
-    
+
     //-----דחיית בקשה--------
-    declineTransfer = (transferID) => {
+    declineTransfer = (transferID, teacherFrom) => {
         //פוט לטבלת העברות לעדכון סטטוס  
-         this.putTransferStatus(transferID, 3);
+        this.putTransferStatus(transferID, 3);
         //פוסט התראה לפיירבייס --לאישור-- להעברה
         var alertTitle = 'בקשה להעברת תלמיד נדחתה';
         var alertText = 'הבקשה לתלמיד ____ נדחתה על ידי המורה';
-        var teacherToken = this.getTeacherToken();
+        var teacherToken = this.getTeacherToken(teacherFrom);
         this.postAlertTFirebase(alertTitle, alertText, teacherToken);
     }
 
     //-----ביטול בקשה--------
     cancelTransfer = (transferID) => {
         //פוט לטבלת העברות לעדכון סטטוס  
-         this.putTransferStatus(transferID, 4);
+        this.putTransferStatus(transferID, 4);
+    }
 
+    changeTeacherIDandClass = (studentID, classID,transferID) => {
+        var studentAndClassObj = {
+            studentID: studentID,
+            classID: classID
+        }
+        fetch(this.apiUrlStudent + '/changeTeacherIDandClass'
+            , {
+                method: 'PUT',
+                body: JSON.stringify(studentAndClassObj),
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                if (!res.ok)
+                    throw new Error('Network response was not ok.');
+                return res.json();
+            })
+            .then(
+                (result) => {
+                    console.log(result);
+                    //פוט לטבלת העברות לעדכון סטטוס  
+                    this.putTransferStatus(transferID, 2);
+                    this.getTransfersRequests();
+
+                },
+                (error) => {
+                    console.log("err get=", error);
+                    // //תוקן
+                    // Swal.fire({
+                    //     title: 'משהו השתבש',
+                    //     text: 'אישור ההעברה לא התבצעת אנא נסה שוב',
+                    //     icon: 'warning',
+                    //     confirmButtonColor: '#e0819a',
+                    // })
+                });
     }
 
     checkIfExists = () => {
@@ -269,7 +308,7 @@ class CCStudentTransfer extends Component {
     }
 
     putTransferStatus = (transferID, status) => {    //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
-        fetch(this.apiUrlTransfer + '/confirmTransfer?transferID=' + transferID + '&status='+status
+        fetch(this.apiUrlTransfer + '/updateTransfer?transferID=' + transferID + '&status=' + status
             , {
                 method: 'PUT',
                 headers: new Headers({
@@ -427,11 +466,11 @@ class CCStudentTransfer extends Component {
                 <br />
                 {
                     transfersArr.length > 0 &&
-                    <div className="col-12 turkiz" style={{marginBottom:'2%'}}>שיוכים שנעשו</div>
+                    <div className="col-12 turkiz" style={{ marginBottom: '2%' }}>שיוכים שנעשו</div>
 
                 }
                 {transfersArr.map((item) =>
-                    <CConeTransfer transferItem={item} cancelTransfer={this.cancelTransfer} declineTransfer={this.declineTransfer} confirmTransfer={this.confirmTransfer}/>
+                    <CConeTransfer transferItem={item} cancelTransfer={this.cancelTransfer} declineTransfer={this.declineTransfer} confirmTransfer={this.confirmTransfer} />
                 )}
             </div>
         );
