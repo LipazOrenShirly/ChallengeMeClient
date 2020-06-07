@@ -10,7 +10,7 @@ import FreeSoloGrouped from '../../LittleComponents/FreeSoloGrouped';
 import FreeSoloTeachers from '../../LittleComponents/FreeSoloTeachers';
 import CConeTransfer from './CConeTransfer';
 import $ from 'jquery';
-
+import { Textbox, Radiobox, Checkbox, Select, Textarea } from 'react-inputs-validation';
 
 class CCStudentTransfer extends Component {
     constructor(props) {
@@ -19,8 +19,9 @@ class CCStudentTransfer extends Component {
             studentsArr: [],
             teachersArr: [],
             transfersArr: [],
-            studentIDToTransfer: "",
-            teacherIDToTransfer: "",
+            studentIDToTransfer: null,
+            teacherIDToTransfer: null,
+            comment: "",
         }
         let local = false;
         this.apiUrlStudent = 'http://localhost:' + { localHost }.localHost + '/api/Student';
@@ -39,24 +40,6 @@ class CCStudentTransfer extends Component {
         this.getTeachers();
         this.getTransfersRequests();
     }
-
-    // התהליך:
-    // במסך אפשר ליצור בקשות להעברות וניתן לראות בקשות שממתינות לאישור שלך
-
-    // יצירת בקשה:
-    // במסך אפשר ליצור בקשה להעברה על ידי בחירת תלמיד להעברה ומורה אליו יועבר התלמיד
-    // בלחיצה על העבר תלמיד:
-    // 1. נוצרת שורה בטבלת העברות
-    // 3. נשלחת התראה לפיירבייס
-
-    // צפיה בבקשות שממתינות לאישור שלך:
-    // יש גט שמביא את כל הבקשות שממתינות לאישור שלך
-    // ברגע שמאשרים:
-    // 1. מתעדכנת ההעברה בטבלת העברות לקונפירם טרו
-    // 2. נשלחת התראה לפיירבייס
-    // 3. פקודת פוט לטבלת תלמידים לעדכון המורה של התלמיד
-
-
 
     getStudents = () => {
         const user = this.context;
@@ -127,7 +110,7 @@ class CCStudentTransfer extends Component {
 
     getTransfersRequests = () => {
         const user = this.context;
-        fetch(this.apiUrlTransfer + '/getTransfersToTeacher?teacherID=' + user.teacherID
+        fetch(this.apiUrlTransfer + '/getTransfers?teacherID=' + user.teacherID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -161,40 +144,88 @@ class CCStudentTransfer extends Component {
 
     onInputChangeStudent = (event, value) => {
         var studentID = value != null ? value.studentID : null;
-        this.setState({studentIDToTransfer: studentID});
+        this.setState({ studentIDToTransfer: studentID });
     }
 
     onInputChangeTeacher = (event, value) => {
         var teacherID = value != null ? value.teacherID : null;
-        this.setState({ teacherIDToTransfer: teacherID});
+        this.setState({ teacherIDToTransfer: teacherID });
     }
 
     //------שליחת בקשה-------
     SubmitTransfer = (event) => {
         event.preventDefault();
+        if (this.state.teacherIDToTransfer == null || this.state.studentIDToTransfer == null) {
+            $('#StudentTeacherError').empty();
+            $('#StudentTeacherError').append("יש לבחור תלמיד ומורה");
+            return;
+        }
+        //בדיקה האם כבר קיימת בקשה כזאת
+        if (this.checkIfExists()) {
+            Swal.fire({
+                title: 'אוי',
+                text: 'הבקשה כבר קיימת וממתינה לאישור של המורה',
+                icon: 'warning',
+                confirmButtonColor: '#e0819a',
+            });
+            return;
+        }
         //פוסט לבקשה להעברה
-        this.postTransfer(); 
+        this.postTransfer();
         //פוסט התראה לפיירבייס --לבקשה-- להעברה
-        var alertTitle = '';
-        var alertText = '';
-        this.postAlertTFirebase(alertTitle, alertText);    
+        var alertTitle = 'ישנה העברה חדשה לאישור';
+        var alertText = 'נשלחה לך בקשה להעברת תלמיד חדש';
+        var teacherToken = this.getTeacherToken(this.state.teacherIDToTransfer);
+        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
     }
 
     //----אישור העברה------
     confirmTransfer = () => {
-        //פוט לטבלת העברות לשינוי עמודת קונפירם לטרו
-        this.putTransferConfirm(transferID);
+        //בחירת כיתה/יצירת כיתה חדשה
+        //יצירת כיתה חדשה
+        //פוט לטבלת העברות לעדכון סטטוס  
+        // this.putTransferStatus(transferID, 2);
         //פוסט התראה לפיירבייס --לאישור-- להעברה
-        var alertTitle = '';
-        var alertText = '';
-        this.postAlertTFirebase(alertTitle, alertText);
+        var alertTitle = 'בקשה להעברת תלמיד אושרה';
+        var alertText = 'הבקשה לתלמיד ____ אושרה';
+        var teacherToken = this.getTeacherToken();
+        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
+        //התראה לתלמיד
+    }
+
+    //-----דחיית בקשה--------
+    declineTransfer = () => {
+        //פוט לטבלת העברות לעדכון סטטוס  
+        // this.putTransferStatus(transferID, 3);
+        //פוסט התראה לפיירבייס --לאישור-- להעברה
+        var alertTitle = 'בקשה להעברת תלמיד נדחתה';
+        var alertText = 'הבקשה לתלמיד ____ נדחתה על ידי המורה';
+        var teacherToken = this.getTeacherToken();
+        this.postAlertTFirebase(alertTitle, alertText, teacherToken);
+    }
+
+    //-----ביטול בקשה--------
+    cancelTransfer = () => {
+        //פוט לטבלת העברות לעדכון סטטוס  
+        // this.putTransferStatus(transferID, 4);
+    }
+
+    checkIfExists = () => {
+        const user = this.context;
+        var filteredTransferArr = this.state.transfersArr.filter(item =>
+            item.teacherFrom == user.teacherID && item.teacherTo == this.state.teacherIDToTransfer && item.studentID == this.state.studentIDToTransfer && item.status == 1
+        );
+        return filteredTransferArr.length > 0  //מחזיר טרו אם קיימת כבר העברה ומחזיר פולס אם לא קיימת 
     }
 
     postTransfer = () => {
+        const user = this.context;
         var transfer = {
             teacherFrom: user.teacherID,
             teacherTo: this.state.teacherIDToTransfer,
             studentID: this.state.studentIDToTransfer,
+            comment: this.state.comment,
+            date: new Date().toISOString().split('T')[0],
         }
 
         fetch(this.apiUrlTransfer,
@@ -220,8 +251,8 @@ class CCStudentTransfer extends Component {
                         icon: 'warning',
                         confirmButtonColor: '#e0819a',
                     });
-                    this.postAlert();
-                    this.props.history.push('/HomePageTeacher');
+                    this.setState({ comment: "" });
+                    // this.props.history.push('/HomePageTeacher');
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -266,9 +297,7 @@ class CCStudentTransfer extends Component {
                 });
     }
 
-    postAlertTFirebase = async (alertTitle, alertText) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
-
-        var teacherToken = this.getTeacherToken();
+    postAlertTFirebase = async (alertTitle, alertText, teacherToken) => {        //פוסט התראה לפיירבייס --לאישור-- להעברה
         //יצירת אובייקט נוטיפיקיישן ופוסט לפיירבייס
         var notification = await {
             "notification": {
@@ -302,9 +331,9 @@ class CCStudentTransfer extends Component {
                 });
     }
 
-    getTeacherToken = async () => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
+    getTeacherToken = async (teacherID) => {  // שליפת הטוקן של המורה אליו צריכה להישלח ההתראה
         const user = await this.context;
-        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + this.state.teacherIDToTransfer
+        await fetch(this.apiUrlTeacher + '/getTeacherToken?teacherID=' + teacherID
             , {
                 method: 'GET',
                 headers: new Headers({
@@ -331,6 +360,7 @@ class CCStudentTransfer extends Component {
     }
 
     render() {
+        var comment = this.state.comment;
         return (
             <div className="container-fluid">
                 <NavBar />
@@ -354,6 +384,24 @@ class CCStudentTransfer extends Component {
                             label='שם המורה אליו יועבר התלמיד'
                             id='teacherToTransfer' />
                     </div>
+
+                    <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
+                        attributesInput={{
+                            autoComplete: "off",
+                            id: 'comment',
+                            type: 'text',
+                            placeholder: 'כתוב הערה',
+                            className: "form-control inputRounded"
+                        }}
+                        value={comment}
+                        onChange={(comment, e) => { //כל שינוי הוא שומר בסטייט
+                            this.setState({ comment });
+                        }}
+                        onBlur={(e) => { console.log(e) }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
+                    />
+
+
+                    <div className='errorInputuserName' id="StudentTeacherError"></div>
                     <div className="col-12">
                         <button className="btn btn-info btnPink col-6" >העבר את התלמיד</button>
                     </div>
