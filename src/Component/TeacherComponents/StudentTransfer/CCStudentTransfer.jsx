@@ -182,8 +182,9 @@ class CCStudentTransfer extends Component {
 
     //----אישור העברה------
     confirmTransfer = (transferID, classID, studentID, teacherFrom) => {
+        alert(classID);
         //פוט לתלמיד לכיתה
-        this.changeTeacherIDandClass(studentID, classID, transferID);
+        this.changeTeacherIDandClass(studentID, classID, teacherFrom, transferID);
 
         //פוסט התראה לפיירבייס --לאישור-- להעברה
         var alertTitle = 'בקשה להעברת תלמיד אושרה';
@@ -210,10 +211,11 @@ class CCStudentTransfer extends Component {
         this.putTransferStatus(transferID, 4);
     }
 
-    changeTeacherIDandClass = (studentID, classID,transferID) => {
+    changeTeacherIDandClass = (studentID, classID, teacherID, transferID) => {
         var studentAndClassObj = {
             studentID: studentID,
-            classID: classID
+            classID: classID,
+            teacherID: teacherID
         }
         fetch(this.apiUrlStudent + '/changeTeacherIDandClass'
             , {

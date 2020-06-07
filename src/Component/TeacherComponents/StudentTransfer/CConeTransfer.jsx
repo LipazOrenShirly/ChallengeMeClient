@@ -76,6 +76,7 @@ export default class oneTransfer extends Component {
         var classID = await this.state.classIDToTransfer;
         if (this.state.classIDToTransfer == null) {
             classID = await this.postClass(this.state.newClassToTransfer);
+            
         }
         await this.props.confirmTransfer(this.props.transferItem.transferID, classID, this.props.transferItem.studentID,this.props.transferItem.teacherFrom);
     }
