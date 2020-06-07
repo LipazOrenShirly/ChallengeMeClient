@@ -71,12 +71,13 @@ export default class oneTransfer extends Component {
         this.setState({ newClassToTransfer: className });
     }
 
-    confirm = async (studentID) => {
+    confirm = async () => {
         if (this.state.newClassToTransfer == null) return;
         var classID = await this.state.classIDToTransfer;
+        alert("classID"+classID);
         if (this.state.classIDToTransfer == null) {
             classID = await this.postClass(this.state.newClassToTransfer);
-            
+            alert("new classID is null "+classID);
         }
         await this.props.confirmTransfer(this.props.transferItem.transferID, classID, this.props.transferItem.studentID,this.props.transferItem.teacherFrom);
     }
