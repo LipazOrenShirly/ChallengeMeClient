@@ -90,4 +90,7 @@ a{
     font-weight: 500;
 }
 
-
+/* free solo */
+.MuiInput-formControl{
+    margin-top: 12px !important;
+}

@@ -172,7 +172,7 @@ export default class CCStudentInfoScreen extends Component {
                     if (result != 0) { // כבר קיים השם משתמש הזה
                         this.setState({ HasSphoneValError: true })
                         $('#phoneValuesError').empty();
-                        $('#phoneValuesError').append("מספר הטלפון כבר שמור במערכת, אנא בחר מספר אחר");
+                        $('#phoneValuesError').append("מספר הטלפון כבר קיים במערכת");
                     }
 
                 },
@@ -220,14 +220,11 @@ export default class CCStudentInfoScreen extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין שם פרטי לתלמיד",
                             customFunc: async v => {
-                                if (v === "") {
-                                    // this.setState({ HafirstNameValError: true });
-                                    return "Name is required.";
-                                }
                                 if (v.length < 2) {
                                     // this.setState({ HafirstNameValError: true });
-                                    return "Name needs at least 2 length.";
+                                    return "השם חייב להיות בעל 2 אותיות ומעלה";
                                 }
                                 return true;
                             }
@@ -256,14 +253,11 @@ export default class CCStudentInfoScreen extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין שם משפחה לתלמיד",
                             customFunc: async v => {
-                                if (v === "") {
-                                    this.setState({ HaslastNameValError: true });
-                                    return "Last Name is required.";
-                                }
                                 if (v.length < 2) {
                                     this.setState({ HaslastNameValError: true });
-                                    return "Last Name needs at least 2 length.";
+                                    return "שם המשפחה חייב להיות בעל 2 אותיות ומעלה";
                                 }
                                 return true;
                             }
@@ -295,13 +289,14 @@ export default class CCStudentInfoScreen extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין מספר פלאפון לתלמיד",
                             customFunc: phoneNum => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
                                 if (reg.test(phoneNum)) {
                                     return true;
                                 } else {
                                     this.setState({ HasphoneValError: true });
-                                    return "is not a valid phone number";
+                                    return "מספר הפלאפון לא תקין";
                                 }
                             }
                         }}
@@ -330,13 +325,14 @@ export default class CCStudentInfoScreen extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין סיסמה לתלמיד",
                             customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
                                 const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
                                 if (reg.test(pas)) {
                                     return true;
                                 } else {
                                     this.setState({ HaspasswordValError: true });
-                                    return "Minimum 5 characters, at least one letter and one number";
+                                    return "אנא הזן לפחות 5 תווים שמכילים אותיות באנגלית ומספרים";
                                 }
                             }
                         }}
@@ -364,6 +360,7 @@ export default class CCStudentInfoScreen extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין סיסמה בשנית לתלמיד",
                             customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
                                 const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
                                 if (reg.test(pas)) {
@@ -371,11 +368,11 @@ export default class CCStudentInfoScreen extends Component {
                                         return true;
                                     else {
                                         this.setState({ Haspassword2ValError: true });
-                                        return "not like first password";
+                                        return "הסיסמה לא זהה לסיסמה הראשונה";
                                     }
                                 } else {
                                     this.setState({ Haspassword2ValError: true });
-                                    return "Minimum 5 characters, at least one letter and one number";
+                                    return "אנא הזן לפחות 5 תווים שמכילים אותיות באנגלית ומספרים";
                                 }
                             }
                         }}
@@ -399,11 +396,14 @@ export default class CCStudentInfoScreen extends Component {
                             console.log(e);
                         }}
                         onBlur={(e) => { e.target.value == "" ? e.target.type = "text" : e.target.type = "date"; console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-
+                        validationOption={{
+                            check: false, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: false,
+                        }}
                     />
                 </div>
                 <div className="form-group col-12">
-                    <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.UpdateStudentInfo}>שמירת עדכונים</button>
+                    <button className="btn btn-info createNewChallenge btnAddNewStudent roundedBtn" onClick={this.UpdateStudentInfo}>שמירת עדכונים</button>
                 </div>
                 {/* <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToHomePage}>יצירת תלמיד והמשכת האפיון במועד מאוחר יותר</button>

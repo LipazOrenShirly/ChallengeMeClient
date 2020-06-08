@@ -428,13 +428,14 @@ export default class CCStudentLogin extends Component {
                 validationOption={{
                   check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                   required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  msgOnError: "חובה להזין מספר פלאפון",
                   customFunc: Phone => {
                     const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
                     if (reg.test(Phone)) {
                       return true;
                     } else {
                       this.setState({ HasPhoneValError: true });
-                      return "is not a valid phone number";
+                      return "מספר הפלאפון חייב להיות בעל 10 ספרות";
                     }
                   }
                 }}
@@ -462,13 +463,14 @@ export default class CCStudentLogin extends Component {
                 validationOption={{
                   check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                   required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                  msgOnError: "חובה להזין סיסמה שהביא לך המורה",
                   customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
                     const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
                     if (reg.test(pas)) {
                       return true;
                     } else {
                       this.setState({ HasPasswordError: true });
-                      return "Minimum 5 characters, at least one letter and one number";
+                      return "אנא הזן לפחות 5 תווים שמכילים אותיות באנגלית ומספרים";
                     }
                   }
                 }}

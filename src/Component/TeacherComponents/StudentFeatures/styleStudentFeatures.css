@@ -8,9 +8,12 @@
     background-color: rgb(231, 199, 208);
 } */
 .classCategory1 , .classCategory2 , .classCategory3{
-    margin-bottom: 2%;
+    /* margin-bottom: 2%; */
     align-content: center;
     background-color: transparent;
+    border-bottom: 1px solid #c3a5a573;
+    margin-top: 1%;
+
 }
 .scalaDetails{
     margin-top: 1%;

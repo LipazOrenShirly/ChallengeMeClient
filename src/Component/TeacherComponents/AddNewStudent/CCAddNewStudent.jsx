@@ -191,14 +191,11 @@ export default class CCAddNewChallenge extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין שם פרטי לתלמיד",
                             customFunc: async v => {
-                                if (v === "") {
-                                    // this.setState({ HasfirstNameValError: true });
-                                    return "Name is required.";
-                                }
                                 if (v.length < 2) {
                                     // this.setState({ HasfirstNameValError: true });
-                                    return "Name needs at least 2 length.";
+                                    return "השם חייב להיות בעל 2 אותיות ומעלה";
                                 }
                                 return true;
                             }
@@ -228,14 +225,11 @@ export default class CCAddNewChallenge extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין שם משפחה לתלמיד",
                             customFunc: async v => {
-                                if (v === "") {
-                                    this.setState({ HasSlastNameValError: true });
-                                    return "Last Name is required.";
-                                }
                                 if (v.length < 2) {
                                     this.setState({ HasSlastNameValError: true });
-                                    return "Last Name needs at least 2 length.";
+                                    return "שם המשפחה חייב להיות בעל 2 אותיות ומעלה";
                                 }
                                 return true;
                             }
@@ -268,6 +262,7 @@ export default class CCAddNewChallenge extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין מספר פלאפון לתלמיד",
                             customFunc: phoneNum => {
                                 const reg = /^0\d([\d]{0,1})([-]{0,1})\d{8}$/;
                                 if (reg.test(phoneNum)) {
@@ -275,7 +270,7 @@ export default class CCAddNewChallenge extends Component {
 
                                 } else {
                                     this.setState({ HasSphoneValError: true });
-                                    return "is not a valid phone number";
+                                    return "מספר הפלאפון לא תקין";
                                 }
 
                             }
@@ -307,13 +302,14 @@ export default class CCAddNewChallenge extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין סיסמה לתלמיד",
                             customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
                                 const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
                                 if (reg.test(pas)) {
                                     return true;
                                 } else {
                                     this.setState({ HasSpasswordValError: true });
-                                    return "Minimum 5 characters, at least one letter and one number";
+                                    return "אנא הזן לפחות 5 תווים שמכילים אותיות באנגלית ומספרים";
                                 }
                             }
                         }}
@@ -342,6 +338,7 @@ export default class CCAddNewChallenge extends Component {
                         validationOption={{
                             check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                             required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                            msgOnError: "חובה להזין סיסמה בשנית לתלמיד",                            
                             customFunc: pas => { //Minimum 5 characters, at least one letter and one number:
                                 const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
                                 if (reg.test(pas)) {
@@ -349,11 +346,11 @@ export default class CCAddNewChallenge extends Component {
                                         return true;
                                     else {
                                         this.setState({ HasSpassword2ValError: true });
-                                        return "not like first password";
+                                        return "הסיסמה לא זהה לסיסמה הראשונה";
                                     }
                                 } else {
                                     this.setState({ HasSpassword2ValError: true });
-                                    return "Minimum 5 characters, at least one letter and one number";
+                                    return "אנא הזן לפחות 5 תווים שמכילים אותיות באנגלית ומספרים";
                                 }
                             }
                         }}
@@ -379,7 +376,11 @@ export default class CCAddNewChallenge extends Component {
                             console.log(e);
                         }}
                         onBlur={(e) => { console.log(e); }} // Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                    />
+                        validationOption={{
+                            check: false, // Optional.[Bool].Default: true. To determin if you need to validate.
+                            required: false,
+                        }}
+                   />
                 </div>
                 <div className="form-group col-12">
                     <button className="btn btn-info createNewChallenge btnAddNewStudent" onClick={this.CreateAndGoToStudentFeatures}>יצירת התלמיד והעברה לאפיון תלמיד</button>

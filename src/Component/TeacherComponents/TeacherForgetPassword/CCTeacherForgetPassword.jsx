@@ -110,13 +110,14 @@ export default class CCTeacherForgetPassword extends Component {
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
+                                    msgOnError: "חובה להזין כתובת מייל",
                                     customFunc: mail => {
                                         const reg1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                                         if (reg1.test(String(mail).toLowerCase())) {
                                             return true;
                                         } else {
                                             this.setState({ HasmailValError: true });
-                                            return "נא לכתוב כתובת מייל";
+                                            return "אנא הכנס כתובת מייל תקינה";
                                         }
                                     }
                                 }}
@@ -144,7 +145,7 @@ export default class CCTeacherForgetPassword extends Component {
                                 validationOption={{
                                     check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                                     required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                                    msgOnError: "נא לכתוב שם משתמש",
+                                    msgOnError: "חובה להזין שם משתמש",
                                 }}
                             />
                         </div>

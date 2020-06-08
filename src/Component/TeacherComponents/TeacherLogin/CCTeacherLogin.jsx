@@ -313,7 +313,7 @@ export default class CCTeacherLogin extends Component {
                     attributesInput={{
                       id: 'newPassword1',
                       type: 'password',
-                      placeholder: 'הזן ססמה חדשה',
+                      placeholder: 'הזן סיסמה חדשה',
                       className: "form-control inputRounded"
                     }}
                     value={newPassword1}
@@ -328,13 +328,14 @@ export default class CCTeacherLogin extends Component {
                     validationOption={{
                       check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                       required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                      customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
+                      msgOnError: " חובה להזין סיסמה חדשה",
+                      customFunc: pas => { //Minimum eight characters, and one number:
                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                         if (reg.test(pas)) {
                           return true;
                         } else {
                           this.setState({ HasnewPassword1Error: true });
-                          return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
+                          return "אנא הזן לפחות 8 תווים שמכילים אותיות באנגלית ומספרים";
                         }
                       }
                     }}
@@ -345,7 +346,7 @@ export default class CCTeacherLogin extends Component {
                     attributesInput={{
                       id: 'newPassword2',
                       type: 'password',
-                      placeholder: 'הזן ססמה בשנית',
+                      placeholder: 'הזן סיסמה בשנית',
                       className: "form-control inputRounded"
                     }}
                     value={newPassword2}
@@ -360,18 +361,19 @@ export default class CCTeacherLogin extends Component {
                     validationOption={{
                       check: true, // Optional.[Bool].Default: true. To determin if you need to validate.
                       required: true, // Optional.[Bool].Default: true. To determin if it is a required field.
-                      customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
+                      msgOnError: "חובה להזין סיסמה חדשה שנית",
+                      customFunc: pas => { 
                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                         if (reg.test(pas)) {
                           if (newPassword2 == newPassword1)
                             return true;
                           else {
                             this.setState({ HasnewPassword2Error: true });
-                            return "not like first password";
+                            return "סיסמה זו לא כמו הסיסמה הראשונה";
                           }
                         } else {
                           this.setState({ HasnewPassword2Error: true });
-                          return "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number";
+                          return "אנא הזן לפחות 8 תווים שמכילים אותיות באנגלית ומספרים";
                         }
                       }
                     }}

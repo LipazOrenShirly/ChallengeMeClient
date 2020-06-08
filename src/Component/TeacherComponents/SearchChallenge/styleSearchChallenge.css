@@ -1,20 +1,20 @@
 .oneTagsSearchText{
-    display: flex;
-    text-align: right;
-font-size: medium;
-/* padding-right: 5px;
-padding-left: 5px;
-padding-top: 7px; */
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .DivOneTagsSearch{
     margin:0px;
     padding:0px;
     background-color: rgb(218, 188, 207);
-    font-weight: 500;
+    font-weight: 400;
     margin-top:1%;
     border-radius: 4px;
     font-size: 20px;
+    min-height: 50px;
+    text-align: center !important;
+    justify-content: center;
+
 }
 .DivAllTagsSearch{
     overflow: scroll;

@@ -172,7 +172,7 @@ export default class CCClasses extends Component {
                 {this.state.showAddClass == true &&
                     <form onSubmit={this.Submit} display='none'>
                         <div className="form-group col-12">
-                            <input type="text" id="newClass" className="form-control inputRounded" placeholder="כתוב שם כיתה" required />
+                            <input type="text" id="newClass" dir="rtl" className="form-control inputRounded" placeholder="כתוב שם כיתה" required />
                         </div>
                         <div className="col-12">
                             <button type="submit" id="submit" className="btn btn-info btnPink roundedBtn">הוסף כיתה</button>

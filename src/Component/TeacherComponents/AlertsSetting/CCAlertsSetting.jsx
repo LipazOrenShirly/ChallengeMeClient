@@ -188,7 +188,7 @@ export default class CCAlertsSettings extends Component {
             </select>
           </div>
           <br />
-          <button className="btn btn-info btnPink" style={{ marginBottom: '30px' }} onClick={() => this.putSettings()}>שמור</button>
+          <button className="btn btn-info btnPink roundedBtn" style={{ marginBottom: '30px' }} onClick={() => this.putSettings()}>שמור</button>
         </div>
       </div>
     );

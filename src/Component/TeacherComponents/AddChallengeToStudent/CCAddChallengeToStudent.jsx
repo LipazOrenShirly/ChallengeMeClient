@@ -90,7 +90,7 @@ export default class CCAddChallengeToStudent extends Component {
 
 
                 <div className="titleSmartDiv"><strong>אתגרים שהוצעו ע"י המערכת בהתאם לאפיון</strong></div>
-                <div className="col-12 DivAllSmart">
+                <div className="col-12 DivAllSmart justify-content-center">
                     {/* get from server ChallengeID and put it instead of key when going to CConeSmartElementOffer */}
                     {
                         this.state.Smartchallenges.map((item, key) =>

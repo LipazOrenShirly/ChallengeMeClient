@@ -271,7 +271,7 @@ export default class CCAlerts extends Component {
                 {this.state.search && this.state.alertArrSearch.length == 0 && 
                     <div> אין התראות לתלמיד </div>}
 
-                {this.state.search == false && <div className="allAlerts">
+                {this.state.search == false && <div className="row allAlerts">
                     {this.state.alertArr.map((item) =>
                         <CCOneAlert key={item.alertID} alert={item}
                             getAlertIDForDelete={this.getAlertIDForDelete}
@@ -281,7 +281,7 @@ export default class CCAlerts extends Component {
                     )}
                 </div>}
 
-                {this.state.search && <div className="allAlerts">
+                {this.state.search && <div className="row allAlerts">
                     {this.state.alertArrSearch.map((item) =>
                         <CCOneAlert key={item.alertID} alert={item}
                             getAlertIDForDelete={this.getAlertIDForDelete}

@@ -11,27 +11,21 @@
     border: none;
 }
 .oneSmartText{
-    display: flex;
     text-align: right;
-font-size: medium;
-padding-right: 5px;
-padding-left: 5px;
-padding-top: 7px;
+    font-size: 18px;
 }
 .DivOneSmart{
-    border: 1px solid rgb(115, 146, 142);
-    /* height: 150%; */
-    /* width: 150px; */
-    /* text-align: center; */
-    /* align-items: center; */
-    
-    margin:5px 0;
+    box-shadow: 1.5px 1.5px rgb(115, 146, 142);
+    border: none;
+    margin-bottom:10px !important;
     padding:0px;
-    background-color: #96C8C2;
-    font-weight: 700;
+    background-color: rgb(178, 209, 211);
+    font-weight: 500;
+  
     color: white;
     margin-top:2px;
     border-radius: 3px;
+    min-height: 60px;
 }
 .floatCrossIcon{
     float: right;

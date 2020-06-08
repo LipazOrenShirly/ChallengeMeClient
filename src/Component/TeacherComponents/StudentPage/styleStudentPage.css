@@ -31,12 +31,13 @@ margin: 3% 0;
     overflow-y: scroll;
 } */
 .oneChallengeDiv{
-    border: 1px solid rgb(127, 116, 145);
+    /* border: 1px solid rgb(127, 116, 145); */
+    box-shadow: 1px 1px rgb(127, 116, 145);
     margin:2%;
     text-align: right;
     padding: 3%;
     border-radius: 5px;
-
+    background-color: rgba(241, 238, 238, 0.767);
 }
 .oneChallengeDetails{
     /* text-decoration: underline; */
@@ -50,21 +51,27 @@ margin: 3% 0;
     margin-bottom: 4px;
 }
 .status1{
-    border: 1px solid #3fb181b2;
+    /* border: 1px solid #3fb181b2; */
+    box-shadow: 1px 1px #3fb181b2;
+    border: none;
     background-color: #38c08c42;
 }
 .iconStatus1{
   color: #38c08ca1;
 }
 .status2{
-    border: 1px solid #fab0a8d8;
+    /* border: 1px solid #fab0a8d8; */
+    box-shadow: 1px 1px #eb968cf5;
+    border: none;
     background-color: #fabfb8b7;
 }
 .iconStatus2{
     color: #fabfb8d5;
 }
 .status3{
-    border: 1px solid #f5da0c75;
+    box-shadow: 1px 1px #e6cd17d5;
+    border: none;
+    /* border: 1px solid #f5da0c75; */
     background-color: #f5da0c56;
 }
 .iconStatus3{

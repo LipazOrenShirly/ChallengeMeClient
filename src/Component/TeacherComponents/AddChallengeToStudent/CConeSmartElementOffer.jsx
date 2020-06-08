@@ -25,7 +25,7 @@ export default class CCOneClass extends Component {
 
     render() {
         return (
-            <div className="DivOneSmart col-12" dir="rtl" >
+            <div className="DivOneSmart align-items-center row"  dir="rtl" >
                 
                 <MdClose className="col-2 closeIcon floatCrossIcon" onClick={this.deleteOption}/>
                 <span className="col-10 oneSmartText" onClick={() => this.props.GoToExtraDetailsPage(this.props.challenge)}>{this.props.challenge.challengeName}</span>

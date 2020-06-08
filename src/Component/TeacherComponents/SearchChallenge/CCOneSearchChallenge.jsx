@@ -19,8 +19,8 @@ export default class CCOneSearchChallenge extends Component {
 
     render() {
         return (
-            <div className="DivOneTagsSearch col-12" dir="rtl" >               
-                <span className="col-10 oneTagsSearchText" onClick={() => this.props.GoToExtraDetailPage(this.props.challenge)}>{this.props.challenge.challengeName}</span>
+            <div className="DivOneTagsSearch row align-items-center" dir="rtl" >               
+                <div className="oneTagsSearchText" onClick={() => this.props.GoToExtraDetailPage(this.props.challenge)}>{this.props.challenge.challengeName}</div>
                 <br/>
             </div>
         );
