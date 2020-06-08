@@ -7,7 +7,8 @@ export default function FreeSoloGroupedInst(props) {
     return (
         <Autocomplete
             className="form-control inputNewTeacher"
-            id={props.id}                    
+            id={props.id} 
+            value={props.value}                   
             onChange={props.onChange}
             options={props.options}
             getOptionLabel={option => option.institutionName}

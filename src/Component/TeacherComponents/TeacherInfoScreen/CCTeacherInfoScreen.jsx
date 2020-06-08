@@ -23,6 +23,7 @@ export default class CCTeacherInfoScreen extends Component {
             password: "",
             password2: "",
             institutionID: "",
+            institution: {},
             HasfirstNameValError: false,
             HaslastNameValError: false,
             HasuserNameValError: false,
@@ -49,8 +50,8 @@ export default class CCTeacherInfoScreen extends Component {
     componentDidMount() {
         const user = this.context;
         // this.setState({ user: this.context })
+        this.getInstitutions();
         this.getInPlace(user);
-        this.getInstitutions()
     }
 
     getInstitutions = () => {
@@ -126,7 +127,8 @@ export default class CCTeacherInfoScreen extends Component {
                     phone: this.state.teacher.phone,
                     password: this.state.teacher.password,
                     password2: this.state.teacher.password,
-                    institutionID: this.state.teacher.institutionID
+                    institutionID: this.state.teacher.institutionID,
+                    institution: this.state.institutionsArr.filter(item => item.institutionID == this.state.teacher.institutionID)[0]
                 })
             });
     }
@@ -291,6 +293,7 @@ export default class CCTeacherInfoScreen extends Component {
         this.setState({
             institutionID: value != null ? value.institutionID : null,
             HasschoolValError: value != null ? false : true,
+            institution: value
         });
         if (value == null) {
             $('#schoolValuesError').empty();
@@ -611,6 +614,7 @@ export default class CCTeacherInfoScreen extends Component {
                         </div> */}
                         <div className="form-group col-12" dir="rtl">
                             <FreeSoloGroupedInst
+                                value={this.state.institution}
                                 options={this.state.institutionsArr.sort( function(a, b) {
                                     if (a.institutionName < b.institutionName) return -1;
                                     if (b.institutionName > a.institutionName) return 1;
