@@ -153,9 +153,10 @@ export default class CCTeacherForgetPassword extends Component {
                         <div className="text-center"><button  type="submit" className="btn btn-light btnPink roundedBtn">שלח</button></div>
 
                         <SweetAlert
+                            
                             show={this.state.showGood}
-                            title="הסיסמה שונתה!"
-                            text="הססמה החדשה נשלחה לך למייל"
+                            title="!הסיסמה שונתה"
+                            text="הסיסמה החדשה נשלחה לך למייל"
                             icon="success"
                             onConfirm={() => this.setState({ showGood: false })}
                         />
