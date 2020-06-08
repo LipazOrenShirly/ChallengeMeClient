@@ -566,7 +566,7 @@ export default class CCnewTeacher extends Component {
                                     return 0;
                                 })}
                                 onChange={this.onChangeInst}
-                                label='מוסד לימודים שהינך מלמד בו'
+                                label='מוסד לימודים'
                                 id='institutions' />
                         </div>
                         <div className='errorInputuserName' id="schoolValuesError"></div>

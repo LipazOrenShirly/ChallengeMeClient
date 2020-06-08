@@ -469,7 +469,7 @@ class CCStudentTransfer extends Component {
                                 clear={this.state.clearSelection}
                                 options={this.state.studentsArr}
                                 onInputChange={this.onInputChangeStudent}
-                                label="שם התלמיד להעברה"
+                                label="בחר תלמיד"
                                 id='studentToTransfer' />
                         </div>
                         <div className="form-group input-group col-12 bc" dir="rtl">
@@ -477,7 +477,7 @@ class CCStudentTransfer extends Component {
                                 clear={this.state.clearSelection}
                                 options={this.state.teachersArr}
                                 onChange={this.onInputChangeTeacher}
-                                label='שם המורה אליו יועבר התלמיד'
+                                label='בחר מורה'
                                 id='teacherToTransfer' />
                         </div>
                         <div className="col-12" dir="rtl">
@@ -521,3 +521,4 @@ class CCStudentTransfer extends Component {
 }
 
 export default CCStudentTransfer;
+

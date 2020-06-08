@@ -620,7 +620,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     if (b.institutionName > a.institutionName) return 1;
                                     return 0;})}
                                 onChange={this.onChangeInst}
-                                label='מוסד לימודים שהינך מלמד בו'
+                                label='מוסד לימודים'
                                 id='institutions' />
                         </div>
 
