@@ -6,7 +6,7 @@ export default function FreeSoloGrouped(props) {
 
     return (
         <Autocomplete
-            key={props.key}
+            key={props.clear}
             className="form-control inputRounded"
             id={props.id}
             onChange={props.onInputChange}

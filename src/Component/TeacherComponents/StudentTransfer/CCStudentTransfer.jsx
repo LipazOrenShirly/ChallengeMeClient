@@ -97,7 +97,7 @@ class CCStudentTransfer extends Component {
             .then(
                 (result) => {
                     console.log(result);
-                    this.setState({ teachersArr: result })
+                    this.setState({ teachersArr: result.filter(item => item.teacherID != user.teacherID) })
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -466,7 +466,7 @@ class CCStudentTransfer extends Component {
                     <form onSubmit={this.SubmitTransfer}>
                         <div className="form-group input-group col-12 bc" dir="rtl">
                             <FreeSoloGrouped
-                                key={this.state.clearSelection}
+                                clear={this.state.clearSelection}
                                 options={this.state.studentsArr}
                                 onInputChange={this.onInputChangeStudent}
                                 label="שם התלמיד להעברה"
@@ -474,7 +474,7 @@ class CCStudentTransfer extends Component {
                         </div>
                         <div className="form-group input-group col-12 bc" dir="rtl">
                             <FreeSoloTeachers
-                                key={this.state.clearSelection}
+                                clear={this.state.clearSelection}
                                 options={this.state.teachersArr}
                                 onChange={this.onInputChangeTeacher}
                                 label='שם המורה אליו יועבר התלמיד'
