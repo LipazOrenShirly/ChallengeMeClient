@@ -146,24 +146,24 @@ export default class CCAlertsSettings extends Component {
             :סמן אילו התרעות תרצה לראות
         </p>
 
-          <div className="row">
-            <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שהצליח אתגר</div>
-            <Switch id="SwitchSuccess" className="Switches" onChange={(checked) => this.setState({ checkedSuccess: checked })} checked={checkedSuccess} onColor="#CFA6D6" />
+          <div className="row align-items-center">
+            <div className="AlertSettingText col-9">קבלת התראה כאשר תלמיד מסמן שהצליח אתגר</div>
+            <div className="col-3"><Switch id="SwitchSuccess" className="Switches" onChange={(checked) => this.setState({ checkedSuccess: checked })} checked={checkedSuccess} onColor="#CFA6D6" /></div>
           </div>
           <br />
-          <div className="row">
-            <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שלא הצליח אתגר</div>
-            <Switch id="SwitchFailure" className="Switches" onChange={(checked) => this.setState({ checkedFailure: checked })} checked={checkedFailure} onColor="#CFA6D6" />
+          <div className="row align-items-center">
+            <div className="AlertSettingText col-9">קבלת התראה כאשר תלמיד מסמן שלא הצליח אתגר</div>
+            <div className="col-3"><Switch id="SwitchFailure" className="Switches" onChange={(checked) => this.setState({ checkedFailure: checked })} checked={checkedFailure} onColor="#CFA6D6" /></div>
           </div>
           <br />
-          <div className="row">
-            <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד מסמן שהוא צריך עזרה</div>
-            <Switch id="SwitchNeedHelp" className="Switches" onChange={(checked) => this.setState({ checkedNeedHelp: checked })} checked={checkedNeedHelp} onColor="#CFA6D6" />
+          <div className="row align-items-center">
+            <div className="AlertSettingText col-9">קבלת התראה כאשר תלמיד מסמן שהוא צריך עזרה</div>
+            <div className="col-3"><Switch id="SwitchNeedHelp" className="Switches" onChange={(checked) => this.setState({ checkedNeedHelp: checked })} checked={checkedNeedHelp} onColor="#CFA6D6" /></div>
           </div>
           <br />
-          <div className="row" style={{ padding: '2%' }}>
-            <div className="AlertSettingText col-10">קבלת התראה כאשר תלמיד לא השלים את האתגר וכבר הגיע הדד ליין</div>
-            <Switch id="SwitchReachDadline" className="Switches" onChange={(checked) => this.setState({ checkedReachDadline: checked })} checked={checkedReachDadline} onColor="#CFA6D6" />
+          <div className="row align-items-center" style={{ padding: '2%' }}>
+            <div className="AlertSettingText col-9">קבלת התראה כאשר תלמיד לא השלים את האתגר וכבר הגיע הדד ליין</div>
+            <div className="col-3"><Switch id="SwitchReachDadline" className="Switches" onChange={(checked) => this.setState({ checkedReachDadline: checked })} checked={checkedReachDadline} onColor="#CFA6D6" /></div>
           </div>
           <br />
 

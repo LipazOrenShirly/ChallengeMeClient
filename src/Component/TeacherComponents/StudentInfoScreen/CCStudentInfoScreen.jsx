@@ -385,7 +385,7 @@ export default class CCStudentInfoScreen extends Component {
                         attributesInput={{
                             id: 'NewStudentBirthDate',
                             type: 'date',
-                            placeholder: 'תאריך לידה תלמיד',
+                            placeholder: 'תאריך לידה',
                             className: "form-control inputNewTeacher"
                         }}
 
