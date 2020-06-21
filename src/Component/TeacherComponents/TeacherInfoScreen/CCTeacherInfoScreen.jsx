@@ -19,7 +19,6 @@ export default class CCTeacherInfoScreen extends Component {
             firstName: "",
             lastName: "",
             mail: "",
-            username: "",
             phone: "",
             password: "",
             password2: "",
@@ -48,14 +47,14 @@ export default class CCTeacherInfoScreen extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount = () => {
+    componentDidMount() {
+        const user = this.context;
+        // this.setState({ user: this.context })
         this.getInstitutions();
-
+        this.getInPlace(user);
     }
 
     getInstitutions = () => {
-        const user = this.context;
-
         fetch(this.apiUrlInstitution
             , {
                 method: 'GET',
@@ -74,8 +73,7 @@ export default class CCTeacherInfoScreen extends Component {
             .then(
                 (result) => {
                     console.log(result);
-                    this.setState({ institutionsArr: result });
-                    this.getInPlace(user, result);
+                    this.setState({ institutionsArr: result })
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -89,7 +87,7 @@ export default class CCTeacherInfoScreen extends Component {
                 })
     }
 
-    getInPlace = (user, institutionArr) => {
+    getInPlace = (user) => {
         fetch(this.apiUrl + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
@@ -130,9 +128,8 @@ export default class CCTeacherInfoScreen extends Component {
                     password: this.state.teacher.password,
                     password2: this.state.teacher.password,
                     institutionID: this.state.teacher.institutionID,
-                    institution: institutionArr.filter(item => item.institutionID == this.state.teacher.institutionID)[0]
+                    institution: this.state.institutionsArr.filter(item => item.institutionID == this.state.teacher.institutionID)[0]
                 })
-
             });
     }
 
@@ -142,7 +139,7 @@ export default class CCTeacherInfoScreen extends Component {
         event.preventDefault();
 
         const { HasphoneValError, HasfirstNameValError, HaslastNameValError, HasmailValError, HaspasswordValError,
-            Haspassword2ValError, HasschoolValError, HasuserNameValError } = this.state
+            Haspassword2ValError, HasschoolValError ,HasuserNameValError} = this.state
 
         if (!HasphoneValError && !HasfirstNameValError && !HaslastNameValError && !HasmailValError && !HaspasswordValError
             && !Haspassword2ValError && !HasschoolValError && !HasuserNameValError) {
@@ -234,11 +231,9 @@ export default class CCTeacherInfoScreen extends Component {
                     if (result == 1) { // כבר קיים השם משתמש הזה
                         if (usernameNewTeacher == this.state.teacher.userName)
                             return;
-                        else {
-                            this.setState({ HasuserNameValError: true });
-                            $('#userNameValuesError').empty();
-                            $('#userNameValuesError').append("שם המשתמש קיים במערכת");
-                        }
+                        this.setState({ HasuserNameValError: true });
+                        $('#userNameValuesError').empty();
+                        $('#userNameValuesError').append("שם המשתמש קיים במערכת");
                     }
                 },
                 (error) => {
@@ -349,7 +344,7 @@ export default class CCTeacherInfoScreen extends Component {
                                             this.setState({ HasfirstNameValError: true });
                                             return "השם צריך להיות בעל 2 אותיות ומעלה";
                                         }
-                                        this.setState({ HasfirstNameValError: false });
+                                        this.setState({ HasfirstNameValError: false });                            
                                         return true;
                                     }
                                 }}
@@ -519,7 +514,7 @@ export default class CCTeacherInfoScreen extends Component {
                                         if (reg.test(pas)) {
                                             this.setState({ HaspasswordValError: false });
                                             return true;
-                                        }
+                                        } 
                                         else {
                                             this.setState({ HaspasswordValError: true });
                                             return "אנא הזן לפחות 8 תווים שמכילים אותיות באנגלית ומספרים";
@@ -554,7 +549,7 @@ export default class CCTeacherInfoScreen extends Component {
                                     customFunc: pas => { //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
                                         const reg = /^(?=.*[A-Za-z])(?=.*\d)([@$!%*#?&]*)[A-Za-z\d@$!%*#?&]{8,}$/;
                                         if (reg.test(pas)) {
-                                            if (password2 == password) {
+                                            if (password2 == password){
                                                 this.setState({ Haspassword2ValError: false });
                                                 return true;
                                             }
@@ -562,7 +557,7 @@ export default class CCTeacherInfoScreen extends Component {
                                                 this.setState({ Haspassword2ValError: true });
                                                 return "הסיסמה לא זהה לסיסמה הראשונה";
                                             }
-                                        }
+                                        } 
                                         else {
                                             this.setState({ Haspassword2ValError: true });
                                             return "אנא הזן לפחות 8 תווים שמכילים אותיות באנגלית ומספרים";
@@ -571,7 +566,7 @@ export default class CCTeacherInfoScreen extends Component {
                                 }}
                             />
                         </div>
-                        {/* 
+{/* 
                         <div className="form-group col-12">
                             <Textbox  // כדי שיפעלו הולידציות שמים את האינפוט בטקסט בוקס
                                 attributesInput={{
@@ -611,11 +606,10 @@ export default class CCTeacherInfoScreen extends Component {
                         <div className="form-group col-12" dir="rtl">
                             <FreeSoloGroupedInst
                                 value={this.state.institution}
-                                options={this.state.institutionsArr.sort(function (a, b) {
+                                options={this.state.institutionsArr.sort( function(a, b) {
                                     if (a.institutionName < b.institutionName) return -1;
                                     if (b.institutionName > a.institutionName) return 1;
-                                    return 0;
-                                })}
+                                    return 0;})}
                                 onChange={this.onChangeInst}
                                 label='מוסד לימודים'
                                 id='institutions' />
