@@ -48,10 +48,8 @@ export default class CCTeacherInfoScreen extends Component {
 
     static contextType = ProjectContext;
 
-    componentDidMount () {
-
+    componentDidMount = () => {
         this.getInstitutions();
-        //  this.getInPlace(user,institutionArr);
 
     }
 
@@ -76,9 +74,8 @@ export default class CCTeacherInfoScreen extends Component {
             .then(
                 (result) => {
                     console.log(result);
-                    this.setState({ institutionsArr: result  }, this.getInPlace)
-                    
-                    
+                    this.setState({ institutionsArr: result });
+                    this.getInPlace(user, result);
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -92,8 +89,7 @@ export default class CCTeacherInfoScreen extends Component {
                 })
     }
 
-    getInPlace = () => {
-        const user = this.context;
+    getInPlace = (user, institutionArr) => {
         fetch(this.apiUrl + '?teacherID=' + user.teacherID
             , {
                 method: 'GET',
@@ -134,7 +130,7 @@ export default class CCTeacherInfoScreen extends Component {
                     password: this.state.teacher.password,
                     password2: this.state.teacher.password,
                     institutionID: this.state.teacher.institutionID,
-                    institution: this.state.institutionsArr.filter(item => item.institutionID == this.state.teacher.institutionID)[0]
+                    institution: institutionArr.filter(item => item.institutionID == this.state.teacher.institutionID)[0]
                 })
 
             });
@@ -215,7 +211,6 @@ export default class CCTeacherInfoScreen extends Component {
 
     checkIfUserNameExist = (e) => {
         var usernameNewTeacher = e.target.value;
-        console.log("usernameNewTeacher "+usernameNewTeacher)
         $('#userNameValuesError').empty();
 
         // לעשות פונקציה בשרת שבודקת ומחזירה 0 או 1
@@ -236,10 +231,8 @@ export default class CCTeacherInfoScreen extends Component {
             })
             .then(
                 (result) => {
-                    console.log('result=', result);
-                    console.log("this.state.teacher.userName", this.state.teacher.userName)
                     if (result == 1) { // כבר קיים השם משתמש הזה
-                        if (usernameNewTeacher == this.state.teacher.userName || this.state.teacher.userName ==undefined)
+                        if (usernameNewTeacher == this.state.teacher.userName)
                             return;
                         else {
                             this.setState({ HasuserNameValError: true });
